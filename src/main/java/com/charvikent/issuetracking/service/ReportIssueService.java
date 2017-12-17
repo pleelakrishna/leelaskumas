@@ -144,6 +144,11 @@ public class ReportIssueService {
 	public List<ReportIssue> getIssuesByAssignBy(String id) {
 		// TODO Auto-generated method stub
 		return reportIssueDao.getIssuesAssignBy(id);
+	}
+
+	public Object getIssuesByAssignTo(String id) {
+ 
+		return reportIssueDao.getIssuesAssignTo(id);
 	}  
 
 

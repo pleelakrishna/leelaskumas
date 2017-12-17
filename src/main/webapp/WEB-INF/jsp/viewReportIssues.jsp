@@ -55,29 +55,28 @@
 												<tbody>
 													<tr class="my-buglist-bug ">
 													    <th class="nowrap width-13">Issue ID</th>
-														<th class="nowrap width-13">Created Time</th>
 														<th class="nowrap width-13">Category</th>
 														<th class="nowrap width-13">Severity</th>
 														<th class="nowrap width-13">Priority</th>
 														<th class="nowrap width-13">AssignTo</th>
-														<th class="nowrap width-13">Description</th>
 														<th class="nowrap width-13">Attachment</th>
-														<th class="nowrap width-13">UpdatedTime</th>
 														<th class="nowrap width-13">Summary</th>
+														<th class="nowrap width-13">UpdatedTime</th>
+														<th class="nowrap width-13">CreatedTime</th>
 														<th class="nowrap width-13"></th>
 													</tr>
 													<c:forEach var="issue" items="${allReportIssues}">
 													<tr class="my-buglist-bug ">
-														<td class="nowrap width-13">${issue.id  }</td>
-														<td class="nowrap width-13">${issue.createdTime }</td>
+														<td class="nowrap width-13">${issue.id }</td>
+														
 														<td class="nowrap width-13">${issue.category}</td>
 														<td class="nowrap width-13">${issue.severity}</td>
 														<td class="nowrap width-13">${issue.priority}</td>
 														<td class="nowrap width-13">${issue.assignto}</td>
-														<td class="nowrap width-13">${issue.subject}</td>
 														<td class="nowrap width-13">${issue.uploadfile}</td>
-														<td class="nowrap width-13">${issue.updatedTime}</td>
 														<td class="nowrap width-13">${issue.subject}</td>
+														<td class="nowrap width-13">${issue.createdTime }</td>
+																												<%-- <td class="nowrap width-13">${issue.updatedTime}</td>
 												<c:if test="${cacheUserBean.designation == 1}">	<td><span><a href="edit?id=${user.id}">Edit</a></span> </c:if> <%-- <span><a href="deleteUser/${user.id }">Delete</a></span> --%></td>
 													</tr>
 													</c:forEach>
