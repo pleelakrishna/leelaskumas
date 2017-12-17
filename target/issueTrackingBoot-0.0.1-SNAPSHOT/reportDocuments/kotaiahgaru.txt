@@ -1,0 +1,233 @@
+package com.charvikent.issuetracking.controller;
+
+import java.util.List;
+
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.charvikent.issuetracking.model.Admin;
+import com.charvikent.issuetracking.model.ReportIssue;
+import com.charvikent.issuetracking.model.User;
+import com.charvikent.issuetracking.service.AdminService;
+import com.charvikent.issuetracking.service.ReportIssueService;
+import com.charvikent.issuetracking.service.UserService;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
+
+@Controller
+public class AdminController {
+	
+	@Autowired
+	private AdminService adminService;
+	
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private ReportIssueService reportIssueService;
+	
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private JavaMailSender sender;
+	
+	@RequestMapping("/")
+	public String homePage(Model model)
+	{
+		model.addAttribute("adminForm",new Admin());
+		return "login";
+		
+	}
+	
+	@RequestMapping(value = "/summary", method = RequestMethod.POST)
+	public String saveAdmin(@Valid @ModelAttribute("adminForm")  Admin admin,BindingResult bindingresults,Model model,HttpSession session,HttpServletRequest request,RedirectAttributes redir) {
+		User lbean;
+		
+		if(bindingresults.hasErrors())
+		{
+			System.out.println("has some errors");
+		return "redirect:/";
+	    }
+		
+		//String adpswd =passwordEncoder.encode(admin.getPassword());
+		//System.out.println(adpswd);
+		
+		/*System.out.println(userService.findWithName(admin.getName()));*/
+		try
+		{
+		 lbean=userService.findWithName(admin.getName(),admin.getPassword());
+		 System.out.println(lbean);
+		 if(lbean != null){
+			 session.setAttribute("cacheUserBean", lbean);
+			 return "redirect:summary";
+		 }else{
+			 redir.addFlashAttribute("msg","Invalid Crediantals");
+			 return  "redirect:/";
+		 }
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			System.out.println("enter valid user name");
+		}
+		
+		
+	
+		
+		return  "redirect:/";
+	}
+	
+	@RequestMapping("/createUser")
+	public String homeUser(Model model)
+	{
+		model.addAttribute("userForm",new User());
+		System.out.print(userService.getDepartments());
+		model.addAttribute("departments",userService.getDepartments());
+		model.addAttribute("roles",userService.getRoles());
+		
+		
+		return "user";
+		
+	}
+	
+	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
+	public String saveAdmin(@Valid @ModelAttribute("userForm") User user,BindingResult bindingresults,Model model) {
+		
+		
+		System.out.print("create user block");
+		if(bindingresults.hasErrors())
+		{
+			System.out.println("has some errors");
+		return "redirect:/";
+	    }
+		
+		//user.setPassword(passwordEncoder.encode(user.getPassword()));
+		userService.saveUser(user);
+		
+	
+		
+		
+		return  "redirect:viewUsers";
+	}
+	
+	  @RequestMapping("/viewUsers")
+		public String pageView(Model model)
+		{
+		  System.out.println("view User Block");
+	    	
+			model.addAttribute("allUsers",userService.getAllUsers());
+			
+			return "viewUsers";
+		}
+	
+
+	  @RequestMapping("/createReportIssue")
+		public String homeReportIssue(Model model)
+		{
+			model.addAttribute("reportIssueForm",new ReportIssue());
+			return "createReportIssue";
+			
+		}
+		
+		@RequestMapping(value = "/createReportIssue", method = RequestMethod.POST)
+		public String saveAdmin(@Valid @ModelAttribute("reportIssueForm") ReportIssue reportIssue,BindingResult bindingresults,Model model) {
+			
+			System.out.print("create reportissue block");
+			
+			if(bindingresults.hasErrors())
+			{
+				System.out.println("has some errors");
+			return "redirect:/";
+		    }
+			reportIssueService.saveReportIssue(reportIssue);
+			
+			try
+			{
+				 
+			          MimeMessage message = sender.createMimeMessage();
+			          MimeMessageHelper helper = new MimeMessageHelper(message);
+			           
+			          helper.setTo("leelakrishnacce@gmail.com");
+			          helper.setText("How are you?");
+			          helper.setSubject("Hi");
+			           
+			          sender.send(message);
+			      
+				
+			}catch(Exception ex)
+			{
+				System.out.println(ex);
+			}
+			
+			return  "redirect:viewReportIssues";
+		}
+		
+		  @RequestMapping("/viewReportIssues")
+			public String viewReportIssues(Model model)
+			{
+			  System.out.println("view reportIssues Block");
+		    	
+				model.addAttribute("allReportIssues",reportIssueService.getAllReportIssues());
+				
+				return "viewReportIssues";
+			}
+		  
+		  
+		  @RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.GET)
+			public String deleteReligion(@PathVariable("id") String id)
+			{
+				userService.deleteUser(Integer.parseInt(id));
+				return  "redirect:viewUsers";
+				
+				
+			}
+		  
+		  @RequestMapping(value = "/editUser/{id}", method = RequestMethod.GET)
+			public String editUser(@PathVariable("id") String id,Model model)
+			{
+			  System.out.println("enter edit block");
+			  
+				User users= userService.getUserById(Integer.parseInt(id));
+				model.addAttribute("users",users);
+				model.addAttribute("departments",userService.getDepartments());
+				model.addAttribute("roles",userService.getRoles());
+				
+				
+				return  "editUser";
+				
+				
+			}
+		  
+		  @RequestMapping(value = "/editUser", method = RequestMethod.POST)
+			public String edit(@Valid @ModelAttribute("UserForm")User  user)
+			{
+			  System.out.println("post edit");
+				System.out.println("edit user postmethod");
+				
+				userService.updateUser(user);
+				return "redirect:viewUsers";
+				
+				
+			}
+			
+
+		  
+		  
+
+
+}
