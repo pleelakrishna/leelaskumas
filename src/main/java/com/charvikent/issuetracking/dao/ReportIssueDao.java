@@ -1,8 +1,11 @@
 package com.charvikent.issuetracking.dao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -106,7 +109,7 @@ public List<ReportIssue> getAllReportIssues() {
 			List<Object[]> rows = em
 					.createQuery(
 							"select r.id, c.category ,s.severity,p.priority," + "u.username ,r.subject ,r.uploadfile,"
-									+ "r.createdTime from ReportIssue r, Category c ,Severity s,Priority p,User u  where r.assignto=c.id and r.severity=s.id and r.priority=p.id and r.assignto=u.id")
+									+ "r.createdTime, r.updatedTime from ReportIssue r, Category c ,Severity s,Priority p,User u  where r.assignto=c.id and r.severity=s.id and r.priority=p.id and r.assignto=u.id")
 					.getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
@@ -119,8 +122,8 @@ public List<ReportIssue> getAllReportIssues() {
 				issue.setAssignto((String) row[4]);
 				issue.setSubject((String) row[5]);
 				issue.setUploadfile((String) row[6]);
-				// issue.setUpdatedTime((String) row[7]);
 				issue.setCreatedTime((Date) row[7]);
+			    issue.setUpdatedTime((Date) row[8]);
 				listissue.add(issue);
 
 			}
@@ -134,9 +137,41 @@ public List<ReportIssue> getAllReportIssues() {
 }
 
 
-
-
-
-
-
+@SuppressWarnings("unchecked")
+public Map<Integer, Integer>  getGapAndCount() {
+	
+	List<ReportIssue> listissuegap=new ArrayList<>();
+	ReportIssue issuegap =null;
+	
+			List<Object[]> rows = 	em.createNativeQuery("SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue group by gap").getResultList();
+			
+			Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
+			
+			for (Object[] row : rows) {
+				issuegap = new ReportIssue();
+				System.out.print(Integer.parseInt(String.valueOf(row[0])));
+				System.out.print(Integer.parseInt(String.valueOf(row[1])));
+				
+				issuegap.setGapdays(Integer.parseInt(String.valueOf(row[0])));
+				issuegap.setGapcount(Integer.parseInt(String.valueOf(row[1])));
+				listissuegap.add(issuegap);
+				
+				issueTimelines.put(Integer.parseInt(String.valueOf(row[0])), Integer.parseInt(String.valueOf(row[1])));
+			}
+			 
+			
+			return issueTimelines;
+	
+	
+	
+	
 }
+}
+
+
+
+
+
+
+
+

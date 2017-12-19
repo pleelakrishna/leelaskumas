@@ -145,7 +145,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Assigned to Me (Unresolved)</a> <span class="badge">  1 - 4 / 4  </span>		</h4>
+<a class="white" href="#">Assigned to Me </a> <span class="badge">    </span>		</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -209,7 +209,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Assigned to Me (Unresolved)</a> <span class="badge">  1 - 4 / 4  </span>		</h4>
+<a class="white" href="#">Reported By Me</a> <span class="badge">   </span>		</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -272,7 +272,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Assigned to Me (Unresolved)</a> <span class="badge">  1 - 4 / 4  </span>		</h4>
+<a class="white" href="#">Monitored by Me</a> <span class="badge">   </span>		</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -336,7 +336,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Assigned to Me (Unresolved)</a> <span class="badge">  1 - 4 / 4  </span>		</h4>
+<a class="white" href="#">Resolved</a> <span class="badge">    </span>		</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -400,7 +400,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Assigned to Me (Unresolved)</a> <span class="badge">  1 - 4 / 4  </span>		</h4>
+<a class="white" href="#">Recently Modified(30 days) </a> <span class="badge">    </span>		</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -464,7 +464,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Assigned to Me (Unresolved)</a> <span class="badge">  1 - 4 / 4  </span>		</h4>
+<a class="white" href="#">Timeline</a> <span class="badge">   </span>		</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -479,39 +479,28 @@
 	<div style="display: block;" class="widget-body">
 		<div class="widget-main no-padding">
 			<div class="table-responsive">
+		
 				<table class="table table-bordered table-condensed table-striped table-hover">
+				<thead>
+				<tr>
+				<th>Days</th>
+				<th>Open</th>
+				
+				</tr>
+				
+				</thead>
 <tbody>
 
+<c:forEach var="issue" items="${gapAndCount}">
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13">Sl.No		</td>
-
+		<td class="nowrap width-13">${issue.key} 
+		</td>
 		<td>
-		<span><a href="#">All Fields</a></span>
+		<span><a href="#">${issue.value }</a></span>
         </td>
+    
 </tr>
-
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">
-		1</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>	</td>
-</tr>
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">Sl.No		</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>
-        </td>
-</tr>
-
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">
-		1</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>	</td>
-</tr>
+</c:forEach>
 
 
 </tbody>

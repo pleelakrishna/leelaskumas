@@ -1,11 +1,15 @@
 package com.charvikent.issuetracking.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -31,7 +35,24 @@ public class ReportIssue {
 	private String subject;
 	private String description;
 	private String uploadfile;
+	private Integer gapdays;
+	private Integer gapcount;
 	
+	
+	
+	public Integer getGapdays() {
+		return gapdays;
+	}
+	public void setGapdays(Integer gapdays) {
+		this.gapdays = gapdays;
+	}
+	public Integer getGapcount() {
+		return gapcount;
+	}
+	public void setGapcount(Integer gapcount) {
+		this.gapcount = gapcount;
+	}
+
 	private String  assignby; 
 	
 	public String getAssignby() {
@@ -103,12 +124,17 @@ public class ReportIssue {
 		this.uploadfile = uploadfile;
 	}
 	
+	
+	
 	@Override
 	public String toString() {
-		return "ReportIssue [id=" + id + ", category=" + category + ", severity=" + severity + ", priority=" + priority
-				+ ", assignto=" + assignto + ", subject=" + subject + ", description=" + description + ", uploadfile="
-				+ uploadfile + "]";
+		return "ReportIssue [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", category="
+				+ category + ", severity=" + severity + ", priority=" + priority + ", assignto=" + assignto
+				+ ", subject=" + subject + ", description=" + description + ", uploadfile=" + uploadfile + ", gapdays="
+				+ gapdays + ", gapcount=" + gapcount + ", assignby=" + assignby + "]";
 	}
+	
+	
 	
 	
 	

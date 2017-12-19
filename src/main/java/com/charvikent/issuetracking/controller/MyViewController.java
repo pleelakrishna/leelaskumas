@@ -21,18 +21,18 @@ public class MyViewController {
 	public String myview(Model model) {
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
 		
-		
-		if(null != objuserBean){
-		System.out.println(reportIssueService.getIssuesByAssignBy(String.valueOf(objuserBean.getId())));
+	
+		//System.out.println(reportIssueService.getIssuesByAssignBy(String.valueOf(objuserBean.getId())));
 		
 		model.addAttribute("reportedByMe", reportIssueService.getIssuesByAssignBy(String.valueOf(objuserBean.getId())));
 		
 		model.addAttribute("assignToMe", reportIssueService.getIssuesByAssignTo(String.valueOf(objuserBean.getId())));
+		model.addAttribute("gapAndCount", reportIssueService.getGapAndCount());
+		model.addAttribute("gapAndCount2", reportIssueService.getGapAndCount());
+		
 		
 		return "myView";
-		}
 		
-		return "redirect:/";
 	}
 
 }
