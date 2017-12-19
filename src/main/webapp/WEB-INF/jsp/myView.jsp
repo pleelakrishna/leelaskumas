@@ -17,8 +17,7 @@
 				<div class="row">
 					<div class="col-md-12 col-xs-12">
 						<div class="page-header">
-							<h1>Reported By Me  
-							</h1>
+							<h1>Reported By Me</h1>
 <!-- 							<a href="createUser" style="float: right;color: white;"> Add User</a> -->
 						</div>
 						<div class="page-body">
@@ -137,15 +136,15 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<!-- /.page-content -->
-			<div class="row">
-							<div class="col-lg-7 col-xs-12">
+				
+				
+				<div class="row">
+							<div class="col-md-7">
 							<div id="assigned" class="widget-box widget-color-blue2">
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Assigned to Me </a> <span class="badge">    </span>		</h4>
+<a class="white" href="#">Assigned to Me (Unresolved)</a> <span class="badge">  1 - 3 / 3  </span>		</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -164,35 +163,37 @@
 <tbody>
 
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13">Sl.No		</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>
+		<td class="nowrap width-13"><a href="#">0000005</a>
+			<br>
+			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
+			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg orange2"></i>
+		</td>
+        
+        <td>
+		<span><a href="#">Add Squad _ Reset option</a></span>
+		<br>
+		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:51</span>
         </td>
 </tr>
 
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13">
-		1</td>
+		<td class="nowrap width-13"><a href="#">0000004</a>
+			<br>
+			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
+			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg orange2"></i>
+			<a class="attachments" href="#"><i class="fa fa-paperclip fa-lg grey"></i></a>
+		</td>
+        
+        <td>
+		<span><a href="#">Add Squad _ Reset option</a></span>
+		<br>
+		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:40</span>
 
-		<td>
-		<span><a href="#">All Fields</a></span>	</td>
-</tr>
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">Sl.No		</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>
         </td>
 </tr>
 
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">
-		1</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>	</td>
-</tr>
 
 
 </tbody>
@@ -209,7 +210,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Reported By Me</a> <span class="badge">   </span>		</h4>
+<a class="white" href="#"> Unassigned</a> <span class="badge">  0- 0 / 0  </span>		</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -228,162 +229,37 @@
 <tbody>
 
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13">Sl.No		</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>
+		<td class="nowrap width-13"><a href="#">0000005</a>
+			<br>
+			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
+			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg orange2"></i>
+		</td>
+        
+        <td>
+		<span><a href="#">Add Squad _ Reset option</a></span>
+		<br>
+		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:51</span>
         </td>
 </tr>
 
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13">
-		1</td>
+		<td class="nowrap width-13"><a href="#">0000004</a>
+			<br>
+			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
+			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg orange2"></i>
+			<a class="attachments" href="#"><i class="fa fa-paperclip fa-lg grey"></i></a>
+		</td>
+        
+        <td>
+		<span><a href="#">Add Squad _ Reset option</a></span>
+		<br>
+		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:40</span>
 
-		<td>
-		<span><a href="#">All Fields</a></span>	</td>
-</tr>
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">Sl.No		</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>
         </td>
 </tr>
 
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">
-		1</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>	</td>
-</tr>
-
-
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="space-10"></div>
-
-
-<div id="assigned" class="widget-box widget-color-blue2">
-	<div class="widget-header widget-header-small">
-		<h4 class="widget-title lighter">
-			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Monitored by Me</a> <span class="badge">   </span>		</h4>
-		<div class="widget-toolbar">
-			<a data-action="collapse" href="#">
-				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
-			</a>
-		</div>
-		<div class="widget-toolbar no-border hidden-xs">
-			<div class="widget-menu">
-				<a class="btn btn-primary btn-white btn-round btn-sm" href="#">View Issues</a>			</div>
-		</div>
-	</div>
-
-	<div style="display: block;" class="widget-body">
-		<div class="widget-main no-padding">
-			<div class="table-responsive">
-				<table class="table table-bordered table-condensed table-striped table-hover">
-<tbody>
-
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">Sl.No		</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>
-        </td>
-</tr>
-
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">
-		1</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>	</td>
-</tr>
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">Sl.No		</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>
-        </td>
-</tr>
-
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">
-		1</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>	</td>
-</tr>
-
-
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-							</div>
-                            
-                            
-                            <div class="col-lg-5 col-xs-12">
-							<div id="assigned" class="widget-box widget-color-blue2">
-	<div class="widget-header widget-header-small">
-		<h4 class="widget-title lighter">
-			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Resolved</a> <span class="badge">    </span>		</h4>
-		<div class="widget-toolbar">
-			<a data-action="collapse" href="#">
-				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
-			</a>
-		</div>
-		<div class="widget-toolbar no-border hidden-xs">
-			<div class="widget-menu">
-				<a class="btn btn-primary btn-white btn-round btn-sm" href="#">View Issues</a>			</div>
-		</div>
-	</div>
-
-	<div style="display: block;" class="widget-body">
-		<div class="widget-main no-padding">
-			<div class="table-responsive">
-				<table class="table table-bordered table-condensed table-striped table-hover">
-<tbody>
-
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">Sl.No		</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>
-        </td>
-</tr>
-
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">
-		1</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>	</td>
-</tr>
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">Sl.No		</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>
-        </td>
-</tr>
-
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">
-		1</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>	</td>
-</tr>
 
 
 </tbody>
@@ -392,7 +268,6 @@
 </div>
 </div>
 </div>	
-
 <div class="space-10"></div>
 
 
@@ -400,7 +275,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Recently Modified(30 days) </a> <span class="badge">    </span>		</h4>
+<a class="white" href="#"> Reported by Me</a> <span class="badge">  0- 0 / 0  </span>		</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -419,35 +294,37 @@
 <tbody>
 
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13">Sl.No		</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>
+		<td class="nowrap width-13"><a href="#">0000005</a>
+			<br>
+			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
+			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg orange2"></i>
+		</td>
+        
+        <td>
+		<span><a href="#">Add Squad _ Reset option</a></span>
+		<br>
+		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:51</span>
         </td>
 </tr>
 
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13">
-		1</td>
+		<td class="nowrap width-13"><a href="#">0000004</a>
+			<br>
+			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
+			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg orange2"></i>
+			<a class="attachments" href="#"><i class="fa fa-paperclip fa-lg grey"></i></a>
+		</td>
+        
+        <td>
+		<span><a href="#">Add Squad _ Reset option</a></span>
+		<br>
+		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:40</span>
 
-		<td>
-		<span><a href="#">All Fields</a></span>	</td>
-</tr>
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">Sl.No		</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>
         </td>
 </tr>
 
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">
-		1</td>
-
-		<td>
-		<span><a href="#">All Fields</a></span>	</td>
-</tr>
 
 
 </tbody>
@@ -464,7 +341,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Timeline</a> <span class="badge">   </span>		</h4>
+<a class="white" href="#"> Resolved</a> <span class="badge">  0- 0 / 0  </span>		</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -479,43 +356,245 @@
 	<div style="display: block;" class="widget-body">
 		<div class="widget-main no-padding">
 			<div class="table-responsive">
-		
 				<table class="table table-bordered table-condensed table-striped table-hover">
-				<thead>
-				<tr>
-				<th>Days</th>
-				<th>Open</th>
-				
-				</tr>
-				
-				</thead>
 <tbody>
 
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13"><a href="#">0000005</a>
+			<br>
+			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
+			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg orange2"></i>
+		</td>
+        
+        <td>
+		<span><a href="#">Add Squad _ Reset option</a></span>
+		<br>
+		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:51</span>
+        </td>
+</tr>
+
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13"><a href="#">0000004</a>
+			<br>
+			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
+			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg orange2"></i>
+			<a class="attachments" href="#"><i class="fa fa-paperclip fa-lg grey"></i></a>
+		</td>
+        
+        <td>
+		<span><a href="#">Add Squad _ Reset option</a></span>
+		<br>
+		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:40</span>
+
+        </td>
+</tr>
+
+
+
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<div class="space-10"></div>
+
+
+<div id="assigned" class="widget-box widget-color-blue2">
+	<div class="widget-header widget-header-small">
+		<h4 class="widget-title lighter">
+			<i class="ace-icon fa fa-list-alt"></i>
+<a class="white" href="#"> Recently Modified (30 Days)</a> <span class="badge">  0- 0 / 0  </span>		</h4>
+		<div class="widget-toolbar">
+			<a data-action="collapse" href="#">
+				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border hidden-xs">
+			<div class="widget-menu">
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="#">View Issues</a>			</div>
+		</div>
+	</div>
+
+	<div style="display: block;" class="widget-body">
+		<div class="widget-main no-padding">
+			<div class="table-responsive">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+<tbody>
+
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13"><a href="#">0000005</a>
+			<br>
+			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
+			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg orange2"></i>
+		</td>
+        
+        <td>
+		<span><a href="#">Add Squad _ Reset option</a></span>
+		<br>
+		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:51</span>
+        </td>
+</tr>
+
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13"><a href="#">0000004</a>
+			<br>
+			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
+			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg orange2"></i>
+			<a class="attachments" href="#"><i class="fa fa-paperclip fa-lg grey"></i></a>
+		</td>
+        
+        <td>
+		<span><a href="#">Add Squad _ Reset option</a></span>
+		<br>
+		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:40</span>
+
+        </td>
+</tr>
+
+
+
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<div class="space-10"></div>
+
+
+<div id="assigned" class="widget-box widget-color-blue2">
+	<div class="widget-header widget-header-small">
+		<h4 class="widget-title lighter">
+			<i class="ace-icon fa fa-list-alt"></i>
+<a class="white" href="#"> Monitored by Me</a> <span class="badge">  0- 0 / 0  </span>		</h4>
+		<div class="widget-toolbar">
+			<a data-action="collapse" href="#">
+				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border hidden-xs">
+			<div class="widget-menu">
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="#">View Issues</a>			</div>
+		</div>
+	</div>
+
+	<div style="display: block;" class="widget-body">
+		<div class="widget-main no-padding">
+			<div class="table-responsive">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+<tbody>
+
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13"><a href="#">0000005</a>
+			<br>
+			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
+			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg orange2"></i>
+		</td>
+        
+        <td>
+		<span><a href="#">Add Squad _ Reset option</a></span>
+		<br>
+		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:51</span>
+        </td>
+</tr>
+
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13"><a href="#">0000004</a>
+			<br>
+			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
+			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg orange2"></i>
+			<a class="attachments" href="#"><i class="fa fa-paperclip fa-lg grey"></i></a>
+		</td>
+        
+        <td>
+		<span><a href="#">Add Squad _ Reset option</a></span>
+		<br>
+		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:40</span>
+
+        </td>
+</tr>
+
+
+
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div><!-- /.col -->
+
+<div class="col-md-5">
+							<div id="assigned" class="widget-box widget-color-blue2">
+	<div class="widget-header widget-header-small">
+		<h4 class="widget-title lighter">
+			<i class="ace-icon fa fa-clock-o"></i>
+<a class="white" href="#"> Timeline</a></h4>
+		<div class="widget-toolbar">
+			<a data-action="collapse" href="#">
+				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border hidden-xs">
+			
+		</div>
+	</div>
+
+	<div style="display: block;" class="widget-body">
+		<div class="widget-main no-padding">
+			<div class="table-responsive">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+<tbody>
+
+<tr class="my-buglist-bug ">
+			<tr>
+                    		<th>By Date(days)</th>
+                    		<th>Open</th>
+                    		<th>Resolved</th>
+                    		<th>Balanced</th>
+                    			
+                    	</tr>
 <c:forEach var="issue" items="${gapAndCount}">
+       
 <tr class="my-buglist-bug ">
 		<td class="nowrap width-13">${issue.key} 
 		</td>
+		 <c:forEach items="${issue.value}" var="entry">
 		<td>
-		<span><a href="#">${issue.value }</a></span>
+		<span><a href="#">${entry}</a></span>
         </td>
+        </c:forEach> 
     
 </tr>
+
 </c:forEach>
-
-
-</tbody>
+                      </table>
+		</td>
+        
+       
 </table>
 </div>
 </div>
-</div>
-</div>
+
+
+
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div>
+				
+			
 							</div>
-
-
-
-
-
-							</div>
+			<!-- /.page-content -->
 		</div>
 		<!-- /.main-content-inner -->
 	</div>
