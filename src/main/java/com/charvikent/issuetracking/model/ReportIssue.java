@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,11 +14,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 public class ReportIssue {
 
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer  id;
-	
+
 	@CreationTimestamp
 	private Date createdTime;
 
@@ -31,9 +32,26 @@ public class ReportIssue {
 	private String subject;
 	private String description;
 	private String uploadfile;
-	
-	private String  assignby; 
-	
+	private Integer gapdays;
+	private Integer gapcount;
+
+
+
+	public Integer getGapdays() {
+		return gapdays;
+	}
+	public void setGapdays(Integer gapdays) {
+		this.gapdays = gapdays;
+	}
+	public Integer getGapcount() {
+		return gapcount;
+	}
+	public void setGapcount(Integer gapcount) {
+		this.gapcount = gapcount;
+	}
+
+	private String  assignby;
+
 	public String getAssignby() {
 		return assignby;
 	}
@@ -46,8 +64,8 @@ public class ReportIssue {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	
+
+
 	public Date getCreatedTime() {
 		return createdTime;
 	}
@@ -102,15 +120,20 @@ public class ReportIssue {
 	public void setUploadfile(String uploadfile) {
 		this.uploadfile = uploadfile;
 	}
-	
+
+
+
 	@Override
 	public String toString() {
-		return "ReportIssue [id=" + id + ", category=" + category + ", severity=" + severity + ", priority=" + priority
-				+ ", assignto=" + assignto + ", subject=" + subject + ", description=" + description + ", uploadfile="
-				+ uploadfile + "]";
+		return "ReportIssue [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", category="
+				+ category + ", severity=" + severity + ", priority=" + priority + ", assignto=" + assignto
+				+ ", subject=" + subject + ", description=" + description + ", uploadfile=" + uploadfile + ", gapdays="
+				+ gapdays + ", gapcount=" + gapcount + ", assignby=" + assignby + "]";
 	}
-	
-	
-	
+
+
+
+
+
 
 }

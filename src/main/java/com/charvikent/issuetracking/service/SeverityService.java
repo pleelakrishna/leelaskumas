@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.charvikent.issuetracking.dao.SeverityDao;
 import com.charvikent.issuetracking.model.Severity;
-import com.charvikent.issuetracking.model.User;
 
 @Service
 @Transactional
@@ -18,7 +17,7 @@ public class SeverityService {
 
 	@Autowired
 	private SeverityDao severityDao;
-	
+
 	public Map<Integer, String> getSeverityNames()
 	{
 		Map<Integer, String> rolesMap = new LinkedHashMap<Integer, String>();
@@ -28,13 +27,13 @@ public class SeverityService {
 		for(Severity bean: rolesList){
 			rolesMap.put(bean.getId(), bean.getSeverity());
 		}
-				
+
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
 		return rolesMap;
-				
-		
+
+
 	}
-	
+
 }
