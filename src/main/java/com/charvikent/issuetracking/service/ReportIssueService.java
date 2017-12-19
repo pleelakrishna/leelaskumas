@@ -2,7 +2,7 @@ package com.charvikent.issuetracking.service;
 
 import java.io.File;
 import java.io.StringWriter;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,11 +154,24 @@ public class ReportIssueService {
 	}  
 	
 	
-	public Map<Integer, Integer> getGapAndCount()
+	public Map<Integer,List< Integer>> getGapAndCount()
 	{
+		Map<Integer,List< Integer>> listmap= new  HashMap<Integer,List< Integer>>();
 		
 	//	List<Integer> timelineDays = Arrays.asList(1,2,3,7,30,60,90,120,180,365);
 		Map<Integer, Integer> issueTimelines = reportIssueDao.getGapAndCount();
+		Map<Integer, Integer> issueTimelinesClosed = reportIssueDao.getGapAndCountForClosed();
+		
+		List<Integer> list1 =new ArrayList<Integer>();
+		List<Integer> list2 =new ArrayList<Integer>();
+		List<Integer> list3 =new ArrayList<Integer>();
+		List<Integer> list7 =new ArrayList<Integer>();
+		List<Integer> list30 =new ArrayList<Integer>();
+		List<Integer> list60 =new ArrayList<Integer>();
+		List<Integer> list90 =new ArrayList<Integer>();
+		List<Integer> list180 =new ArrayList<Integer>();
+		List<Integer> list365 =new ArrayList<Integer>();
+		
 		int day1Issues = 0;
 		int day2Issues = 0;
 		int day3Issues = 0;
@@ -184,20 +197,20 @@ public class ReportIssueService {
 				day7Issues = day7Issues+entry.getValue();
 			}
 			if(entry.getKey() <=30 && entry.getKey() > 7  ){
-				day7Issues = day30Issues+entry.getValue();
+				day30Issues = day30Issues+entry.getValue();
 			}
 			
 			if(entry.getKey() <=60 && entry.getKey() > 30  ){
-				day7Issues = day60Issues+entry.getValue();
+				day60Issues = day60Issues+entry.getValue();
 			}
 			if(entry.getKey() <=90 && entry.getKey() > 60  ){
-				day7Issues = day90Issues+entry.getValue();
+				day90Issues = day90Issues+entry.getValue();
 			}
 			if(entry.getKey() <=180 && entry.getKey() > 90  ){
-				day7Issues = day180Issues+entry.getValue();
+				day180Issues = day180Issues+entry.getValue();
 			}
 			if(entry.getKey() <=365 && entry.getKey() > 180  ){
-				day7Issues = day180Issues+entry.getValue();
+				day365Issues = day180Issues+entry.getValue();
 			}
 			
 		}
@@ -214,8 +227,107 @@ public class ReportIssueService {
 		gapAndCount.put(180, day180Issues);
 		gapAndCount.put(365, day365Issues);
 		
-		return gapAndCount;
 		
+		
+		int day1Issuesclosed = 0;
+		int day2Issuesclosed = 0;
+		int day3Issuesclosed = 0;
+		int day7Issuesclosed = 0;
+		int day30Issuesclosed = 0;
+		int day60Issuesclosed = 0;
+		int day90Issuesclosed = 0;
+		int day180Issuesclosed = 0;
+		int day365Issuesclosed = 0;
+		
+		
+		
+for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
+			
+			if(entry.getKey() <= 1){
+				day1Issuesclosed = day1Issuesclosed+entry.getValue();
+			}
+			if(entry.getKey() == 2  ){
+				day2Issuesclosed = day2Issuesclosed+entry.getValue();
+			}
+			if(entry.getKey() == 3  ){
+				day3Issuesclosed = day3Issuesclosed+entry.getValue();
+			}
+			if(entry.getKey() <=7 && entry.getKey() > 3  ){
+				day7Issuesclosed = day7Issuesclosed+entry.getValue();
+			}
+			if(entry.getKey() <=30 && entry.getKey() > 7  ){
+				day30Issuesclosed = day30Issuesclosed+entry.getValue();
+			}
+			
+			if(entry.getKey() <=60 && entry.getKey() > 30  ){
+				day60Issuesclosed = day60Issuesclosed+entry.getValue();
+			}
+			if(entry.getKey() <=90 && entry.getKey() > 60  ){
+				day90Issues = day90Issues+entry.getValue();
+			}
+			if(entry.getKey() <=180 && entry.getKey() > 90  ){
+				day180Issues = day180Issues+entry.getValue();
+			}
+			if(entry.getKey() <=365 && entry.getKey() > 180  ){
+				day365Issues = day180Issues+entry.getValue();
+			}
+			
+}
+		
+		list1.add(day1Issues);
+		list1.add(day1Issuesclosed);
+		list1.add(day1Issues-day1Issuesclosed);
+		
+		list2.add(day2Issues);
+		list2.add(day2Issuesclosed);
+		list2.add(day2Issues-day2Issuesclosed);
+		
+		list3.add(day3Issues);
+		list3.add(day3Issuesclosed);
+		list3.add(day3Issues-day3Issuesclosed);
+		
+		list7.add(day7Issues);
+		list7.add(day7Issuesclosed);
+		list7.add(day7Issues-day7Issuesclosed);
+		
+		list30.add(day30Issues);
+		list30.add(day30Issuesclosed);
+		list30.add(day30Issues-day30Issuesclosed);
+		
+		
+		list60.add(day60Issues);
+		list60.add(day60Issuesclosed);
+		list60.add(day60Issues-day60Issuesclosed);
+		
+		
+		list90.add(day90Issues);
+		list90.add(day90Issuesclosed);
+		list90.add(day90Issues-day90Issuesclosed);
+		
+		
+		list180.add(day180Issues);
+		list180.add(day180Issuesclosed);
+		list180.add(day180Issues-day180Issuesclosed);
+		
+
+		list365.add(day365Issues);
+		list365.add(day365Issuesclosed);
+		list365.add(day365Issues-day365Issuesclosed);
+		
+		listmap.put(1, list1);
+		listmap.put(2,  list2);
+		listmap.put(3,  list3);
+		listmap.put(7,  list7);
+		listmap.put(30,  list30);
+		listmap.put(60,  list60);
+		listmap.put(90,  list90);
+		listmap.put(180,  list180);
+		listmap.put(365,  list365);
+		
+		
+		//return gapAndCount;
+		
+		return listmap;
 	}
 
 

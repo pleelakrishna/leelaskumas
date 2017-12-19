@@ -28,8 +28,8 @@ public class MyViewController {
 		
 		model.addAttribute("assignToMe", reportIssueService.getIssuesByAssignTo(String.valueOf(objuserBean.getId())));
 		model.addAttribute("gapAndCount", reportIssueService.getGapAndCount());
-		model.addAttribute("gapAndCount2", reportIssueService.getGapAndCount());
-		
+		System.out.println("Problem here occured");
+		System.out.println(reportIssueService.getGapAndCount());
 		
 		return "myView";
 		

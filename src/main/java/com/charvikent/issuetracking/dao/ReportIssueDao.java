@@ -143,7 +143,36 @@ public Map<Integer, Integer>  getGapAndCount() {
 	List<ReportIssue> listissuegap=new ArrayList<>();
 	ReportIssue issuegap =null;
 	
-			List<Object[]> rows = 	em.createNativeQuery("SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue group by gap").getResultList();
+			List<Object[]> rows = 	em.createNativeQuery("SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue group by gap ").getResultList();
+			
+			Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
+			
+			for (Object[] row : rows) {
+				issuegap = new ReportIssue();
+				//System.out.print(Integer.parseInt(String.valueOf(row[0])));
+				//System.out.print(Integer.parseInt(String.valueOf(row[1])));
+				
+				issuegap.setGapdays(Integer.parseInt(String.valueOf(row[0])));
+				issuegap.setGapcount(Integer.parseInt(String.valueOf(row[1])));
+				listissuegap.add(issuegap);
+				
+				issueTimelines.put(Integer.parseInt(String.valueOf(row[0])), Integer.parseInt(String.valueOf(row[1])));
+			}
+			 
+			
+			return issueTimelines;
+	
+}
+
+@SuppressWarnings("unchecked")
+public Map<Integer, Integer>  getGapAndCountForClosed() {
+	
+	List<ReportIssue> listissuegap=new ArrayList<>();
+	ReportIssue issuegap =null;
+	
+	//String custName=null;
+	
+			List<Object[]> rows = 	em.createNativeQuery(" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue where status =:custName  group by gap  ").setParameter("custName", "closed").getResultList();
 			
 			Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
 			
@@ -162,10 +191,14 @@ public Map<Integer, Integer>  getGapAndCount() {
 			
 			return issueTimelines;
 	
-	
-	
-	
 }
+
+
+
+
+
+
+
 }
 
 
