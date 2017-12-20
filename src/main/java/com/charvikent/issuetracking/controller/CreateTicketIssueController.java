@@ -187,6 +187,7 @@ public class CreateTicketIssueController {
 			model.addAttribute("priority", reportIssue.getPriority());
 			model.addAttribute("issueId", reportIssue.getId());
 
+			model.addAttribute("description", reportIssue.getDescription());
 
 			model.addAttribute("userNames", userService.getUserName());
 			model.addAttribute("categories",categoryService.getCategoryNames());
