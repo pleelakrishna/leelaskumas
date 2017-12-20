@@ -69,7 +69,7 @@
 														<td class="nowrap width-13">${user.designation}</td>
 														<td class="nowrap width-13">${user.department}</td>
 														<td class="nowrap width-13">${user.enabled}</td>
-														<td><span><a href="edit?id=${user.id}">Edit</a></span> <span><a href="deleteUser/${user.id }">Delete</a></span></td>
+														<td><span><a href="edit?id=${user.id}"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a></span> <span><a href="deleteUser/${user.id }">Delete</a></span></td>
 													</tr>
 													</c:forEach>
 												</tbody>
