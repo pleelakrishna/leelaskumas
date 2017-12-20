@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -153,24 +155,29 @@ public class ReportIssueService {
 		return reportIssueDao.getIssuesAssignTo(id);
 	}  
 	
+	public Object getIssuesByAssignToResolved(String id) {
+		 
+		return reportIssueDao.getIssuesAssignToResolved(id);
+	} 
+	
 	
 	public Map<Integer,List< Integer>> getGapAndCount()
 	{
-		Map<Integer,List< Integer>> listmap= new  HashMap<Integer,List< Integer>>();
+		Map<Integer,List< Integer>> listmap= new  LinkedHashMap<Integer,List< Integer>>();
 		
 	//	List<Integer> timelineDays = Arrays.asList(1,2,3,7,30,60,90,120,180,365);
 		Map<Integer, Integer> issueTimelines = reportIssueDao.getGapAndCount();
 		Map<Integer, Integer> issueTimelinesClosed = reportIssueDao.getGapAndCountForClosed();
 		
-		List<Integer> list1 =new ArrayList<Integer>();
-		List<Integer> list2 =new ArrayList<Integer>();
-		List<Integer> list3 =new ArrayList<Integer>();
-		List<Integer> list7 =new ArrayList<Integer>();
-		List<Integer> list30 =new ArrayList<Integer>();
-		List<Integer> list60 =new ArrayList<Integer>();
-		List<Integer> list90 =new ArrayList<Integer>();
-		List<Integer> list180 =new ArrayList<Integer>();
-		List<Integer> list365 =new ArrayList<Integer>();
+		List<Integer> list1 =new LinkedList<Integer>();
+		List<Integer> list2 =new LinkedList<Integer>();
+		List<Integer> list3 =new LinkedList<Integer>();
+		List<Integer> list7 =new LinkedList<Integer>();
+		List<Integer> list30 =new LinkedList<Integer>();
+		List<Integer> list60 =new LinkedList<Integer>();
+		List<Integer> list90 =new LinkedList<Integer>();
+		List<Integer> list180 =new LinkedList<Integer>();
+		List<Integer> list365 =new LinkedList<Integer>();
 		
 		int day1Issues = 0;
 		int day2Issues = 0;
@@ -328,6 +335,13 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		//return gapAndCount;
 		
 		return listmap;
+	}
+	
+	
+	public List<ReportIssue> getRecentlyModified()
+	{
+		return reportIssueDao.getRecentlyModified();
+		
 	}
 
 

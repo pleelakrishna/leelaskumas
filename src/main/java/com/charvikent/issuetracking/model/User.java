@@ -1,19 +1,13 @@
 package com.charvikent.issuetracking.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -88,9 +82,7 @@ public class User {
 	@Column
 	private Boolean enabled;
 	
-	@OneToMany(cascade=CascadeType.ALL,fetch= FetchType.LAZY)
-	@JoinColumn(name="userfk")
-	private List<Designation> designation1 = new ArrayList<Designation>(0);
+	
 	
 	
 	
@@ -175,13 +167,15 @@ public class User {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
+	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", username="
-				+ username + ", password=" + password + ", firstname=" + firstname + ", mobilenumber=" + mobilenumber
-				+ ", email=" + email + ", designation=" + designation + ", department=" + department + ", enabled="
-				+ enabled + "]";
+				+ username + ", password=" + password + ", cpassword=" + cpassword + ", npassword=" + npassword
+				+ ", firstname=" + firstname + ", lastname=" + lastname + ", mobilenumber=" + mobilenumber + ", email="
+				+ email + ", department=" + department + ", enabled=" + enabled + ", designation=" + designation + "]";
 	}
+	
 	
 	
 	

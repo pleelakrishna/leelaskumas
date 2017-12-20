@@ -14,6 +14,17 @@ public class Severity {
 	
 	@Column
 	private String severity;
+	
+	@Column
+	private String colour;
+
+	public String getColour() {
+		return colour;
+	}
+
+	public void setColour(String colour) {
+		this.colour = colour;
+	}
 
 	public Integer getId() {
 		return id;

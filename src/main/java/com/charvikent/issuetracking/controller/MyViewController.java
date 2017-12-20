@@ -27,9 +27,13 @@ public class MyViewController {
 		model.addAttribute("reportedByMe", reportIssueService.getIssuesByAssignBy(String.valueOf(objuserBean.getId())));
 		
 		model.addAttribute("assignToMe", reportIssueService.getIssuesByAssignTo(String.valueOf(objuserBean.getId())));
+		model.addAttribute("assignToMeResolved", reportIssueService.getIssuesByAssignToResolved(String.valueOf(objuserBean.getId())));
 		model.addAttribute("gapAndCount", reportIssueService.getGapAndCount());
-		System.out.println("Problem here occured");
-		System.out.println(reportIssueService.getGapAndCount());
+		//System.out.println("Problem here occured");
+		//System.out.println(reportIssueService.getGapAndCount());
+		model.addAttribute("recentlyModified", reportIssueService.getRecentlyModified());
+		
+		System.out.println(reportIssueService.getRecentlyModified());
 		
 		return "myView";
 		

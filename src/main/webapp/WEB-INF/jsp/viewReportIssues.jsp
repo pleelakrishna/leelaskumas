@@ -77,7 +77,7 @@
 														<td class="nowrap width-13">${issue.subject}</td>
 														<td class="nowrap width-13">${issue.createdTime }</td>
 														<td class="nowrap width-13">${issue.updatedTime }</td>
-												<c:if test="${cacheUserBean.designation == 1}">	<td><span><a href="edit?id=${user.id}">Edit</a></span> </c:if> <%-- <span><a href="deleteUser/${user.id }">Delete</a></span> --%></td>
+												<c:if test="${cacheUserBean.designation == 1}">	<td><span><a href="edit?id=${user.id}"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a></span> </c:if> <%-- <span><a href="deleteUser/${user.id }">Delete</a></span> --%></td>
 													</tr>
 													</c:forEach>
 												</tbody>

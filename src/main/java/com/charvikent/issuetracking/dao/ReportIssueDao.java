@@ -2,6 +2,7 @@ package com.charvikent.issuetracking.dao;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +48,7 @@ public List<ReportIssue> getIssuesAssignBy(String id) {
 
 	try {
 		@SuppressWarnings("unchecked")
-		List <Object[]> rows=em.createQuery("select r.id , u.username, s.severity, p.priority,r.uploadfile,r.subject from ReportIssue r, Category c, Priority p, User u, Severity s  where r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.assignby =:custName").setParameter("custName", id).getResultList();
+		List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.createdTime from ReportIssue r, Category c, Priority p, User u, Severity s  where r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.assignby =:custName").setParameter("custName", id).getResultList();
 for(Object[] row: rows)
 {
 	ReportIssue issue =new ReportIssue();
@@ -59,6 +60,8 @@ for(Object[] row: rows)
 		issue.setPriority((String) row[3]);
 		issue.setUploadfile((String) row[4]);
 		issue.setSubject((String) row[5]);
+		issue.setCategory((String) row[6]);
+		issue.setCreatedTime((Date) row[7]);
 		listissue.add(issue);
 		
 }
@@ -76,7 +79,7 @@ public Object getIssuesAssignTo(String id) {
 
 	try {
 		@SuppressWarnings("unchecked")
-		List <Object[]> rows=em.createQuery("select r.id , u.username, s.severity, p.priority,r.uploadfile,r.subject from ReportIssue r, Category c, Priority p, User u, Severity s  where r.assignby=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.assignto =:custName").setParameter("custName", id).getResultList();
+		List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category  from ReportIssue r, Category c, Priority p, User u, Severity s   where r.assignby=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.assignto =:custName").setParameter("custName", id).getResultList();
 for(Object[] row: rows)
 {
 	ReportIssue issue =new ReportIssue();
@@ -88,6 +91,10 @@ for(Object[] row: rows)
 		issue.setPriority((String) row[3]);
 		issue.setUploadfile((String) row[4]);
 		issue.setSubject((String) row[5]);
+		issue.setCreatedTime((Date) row[6]);
+		issue.setCategory((String) row[7]);
+		
+		
 		listissue.add(issue);
 		
 }
@@ -99,6 +106,46 @@ for(Object[] row: rows)
 	return  listissue;
 
 }
+
+
+public Object getIssuesAssignToResolved(String id) {
+	List<ReportIssue> listissue=new ArrayList<>();
+
+	try {
+		@SuppressWarnings("unchecked")
+		List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category  from ReportIssue r, Category c, Priority p, User u, Severity s   where r.assignby=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.assignto =:custName").setParameter("custName", id).getResultList();
+for(Object[] row: rows)
+{
+	ReportIssue issue =new ReportIssue();
+	int j = Integer.parseInt(String.valueOf(row[0]));
+	Integer intobj=new Integer(j);
+		issue.setId(intobj);
+		issue.setAssignby((String) row[1]);
+		issue.setSeverity((String) row[2]);
+		issue.setPriority((String) row[3]);
+		issue.setUploadfile((String) row[4]);
+		issue.setSubject((String) row[5]);
+		issue.setCreatedTime((Date) row[6]);
+		issue.setCategory((String) row[7]);
+		
+		
+		listissue.add(issue);
+		
+}
+	} catch (Exception e) {
+		System.out.println("error here");
+		e.printStackTrace();
+	}
+
+	return  listissue;
+
+}
+
+
+
+
+
+
 
 
 public List<ReportIssue> getAllReportIssues() {
@@ -197,6 +244,41 @@ public Map<Integer, Integer>  getGapAndCountForClosed() {
 
 
 
+
+@SuppressWarnings({ "unchecked", "rawtypes" })
+public  List<ReportIssue> getRecentlyModified() {
+	
+	List<ReportIssue> listissue=new ArrayList<>();
+
+	try {
+		@SuppressWarnings("unchecked")
+		List<Object[]> rows = em
+				.createNativeQuery(" select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time from report_issue r, category c, priority p, kpusers u, severity s  where r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category   and DATEDIFF (CURDATE(),r.updated_time )<=30")
+				.getResultList();
+		for (Object[] row : rows) {
+			ReportIssue issue = new ReportIssue();
+
+			issue.setId(Integer.parseInt(String.valueOf(row[0])));
+			issue.setAssignto((String) row[1]);
+			issue.setSeverity((String) row[2]);
+			issue.setPriority((String) row[3]);
+			issue.setUploadfile((String) row[4]);
+			issue.setSubject((String) row[5]);
+
+			issue.setCategory((String) row[6]);
+			issue.setCreatedTime((Date) row[7]);
+			listissue.add(issue);
+
+		}
+	} catch (Exception e) {
+		System.out.println("error here");
+		e.printStackTrace();
+	}
+
+return  listissue;
+
+	
+}
 
 
 }
