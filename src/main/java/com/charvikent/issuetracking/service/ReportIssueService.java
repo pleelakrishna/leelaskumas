@@ -2,7 +2,6 @@ package com.charvikent.issuetracking.service;
 
 import java.io.File;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -217,7 +216,7 @@ public class ReportIssueService {
 				day180Issues = day180Issues+entry.getValue();
 			}
 			if(entry.getKey() <=365 && entry.getKey() > 180  ){
-				day365Issues = day180Issues+entry.getValue();
+				day365Issues = day365Issues+entry.getValue();
 			}
 			
 		}
@@ -270,13 +269,13 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 				day60Issuesclosed = day60Issuesclosed+entry.getValue();
 			}
 			if(entry.getKey() <=90 && entry.getKey() > 60  ){
-				day90Issues = day90Issues+entry.getValue();
+				day90Issuesclosed = day90Issuesclosed+entry.getValue();
 			}
 			if(entry.getKey() <=180 && entry.getKey() > 90  ){
-				day180Issues = day180Issues+entry.getValue();
+				day180Issuesclosed = day180Issuesclosed+entry.getValue();
 			}
 			if(entry.getKey() <=365 && entry.getKey() > 180  ){
-				day365Issues = day180Issues+entry.getValue();
+				day365Issuesclosed = day365Issuesclosed+entry.getValue();
 			}
 			
 }
@@ -342,6 +341,19 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 	{
 		return reportIssueDao.getRecentlyModified();
 		
+	}
+
+	public void updateIssue(ReportIssue reportIssue) {
+
+		reportIssueDao.updateIssue(reportIssue);;
+
+	}
+
+	public ReportIssue getReportIssueById(Integer id) {
+
+		ReportIssue obj=reportIssueDao.getReportIssueById(id);
+
+		return obj;
 	}
 
 

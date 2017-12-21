@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.Priority;
-import com.charvikent.issuetracking.model.User;
 
 
 @Repository

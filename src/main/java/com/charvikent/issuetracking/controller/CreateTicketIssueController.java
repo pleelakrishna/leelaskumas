@@ -27,12 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.charvikent.issuetracking.dao.ReportIssueDao;
 import com.charvikent.issuetracking.dao.UserDao;
-import com.charvikent.issuetracking.model.Category;
-import com.charvikent.issuetracking.model.Priority;
 import com.charvikent.issuetracking.model.ReportIssue;
-import com.charvikent.issuetracking.model.Severity;
 import com.charvikent.issuetracking.service.CategoryService;
+import com.charvikent.issuetracking.service.DepartmentService;
 import com.charvikent.issuetracking.service.PriorityService;
 //import com.charvikent.issuetracking.service.AdminService;
 import com.charvikent.issuetracking.service.ReportIssueService;
@@ -48,18 +47,24 @@ public class CreateTicketIssueController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@Autowired
 	private PriorityService priorityService;
-	
+
 	@Autowired
 	private SeverityService severityService;
-	
+
 	@Autowired
 	private ReportIssueService reportIssueService;
+	@Autowired
+	private DepartmentService  departmentService;
+
+	@Autowired
+	private ReportIssueDao reportIssueDao;
+
 	//@Autowired
 	//private VelocityEngine velocityEngine;
 
@@ -67,8 +72,8 @@ public class CreateTicketIssueController {
 	//private JavaMailSender sender;
 	@Autowired
 	UserDao userDao;
-	
-	
+
+
 	@RequestMapping("/createTicketIssues")
 	public String createReportIssues(Model model) {
 		System.out.println("----createTicketIssues home-----");
@@ -76,6 +81,7 @@ public class CreateTicketIssueController {
 		// model.addAttribute("adminNames", userService.getAdminNames());
 		model.addAttribute("userNames", userService.getUserName());
 		model.addAttribute("category",categoryService.getCategoryNames());
+		model.addAttribute("departmentNames",departmentService.getDepartmentNames());
 		model.addAttribute("severity", severityService.getSeverityNames());
 		model.addAttribute("priority",  priorityService.getPriorityNames());
 		return "createTicketIssues";
@@ -142,7 +148,7 @@ public class CreateTicketIssueController {
 				//System.out.println("has some errors");
 				return "redirect:/";
 			}
-			
+
 			reportIssueService.saveReportIssue(reportIssue,serverFile);
 
 
@@ -166,5 +172,67 @@ public class CreateTicketIssueController {
 		return "viewReportIssues";
 	}
 
-}
 
+	@RequestMapping("/editIssue")
+	public String createReportIssues(@Valid @ModelAttribute("updateIssue") ReportIssue reportIssue,@RequestParam(value="id", required=true) String id,Model model) {
+
+
+			System.out.print("editissue;;;;;;;;;;;"+id);
+
+			reportIssue = reportIssueService.getReportIssueById(Integer.parseInt(id));
+
+			model.addAttribute("assignto", reportIssue.getAssignto());
+			model.addAttribute("category", reportIssue.getCategory());
+			model.addAttribute("severity",reportIssue.getSeverity());
+			model.addAttribute("priority", reportIssue.getPriority());
+			model.addAttribute("issueId", reportIssue.getId());
+			model.addAttribute("summary", reportIssue.getSubject());
+
+			model.addAttribute("description", reportIssue.getDescription());
+
+			model.addAttribute("userNames", userService.getUserName());
+			model.addAttribute("categories",categoryService.getCategoryNames());
+			//model.addAttribute("departmentNames",departmentService.getDepartmentNames());
+			model.addAttribute("severityOptions", severityService.getSeverityNames());
+			model.addAttribute("priorities",  priorityService.getPriorityNames());
+			//model.addAttribute("priority", reportIssue.);
+
+
+		/*
+		User users = userService.getUserById(Integer.parseInt(id));
+		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		model.addAttribute("users", users);
+		model.addAttribute("departments", userService.getDepartments());
+		model.addAttribute("roles", userService.getRoles());
+
+		System.out.println(users.getUsername());
+
+		System.out.println(users.getDesignation());
+		if("1".equals(objuserBean.getDesignation()))
+		model.addAttribute("flag",false);
+		else
+		model.addAttribute("flag",true);
+		*/
+
+		return "updateIssue";
+
+	}
+
+	@RequestMapping(value = "/updateIssue", method = RequestMethod.POST)
+	public String saveIssue(@Valid @ModelAttribute("updateIssue") ReportIssue reportIssue, RedirectAttributes redir) {
+
+		//reportIssue.setId(IntegerreportIssue.getAssignto());
+		System.out.println("repostissue id ......>>>>" + reportIssue.getId());
+		System.out.println("edit user postmethod");
+
+		reportIssueService.updateIssue(reportIssue);
+
+		redir.addFlashAttribute("msg", "Record Updated Successfully");
+		redir.addFlashAttribute("cssMsg", "warning");
+
+		return "redirect:viewReportIssues";
+
+
+
+   }
+}

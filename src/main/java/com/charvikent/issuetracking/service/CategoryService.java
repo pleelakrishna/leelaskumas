@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.charvikent.issuetracking.dao.CategoryDao;
 import com.charvikent.issuetracking.model.Category;
-import com.charvikent.issuetracking.model.User;
 
 @Service
 @Transactional

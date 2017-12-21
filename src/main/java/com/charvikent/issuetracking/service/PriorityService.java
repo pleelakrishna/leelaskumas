@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.charvikent.issuetracking.dao.PriorityDao;
 import com.charvikent.issuetracking.model.Priority;
-import com.charvikent.issuetracking.model.User;
 
 @Service
 @Transactional

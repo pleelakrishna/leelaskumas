@@ -1,8 +1,6 @@
 package com.charvikent.issuetracking.dao;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -153,10 +151,9 @@ public List<ReportIssue> getAllReportIssues() {
 
 		try {
 			@SuppressWarnings("unchecked")
-			List<Object[]> rows = em
-					.createQuery(
-							"select r.id, c.category ,s.severity,p.priority," + "u.username ,r.subject ,r.uploadfile,"
-									+ "r.createdTime, r.updatedTime from ReportIssue r, Category c ,Severity s,Priority p,User u  where r.assignto=c.id and r.severity=s.id and r.priority=p.id and r.assignto=u.id")
+			List<Object[]> rows = em.createQuery("select r.id, c.category ,s.severity,p.priority,"
+					+ "u.username ,r.subject ,r.uploadfile,"
+					+ "r.createdTime, r.updatedTime from ReportIssue r, Category c ,Severity s,Priority p,User u  where r.category=c.id and r.severity=s.id and r.priority=p.id and r.assignto=u.id")
 					.getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
@@ -278,6 +275,24 @@ public  List<ReportIssue> getRecentlyModified() {
 return  listissue;
 
 	
+}
+
+public ReportIssue getReportIssueById(Integer id) {
+
+	return em.find(ReportIssue.class, id);
+}
+
+public void updateIssue(ReportIssue reportIssue) {
+
+ //ReportIssue reportIssues =getReportIssueById(reportIssue.getId());
+	//users.setPassword(user.getCpassword());
+
+	em.merge(reportIssue);
+
+
+	em.flush();
+
+
 }
 
 
