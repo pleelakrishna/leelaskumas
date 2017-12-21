@@ -14,6 +14,7 @@ import com.charvikent.issuetracking.model.Designation;
 import com.charvikent.issuetracking.model.User;
 
 @Repository
+
 public class UserDao {
 	
 	@PersistenceContext
@@ -83,17 +84,16 @@ public void deleteUser(Integer id) {
 public void updateUser(User user) {
 	User users=getUserById(user.getId());
 	users.setPassword(user.getCpassword());
-	
-	em.merge(users);
-	/*users.setLastname(user.getLastname());
 	users.setDepartment(user.getDepartment());
 	users.setDesignation(user.getDesignation());
 	users.setEmail(user.getEmail());
 	users.setEnabled(user.getEnabled());
 	users.setFirstname(user.getFirstname());
+	users.setLastname(user.getLastname());
 	users.setMobilenumber(user.getMobilenumber());
 	users.setUsername(user.getUsername());
-	users.setPassword(user.getPassword());*/
+	
+	em.merge(users);
 	
 	em.flush();
 	

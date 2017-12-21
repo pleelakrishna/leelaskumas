@@ -19,11 +19,12 @@
 							<h1>View Ticket</h1>
 						</div>
 						<div class="page-body">
-							<form:form  action="myView" modelAttribute="cissue" class="form-horizontal" enctype="multipart/form-data">
+							<form:form  action="updateIssue" method="post"  modelAttribute="cissue" class="form-horizontal" >
+							<form:hidden path ="id"/> 
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-1">Category </label>
 									<div class="col-sm-9">
-										<form:select path="category" disabled="true" class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)" >
+										<form:select path="category"  class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)" >
 											<form:option value="" label="--- Select ---" />
 											<form:options items="${category}"/>
 										</form:select>
@@ -48,7 +49,7 @@
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Severity </label>
 									<div class="col-sm-9">
-										<form:select path="severity" disabled="true" class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)">
+										<form:select path="severity"  class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)">
 										<form:option value="" label="--- Select ---" />
 										 <form:options items="${severity}"/>
 										</form:select>
@@ -58,7 +59,7 @@
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Priority </label>
 									<div class="col-sm-9">
-										<form:select path="priority"  disabled="true" class="col-xs-10 col-sm-5" id="form-field-select-1">
+										<form:select path="priority"   class="col-xs-10 col-sm-5" id="form-field-select-1">
 											<form:option value=""></form:option>
 											<form:options items="${priority}"></form:options>
 										</form:select>
@@ -68,17 +69,17 @@
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> Assigned to </label>
 									<div class="col-sm-9">
-										<form:select path="assignto" disabled="true" class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)">
+										<form:select path="assignto"  class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)">
 											<form:option value="" />
 										 	<form:options items="${userNames}"/>
 										</form:select>
 									</div>
 								</div>
-								<div class="space-2"></div>
-								<%-- <div class="form-group">
+								<%-- <div class="space-2"></div>
+								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-4">Department</label>
 									<div class="col-sm-9">
-										<form:select path="department" disabled="true" class="col-xs-10 col-sm-5" id="form-field-select-1">
+										<form:select path="priority" disabled="true" class="col-xs-10 col-sm-5" id="form-field-select-1">
 											<form:option value=""></form:option>
 											<form:options items="${departments}"></form:options>
 										</form:select>
@@ -88,14 +89,14 @@
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-5">Summary</label>
 									<div class="col-sm-9">
-										<form:input path="subject"  readonly="true"  placeholder="Summary" class="col-xs-10 col-sm-5" />
+										<form:input path="subject"    placeholder="Summary" class="col-xs-10 col-sm-5" />
 									</div>
 								</div>
 								<div class="space-2"></div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-5">Description</label>
 									<div class="col-sm-9">
-										<form:textarea path="description"  readonly="true" class="col-xs-10 col-sm-5" rows="4"></form:textarea>
+										<form:textarea path="description"   class="col-xs-10 col-sm-5" rows="4"></form:textarea>
 									</div>
 								</div>
 								<div class="space-2"></div>
@@ -109,7 +110,7 @@
 								<div class="space-2"></div>
 								<div class="clearfix form-actions">
 									<div class="col-md-offset-3 col-md-9">
-							<input type="submit" id="submit1" class="btn btn-info" value="Back"/>
+							<input type="submit" id="submit1" class="btn btn-info" value="Update"/>
 										&nbsp; &nbsp; &nbsp;
 										<!-- <button class="btn"  	onclick="javascript:window.location='myView'">
 											<i class="ace-icon fa fa-undo bigger-110"></i> Back
@@ -117,8 +118,6 @@
 									</div> -->
 								</div>
 								
-											<input type="hidden" name="max_file_size" value="5000000" />
-	
 							</form:form>	
 						</div>
 					</div>

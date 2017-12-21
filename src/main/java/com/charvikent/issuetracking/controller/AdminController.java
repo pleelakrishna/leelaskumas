@@ -89,7 +89,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
-	public String saveAdmin(@Valid @ModelAttribute("userForm") User user, BindingResult bindingresults, Model model,
+	public String saveAdmin(@Valid @ModelAttribute  User user, BindingResult bindingresults,
 			RedirectAttributes redir) {
 
 		System.out.print("create user block");
@@ -138,19 +138,7 @@ public class AdminController {
 
 	}*/
 
-	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
-	public String edit(@Valid @ModelAttribute("UserForm") User user, RedirectAttributes redir) {
-		System.out.println("post edit");
-		System.out.println("edit user postmethod");
-
-		userService.updateUser(user);
-
-		redir.addFlashAttribute("msg", "Record Updated Successfully");
-		redir.addFlashAttribute("cssMsg", "warning");
-		return "redirect:viewUsers";
-
-	}
-	
+		
 	
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
@@ -193,6 +181,23 @@ public class AdminController {
 			return "editUser";
 
 	}
+	
+	
+	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
+	public String edit(@Valid @ModelAttribute User user, RedirectAttributes redir) {
+		System.out.println("post edit");
+		System.out.println("edit user postmethod");
+
+		userService.updateUser(user);
+
+		redir.addFlashAttribute("msg", "Record Updated Successfully");
+		redir.addFlashAttribute("cssMsg", "warning");
+		return "redirect:viewUsers";
+
+	}
+
+	
+	
 	
 	@RequestMapping("/getCurrentpwd")
 	public  @ResponseBody  String cylinderTypes(HttpServletRequest request, HttpSession session)

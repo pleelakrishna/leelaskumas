@@ -231,7 +231,7 @@
 						</div>
 
 					<div style="display: block;" class="widget-body">
-						<form:form action="updateIssue" method="post" modelAttribute="updateIssue" class="form-horizontal">
+						<form:form action="updateIssue" method="post" modelAttribute="cissue" class="form-horizontal">
 								<div class="widget-main no-padding">
 									<div class="table-responsive">
 										<table
@@ -241,7 +241,7 @@
 												<tr class="my-buglist-bug ">
 													<td class="nowrap width-13">ID</td>
 
-													<td><span>Project</span></td>
+													<!-- <td><span>Project</span></td> -->
 
 													<td><span>Category</span></td>
 
@@ -258,7 +258,7 @@
 													
 													</td>
 
-													<td><span>HRMS</span></td>
+													<!-- <td><span>HRMS</span></td> -->
 
 													<td><form:hidden path="id"/>
 														<form:select path="category" class="col-xs-10 col-sm-5 validate"
@@ -272,13 +272,6 @@
 																<option value="4">[All Projects] Security Defect</option>
 																<option value="2">[All Projects] User Interface	Defect</option>
 														</select> -->
-													</td>
-
-													<td>
-														<select tabindex="2" id="view_state" name="view_state" class="input-sm" style="width: 100%;">
-															<option	value="10" selected="selected">public</option>
-															<option value="50">private</option>
-														</select>
 													</td>
 
 													<td><span>2017-09-05 11:04</span></td>

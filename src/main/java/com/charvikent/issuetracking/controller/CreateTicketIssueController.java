@@ -30,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.charvikent.issuetracking.dao.ReportIssueDao;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.ReportIssue;
+import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.CategoryService;
 import com.charvikent.issuetracking.service.DepartmentService;
 import com.charvikent.issuetracking.service.PriorityService;
@@ -174,57 +175,32 @@ public class CreateTicketIssueController {
 
 
 	@RequestMapping("/editIssue")
-	public String createReportIssues(@Valid @ModelAttribute("updateIssue") ReportIssue reportIssue,@RequestParam(value="id", required=true) String id,Model model) {
+	public String createReportIssues(@RequestParam(value="id", required=true) String id,Model model) {
 
 
-			System.out.print("editissue;;;;;;;;;;;"+id);
-
-			reportIssue = reportIssueService.getReportIssueById(Integer.parseInt(id));
-
-			model.addAttribute("assignto", reportIssue.getAssignto());
-			model.addAttribute("category", reportIssue.getCategory());
-			model.addAttribute("severity",reportIssue.getSeverity());
-			model.addAttribute("priority", reportIssue.getPriority());
-			model.addAttribute("issueId", reportIssue.getId());
-			model.addAttribute("summary", reportIssue.getSubject());
-
-			model.addAttribute("description", reportIssue.getDescription());
-
-			model.addAttribute("userNames", userService.getUserName());
-			model.addAttribute("categories",categoryService.getCategoryNames());
-			//model.addAttribute("departmentNames",departmentService.getDepartmentNames());
-			model.addAttribute("severityOptions", severityService.getSeverityNames());
-			model.addAttribute("priorities",  priorityService.getPriorityNames());
-			//model.addAttribute("priority", reportIssue.);
-
-
-		/*
-		User users = userService.getUserById(Integer.parseInt(id));
-		User objuserBean = (User) session.getAttribute("cacheUserBean");
-		model.addAttribute("users", users);
+         System.out.print(id);
+         
+         System.out.print("enter to edit issue");
+		
+		ReportIssue issue = reportIssueService.getReportIssueById(Integer.parseInt(id));
+		model.addAttribute("cissue", issue);
+		
 		model.addAttribute("departments", userService.getDepartments());
-		model.addAttribute("roles", userService.getRoles());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category",categoryService.getCategoryNames());
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority",  priorityService.getPriorityNames());
+		
 
-		System.out.println(users.getUsername());
-
-		System.out.println(users.getDesignation());
-		if("1".equals(objuserBean.getDesignation()))
-		model.addAttribute("flag",false);
-		else
-		model.addAttribute("flag",true);
-		*/
-
-		return "updateIssue";
+		//return "updateIssue";
+		return "editTicket";
 
 	}
 
 	@RequestMapping(value = "/updateIssue", method = RequestMethod.POST)
-	public String saveIssue(@Valid @ModelAttribute("updateIssue") ReportIssue reportIssue, RedirectAttributes redir) {
+	public String saveIssue(@Valid @ModelAttribute ReportIssue reportIssue, RedirectAttributes redir) {
 
-		//reportIssue.setId(IntegerreportIssue.getAssignto());
-		System.out.println("repostissue id ......>>>>" + reportIssue.getId());
-		System.out.println("edit user postmethod");
-
+		
 		reportIssueService.updateIssue(reportIssue);
 
 		redir.addFlashAttribute("msg", "Record Updated Successfully");
@@ -232,7 +208,26 @@ public class CreateTicketIssueController {
 
 		return "redirect:viewReportIssues";
 
-
-
    }
+	
+	@RequestMapping(value = "/viewTicket")
+	public String viewIssue(
+	    @RequestParam(value="id", required=true) String id,Model model){
+		
+		System.out.print(id);
+		
+		ReportIssue issue = reportIssueService.getReportIssueById(Integer.parseInt(id));
+		model.addAttribute("cissue", issue);
+		model.addAttribute("departments", userService.getDepartments());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category",categoryService.getCategoryNames());
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority",  priorityService.getPriorityNames());
+		
+		
+		
+			return "ViewTicket";
+
+	}
+	
 }

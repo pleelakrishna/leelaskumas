@@ -345,7 +345,7 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 
 	public void updateIssue(ReportIssue reportIssue) {
 
-		reportIssueDao.updateIssue(reportIssue);;
+		reportIssueDao.updateIssue(reportIssue);
 
 	}
 
