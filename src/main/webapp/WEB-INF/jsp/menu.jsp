@@ -47,7 +47,7 @@
 				<li class="createTicketIssues">
 					<a href="createTicketIssues">
 						<i class="menu-icon fa fa-pencil-square-o"></i>
-						<span class="menu-text">Create Issue</span>
+						<span class="menu-text">Create Ticket</span>
 					</a>
 				</li>
 				<c:if test="${cacheUserBean.designation == 1}">

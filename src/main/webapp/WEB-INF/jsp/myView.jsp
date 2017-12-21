@@ -29,7 +29,7 @@
 		</div>
 		<div class="widget-toolbar no-border hidden-xs">
 			<div class="widget-menu">
-				<a class="btn btn-primary btn-white btn-round btn-sm" href="#">View Issues</a>			</div>
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Issues</a>			</div>
 		</div>
 	</div>
 
@@ -41,11 +41,12 @@
 <c:forEach var="issue" items="${assignToMe}">
 
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13"><a href="#">${issue.id}</a>
+		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id}</a>
 			<br>
-			<i class="fa fa-square fa-status-box blue" title="assigned"></i>
-			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-square fa-status-box red" title="assigned"></i>
+			<a class="edit" href="editIssue?id=${issue.id}"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
 			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}  ></i>
+			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
 		</td>
         
         <td>
@@ -78,7 +79,7 @@
 		</div>
 		<div class="widget-toolbar no-border hidden-xs">
 			<div class="widget-menu">
-				<a class="btn btn-primary btn-white btn-round btn-sm" href="#">View Issues</a>			</div>
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Issues</a>			</div>
 		</div>
 	</div>
 
@@ -89,11 +90,11 @@
 <tbody>
 <c:forEach var="issue" items="${reportedByMe}">
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13"><a href="#">${issue.id }</a>
+		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id }</a>
 			<br>
-			<i class="fa fa-square fa-status-box blue" title="assigned"></i>
+			<i class="fa fa-square fa-status-box blue" title="reportedByMe"></i>
 			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}  ></i>
-			<a class="attachments" href="#"><i class="fa fa-paperclip fa-lg grey"></i></a>
+			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
 		</td>
         
         <td>
@@ -128,7 +129,7 @@
 		</div>
 		<div class="widget-toolbar no-border hidden-xs">
 			<div class="widget-menu">
-				<a class="btn btn-primary btn-white btn-round btn-sm" href="#">View Issues</a>			</div>
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Issues</a>			</div>
 		</div>
 	</div>
 
@@ -140,11 +141,12 @@
 
 <c:forEach var="issue" items="${assignToMeResolved}">
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13"><a href="#">${issue.id}</a>
+		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id}</a>
 			<br>
-			<i class="fa fa-square fa-status-box blue" title="assigned"></i>
-			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-square fa-status-box green" title="resolved"></i>
+			<%-- <a class="edit" href="editIssue?id=${issue.id}"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> --%>
 			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}></i>
+			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
 		</td>
         
         <td>
@@ -170,13 +172,13 @@
 			<i class="ace-icon fa fa-list-alt"></i>
 <a class="white" href="#"> Recently Modified (30 Days)</a> <span class="badge">  0- 0 / 0  </span>		</h4>
 		<div class="widget-toolbar">
-			<a data-action="collapse" href="#">
+			<a data-action="collapse" href=""> view issues
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
 			</a>
 		</div>
 		<div class="widget-toolbar no-border hidden-xs">
 			<div class="widget-menu">
-				<a class="btn btn-primary btn-white btn-round btn-sm" href="#">View Issues</a>			</div>
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Issues</a>			</div>
 		</div>
 	</div>
 
@@ -188,11 +190,12 @@
 
 <c:forEach var="issue" items="${recentlyModified}">
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13"><a href="#">${issue.id}</a>
+		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id}</a>
 			<br>
-			<i class="fa fa-square fa-status-box blue" title="assigned"></i>
-			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-square fa-status-box purple" title="recentlyModified"></i>
+			<!-- <a class="edit" href="editIssue?id=${issue.id}"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> -->
 			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}></i>
+			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
 		</td>
         
         <td>
@@ -227,7 +230,7 @@
 		</div>
 		<div class="widget-toolbar no-border hidden-xs">
 			<div class="widget-menu">
-				<a class="btn btn-primary btn-white btn-round btn-sm" href="#">View Issues</a>			</div>
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Issues</a>			</div>
 		</div>
 	</div>
 

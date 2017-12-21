@@ -27,7 +27,7 @@
 		            </c:if>
 					<div class="col-md-12 col-xs-12">
 						<div class="page-header">
-							<h1>Create User</h1>
+							<h1>Create Ticket</h1>
 						</div>
 						<div class="page-body">
 							<form:form action="createTicketIssues" method="post" modelAttribute="createTicketIssues" class="form-horizontal" enctype="multipart/form-data">
