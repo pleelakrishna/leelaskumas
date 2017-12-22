@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import com.charvikent.issuetracking.dao.ReportIssueDao;
 import com.charvikent.issuetracking.dao.UserDao;
+import com.charvikent.issuetracking.model.KpStatus;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 
@@ -356,6 +357,22 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		return obj;
 	}
 
+	
+	public HashMap<Integer, String> getKpStatues()
+	{
+		List<KpStatus> listkpstatues=reportIssueDao.getKpStatues();
+		
+		
+		HashMap<Integer,String> kpstatuesmap =new HashMap<Integer,String>();
+		
+		for(KpStatus kp:listkpstatues)
+		{
+			kpstatuesmap.put(kp.getId(), kp.getName());
+			
+		}
+		
+		return kpstatuesmap;
+	}
 
 
 

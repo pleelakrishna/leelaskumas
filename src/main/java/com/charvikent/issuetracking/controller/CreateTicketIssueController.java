@@ -176,11 +176,6 @@ public class CreateTicketIssueController {
 
 	@RequestMapping("/editIssue")
 	public String createReportIssues(@RequestParam(value="id", required=true) String id,Model model) {
-
-
-         System.out.print(id);
-         
-         System.out.print("enter to edit issue");
 		
 		ReportIssue issue = reportIssueService.getReportIssueById(Integer.parseInt(id));
 		model.addAttribute("cissue", issue);
@@ -191,6 +186,10 @@ public class CreateTicketIssueController {
 		model.addAttribute("severity", severityService.getSeverityNames());
 		model.addAttribute("priority",  priorityService.getPriorityNames());
 		
+		model.addAttribute("kpstatuses",  reportIssueService.getKpStatues());
+		
+		
+		System.out.print(reportIssueService.getKpStatues());
 
 		//return "updateIssue";
 		return "editTicket";

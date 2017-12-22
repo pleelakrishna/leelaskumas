@@ -38,8 +38,16 @@ public class ReportIssue {
 	@Transient
 	private Integer gapcount;
 	
+	private String kstatus;
 	
 	
+	
+	public String getKstatus() {
+		return kstatus;
+	}
+	public void setKstatus(String kstatus) {
+		this.kstatus = kstatus;
+	}
 	public Integer getGapdays() {
 		return gapdays;
 	}
@@ -124,15 +132,16 @@ public class ReportIssue {
 		this.uploadfile = uploadfile;
 	}
 	
-	
-	
 	@Override
 	public String toString() {
 		return "ReportIssue [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", category="
 				+ category + ", severity=" + severity + ", priority=" + priority + ", assignto=" + assignto
 				+ ", subject=" + subject + ", description=" + description + ", uploadfile=" + uploadfile + ", gapdays="
-				+ gapdays + ", gapcount=" + gapcount + ", assignby=" + assignby + "]";
+				+ gapdays + ", gapcount=" + gapcount + ", kstatus=" + kstatus + ", assignby=" + assignby + "]";
 	}
+	
+	
+	
 	
 	
 	

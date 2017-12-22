@@ -50,7 +50,7 @@
 		</td>
         
         <td>
-		<span>${issue.id}</span>
+		<span>${issue.subject}</span>
 		<br>
 		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
         </td>
@@ -150,7 +150,7 @@
 		</td>
         
         <td>
-		<span>${issue.id}</span>
+		<span>${issue.subject}</span>
 		<br>
 		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
         </td>

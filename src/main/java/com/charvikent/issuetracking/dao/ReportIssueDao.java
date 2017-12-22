@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.charvikent.issuetracking.model.KpStatus;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 
@@ -28,6 +29,7 @@ public class ReportIssueDao {
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
 
 		reportIssue.setAssignby(String.valueOf(objuserBean.getId()));
+		reportIssue.setKstatus("2");
 		em.persist(reportIssue);
 
 	}
@@ -216,7 +218,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		//String custName=null;
 
-		List<Object[]> rows = 	em.createNativeQuery(" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue where status =:custName  group by gap  ").setParameter("custName", "closed").getResultList();
+		List<Object[]> rows = 	em.createNativeQuery(" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue where kstatus =:custName  group by gap  ").setParameter("custName", "closed").getResultList();
 
 		Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
 
@@ -296,6 +298,7 @@ public List<ReportIssue> getAllReportIssues()
      editissue.setPriority(issue.getPriority());
      editissue.setSeverity(issue.getSeverity());
      editissue.setSubject(issue.getSubject());
+     editissue.setKstatus(issue.getKstatus());
     // editissue.setUploadfile(issue.getUploadfile());
      
      
@@ -305,6 +308,13 @@ public List<ReportIssue> getAllReportIssues()
 		em.flush();
 
 
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<KpStatus> getKpStatues() {
+		return em.createQuery("SELECT kpstatus FROM KpStatus kpstatus").getResultList();
 	}
 
 

@@ -20,7 +20,7 @@
 							<h1>Edit User</h1>
 						</div>
 						<div class="page-body">
-							<form:form action="../editUser" method="post" modelAttribute="users" class="form-horizontal" >
+							<form:form action="editUser" method="post" modelAttribute="users" class="form-horizontal" >
 							<form:hidden path ="id"/> 
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Username</label>
