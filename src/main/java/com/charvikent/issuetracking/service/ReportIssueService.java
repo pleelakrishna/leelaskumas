@@ -338,9 +338,11 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 	}
 	
 	
-	public List<ReportIssue> getRecentlyModified()
+	public List<ReportIssue> getRecentlyModified(String id)
 	{
-		return reportIssueDao.getRecentlyModified();
+		System.out.println("xxxxxxxxxxxxx");
+		System.out.println(reportIssueDao.getRecentlyModified(id));
+		return reportIssueDao.getRecentlyModified(id);
 		
 	}
 

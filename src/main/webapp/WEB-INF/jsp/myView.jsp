@@ -93,6 +93,7 @@
 		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id }</a>
 			<br>
 			<i class="fa fa-square fa-status-box blue" title="reportedByMe"></i>
+			<a class="edit" href="editIssue?id=${issue.id}"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
 			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}  ></i>
 			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
 		</td>
@@ -170,9 +171,9 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#"> Recently Modified (30 Days)</a> <span class="badge">  0- 0 / 0  </span>		</h4>
+<a class="white" href="#"> Recently Closed (30 Days)</a> <span class="badge">  0- 0 / 0  </span>		</h4>
 		<div class="widget-toolbar">
-			<a data-action="collapse" href=""> view issues
+			<a data-action="collapse" href="">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
 			</a>
 		</div>
@@ -308,7 +309,7 @@
 			<tr>
                     		<th>By Date(days)</th>
                     		<th>Open</th>
-                    		<th>Resolved</th>
+                    		<th>Closed</th>
                     		<th>Balanced</th>
                     			
                     	</tr>

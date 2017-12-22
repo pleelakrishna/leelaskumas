@@ -1,13 +1,12 @@
 package com.charvikent.issuetracking.dao;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.Attributes;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.Designation;
@@ -28,7 +27,33 @@ public class UserDao {
  @SuppressWarnings("unchecked")
 public List<User> getAllUsers()
  {
-	 return (List<User>) em.createQuery("select user from User user").getResultList();
+	 List<User> listusers =new ArrayList<User>();
+
+
+	 try {
+		List<Object[]> rows = em.createQuery("select  u.id,u.username,u.mobilenumber,u.email,u.enabled,dep.department,d.name from User u,Designation d,Department dep where u.department=dep.id and u.designation= d.id").getResultList();
+		 for (Object[] row : rows) {
+		      User users =new User();
+
+				users.setId(Integer.parseInt(String.valueOf(row[0])));
+
+				users.setUsername((String) row[1]);
+				users.setMobilenumber((String) row[2]);
+				users.setEmail((String) row[3]);
+				users.setEnabled((Boolean) row[4]);
+				users.setDepartment((String) row[5]);
+				users.setDesignation((String) row[6]);
+
+
+				listusers.add(users);
+
+			}
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+	 return  listusers;
  }
  
 

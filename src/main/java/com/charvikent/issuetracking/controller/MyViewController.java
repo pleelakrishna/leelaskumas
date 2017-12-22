@@ -21,7 +21,8 @@ public class MyViewController {
 	public String myview(Model model) {
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
 		
-	
+	         if(objuserBean!=null)
+	         {
 		//System.out.println(reportIssueService.getIssuesByAssignBy(String.valueOf(objuserBean.getId())));
 		
 		model.addAttribute("reportedByMe", reportIssueService.getIssuesByAssignBy(String.valueOf(objuserBean.getId())));
@@ -31,11 +32,15 @@ public class MyViewController {
 		model.addAttribute("gapAndCount", reportIssueService.getGapAndCount());
 		//System.out.println("Problem here occured");
 		//System.out.println(reportIssueService.getGapAndCount());
-		model.addAttribute("recentlyModified", reportIssueService.getRecentlyModified());
+		model.addAttribute("recentlyModified", reportIssueService.getRecentlyModified(String.valueOf(objuserBean.getId())));
 		
-		System.out.println(reportIssueService.getRecentlyModified());
+		System.out.println(reportIssueService.getRecentlyModified(String.valueOf(objuserBean.getId())));
 		
 		return "myView";
+	         }
+	         
+	         else 
+	        	 return "redirect:/"; 
 		
 	}
 

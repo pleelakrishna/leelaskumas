@@ -40,7 +40,7 @@
 				<li class="viewReportIssues">
 					<a href="viewReportIssues">
 						<i class="menu-icon fa fa-list"></i>
-						<span class="menu-text">View Issues</span>
+						<span class="menu-text">View Tickets</span>
 					</a>
 				</li>
 				

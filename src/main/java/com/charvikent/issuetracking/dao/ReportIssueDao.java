@@ -79,9 +79,10 @@ public List<ReportIssue> getAllReportIssues()
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category  from ReportIssue r, Category c, Priority p, User u, Severity s   where r.assignby=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.assignto =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category  from ReportIssue r, Category c, Priority p, User u, Severity s   where r.assignby=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='2' and r.assignto =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
+				System.out.println(row);
 				ReportIssue issue =new ReportIssue();
 				int j = Integer.parseInt(String.valueOf(row[0]));
 				Integer intobj=new Integer(j);
@@ -113,7 +114,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category  from ReportIssue r, Category c, Priority p, User u, Severity s   where r.assignby=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.assignto =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category  from ReportIssue r, Category c, Priority p, User u, Severity s   where r.assignby=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='4' and  r.assignto =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();
@@ -218,7 +219,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		//String custName=null;
 
-		List<Object[]> rows = 	em.createNativeQuery(" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue where kstatus =:custName  group by gap  ").setParameter("custName", "closed").getResultList();
+		List<Object[]> rows = 	em.createNativeQuery(" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue where kstatus =:custName  group by gap  ").setParameter("custName", "1").getResultList();
 
 		Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
 
@@ -245,16 +246,17 @@ public List<ReportIssue> getAllReportIssues()
 
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public  List<ReportIssue> getRecentlyModified() {
+	public  List<ReportIssue> getRecentlyModified(String id) {
 
 		List<ReportIssue> listissue=new ArrayList<>();
 
 		try {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
-			.createNativeQuery(" select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time from report_issue r, category c, priority p, kpusers u, severity s  where r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category   and DATEDIFF (CURDATE(),r.updated_time )<=30")
+			.createNativeQuery(" select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time from report_issue r, category c, priority p, kpusers u, severity s  where r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignby =:custName union (select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time from report_issue r, category c, priority p, kpusers u, severity s  where r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignto =:custName )").setParameter("custName", id)
 			.getResultList();
 			for (Object[] row : rows) {
+				System.out.println(row);
 				ReportIssue issue = new ReportIssue();
 
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));

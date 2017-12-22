@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -12,7 +11,7 @@
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
 				<ul class="breadcrumb">
-					<li class="">View Users</li>
+					<li class="">View Tickets</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
 			
@@ -20,7 +19,7 @@
 				<div class="row">
 					<div class="col-md-12 col-xs-12">
 						<div class="page-header">
-							<h1>Issues List</h1>
+							<h1>Tickets List</h1>
 <!-- 							<a href="createUser" style="float: right;color: white;"> Add User</a> -->
 						</div>
 						<div class="page-body">
@@ -62,8 +61,8 @@
 														<th class="nowrap width-13">AssignTo</th>
 														<th class="nowrap width-13">Attachment</th>
 														<th class="nowrap width-13">Summary</th>
-														<th class="nowrap width-13">UpdatedTime</th>
 														<th class="nowrap width-13">CreatedTime</th>
+														<th class="nowrap width-13">UpdatedTime</th>
 														<th class="nowrap width-13"></th>
 													</tr>
 													<c:forEach var="issue" items="${allReportIssues}">

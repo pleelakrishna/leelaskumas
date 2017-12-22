@@ -8,7 +8,7 @@
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
 				<ul class="breadcrumb">
-					<li class="">View Ticket</li>
+					<li class="">Edit Ticket</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
 			
@@ -16,7 +16,7 @@
 				<div class="row">
 					<div class="col-md-12 col-xs-12">
 						<div class="page-header">
-							<h1>View Ticket</h1>
+							<h1>Edit Ticket</h1>
 						</div>
 						<div class="page-body">
 							<form:form  action="updateIssue" method="post"  modelAttribute="cissue" class="form-horizontal" >

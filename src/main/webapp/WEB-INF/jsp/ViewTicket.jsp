@@ -99,6 +99,15 @@
 									</div>
 								</div>
 								<div class="space-2"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> Status </label>
+									<div class="col-sm-9">
+										<form:select path="kstatus"  disabled="true"  class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)">
+											<form:option value="" />
+										 	<form:options items="${kpstatuses}"/>
+										</form:select>
+									</div>
+								</div>
 								<!-- <div class="form-group">
 									<label class="ace-file-input ace-file-multiple col-sm-3 control-label no-padding-right">Attach File(s)</label>
 									<div class="col-md-9">

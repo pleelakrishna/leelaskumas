@@ -189,7 +189,6 @@ public class CreateTicketIssueController {
 		model.addAttribute("kpstatuses",  reportIssueService.getKpStatues());
 		
 		
-		System.out.print(reportIssueService.getKpStatues());
 
 		//return "updateIssue";
 		return "editTicket";
@@ -222,6 +221,7 @@ public class CreateTicketIssueController {
 		model.addAttribute("category",categoryService.getCategoryNames());
 		model.addAttribute("severity", severityService.getSeverityNames());
 		model.addAttribute("priority",  priorityService.getPriorityNames());
+		model.addAttribute("kpstatuses",  reportIssueService.getKpStatues());
 		
 		
 		
