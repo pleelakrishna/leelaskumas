@@ -353,7 +353,6 @@
 $(".myView").addClass("active");
 $(document).ready(function(){
 $('.myView').on('click', function(){
-	alert('onclick is working.');
 	console.log("write your code hee") 
 	console.log("cacheUserBean") 
 });

@@ -184,6 +184,11 @@ public class UserService {
 				
 		
 	}
+
+	public void setLoginRecord(Integer id,String str) {
+          
+		userDao.setLoginRecord(id,str);
+	}
 	
 	
 	

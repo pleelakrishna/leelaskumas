@@ -61,6 +61,7 @@ public class LoginController {
 			lbean = userService.findWithName(admin.getName(),admin.getPassword());
 			if(lbean != null){
 				 session.setAttribute("cacheUserBean", lbean);
+				 userService.setLoginRecord(lbean.getId(),"login");
 				 return "redirect:summary";
 			 }else{
 				 redir.addFlashAttribute("msg","Invalid Crediantals");
@@ -84,6 +85,7 @@ public class LoginController {
 			HttpSession session = request.getSession(false);
 			User objuserBean = (User) session.getAttribute("cacheUserBean");
 			if (objuserBean != null) {
+				 userService.setLoginRecord(objuserBean.getId(),"logout");
 				session.removeAttribute("cacheUserBean");
 				session.removeAttribute("cacheGuest");
 				session.removeAttribute("rolId");

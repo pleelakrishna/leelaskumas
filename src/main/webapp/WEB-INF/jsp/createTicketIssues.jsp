@@ -85,16 +85,16 @@
 										</form:select>
 									</div>
 								</div>
-								<div class="space-2"></div>
+								<%-- <div class="space-2"></div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-4">Department</label>
 									<div class="col-sm-9">
-										<form:select path="priority" class="col-xs-10 col-sm-5" id="form-field-select-1">
+										<form:select path="" class="col-xs-10 col-sm-5" id="form-field-select-1">
 											<form:option value=""></form:option>
 											<form:options items="${departmentNames}"></form:options>
 										</form:select>
 									</div>
-								</div>
+								</div> --%>
 								<div class="space-2"></div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-5">Summary</label>
