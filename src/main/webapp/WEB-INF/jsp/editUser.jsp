@@ -152,6 +152,7 @@ $('#cpassword').blur(function() {
 		$('#npassword').val("");
 		
 		}
+})
 	/* else
 		{
 	var upwd=$('#cpassword').val();
@@ -170,7 +171,7 @@ $('#cpassword').blur(function() {
 
 		}	 */
 
-})
+
 	
 	
 	</script>

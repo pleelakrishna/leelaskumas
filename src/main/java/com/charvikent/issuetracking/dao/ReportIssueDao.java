@@ -48,7 +48,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.createdTime from ReportIssue r, Category c, Priority p, User u, Severity s  where r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.assignby =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.createdTime from ReportIssue r, Category c, Priority p, User u, Severity s  where r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus<>'1'  and  r.assignby =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();

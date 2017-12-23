@@ -148,4 +148,24 @@ $(function(){
 	 Dropzone.autoDiscover = false;
 });
 
+$('#kstatus').on('change',function() {
+	
+	var loginid=${cacheUserBean.id};
+	var tassignby=${cissue.assignby};
+	console.log("XXXXXXX")
+	console.log("loginid"+loginid)
+	console.log("tassignby"+tassignby)
+	if($('#kstatus').val()=='1')
+		{
+	if( tassignby!= loginid)
+		{
+		console.log("you are not authorized to close ticket")
+		$('#kstatus').css('border-color', 'red');
+		$('#kstatus').val("");
+		return false;
+		}
+		}
+});
+
+
 </script>
