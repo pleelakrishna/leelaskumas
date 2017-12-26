@@ -1,6 +1,8 @@
 package com.charvikent.issuetracking.controller;
 
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -90,7 +92,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
 	public String saveAdmin(@Valid @ModelAttribute  User user, BindingResult bindingresults,
-			RedirectAttributes redir) {
+			RedirectAttributes redir) throws IOException {
 
 		System.out.print("create user block");
 		if (bindingresults.hasErrors()) {

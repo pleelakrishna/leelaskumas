@@ -96,7 +96,7 @@
 								</div>
 								<div class="form-group">
 									<div class="col-md-offset-3 col-md-6">
-										<input type="submit" id="submit1" class="btn btn-success" value="Create"/>
+										<input type="submit" id="submit1" class="btn btn-success" value="Edit"/>
 										<input class="btn-danger btn cancel" type="reset"  value="Reset" />
 									</div>
 								</div>

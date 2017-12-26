@@ -1,7 +1,10 @@
 package com.charvikent.issuetracking.service;
 
+import java.io.IOException;
 import java.io.StringWriter;
-import java.util.HashMap;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,10 +44,23 @@ public class UserService {
 
 	@Autowired  
 	private JavaMailSender javaMailSender; 
+	
+	
+	String mobileNumber =null;
+    String username = "RKKIDS";
+    String password = "RK@kids987";
+    String from = "RKKIDS";
+    String requestUrl = null;
+    String toAddress = null;
+    
+    String message=null;
 
-	public void saveUser(User user)
+	public void saveUser(User user) throws IOException
 	{
+		message ="you are Successfully Registered with  Username: "+user.getUsername()+"and  password:"+user.getPassword();
+		mobileNumber=user.getMobilenumber();
 		userDao.saveuser(user);
+		sendSMS();
 		sendConfirmationEmail(user);
 	}
 
@@ -97,18 +113,14 @@ public class UserService {
 	private void sendConfirmationEmail(final User user) {  
 		try {
 			MimeMessagePreparator preparator = new MimeMessagePreparator() {  
-				@SuppressWarnings({ "unchecked", "deprecation" })
 				@Override  
 				public void prepare(MimeMessage mimeMessage) throws Exception {  
 					MimeMessageHelper message = new MimeMessageHelper(mimeMessage);  
 					message.setTo(user.getEmail());
 
 					message.setSubject(SUBJECT_MAIL_REGISTRATION_CONFIRMATION);  
-					Map model = new HashMap<>();  
 					VelocityContext velocityContext = new VelocityContext();
-					//model.put("name", user.getUsername());  
-					//TODO: get issue id
-					//model.put("issueId", "457896");
+				
 					
 					velocityContext.put("name",user.getUsername());
 					velocityContext.put("issueId",user.getId());
@@ -133,7 +145,7 @@ public class UserService {
 	
 
 		public User  findWithName(String username, String lpassword)
-	{
+	    {
 	 
 		 User userdao=null;
 		
@@ -191,6 +203,17 @@ public class UserService {
 	}
 	
 	
+	
+	public void sendSMS() throws IOException
+	{
+		
+		//message ="hi test";
+		requestUrl  = "http://182.18.160.225/index.php/api/bulk-sms?username="+URLEncoder.encode(username, "UTF-8")+"&password="+ URLEncoder.encode(password, "UTF-8")+"&from="+from+"&to="+URLEncoder.encode(mobileNumber, "UTF-8")+"&message="+URLEncoder.encode(message, "UTF-8")+"&sms_type=2";
+        URL url = new URL(requestUrl);
+        HttpURLConnection uc = (HttpURLConnection)url.openConnection();
+        System.out.println(uc.getResponseMessage());
+        uc.disconnect();
+	}
 	
 	
 	
