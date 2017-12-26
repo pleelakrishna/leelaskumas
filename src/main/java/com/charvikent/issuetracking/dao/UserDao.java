@@ -1,6 +1,7 @@
 package com.charvikent.issuetracking.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.Designation;
 import com.charvikent.issuetracking.model.User;
+import com.charvikent.issuetracking.model.UserLogs;
 
 @Repository
 
@@ -139,6 +141,19 @@ public User find(Integer id) {
 	  return em.find(User.class, id);
 
 	 }
+
+public void setLoginRecord(Integer id,String str) {
+	UserLogs logs =new UserLogs();
+	
+	
+	logs.setUserid(String.valueOf(id));
+	logs.setSessionname(str);
+	
+	em.merge(logs);
+	
+	
+	
+}
 
 /*@SuppressWarnings("unchecked")
 public List<Admin> getAdminNames()
