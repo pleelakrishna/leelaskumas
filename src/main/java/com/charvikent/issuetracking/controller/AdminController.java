@@ -87,6 +87,7 @@ public class AdminController {
 		System.out.print(userService.getDepartments());
 		model.addAttribute("departments", userService.getDepartments());
 		model.addAttribute("roles", userService.getRoles());
+		model.addAttribute("userNames", userService.getUserName());
 		return "user";
 	}
 

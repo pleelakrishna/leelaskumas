@@ -21,6 +21,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
+import com.charvikent.issuetracking.config.SendSMS;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.Designation;
@@ -46,22 +47,24 @@ public class UserService {
 	private JavaMailSender javaMailSender; 
 	
 	
-	String mobileNumber =null;
+	//String mobileNumber =null;
     String username = "RKKIDS";
     String password = "RK@kids987";
     String from = "RKKIDS";
     String requestUrl = null;
     String toAddress = null;
     
-    String message=null;
+    //String message=null;
+    
+    SendSMS smstemplate =new SendSMS();
 
 	public void saveUser(User user) throws IOException
 	{
-		message ="you are Successfully Registered with  Username: "+user.getUsername()+"and  password:"+user.getPassword();
-		mobileNumber=user.getMobilenumber();
+		String msg ="you are Successfully Registered with  Username:  "+user.getUsername()+"  and  password:"+user.getPassword();
+		String mbnum=user.getMobilenumber();
 		userDao.saveuser(user);
-		sendSMS();
-		sendConfirmationEmail(user);
+		smstemplate.sendSMSFromClass(msg,mbnum);
+		//sendConfirmationEmail(user);
 	}
 
 	public List<User> getAllUsers()
@@ -204,7 +207,7 @@ public class UserService {
 	
 	
 	
-	public void sendSMS() throws IOException
+	/*public void sendSMS() throws IOException
 	{
 		
 		//message ="hi test";
@@ -213,7 +216,7 @@ public class UserService {
         HttpURLConnection uc = (HttpURLConnection)url.openConnection();
         System.out.println(uc.getResponseMessage());
         uc.disconnect();
-	}
+	}*/
 	
 	
 	

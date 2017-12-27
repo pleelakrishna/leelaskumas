@@ -3,8 +3,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
-
-
 <!-- Body starts here -->
 	<div class="main-content">
 		<div class="main-content-inner">
@@ -85,6 +83,16 @@
 										</form:select>
 									</div>
 								</div>
+								<%-- <div class="space-2"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> Report To </label>
+									<div class="col-sm-9">
+										<form:select path="reportto" class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)">
+											<form:option value="" />
+										 	<form:options items="${userNames}"/>
+										</form:select>
+									</div>
+								</div> --%>
 								<%-- <div class="space-2"></div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-4">Department</label>

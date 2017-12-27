@@ -41,7 +41,7 @@ public class ReportIssue {
 	private String kstatus;
 	
 	
-	
+
 	public String getKstatus() {
 		return kstatus;
 	}
@@ -139,6 +139,9 @@ public class ReportIssue {
 				+ ", subject=" + subject + ", description=" + description + ", uploadfile=" + uploadfile + ", gapdays="
 				+ gapdays + ", gapcount=" + gapcount + ", kstatus=" + kstatus + ", assignby=" + assignby + "]";
 	}
+	
+	
+	
 	
 	
 	

@@ -21,6 +21,7 @@
 						<div class="page-body">
 							<form:form  action="updateIssue" method="post"  modelAttribute="cissue" class="form-horizontal" >
 							<form:hidden path ="id"/> 
+							 <input type="hidden" name="pagname" value=${pagname}>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-1">Category </label>
 									<div class="col-sm-9">

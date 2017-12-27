@@ -21,7 +21,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#">Assigned to Me (Unresolved)</a> <span class="badge">  1 - 3 / 3  </span>		</h4>
+<a class="white" href="#">Assigned to Me (Unresolved)</a> </h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -29,7 +29,7 @@
 		</div>
 		<div class="widget-toolbar no-border hidden-xs">
 			<div class="widget-menu">
-				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Issues</a>			</div>
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Tickets</a>			</div>
 		</div>
 	</div>
 
@@ -44,7 +44,7 @@
 		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id}</a>
 			<br>
 			<i class="fa fa-square fa-status-box red" title="assigned"></i>
-			<a class="edit" href="editIssue?id=${issue.id}"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<a class="edit" href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
 			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}  ></i>
 			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
 		</td>
@@ -71,7 +71,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#"> Reported by Me</a> <span class="badge">  0- 0 / 0  </span>		</h4>
+<a class="white" href="#"> Reported by Me</a> </h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -79,7 +79,7 @@
 		</div>
 		<div class="widget-toolbar no-border hidden-xs">
 			<div class="widget-menu">
-				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Issues</a>			</div>
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Tickets</a>			</div>
 		</div>
 	</div>
 
@@ -93,7 +93,7 @@
 		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id }</a>
 			<br>
 			<i class="fa fa-square fa-status-box blue" title="reportedByMe"></i>
-			<a class="edit" href="editIssue?id=${issue.id}"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<a class="edit" href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
 			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}  ></i>
 			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
 		</td>
@@ -122,7 +122,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#"> Resolved</a> <span class="badge">  0- 0 / 0  </span>		</h4>
+<a class="white" href="#"> Resolved</a> 	</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -130,7 +130,7 @@
 		</div>
 		<div class="widget-toolbar no-border hidden-xs">
 			<div class="widget-menu">
-				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Issues</a>			</div>
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Tickets</a>			</div>
 		</div>
 	</div>
 
@@ -146,7 +146,7 @@
 			<br>
 			<i class="fa fa-square fa-status-box green" title="resolved"></i>
 			<%-- <a class="edit" href="editIssue?id=${issue.id}"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> --%>
-			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}></i>
+			<i class="fa fa-minus fa-lg ${issue.severity}&pgn=2" title=${issue.priority}></i>
 			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
 		</td>
         
@@ -171,7 +171,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#"> Recently Closed (30 Days)</a> <span class="badge">  0- 0 / 0  </span>		</h4>
+<a class="white" href="#"> Recently Closed (30 Days)</a> 		</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -179,7 +179,7 @@
 		</div>
 		<div class="widget-toolbar no-border hidden-xs">
 			<div class="widget-menu">
-				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Issues</a>			</div>
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Tickets</a>			</div>
 		</div>
 	</div>
 
@@ -223,7 +223,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-list-alt"></i>
-<a class="white" href="#"> Monitored by Me</a> <span class="badge">  0- 0 / 0  </span>		</h4>
+<a class="white" href="#"> Monitored by Me</a> 		</h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
@@ -231,7 +231,7 @@
 		</div>
 		<div class="widget-toolbar no-border hidden-xs">
 			<div class="widget-menu">
-				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Issues</a>			</div>
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Tickets</a>			</div>
 		</div>
 	</div>
 
@@ -339,10 +339,48 @@
 
 						</div><!-- /.row -->
 					</div><!-- /.page-content -->
-				</div>
-			</div>
-				
+				<div class="space-10"></div>
+							<div id="assigned" class="widget-box widget-color-blue2">
+	<div class="widget-header widget-header-small">
+		<h4 class="widget-title lighter">
+			<i class="ace-icon fa fa-clock-o"></i>
+<a class="white" href="#"> Status Wise Summary</a></h4>
+		<div class="widget-toolbar">
+			<a data-action="collapse" href="#">
+				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border hidden-xs">
 			
+		</div>
+	</div>
+
+	<div style="display: block;" class="widget-body">
+		<div class="widget-main no-padding">
+			<div class="table-responsive">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+<tbody>
+
+<tr class="my-buglist-bug ">
+			<tr>
+                    		<th>By Status(days)</th>
+                    		<th>Total</th>
+                    	</tr>
+<c:forEach var="issue" items="${statusCount}">
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13">${issue.key} 
+		</td>
+		<td class="nowrap width-13">${issue.value} 
+		</td>
+</tr>
+</c:forEach>
+</table>
+</div>
+</div>
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+			</div>
+				</div>
 							</div>
 			<!-- /.page-content -->
 		</div>

@@ -53,7 +53,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Email</label>
 									<div class="col-md-6">
-										<form:input path="email" class="form-control validate email" placeholder="Enter Email"/>
+										<form:input path="email" class="form-control" placeholder="Enter Email"/>
 									</div>
 								</div>
 								<div class="form-group">
@@ -71,6 +71,15 @@
 										<form:select path ="department" class="form-control validate" onfocus="removeBorder(this.id)">
 											<form:option value="">-- Select Department --</form:option>
 								     		<form:options items="${departments}"/>
+										</form:select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label no-padding-right">ReportTo</label>
+									<div class="col-md-6">
+										<form:select path ="reportto" class="form-control validate" onfocus="removeBorder(this.id)">
+											<form:option value="">-- Select Report to --</form:option>
+								     		<form:options items="${userNames}"/>
 										</form:select>
 									</div>
 								</div>

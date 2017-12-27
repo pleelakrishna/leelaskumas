@@ -67,7 +67,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Email</label>
 									<div class="col-md-6">
-										<form:input path="email" readonly="${flag}"  class="form-control validate email" placeholder="Enter Email"/>
+										<form:input path="email" readonly="${flag}"  class="form-control" placeholder="Enter Email"/>
 									</div>
 								</div>
 								<div class="form-group">

@@ -3,6 +3,7 @@ package com.charvikent.issuetracking.dao;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -318,6 +319,37 @@ public List<ReportIssue> getAllReportIssues()
 	public List<KpStatus> getKpStatues() {
 		return em.createQuery("SELECT kpstatus FROM KpStatus kpstatus").getResultList();
 	}
+	
+	
+	public  Map<String,Integer> getCountByStatusWise() {
+		
+		Map<String,Integer> statusCounts =new LinkedHashMap<String,Integer>();
+		
+		Integer opentotal=0;
+		
+		try {
+			@SuppressWarnings("unchecked")
+			List<Object[]> rows = em
+			.createNativeQuery(" select ks.name,count(*)as count from report_issue r,kpstatus ks  where  r.kstatus=ks.id group by kstatus")
+			.getResultList();
+			for (Object[] row : rows) {
+				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
+				statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
+				
+			}
+			
+			statusCounts.put("Open",opentotal);
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		return statusCounts;
+
+
+	}
+
+	
+	
 
 
 }

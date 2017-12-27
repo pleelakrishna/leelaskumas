@@ -175,7 +175,11 @@ public class CreateTicketIssueController {
 
 
 	@RequestMapping("/editIssue")
-	public String createReportIssues(@RequestParam(value="id", required=true) String id,Model model) {
+	public String createReportIssues(@RequestParam(value="id", required=true) String id,
+			@RequestParam(value="pgn", required=true) String pgn,
+			Model model) {
+		
+		model.addAttribute("pagname",pgn);
 		
 		ReportIssue issue = reportIssueService.getReportIssueById(Integer.parseInt(id));
 		model.addAttribute("cissue", issue);
@@ -188,23 +192,30 @@ public class CreateTicketIssueController {
 		
 		model.addAttribute("kpstatuses",  reportIssueService.getKpStatues());
 		
+		model.addAttribute("pagename","1");
 		
-
+		
 		//return "updateIssue";
 		return "editTicket";
 
 	}
 
 	@RequestMapping(value = "/updateIssue", method = RequestMethod.POST)
-	public String saveIssue(@Valid @ModelAttribute ReportIssue reportIssue, RedirectAttributes redir) {
+	public String saveIssue(@Valid @ModelAttribute ReportIssue reportIssue,HttpServletRequest request, RedirectAttributes redir) {
 
 		
 		reportIssueService.updateIssue(reportIssue);
+		System.out.println(request.getParameter("xxxxxxx"));
+		
+		System.out.println(request.getParameter("pagname"));
+		String pagname=request.getParameter("pagname");
 
 		redir.addFlashAttribute("msg", "Record Updated Successfully");
 		redir.addFlashAttribute("cssMsg", "warning");
-
-		return "redirect:viewReportIssues";
+           if(pagname.equals("1"))
+        	   return "redirect:viewReportIssues";
+           else
+		return "redirect:myView";
 
    }
 	

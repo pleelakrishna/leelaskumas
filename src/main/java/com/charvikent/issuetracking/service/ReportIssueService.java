@@ -1,6 +1,7 @@
 package com.charvikent.issuetracking.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -21,6 +22,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 //import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
+import com.charvikent.issuetracking.config.SendSMS;
 import com.charvikent.issuetracking.dao.ReportIssueDao;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.KpStatus;
@@ -45,12 +47,21 @@ public class ReportIssueService {
 	
 	@Autowired
 	private ReportIssueDao reportIssueDao;
+
 	private User user;
 	
-	public void saveReportIssue(ReportIssue reportIssue,File serverFile) throws MessagingException
+
+	  SendSMS smstemplate =new SendSMS();
+	
+	public void saveReportIssue(ReportIssue reportIssue,File serverFile) throws MessagingException, IOException
 	{
 		reportIssueDao.saveReportIssue(reportIssue);
-		sendConfirmationEmail(reportIssue,user,serverFile);
+		//sendConfirmationEmail(reportIssue,user,serverFile);
+		User touser = userDao.find(Integer.parseInt(reportIssue.getAssignto()));
+		String msg =" A Ticket is assigned to you with id: "+reportIssue.getId();
+		System.out.println("....Sending SMS ....");
+		String  mnum=touser.getMobilenumber();
+		smstemplate.sendSMSFromClass(msg,mnum);
 	}
 	
 	public List<ReportIssue> getAllReportIssues()
@@ -233,6 +244,8 @@ public class ReportIssueService {
 		gapAndCount.put(90, day90Issues);
 		gapAndCount.put(180, day180Issues);
 		gapAndCount.put(365, day365Issues);
+		gapAndCount.put(380, gapAndCount.size());
+		
 		
 		
 		
@@ -374,6 +387,12 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		}
 		
 		return kpstatuesmap;
+	}
+	
+	
+	public  Map<String,Integer> getCountByStatusWise() {
+		
+		return reportIssueDao.getCountByStatusWise();
 	}
 
 

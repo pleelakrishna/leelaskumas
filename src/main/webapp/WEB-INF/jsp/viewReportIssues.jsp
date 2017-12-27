@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
     
     
 
@@ -55,12 +56,12 @@
 												<tbody>
 													<tr class="my-buglist-bug ">
 													    <th class="nowrap width-13">Issue ID</th>
+														<th class="nowrap width-13">Summary</th>
 														<th class="nowrap width-13">Category</th>
 														<th class="nowrap width-13">Severity</th>
 														<th class="nowrap width-13">Priority</th>
-														<th class="nowrap width-13">AssignTo</th>
+														<th class="nowrap width-16">Assigned</th>
 														<th class="nowrap width-13">Attachment</th>
-														<th class="nowrap width-13">Summary</th>
 														<th class="nowrap width-13">CreatedTime</th>
 														<th class="nowrap width-13">UpdatedTime</th>
 														<th class="nowrap width-13"></th>
@@ -68,16 +69,16 @@
 													<c:forEach var="issue" items="${allReportIssues}">
 													<tr class="my-buglist-bug ">
 														<td class="nowrap width-13">${issue.id }</td>
-														
+														<td class="nowrap width-13">${issue.subject}</td>
 														<td class="nowrap width-13">${issue.category}</td>
 														<td class="nowrap width-13">${issue.severity}</td>
 														<td class="nowrap width-13">${issue.priority}</td>
-														<td class="nowrap width-13">${issue.assignto}</td>
-														<td class="nowrap width-13">${issue.uploadfile}</td>
-														<td class="nowrap width-13">${issue.subject}</td>
+														<td class="nowrap width-16">${issue.assignto}</td>
+														<td wclass="nowrap width-13"><c:set var="str" value="${issue.uploadfile}" />
+														    ${fn:substringAfter(str,"/")}</td>
 														<td class="nowrap width-13">${issue.createdTime }</td>
 														<td class="nowrap width-13">${issue.updatedTime }</td>
-												<c:if test="${cacheUserBean.designation == 1}">	<td><span><a href="editIssue?id=${issue.id}"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a></span> </c:if> <%-- <span><a href="deleteUser/${user.id }">Delete</a></span> --%></td>
+												<c:if test="${cacheUserBean.designation == 1}">	<td><span><a href="editIssue?id=${issue.id}&pgn=1"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a></span> </c:if> <%-- <span><a href="deleteUser/${user.id }">Delete</a></span> --%></td>
 													</tr>
 													</c:forEach>
 												</tbody>

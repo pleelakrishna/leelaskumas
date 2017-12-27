@@ -79,13 +79,10 @@ public class User {
 	@Column
 	private String department;
 	
+	private String reportto;
+	
 	@Column
 	private Boolean enabled;
-	
-	
-	
-	
-	
 	 private String  designation;
 	
 	
@@ -93,18 +90,6 @@ public class User {
 	public User() {
 	}
 	
-	public User(String username, String password, String firstname, String lastname, String mobilenumber, String email,
-			String designation, String department, Boolean enabled, Set<Designation> designations) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.mobilenumber = mobilenumber;
-		this.email = email;
-		this.department = department;
-		this.enabled = enabled;
-	}
 	public String getPassword() {
 		return password;
 	}
@@ -167,13 +152,19 @@ public class User {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+	public String getReportto() {
+		return reportto;
+	}
+	public void setReportto(String reportto) {
+		this.reportto = reportto;
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", username="
 				+ username + ", password=" + password + ", cpassword=" + cpassword + ", npassword=" + npassword
 				+ ", firstname=" + firstname + ", lastname=" + lastname + ", mobilenumber=" + mobilenumber + ", email="
-				+ email + ", department=" + department + ", enabled=" + enabled + ", designation=" + designation + "]";
+				+ email + ", department=" + department + ", reportto=" + reportto + ", enabled=" + enabled
+				+ ", designation=" + designation + "]";
 	}
 	
 	

@@ -34,7 +34,7 @@ public class MyViewController {
 		//System.out.println(reportIssueService.getGapAndCount());
 		model.addAttribute("recentlyModified", reportIssueService.getRecentlyModified(String.valueOf(objuserBean.getId())));
 		
-		System.out.println(reportIssueService.getRecentlyModified(String.valueOf(objuserBean.getId())));
+	     model.addAttribute("statusCount" ,reportIssueService.getCountByStatusWise());
 		
 		return "myView";
 	         }
