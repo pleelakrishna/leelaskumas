@@ -204,6 +204,24 @@ public class UserService {
           
 		userDao.setLoginRecord(id,str);
 	}
+
+	public boolean checkUserExist(String username) {
+		
+		List<User> usersList= userDao.getUserNames();
+		
+		for(User bean: usersList){
+			  if(username.equalsIgnoreCase(bean.getUsername()))
+			  {
+				  
+				  return true;
+		       }
+			 
+
+	}
+		return false;
+	}
+
+	
 	
 	
 	

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.ReportIssueService;
 @Controller
@@ -16,6 +17,9 @@ public class MyViewController {
 	@Autowired
 	private ReportIssueService reportIssueService;
 	
+	@Autowired
+	private UserDao userService;
+	
 	
 	@RequestMapping("/myView")
 	public String myview(Model model) {
@@ -23,7 +27,9 @@ public class MyViewController {
 		
 	         if(objuserBean!=null)
 	         {
-		//System.out.println(reportIssueService.getIssuesByAssignBy(String.valueOf(objuserBean.getId())));
+	        	//userService.getUsersUnderReportTo();
+	        	//reportIssueService.getIssuesByAssignToUnderMonitor();
+		//System.out.println(reportIssueService.getIssuesByAsorysignBy(String.valueOf(objuserBean.getId())));
 		
 		model.addAttribute("reportedByMe", reportIssueService.getIssuesByAssignBy(String.valueOf(objuserBean.getId())));
 		
@@ -35,6 +41,7 @@ public class MyViewController {
 		model.addAttribute("recentlyModified", reportIssueService.getRecentlyModified(String.valueOf(objuserBean.getId())));
 		
 	     model.addAttribute("statusCount" ,reportIssueService.getCountByStatusWise());
+	     model.addAttribute("monitoryBy",reportIssueService.getIssuesByAssignToUnderMonitor(String.valueOf(objuserBean.getId())));
 		
 		return "myView";
 	         }

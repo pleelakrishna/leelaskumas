@@ -240,41 +240,24 @@
 			<div class="table-responsive">
 				<table class="table table-bordered table-condensed table-striped table-hover">
 <tbody>
+<c:forEach var="issue" items="${monitoryBy}">
 
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13"><a href="#">0000005</a>
+		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id}</a>
 			<br>
-			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
-			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
-			<i class="fa fa-minus fa-lg orange2"></i>
+			<i class="fa fa-square fa-status-box red" title="assigned"></i>
+			<a class="edit" href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
+			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}  ></i>
+			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
 		</td>
         
         <td>
-		<span><a href="#">Add Squad _ Reset option</a></span>
+		<span>${issue.subject}</span>
 		<br>
-		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:51</span>
+		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
         </td>
 </tr>
-
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13"><a href="#">0000004</a>
-			<br>
-			<i class="fa fa-square fa-status-box status-50-color" title="assigned"></i>
-			<a class="edit" href="#"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
-			<i class="fa fa-minus fa-lg orange2"></i>
-			<a class="attachments" href="#"><i class="fa fa-paperclip fa-lg grey"></i></a>
-		</td>
-        
-        <td>
-		<span><a href="#">Add Squad _ Reset option</a></span>
-		<br>
-		<span class="small">[All Projects] Functional Defect - 2017-08-22 11:40</span>
-
-        </td>
-</tr>
-
-
-
+</c:forEach>
 </tbody>
 </table>
 </div>

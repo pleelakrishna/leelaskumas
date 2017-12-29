@@ -80,7 +80,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category  from ReportIssue r, Category c, Priority p, User u, Severity s   where r.assignby=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='2' and r.assignto =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category  from ReportIssue r, Category c, Priority p, User u, Severity s   where r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='2' and r.assignto =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				System.out.println(row);

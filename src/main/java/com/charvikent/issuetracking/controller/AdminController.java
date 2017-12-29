@@ -30,11 +30,11 @@ public class AdminController {
 
 	@Autowired
 	private UserService userService;
-	
+
 
 	@Autowired
 	UserDao userDao;
-	
+
 	@Autowired
 	HttpSession session;
 
@@ -77,10 +77,10 @@ public class AdminController {
 	public String summary(Model model) {
 		return "summary";
 	}
-	
-	
-	
-	
+
+
+
+
 	@RequestMapping("/createUser")
 	public String homeUser(Model model) {
 		model.addAttribute("userForm", new User());
@@ -121,12 +121,13 @@ public class AdminController {
 
 	@RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable("id") String id) {
+		
 		userService.deleteUser(Integer.parseInt(id));
 		return "redirect:../viewUsers";
 
 	}
-	
-	
+
+
 
 	/*@RequestMapping(value = "/editUser/{id}", method = RequestMethod.GET)
 	public String editUser(@PathVariable("id") String id, Model model) {
@@ -141,17 +142,17 @@ public class AdminController {
 
 	}*/
 
-		
-	
+
+
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String editProfile( Model model,HttpSession session) {
 		System.out.println(" profile edit block");
-		
+
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
-		
+
 		Integer id=objuserBean.getId();
-		
+
 		System.out.println(objuserBean.getMobilenumber());
 		System.out.println(objuserBean.getDepartment());
 		System.out.println(objuserBean.getId());
@@ -160,87 +161,87 @@ public class AdminController {
 		return "redirect:edit?id="+id;
 
 	}
-	
+
 	@RequestMapping(value = "/edit")
 	public String bookmark(
-	    @RequestParam(value="id", required=true) String id,Model model){
-		
-		System.out.print(id);
-		
+			@RequestParam(value="id", required=true) String id,Model model){
 		User users = userService.getUserById(Integer.parseInt(id));
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
 		model.addAttribute("users", users);
 		model.addAttribute("departments", userService.getDepartments());
 		model.addAttribute("roles", userService.getRoles());
-		
-		System.out.println(users.getUsername());
-		
-		System.out.println(users.getDesignation());
+		model.addAttribute("userNames", userService.getUserName());
 		if("1".equals(objuserBean.getDesignation()))
-		model.addAttribute("flag",false);
+			model.addAttribute("flag",false);
 		else 
-		model.addAttribute("flag",true);
-		
-			return "editUser";
+			model.addAttribute("flag",true);
+		return "editUser";
 
 	}
-	
-	
+
+
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
 	public String edit(@Valid @ModelAttribute User user, RedirectAttributes redir) {
 		System.out.println("post edit");
 		System.out.println("edit user postmethod");
-
 		userService.updateUser(user);
-
 		redir.addFlashAttribute("msg", "Record Updated Successfully");
 		redir.addFlashAttribute("cssMsg", "warning");
 		return "redirect:viewUsers";
 
 	}
 
-	
-	
-	
+
+
+
 	@RequestMapping("/getCurrentpwd")
 	public  @ResponseBody  String cylinderTypes(HttpServletRequest request, HttpSession session)
 	{
-			if(null != request.getParameter("cpwd"))
-			{//return cylindermasterDao.getCylinderCapacityByID(Integer.parseInt(request.getParameter("cpwd")));
-				
-				User user=userService.getUserById(Integer.parseInt(request.getParameter("cuid")));
-				
+		if(null != request.getParameter("cpwd"))
+		{//return cylindermasterDao.getCylinderCapacityByID(Integer.parseInt(request.getParameter("cpwd")));
+
+			User user=userService.getUserById(Integer.parseInt(request.getParameter("cuid")));
+
 			return user.getPassword();
-			}
-			else
-				return "No data found";
+		}
+		else
+			return "No data found";
 	}
-	
-	
+
+
 	@RequestMapping("/updatepwd")
 	public  @ResponseBody  String setUpdatePwd(HttpServletRequest request, HttpSession session)
 	{
-			if(null != request.getParameter("upwd"))
-			{//return cylindermasterDao.getCylinderCapacityByID(Integer.parseInt(request.getParameter("cpwd")));
-				
-				System.out.println(request.getParameter("upwd"));
-				System.out.println(request.getParameter("cuid"));
-				
-				User user=userService.getUserById(Integer.parseInt(request.getParameter("cuid")));
-				user.setPassword(request.getParameter("upwd").trim());
-				
-				userService.updateUser(user);
-				
+		if(null != request.getParameter("upwd"))
+		{//return cylindermasterDao.getCylinderCapacityByID(Integer.parseInt(request.getParameter("cpwd")));
+
+		/*	System.out.println(request.getParameter("upwd"));
+			System.out.println(request.getParameter("cuid"));*/
+
+			User user=userService.getUserById(Integer.parseInt(request.getParameter("cuid")));
+			user.setPassword(request.getParameter("upwd").trim());
+
+			userService.updateUser(user);
+
 			return user.getPassword();
-			}
-			else
-				return "No data found";
+		}
+		else
+			return "No data found";
 	}
 	
-	
-	
-	
-	
+	@RequestMapping("/getUserName")
+	public  @ResponseBody  Boolean getUserName(HttpServletRequest request, HttpSession session)
+	{
+		String username=request.getParameter("username");
+		
+		username = username.replaceAll("\\s+","");
+		return userService.checkUserExist(username);
+	}
+
+
+
 }
 
-	
+
+
+

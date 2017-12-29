@@ -45,8 +45,8 @@ window.setTimeout(function() {
       <div class="login-body">
      
         <div class="form-group">
-          <label for="emailID">Email</label>
-          <form:input path="name" class="form-control" placeholder="Email"/>
+          <label for="emailID">UserName</label>
+          <form:input path="name" class="form-control" placeholder="user Name"/>
         </div>
         <div class="form-group">
           <label for="password">Password</label>

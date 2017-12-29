@@ -85,8 +85,6 @@ public class User {
 	private Boolean enabled;
 	 private String  designation;
 	
-	
-	
 	public User() {
 	}
 	

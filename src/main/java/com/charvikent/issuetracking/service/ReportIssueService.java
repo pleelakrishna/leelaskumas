@@ -3,6 +3,8 @@ package com.charvikent.issuetracking.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -49,8 +51,6 @@ public class ReportIssueService {
 	private ReportIssueDao reportIssueDao;
 
 	private User user;
-	
-
 	  SendSMS smstemplate =new SendSMS();
 	
 	public void saveReportIssue(ReportIssue reportIssue,File serverFile) throws MessagingException, IOException
@@ -394,6 +394,22 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		
 		return reportIssueDao.getCountByStatusWise();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Object getIssuesByAssignToUnderMonitor(String rto) {
+		
+		List<String> monitorList=userDao.getUsersUnderReportTo(rto);
+		List<ReportIssue> listissue=new ArrayList<>();
+		
+		for(String id2:monitorList)
+		{
+			listissue.addAll((Collection<? extends ReportIssue>) reportIssueDao.getIssuesAssignTo(id2));
+		
+		}
+		
+		
+		return listissue;
+	}  
 
 
 

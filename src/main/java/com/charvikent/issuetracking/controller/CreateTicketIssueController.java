@@ -86,7 +86,6 @@ public class CreateTicketIssueController {
 		model.addAttribute("severity", severityService.getSeverityNames());
 		model.addAttribute("priority",  priorityService.getPriorityNames());
 		return "createTicketIssues";
-
 	}
 
 	@RequestMapping(value = "/createTicketIssues", method = RequestMethod.POST)

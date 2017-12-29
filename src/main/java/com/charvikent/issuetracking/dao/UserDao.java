@@ -1,7 +1,6 @@
 package com.charvikent.issuetracking.dao;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -78,7 +77,7 @@ public List<Designation> getRoles()
 public User findWithName(String username,String lpassword) {
 	User userbean =null;
         try {
-		 userbean=  (User) em.createQuery(" select u FROM User u where u.username =:custName AND u.password =:custPass ")
+		 userbean=  (User) em.createQuery(" select u FROM User u where  enabled=true and u.username =:custName AND u.password =:custPass ")
 			.setParameter("custName", username)
 			.setParameter("custPass", lpassword)
 			.getSingleResult();
@@ -155,6 +154,8 @@ public void setLoginRecord(Integer id,String str) {
 	
 }
 
+
+
 /*@SuppressWarnings("unchecked")
 public List<Admin> getAdminNames()
  {
@@ -163,6 +164,33 @@ public List<Admin> getAdminNames()
 	 
  }
 */
+
+
+public List<String> getUsersUnderReportTo(String rto)
+ {
+	
+	List<String> list=new ArrayList<String>();
+	
+	 @SuppressWarnings("unchecked")
+	 List<Object []> rows =   em.createNativeQuery("select id from kpusers where reportto=:custName").setParameter("custName",rto).getResultList();
+	 System.out.println("Test start here");
+	 for(Object object: rows)
+	 {
+		 list.add(object.toString());
+	  Integer id=Integer.parseInt(String.valueOf(object));
+	  @SuppressWarnings("unchecked")
+	List<Object []> rows1 =   em.createNativeQuery("select id from kpusers where reportto=:custName").setParameter("custName", id).getResultList();
+	for(Object object1: rows1)
+	 {
+		list.add(object1.toString());
+	 }
+	
+	 }
+	return list;
+	 
+	
+ } 
+ 
 
 
 }

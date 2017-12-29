@@ -91,8 +91,8 @@
 								</div>
 								<div class="form-group">
 									<div class="col-md-offset-3 col-md-6">
-										<input type="submit" id="submit1" class="btn btn-success" value="Create"/>
-										<input class="btn-danger btn cancel" type="reset"  value="Reset" />
+										<input type="submit" id="submit1"  class="btn btn-success" value="Create"/>
+										<input class="btn-danger btn cancel"  type="reset"  value="Reset" />
 									</div>
 								</div>
 							</form:form>
@@ -110,4 +110,45 @@
 
 <script type="text/javascript">
 $(".createUser").addClass("active");
+
+//var username=$('#username').val();
+
+$('#username').blur(function() {
+var username=$(this).val();
+
+$.ajax({
+			type : "GET",
+			url : "getUserName",
+			data : {"username":username},
+			dataType : "text",
+			success : function(data) {
+				if(data ==='true')
+					{
+					alert("username already exists")
+ 					$('#username').css('border-color', 'red');
+					 $('#submit1').prop('disabled', true);
+					}
+				else
+					{
+					$('#username').css('border-color', 'none');
+					$('#submit1').prop('disabled', false);
+					}
+				
+			}
+			
+		});
+
+	}); 
+	
+$('#designation').blur(function() {
+	var role=$(this).val();
+	if(role ===  '1')
+		$('#reportto').prop('disabled', true);
+	else
+		$('#reportto').prop('disabled', false);
+	
+	
+});
+	
+	
 </script>

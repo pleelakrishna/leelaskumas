@@ -25,7 +25,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Username</label>
 									<div class="col-md-6">
-										<form:input path="username" readonly="${flag}"  class="form-control validate" placeholder="Enter Username"/>
+										<form:input path="username" readonly="true"  class="form-control validate" placeholder="Enter Username"/>
 									</div>
 								</div>
 								<div class="form-group">
@@ -89,6 +89,15 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<label class="col-md-3 control-label no-padding-right">Department</label>
+									<div class="col-md-6">
+										<form:select path ="reportto"  disabled="${flag}" class="form-control validate" onfocus="removeBorder(this.id)">
+											<form:option value="">-- Select Reportto --</form:option>
+								     		<form:options items="${userNames}"/>
+										</form:select>
+									</div>
+								</div>
+								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Enable</label>
 									<div class="col-md-6">
 										<form:checkbox  path="enabled" disabled="${flag}" />
@@ -139,10 +148,6 @@ $.ajax({
 	
 	
 $('#cpassword').blur(function() {
-	
-	console.log($('#npassword').val())
-	console.log($('#cpassword').val())
-
 	if($('#npassword').val()!=$('#cpassword').val())
 		{
 		alert("Conform password and new password doesn't match")
