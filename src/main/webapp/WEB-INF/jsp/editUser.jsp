@@ -89,7 +89,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-3 control-label no-padding-right">Department</label>
+									<label class="col-md-3 control-label no-padding-right">Report to</label>
 									<div class="col-md-6">
 										<form:select path ="reportto"  disabled="${flag}" class="form-control validate" onfocus="removeBorder(this.id)">
 											<form:option value="">-- Select Reportto --</form:option>

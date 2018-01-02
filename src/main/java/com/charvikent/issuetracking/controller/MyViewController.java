@@ -50,5 +50,10 @@ public class MyViewController {
 	        	 return "redirect:/"; 
 		
 	}
+	@RequestMapping("*")
+	public String fallbackMethod(){
+		return "redirect:logoutHome";
+	}
+	
 
 }

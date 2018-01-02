@@ -41,12 +41,22 @@
 <c:forEach var="issue" items="${assignToMe}">
 
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id}</a>
-			<br>
+		<td class="nowrap width-13">
+		    <form action="viewTicket?id=${issue.id}" method="post">
+            <button type="submit"  class="btn-link">${issue.id}</button>
+            </form>
+			
+			<div style="display: -webkit-inline-box;">
 			<i class="fa fa-square fa-status-box red" title="assigned"></i>
-			<a class="edit" href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
-			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}  ></i>
+			<form action="editIssue?id=${issue.id}&pgn=2" method="post">
+            <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
+            </form>
+			<%-- <a class="edit"   href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> --%>
+			<i class="fa fa-minus fa-lg ${issue.severity}"  title= "${issue.priority}"></i>
+			<c:if test="${not empty issue.uploadfile}">
 			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
+			</c:if>
+			</div>
 		</td>
         
         <td>
@@ -90,19 +100,27 @@
 <tbody>
 <c:forEach var="issue" items="${reportedByMe}">
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id }</a>
-			<br>
-			<i class="fa fa-square fa-status-box blue" title="reportedByMe"></i>
-			<a class="edit" href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
-			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}  ></i>
+		<td class="nowrap width-13">
+		    <form action="viewTicket?id=${issue.id}" method="post">
+            <button type="submit" class="btn-link">${issue.id}</button>
+            </form>
+            <div style="display: -webkit-inline-box;">
+			<i class="fa fa-square fa-status-box red" title="assigned"></i>
+			<form action="editIssue?id=${issue.id}&pgn=2" method="post">
+            <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
+            </form>
+			<%-- <a class="edit"   href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> --%>
+			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
+			<c:if test="${not empty issue.uploadfile}">
 			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
+		   </c:if>
+		</div>
 		</td>
         
         <td>
 		<span>${issue.subject}</span>
 		<br>
-		<span class="small"> (${issue.category}) -${issue.createdTime}</span>
-
+		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
         </td>
 </tr>
 </c:forEach>
@@ -142,12 +160,20 @@
 
 <c:forEach var="issue" items="${assignToMeResolved}">
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id}</a>
-			<br>
-			<i class="fa fa-square fa-status-box green" title="resolved"></i>
-			<%-- <a class="edit" href="editIssue?id=${issue.id}"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> --%>
-			<i class="fa fa-minus fa-lg ${issue.severity}&pgn=2" title=${issue.priority}></i>
+		<td class="nowrap width-13">
+		    <form action="viewTicket?id=${issue.id}" method="post">
+            <button type="submit"  class="btn-link">${issue.id}</button>
+            </form>
+            <div style="display: -webkit-inline-box;">
+			<i class="fa fa-square fa-status-box red" title="assigned"></i>
+			<%-- <form action="editIssue?id=${issue.id}&pgn=2" method="post">
+            <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
+            </form> --%>
+			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
+			<c:if test="${not empty issue.uploadfile}">
 			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
+		</c:if>
+		</div>
 		</td>
         
         <td>
@@ -191,16 +217,20 @@
 
 <c:forEach var="issue" items="${recentlyModified}">
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id}</a>
-			<br>
-			<i class="fa fa-square fa-status-box purple" title="recentlyModified"></i>
-			<!-- <a class="edit" href="editIssue?id=${issue.id}"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> -->
-			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}></i>
+		<td class="nowrap width-13">
+		    <form action="viewTicket?id=${issue.id}" method="post">
+            <button type="submit" class="btn-link">${issue.id}</button>
+            </form>
+            <div style="display: -webkit-inline-box;">
+			<i class="fa fa-square fa-status-box red" title="assigned"></i>
+			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
+			<c:if test="${not empty issue.uploadfile}">
 			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
+	      </c:if>
+	</div>
 		</td>
-        
         <td>
-		<span>${issue.id}</span>
+		<span>${issue.subject}</span>
 		<br>
 		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
         </td>
@@ -243,12 +273,21 @@
 <c:forEach var="issue" items="${monitoryBy}">
 
 <tr class="my-buglist-bug ">
-		<td class="nowrap width-13"><a href="viewTicket?id=${issue.id}">${issue.id}</a>
-			<br>
+		<td class="nowrap width-13">
+		    <form action="viewTicket?id=${issue.id}" method="post">
+            <button type="submit"  class="btn-link">${issue.id}</button>
+            </form>
+            <div style="display: -webkit-inline-box;">
 			<i class="fa fa-square fa-status-box red" title="assigned"></i>
-			<a class="edit" href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a>
-			<i class="fa fa-minus fa-lg ${issue.severity}" title=${issue.priority}  ></i>
+			<form action="editIssue?id=${issue.id}&pgn=2" method="post">
+            <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
+            </form>
+			<%-- <a class="edit"   href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> --%>
+			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
+			<c:if test="${not empty issue.uploadfile}">
 			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
+		  </c:if>
+		</div>
 		</td>
         
         <td>
@@ -311,10 +350,8 @@
 
 </c:forEach>
                       </table>
-		</td>
         
        
-</table>
 </div>
 </div>
 

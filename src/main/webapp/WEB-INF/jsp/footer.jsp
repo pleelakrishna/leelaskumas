@@ -16,6 +16,20 @@
 		<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 	</a>
 	
+	<script type="text/javascript">
+	$('#designation').blur(function() {
+		var role=$(this).val();
+		if(role ===  '1')
+			$('#reportto').prop('disabled', true);
+		else
+			$('#reportto').prop('disabled', false);
+		
+		
+	});
+		
+	
+	</script>
+	
 	<!-- basic scripts -->
 	<script src="${pageContext.request.contextPath}/js/customValidation.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>

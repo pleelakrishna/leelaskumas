@@ -140,7 +140,7 @@ $.ajax({
 
 	}); 
 	
-$('#designation').blur(function() {
+/* $('#designation').blur(function() {
 	var role=$(this).val();
 	if(role ===  '1')
 		$('#reportto').prop('disabled', true);
@@ -148,7 +148,7 @@ $('#designation').blur(function() {
 		$('#reportto').prop('disabled', false);
 	
 	
-});
+}); */
 	
 	
 </script>

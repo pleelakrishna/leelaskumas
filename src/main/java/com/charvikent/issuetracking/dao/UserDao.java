@@ -168,25 +168,15 @@ public List<Admin> getAdminNames()
 
 public List<String> getUsersUnderReportTo(String rto)
  {
-	
-	List<String> list=new ArrayList<String>();
-	
+	List<String> list1=new ArrayList<String>();
 	 @SuppressWarnings("unchecked")
-	 List<Object []> rows =   em.createNativeQuery("select id from kpusers where reportto=:custName").setParameter("custName",rto).getResultList();
-	 System.out.println("Test start here");
-	 for(Object object: rows)
+	List<Object []> rowsf =   em.createNativeQuery("select  id,reportto from(select * from kpusers order by reportto, id) kpusers_sorted,(select @pv \\:=:custName ) initialisation where   find_in_set(reportto, @pv) > 0 and     @pv \\:= concat(@pv, ',', id)").setParameter("custName",rto).getResultList();
+	 for(Object[] row:rowsf)
 	 {
-		 list.add(object.toString());
-	  Integer id=Integer.parseInt(String.valueOf(object));
-	  @SuppressWarnings("unchecked")
-	List<Object []> rows1 =   em.createNativeQuery("select id from kpusers where reportto=:custName").setParameter("custName", id).getResultList();
-	for(Object object1: rows1)
-	 {
-		list.add(object1.toString());
+		 list1.add(row[0].toString());
 	 }
-	
-	 }
-	return list;
+	 
+	return list1;
 	 
 	
  } 

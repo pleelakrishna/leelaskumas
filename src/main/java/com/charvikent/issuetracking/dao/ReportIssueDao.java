@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.KpStatus;
+import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 
@@ -80,7 +81,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category  from ReportIssue r, Category c, Priority p, User u, Severity s   where r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='2' and r.assignto =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createNativeQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.created_time,c.category  from report_issue r, category c, priority p, kpusers u, severity s   where r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus in(2,6) and r.assignto =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				System.out.println(row);
@@ -115,7 +116,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category  from ReportIssue r, Category c, Priority p, User u, Severity s   where r.assignby=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='4' and  r.assignto =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category  from ReportIssue r, Category c, Priority p, User u, Severity s   where r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='4' and  r.assignto =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();
@@ -303,11 +304,18 @@ public List<ReportIssue> getAllReportIssues()
      editissue.setSubject(issue.getSubject());
      editissue.setKstatus(issue.getKstatus());
     // editissue.setUploadfile(issue.getUploadfile());
-     
-     
 		em.merge(editissue);
-
-
+		
+		KpStatusLogs slogs=new KpStatusLogs();
+		
+		slogs.setIssueid(issue.getId().toString());
+		slogs.setIassignto(issue.getAssignto());
+		slogs.setIassignby(issue.getAssignby());
+		slogs.setSubject(issue.getSubject());
+		slogs.setDescription(issue.getDescription());
+		slogs.setKpstatus(issue.getKstatus());
+		
+		em.merge(slogs);
 		em.flush();
 
 
@@ -347,7 +355,8 @@ public List<ReportIssue> getAllReportIssues()
 
 
 	}
-
+	
+	
 	
 	
 

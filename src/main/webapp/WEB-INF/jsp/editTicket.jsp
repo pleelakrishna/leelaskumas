@@ -153,9 +153,6 @@ $('#kstatus').on('change',function() {
 	
 	var loginid=${cacheUserBean.id};
 	var tassignby=${cissue.assignby};
-	console.log("XXXXXXX")
-	console.log("loginid"+loginid)
-	console.log("tassignby"+tassignby)
 	if($('#kstatus').val()=='1')
 		{
 	if( tassignby!= loginid)
