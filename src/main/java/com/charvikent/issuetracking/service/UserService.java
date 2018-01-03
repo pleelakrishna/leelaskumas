@@ -60,7 +60,7 @@ public class UserService {
 
 	public void saveUser(User user) throws IOException
 	{
-		String msg ="you are Successfully Registered with  Username:  "+user.getUsername()+"  and  password:"+user.getPassword();
+		String msg =user.getFirstname()+" "+user.getLastname()+",  Successfully registered with KPTMS. \n You can login using \n Username:  "+user.getUsername()+"\n password: "+user.getPassword();
 		String mbnum=user.getMobilenumber();
 		userDao.saveuser(user);
 		smstemplate.sendSMSFromClass(msg,mbnum);

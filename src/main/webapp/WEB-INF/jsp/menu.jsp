@@ -26,7 +26,7 @@
 				<li class="myView">
 					<a href="myView">
 						<i class="menu-icon fa fa-tachometer"></i>
-						<span class="menu-text">My View</span>
+						<span class="menu-text">Dashboard</span>
 					</a>
 					<b class="arrow"></b>
 				</li>

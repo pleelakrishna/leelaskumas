@@ -9,7 +9,7 @@
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
 				<ul class="breadcrumb">
-					<li class="">My View</li>
+					<li class="">Dashboard</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
 			
@@ -33,7 +33,7 @@
 		</div>
 	</div>
 
-	<div style="display: block;" class="widget-body">
+	<div  class="widget-body" style="display: block;max-height:300px;overflow:auto;">
 		<div class="widget-main no-padding">
 			<div class="table-responsive">
 				<table class="table table-bordered table-condensed table-striped table-hover">
@@ -47,7 +47,7 @@
             </form>
 			
 			<div style="display: -webkit-inline-box;">
-			<i class="fa fa-square fa-status-box red" title="assigned"></i>
+			<i class="fa fa-square fa-status-box ${issue.kstatus}" title="${issue.assignto}"></i>
 			<form action="editIssue?id=${issue.id}&pgn=2" method="post">
             <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
             </form>
@@ -60,7 +60,7 @@
 		</td>
         
         <td>
-		<span>${issue.subject}</span>
+		<span><b>${issue.subject}</b></span>
 		<br>
 		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
         </td>
@@ -105,7 +105,7 @@
             <button type="submit" class="btn-link">${issue.id}</button>
             </form>
             <div style="display: -webkit-inline-box;">
-			<i class="fa fa-square fa-status-box red" title="assigned"></i>
+			<i class="fa fa-square fa-status-box ${issue.kstatus}" title="${issue.assignby}"></i>
 			<form action="editIssue?id=${issue.id}&pgn=2" method="post">
             <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
             </form>
@@ -118,7 +118,7 @@
 		</td>
         
         <td>
-		<span>${issue.subject}</span>
+		<span><b>${issue.subject}</b></span>
 		<br>
 		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
         </td>
@@ -177,7 +177,7 @@
 		</td>
         
         <td>
-		<span>${issue.subject}</span>
+		<span><b>${issue.subject}</b></span>
 		<br>
 		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
         </td>
@@ -230,7 +230,7 @@
 	</div>
 		</td>
         <td>
-		<span>${issue.subject}</span>
+		<span><b>${issue.subject}</b></span>
 		<br>
 		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
         </td>
@@ -278,7 +278,7 @@
             <button type="submit"  class="btn-link">${issue.id}</button>
             </form>
             <div style="display: -webkit-inline-box;">
-			<i class="fa fa-square fa-status-box red" title="assigned"></i>
+			<i class="fa fa-square fa-status-box ${issue.kstatus}" title="${issue.assignto}"></i>
 			<form action="editIssue?id=${issue.id}&pgn=2" method="post">
             <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
             </form>
@@ -291,7 +291,7 @@
 		</td>
         
         <td>
-		<span>${issue.subject}</span>
+		<span><b>${issue.subject}</b></span>
 		<br>
 		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
         </td>

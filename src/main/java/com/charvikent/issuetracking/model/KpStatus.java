@@ -17,6 +17,20 @@ public class KpStatus {
 	
 	@Column
 	private String name;
+	
+	private String scolour;
+	
+	
+	
+
+	
+	public String getScolour() {
+		return scolour;
+	}
+
+	public void setScolour(String scolour) {
+		this.scolour = scolour;
+	}
 
 	public Integer getId() {
 		return id;
@@ -36,9 +50,11 @@ public class KpStatus {
 
 	@Override
 	public String toString() {
-		return "KpStatus [id=" + id + ", name=" + name + "]";
+		return "KpStatus [id=" + id + ", name=" + name + ", scolour=" + scolour + "]";
 	}
+
 	
+
 	
 
 }

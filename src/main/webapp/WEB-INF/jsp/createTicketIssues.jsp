@@ -67,8 +67,8 @@
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Priority </label>
 									<div class="col-sm-9">
-										<form:select path="priority" class="col-xs-10 col-sm-5" id="form-field-select-1">
-											<form:option value=""></form:option>
+										<form:select path="priority" class="col-xs-10 col-sm-5 validate" id="form-field-select-1">
+											<<form:option value="" label="--- Select ---" />
 											<form:options items="${priority}"></form:options>
 										</form:select>
 									</div>
@@ -78,7 +78,7 @@
 									<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> Assigned to </label>
 									<div class="col-sm-9">
 										<form:select path="assignto" class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)">
-											<form:option value="" />
+											<form:option value="" label="--- Select ---" />
 										 	<form:options items="${userNames}"/>
 										</form:select>
 									</div>
@@ -107,14 +107,14 @@
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-5">Summary</label>
 									<div class="col-sm-9">
-										<input type="text" id="form-field-1" placeholder="Summary" class="col-xs-10 col-sm-5" />
+										<form:input path="subject"  placeholder="Summary" class="col-xs-10 col-sm-5 validate" />
 									</div>
 								</div>
 								<div class="space-2"></div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-5">Description</label>
 									<div class="col-sm-9">
-										<form:textarea path="description" class="col-xs-10 col-sm-5" rows="4"></form:textarea>
+										<form:textarea path="description" class="col-xs-10 col-sm-5 validate" rows="4"></form:textarea>
 									</div>
 								</div>
 								<div class="space-2"></div>
@@ -137,16 +137,12 @@
 								</div>
 								<div class="space-2"></div>
 								<div class="clearfix form-actions">
-									<div class="col-md-offset-3 col-md-9">
-<!-- 										<button class="btn btn-info" type="button"> -->
-<!-- 											<i class="ace-icon fa fa-check bigger-110"></i> Submit -->
-<!-- 										</button> -->
-							<input type="submit" id="submit1" class="btn btn-info" value="Submit"/>
-										&nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset">
-											<i class="ace-icon fa fa-undo bigger-110"></i> Reset
-										</button>
+									<div class="form-group">
+									<div class="col-md-offset-3 col-md-6">
+										<input type="submit" id="submit1"  class="btn btn-success" value="Create"/>
+										<input class="btn-danger btn cancel"  type="reset"  value="Reset" />
 									</div>
+								</div>
 								</div>
 								
 											<input type="hidden" name="max_file_size" value="5000000" />

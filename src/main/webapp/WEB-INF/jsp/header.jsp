@@ -35,7 +35,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Kumar Pumps Ticket Tracking System</title>
+<title>Kumar Pumps Ticket Management System</title>
 
 <!-- bootstrap & fontawesome -->
 		<link rel="stylesheet" href="${baseurl}/assets/css/bootstrap.min.css" />
@@ -129,7 +129,10 @@ span.has-error,span.hasError
 			</button>
 			
 			<div class="navbar-header pull-left">
-				<a href="#" class="navbar-brand"><small>KPTTS</small></a>
+				<a href="#" class="navbar-brand"><img src="img/kumar_logo.png" style="height: 26px;"/></a>
+			</div>
+			<div >
+				<a href="#" class="navbar-brand">Kumar Pumps-Ticket Management system</a>
 			</div>
 
 			<div class="navbar-buttons navbar-header pull-right" role="navigation">
