@@ -165,7 +165,7 @@
             <button type="submit"  class="btn-link">${issue.id}</button>
             </form>
             <div style="display: -webkit-inline-box;">
-			<i class="fa fa-square fa-status-box red" title="assigned"></i>
+			<i class="fa fa-square fa-status-box ${issue.kstatus}" title="${issue.assignto}"></i>
 			<%-- <form action="editIssue?id=${issue.id}&pgn=2" method="post">
             <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
             </form> --%>
@@ -222,7 +222,7 @@
             <button type="submit" class="btn-link">${issue.id}</button>
             </form>
             <div style="display: -webkit-inline-box;">
-			<i class="fa fa-square fa-status-box red" title="assigned"></i>
+			<i class="fa fa-square fa-status-box ${issue.kstatus}" title="${issue.assignby}"></i>
 			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
 			<c:if test="${not empty issue.uploadfile}">
 			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>

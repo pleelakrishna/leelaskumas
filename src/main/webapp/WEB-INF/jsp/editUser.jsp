@@ -28,12 +28,14 @@
 										<form:input path="username" readonly="true"  class="form-control validate" placeholder="Enter Username"/>
 									</div>
 								</div>
+									<c:if test="${cacheUserBean.designation != 1}">
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Current Password</label>
 									<div class="col-md-6">
-										<form:password path="password" class="form-control validate" placeholder="Enter Password"/>
+										<form:password path="password" class="form-control" placeholder="Enter Password"/>
 									</div>
 								</div>
+								</c:if>
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">New Password</label>
 									<div class="col-md-6">
@@ -105,7 +107,7 @@
 								</div>
 								<div class="form-group">
 									<div class="col-md-offset-3 col-md-6">
-										<input type="submit" id="submit1" class="btn btn-success" value="Edit"/>
+										<input type="submit" id="submit1" class="btn btn-success" value="Update"/>
 										<input class="btn-danger btn cancel" type="reset"  value="Reset" />
 									</div>
 								</div>
@@ -180,156 +182,3 @@ $('#cpassword').blur(function() {
 	
 	
 	</script>
-
-
-<%-- <!-- Body starts here -->
-<div class="dashboard-wrapper">
-    <div class="top-bar clearfix">
-      <div class="row gutter">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-          <div class="page-title">
-            <h4>Create User</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="main-container">
- 
- <div class="row gutter">
-      
-      <div class="row gutter">
-<form:form action="../editUser" method="post" modelAttribute="users">
-<table class="table table-bordered table-condensed">
-          <thead>
-          <tr class="primary">
-          <th colspan="2">Create New User
-          </th>
-          </tr>
-           <form:hidden path ="id"/> 
-  <tr>
-    <td class="info">Username</td>
-    <td class="default"><form:input path="username"  readonly="${flag}"  class="form-control validate"/></td>
-  </tr>
-   <tr>
-    <td  class="info">Current Password</td>
-    <td class="default"><form:password path="password"  class="form-control validate"/></td>
-  </tr>
-   <tr>
-    <td  class="info">New Password</td>
-    <td class="default"><form:password path="npassword"  class="form-control validate"/></td>
-  </tr>
-   <tr>
-    <td  class="info">Conform Password</td>
-    <td class="default"><form:password path="cpassword"  class="form-control validate"/></td>
-  </tr>
-    <tr>
-    <td class="info">First Name</td>
-    <td class="default"><form:input path="firstname"  readonly="${flag}"   class="form-control validate onlyCharacters"/></td>
-    </tr>
-    <tr>
-    <td class="info">Last Name</td>
-    <td class="default"><form:input path="lastname" readonly="${flag}"   class="form-control validate onlyCharacters"/></td>
-    </tr>
-      <tr>
-    <td class="info">Mobile No</td>
-    <td class="default"><form:input path="mobilenumber" readonly="${flag}"   class="form-control validate numericOnly"/></td>
-  </tr>
-   <tr>
-    <td class="info">Email</td>
-    <td class="default"><form:input path="email"  readonly="${flag}"  class="form-control validate email"  /></td>
-  </tr>
-   <tr>
-    <td class="info">Designation</td>
-    <td class="default">
-   <form:select path ="designation" items="${roles}" disabled="${flag}"  class="form-control"/> </td>
-  </tr>
-   <tr>
-    <td class="info">Department </td>
-    <td class="default"> 
-    <form:select path ="department" items="${departments}" disabled="${flag}"  class="form-control"/> </td>
-   
-
- <tr>
-    <td class="info">Enable</td>
-    <td class="default"><form:checkbox  path="enabled" disabled="${flag}"  /> </td>
-  </tr>
-   <tr class="primary">
-   <td></td>
-    <td><button type="submit" id="submit1" class="btn btn-danger">Update </button>
-      <input class="btn-danger btn cancel" type="reset"  value="Reset" /></td>
-  </tr>
-
-</table>
-</form:form>
-      </div>
-      
-    </div>
-  </div>
-</div>
-<!-- Body ends here -->
-<script type="text/javascript">
-var cuid=$('#id').val();
-$('#password').blur(function() {
-var cpwd=$(this).val();
-
-$.ajax({
-			type : "GET",
-			url : "getCurrentpwd",
-			data : {"cpwd":cpwd, "cuid":cuid},
-			dataType : "text",
-			success : function(data) {
-				console.log(data);
-				
-				if(data!=cpwd)
-					{
-					alert("Enter valid password")
- 					$('#password').css('border-color', 'red');
-				$('#password').val("");
-					}
-				
-			}
-		});
-
-	}); 
-	
-	
-$('#cpassword').blur(function() {
-	
-	console.log($('#npassword').val())
-	console.log($('#cpassword').val())
-
-	if($('#npassword').val()!=$('#cpassword').val())
-		{
-		alert("Conform password and new password doesn't match")
-		$('#cpassword').css('border-color', 'red');
-		$('#npassword').css('border-color', 'red');
-		$('#cpassword').val("");
-		$('#npassword').val("");
-		
-		}
-	/* else
-		{
-	var upwd=$('#cpassword').val();
-	
-	
-	$.ajax({
-		type : "GET",
-		url : "updatepwd",
-		data : {"upwd":upwd,"cuid":cuid},
-		dataType : "text",
-		success : function(data) {
-			console.log(data);
-			
-		}
-	});
-
-		}	 */
-
-})
-	
-	
-	</script>
-
-
-
- --%>

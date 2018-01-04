@@ -118,6 +118,7 @@ public void updateUser(User user) {
 	users.setLastname(user.getLastname());
 	users.setMobilenumber(user.getMobilenumber());
 	users.setUsername(user.getUsername());
+	users.setReportto(user.getReportto());
 	
 	em.merge(users);
 	

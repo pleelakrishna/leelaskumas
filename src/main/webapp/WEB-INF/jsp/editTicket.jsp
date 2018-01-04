@@ -61,7 +61,7 @@
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Priority </label>
 									<div class="col-sm-9">
 										<form:select path="priority"   class="col-xs-10 col-sm-5" id="form-field-select-1">
-											<form:option value=""></form:option>
+											<form:option value="" label="--- Select ---" />
 											<form:options items="${priority}"></form:options>
 										</form:select>
 									</div>
@@ -71,7 +71,7 @@
 									<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> Assigned to </label>
 									<div class="col-sm-9">
 										<form:select path="assignto"  class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)">
-											<form:option value="" />
+											<form:option value="" label="--- Select ---" />
 										 	<form:options items="${userNames}"/>
 										</form:select>
 									</div>
@@ -105,7 +105,7 @@
 									<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> Status </label>
 									<div class="col-sm-9">
 										<form:select path="kstatus"  class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)">
-											<form:option value="" />
+											<form:option value="" label="--- Select ---" />
 										 	<form:options items="${kpstatuses}"/>
 										</form:select>
 									</div>
@@ -119,14 +119,13 @@
 									<div> <img src=${cissue.uploadfile} alt="car_image" width="150" height="100"/> </div>
 								</div> -->
 								<div class="space-2"></div>
-								<div class="clearfix form-actions">
-									<div class="col-md-offset-3 col-md-9">
-							<input type="submit" id="submit1" class="btn btn-info" value="Update"/>
-										&nbsp; &nbsp; &nbsp;
-										<!-- <button class="btn"  	onclick="javascript:window.location='myView'">
-											<i class="ace-icon fa fa-undo bigger-110"></i> Back
-										</button>
-									</div> -->
+									<div class="clearfix form-actions">
+									<div class="form-group">
+									<div class="col-md-offset-3 col-md-6">
+										<input type="submit" id="submit1"  class="btn btn-success" value="Update"/>
+										<input class="btn-danger btn cancel"  type="reset"  value="Reset" />
+									</div>
+								</div>
 								</div>
 								
 							</form:form>	
@@ -153,11 +152,14 @@ $('#kstatus').on('change',function() {
 	
 	var loginid=${cacheUserBean.id};
 	var tassignby=${cissue.assignby};
+	
 	if($('#kstatus').val()=='1')
 		{
+		
 	if( tassignby!= loginid)
 		{
-		console.log("you are not authorized to close ticket")
+		
+		alert("you are not authorized to close ticket");
 		$('#kstatus').css('border-color', 'red');
 		$('#kstatus').val("");
 		return false;

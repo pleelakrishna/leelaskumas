@@ -132,7 +132,7 @@ span.has-error,span.hasError
 				<a href="#" class="navbar-brand"><img src="img/kumar_logo.png" style="height: 26px;"/></a>
 			</div>
 			<div >
-				<a href="#" class="navbar-brand">Kumar Pumps-Ticket Management system</a>
+				<a href="#" class="navbar-brand">Kumar Pumps - Ticket Management System</a>
 			</div>
 
 			<div class="navbar-buttons navbar-header pull-right" role="navigation">
