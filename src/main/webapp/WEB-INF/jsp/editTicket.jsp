@@ -19,7 +19,7 @@
 							<h1>Edit Ticket</h1>
 						</div>
 						<div class="page-body">
-							<form:form  action="updateIssue" method="post"  modelAttribute="cissue" class="form-horizontal" >
+							<form:form  action="updateIssue" method="post"  modelAttribute="cissue" class="form-horizontal" id="formEdit">
 							<form:hidden path ="id"/> 
 							 <input type="hidden" name="pagname" value=${pagname}>
 								<div class="form-group">
@@ -145,7 +145,7 @@
 <script type="text/javascript">
 $(".createTicketIssues").addClass("active");
 $(function(){
-	 Dropzone.autoDiscover = false;
+// 	 Dropzone.autoDiscover = false;
 });
 
 $('#kstatus').on('change',function() {
@@ -167,5 +167,27 @@ $('#kstatus').on('change',function() {
 		}
 });
 
+$(document).ready(function() { 
+
+	$('#formEdit')
+	.each(function(){
+		$(this).data('serialized', $(this).serialize())
+	})
+    .on('change', function(){
+    	var sub =$.trim($('#subject').val());
+    	var des =$.trim($('#description').val());
+    	$('#subject').val(sub);
+    	$('#description').val(des);
+        $(this)				
+           .find('#submit1')
+                .attr('disabled', $(this).serialize() == $(this).data('serialized'));
+     })
+	.find('input:submit, button:submit')
+		.attr('disabled', true);
+
+     
+	 
+	
+});
 
 </script>
