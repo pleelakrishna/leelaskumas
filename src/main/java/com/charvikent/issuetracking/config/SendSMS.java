@@ -5,6 +5,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import org.springframework.stereotype.Component;
+@Component
 public class SendSMS {
 	
    //public  String  mobileNumber =null;

@@ -1,24 +1,14 @@
 package com.charvikent.issuetracking.service;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 import com.charvikent.issuetracking.config.SendSMS;
@@ -31,30 +21,15 @@ import com.charvikent.issuetracking.model.User;
 @Transactional
 public class UserService {
 
-	//private final static Logger logger = Logger.getLogger(AdminService.class);  
-	private static final String SUBJECT_MAIL_REGISTRATION_CONFIRMATION = "Registration Confirmation";  
-	//private static final String CHARSET_UTF8 = "UTF-8";
+	private final static Logger logger = Logger.getLogger(AdminService.class);  
 
 	@Autowired
 	private UserDao userDao;
-
-	/*@Autowired
-	private ReportIssue reportIssue;*/
-	@Autowired  
-	private VelocityEngine velocityEngine; 
-
-	@Autowired  
-	private JavaMailSender javaMailSender; 
 	
+	@Autowired
+	private SendSMS smsTemplate;
+
 	
-	//String mobileNumber =null;
-    String username = "RKKIDS";
-    String password = "RK@kids987";
-    String from = "RKKIDS";
-    String requestUrl = null;
-    String toAddress = null;
-    
-    //String message=null;
     
     SendSMS smstemplate =new SendSMS();
 
@@ -63,8 +38,8 @@ public class UserService {
 		String msg =user.getFirstname()+" "+user.getLastname()+",  Successfully registered with KPTMS. \n You can login using \n Username:  "+user.getUsername()+"\n password: "+user.getPassword();
 		String mbnum=user.getMobilenumber();
 		userDao.saveuser(user);
-		smstemplate.sendSMSFromClass(msg,mbnum);
-		//sendConfirmationEmail(user);
+		logger.info("Sending message.......");
+		smsTemplate.sendSMSFromClass(msg,mbnum);
 	}
 
 	public List<User> getAllUsers()
@@ -111,42 +86,6 @@ public class UserService {
 		
 	}
 	
-	/*public List<Object> getAllDe*/
-	
-	private void sendConfirmationEmail(final User user) {  
-		try {
-			MimeMessagePreparator preparator = new MimeMessagePreparator() {  
-				@Override  
-				public void prepare(MimeMessage mimeMessage) throws Exception {  
-					MimeMessageHelper message = new MimeMessageHelper(mimeMessage);  
-					message.setTo(user.getEmail());
-
-					message.setSubject(SUBJECT_MAIL_REGISTRATION_CONFIRMATION);  
-					VelocityContext velocityContext = new VelocityContext();
-				
-					
-					velocityContext.put("name",user.getUsername());
-					velocityContext.put("issueId",user.getId());
-					StringWriter stringWriter = new StringWriter();
-					velocityEngine.mergeTemplate("emailtemplate.vm", "UTF-8", velocityContext, stringWriter);
-					
-					//velocityContext.put("user",user);
-					/*message.setText(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine  
-							, "emailtemplate.vm", CHARSET_UTF8, model), true);*/  
-					
-					message.setText(stringWriter.toString(), true);
-					
-				}  
-			};  
-			this.javaMailSender.send(preparator);
-		} catch (MailException e) {
-			e.printStackTrace();
-			System.out.println(e);
-		}  
-	}  
-
-	
-
 		public User  findWithName(String username, String lpassword)
 	    {
 	 
@@ -215,8 +154,6 @@ public class UserService {
 				  
 				  return true;
 		       }
-			 
-
 	}
 		return false;
 	}
@@ -224,17 +161,6 @@ public class UserService {
 	
 	
 	
-	
-	/*public void sendSMS() throws IOException
-	{
-		
-		//message ="hi test";
-		requestUrl  = "http://182.18.160.225/index.php/api/bulk-sms?username="+URLEncoder.encode(username, "UTF-8")+"&password="+ URLEncoder.encode(password, "UTF-8")+"&from="+from+"&to="+URLEncoder.encode(mobileNumber, "UTF-8")+"&message="+URLEncoder.encode(message, "UTF-8")+"&sms_type=2";
-        URL url = new URL(requestUrl);
-        HttpURLConnection uc = (HttpURLConnection)url.openConnection();
-        System.out.println(uc.getResponseMessage());
-        uc.disconnect();
-	}*/
 	
 	
 	

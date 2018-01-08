@@ -237,6 +237,11 @@ public class AdminController {
 		username = username.replaceAll("\\s+","");
 		return userService.checkUserExist(username);
 	}
+	
+	
+	
+	
+
 
 
 

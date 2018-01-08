@@ -160,24 +160,7 @@ $('#cpassword').blur(function() {
 		
 		}
 })
-	/* else
-		{
-	var upwd=$('#cpassword').val();
 	
-	
-	$.ajax({
-		type : "GET",
-		url : "updatepwd",
-		data : {"upwd":upwd,"cuid":cuid},
-		dataType : "text",
-		success : function(data) {
-			console.log(data);
-			
-		}
-	});
-
-		}	 */
-
 
 	
 	

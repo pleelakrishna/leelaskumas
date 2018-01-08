@@ -119,6 +119,13 @@
 									<div> <img src=${cissue.uploadfile} alt="car_image" width="150" height="100"/> </div>
 								</div> -->
 								<div class="space-2"></div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-5">Additional Inofrmation</label>
+									<div class="col-sm-9">
+										<form:textarea path="additionalinfo"   class="col-xs-10 col-sm-5" rows="4"></form:textarea>
+									</div>
+								</div>
+								<div class="space-2"></div>
 									<div class="clearfix form-actions">
 									<div class="form-group">
 									<div class="col-md-offset-3 col-md-6">
@@ -171,18 +178,21 @@ $(document).ready(function() {
 
 	$('#formEdit')
 	.each(function(){
+		var x=$("#formEdit").serializeArray();
 		$(this).data('serialized', $(this).serialize())
 	})
     .on('change', function(){
     	var sub =$.trim($('#subject').val());
     	var des =$.trim($('#description').val());
+    	var additionalinfo =$.trim($('#additionalinfo').val());
     	$('#subject').val(sub);
     	$('#description').val(des);
+    	$('#additionalinfo').val(additionalinfo);
         $(this)				
            .find('#submit1')
                 .attr('disabled', $(this).serialize() == $(this).data('serialized'));
      })
-	.find('input:submit, button:submit')
+	.find('#submit1')
 		.attr('disabled', true);
 
      

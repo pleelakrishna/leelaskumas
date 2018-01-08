@@ -310,6 +310,7 @@ public List<ReportIssue> getAllReportIssues()
      editissue.setSeverity(issue.getSeverity());
      editissue.setSubject(issue.getSubject());
      editissue.setKstatus(issue.getKstatus());
+     editissue.setAdditionalinfo(issue.getAdditionalinfo());
     // editissue.setUploadfile(issue.getUploadfile());
 		em.merge(editissue);
 		
@@ -319,7 +320,7 @@ public List<ReportIssue> getAllReportIssues()
 		slogs.setIassignto(issue.getAssignto());
 		slogs.setIassignby(issue.getAssignby());
 		slogs.setSubject(issue.getSubject());
-		slogs.setDescription(issue.getDescription());
+		slogs.setDescription(issue.getAdditionalinfo());
 		slogs.setKpstatus(issue.getKstatus());
 		
 		em.merge(slogs);

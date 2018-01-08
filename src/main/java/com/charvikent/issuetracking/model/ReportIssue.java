@@ -39,9 +39,16 @@ public class ReportIssue {
 	private Integer gapcount;
 	
 	private String kstatus;
+	private String additionalinfo;
 	
 	
 
+	public String getAdditionalinfo() {
+		return additionalinfo;
+	}
+	public void setAdditionalinfo(String additionalinfo) {
+		this.additionalinfo = additionalinfo;
+	}
 	public String getKstatus() {
 		return kstatus;
 	}
@@ -137,8 +144,11 @@ public class ReportIssue {
 		return "ReportIssue [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", category="
 				+ category + ", severity=" + severity + ", priority=" + priority + ", assignto=" + assignto
 				+ ", subject=" + subject + ", description=" + description + ", uploadfile=" + uploadfile + ", gapdays="
-				+ gapdays + ", gapcount=" + gapcount + ", kstatus=" + kstatus + ", assignby=" + assignby + "]";
+				+ gapdays + ", gapcount=" + gapcount + ", kstatus=" + kstatus + ", additionalinfo=" + additionalinfo
+				+ ", assignby=" + assignby + "]";
 	}
+	
+	
 	
 	
 	
