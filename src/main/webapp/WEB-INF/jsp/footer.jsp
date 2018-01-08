@@ -45,10 +45,13 @@
 	<script src="${pageContext.request.contextPath}/assets/js/jquery.flot.min.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/jquery.flot.pie.min.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/jquery.flot.resize.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.blockUI.min.js"></script>
+	
 
 	<!-- ace scripts -->
 	<script src="${pageContext.request.contextPath}/assets/js/ace-elements.min.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/ace.min.js"></script>
+	
 </body>
 </html>
 <!-- Footer ends here -->

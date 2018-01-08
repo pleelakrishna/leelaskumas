@@ -133,6 +133,9 @@ $.ajax({
 			url : "getCurrentpwd",
 			data : {"cpwd":cpwd, "cuid":cuid},
 			dataType : "text",
+			beforeSend : function() {
+	             $.blockUI({ message: 'Please wait' });
+	          }, 
 			success : function(data) {
 				console.log(data);
 				
@@ -143,7 +146,13 @@ $.ajax({
 				$('#password').val("");
 					}
 				
-			}
+			},
+          complete: function () {
+	            
+	            $.unblockUI();
+	       },
+			error :  function(e){$.unblockUI();console.log(e);}
+			
 		});
 
 	}); 

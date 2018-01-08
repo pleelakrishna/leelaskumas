@@ -49,12 +49,12 @@
 										</div>
 									</div>
 								</div>
-								<div style="display: block;" class="widget-body">
+								<div style="display: block;max-height:300px;overflow:auto;" class="widget-body">
 									<div class="widget-main no-padding">
 										<div class="table-responsive">
 											<table class="table table-bordered table-condensed table-striped table-hover">
 												<tbody>
-													<tr class="my-buglist-bug ">
+													<tr class="my-buglist-bug success">
 													    <th class="nowrap width-13">Issue ID</th>
 														<th class="nowrap width-13">Summary</th>
 														<th class="nowrap width-13">Category</th>
@@ -78,9 +78,9 @@
 														    ${fn:substringAfter(str,"/")}</td>
 														<td class="nowrap width-13">${issue.createdTime }</td>
 														<td class="nowrap width-13">${issue.updatedTime }</td>
-												<td><c:if test="${cacheUserBean.designation == 1}"><td><span><form action="editIssue?id=${issue.id}&pgn=2" method="post">
+														<td><c:if test="${cacheUserBean.designation == 1}"><form action="editIssue?id=${issue.id}&pgn=2" method="post">
             <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
-            </form></span> </td></c:if> <%-- <span><a href="deleteUser/${user.id }">Delete</a></span> --%></td>
+            </form></c:if></td> <%-- <span><a href="deleteUser/${user.id }">Delete</a></span> --%></td>
 													</tr>
 													</c:forEach>
 												</tbody>

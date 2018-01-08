@@ -165,7 +165,7 @@ public class CreateTicketIssueController {
 		return "redirect:viewReportIssues";
 	}
 
-	@RequestMapping("/viewReportIssues")
+	@RequestMapping(value="/viewReportIssues")
 	public String viewReportIssues(Model model) {
 		System.out.println("view report Issues Block");
 
@@ -219,7 +219,7 @@ public class CreateTicketIssueController {
         	  return "redirect:/";
    }
 	
-	@RequestMapping(value = "/viewTicket")
+	@RequestMapping(value = "/viewTicket",method=RequestMethod.POST)
 	public String viewIssue(
 	    @RequestParam(value="id", required=true) String id,Model model){
 		

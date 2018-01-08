@@ -58,7 +58,6 @@
 			</c:if>
 			</div>
 		</td>
-        
         <td>
 		<span><b>${issue.subject}</b></span>
 		<br>
@@ -93,7 +92,7 @@
 		</div>
 	</div>
 
-	<div style="display: block;" class="widget-body">
+	<div style="display: block;max-height:300px;overflow:auto;" class="widget-body">
 		<div class="widget-main no-padding">
 			<div class="table-responsive">
 				<table class="table table-bordered table-condensed table-striped table-hover">
@@ -152,7 +151,7 @@
 		</div>
 	</div>
 
-	<div style="display: block;" class="widget-body">
+	<div style="display: block;max-height:300px;overflow:auto;" class="widget-body">
 		<div class="widget-main no-padding">
 			<div class="table-responsive">
 				<table class="table table-bordered table-condensed table-striped table-hover">
@@ -209,7 +208,7 @@
 		</div>
 	</div>
 
-	<div style="display: block;" class="widget-body">
+	<div style="display: block;max-height:300px;overflow:auto;" class="widget-body">
 		<div class="widget-main no-padding">
 			<div class="table-responsive">
 				<table class="table table-bordered table-condensed table-striped table-hover">
@@ -265,7 +264,7 @@
 		</div>
 	</div>
 
-	<div style="display: block;" class="widget-body">
+	<div style="display: block;max-height:300px;overflow:auto;" class="widget-body">
 		<div class="widget-main no-padding">
 			<div class="table-responsive">
 				<table class="table table-bordered table-condensed table-striped table-hover">

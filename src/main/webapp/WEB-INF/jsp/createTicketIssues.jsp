@@ -185,7 +185,7 @@
 	<link rel="stylesheet" type="text/css" href="http://charvikent.com/mantis/css/dropzone-4.3.0.min.css" />
 <script type="text/javascript">
 $(".createTicketIssues").addClass("active");
-$(function(){
+/* $(function(){
 	 Dropzone.autoDiscover = false;
-})
+}) */
 </script>

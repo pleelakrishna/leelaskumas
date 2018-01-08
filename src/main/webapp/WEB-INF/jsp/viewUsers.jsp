@@ -47,13 +47,14 @@
 										</div>
 									</div>
 								</div>
-								<div style="display: block;" class="widget-body">
+								<div style="display: block;max-height:300px;overflow:auto;"  class="widget-body">
 									<div class="widget-main no-padding">
 										<div class="table-responsive">
-											<table class="table table-bordered table-condensed table-striped table-hover">
-												<tbody>
-													<tr class="my-buglist-bug ">
-														<th class="nowrap width-13">Username</th>
+											<table class="table table-bordered table-condensed table-striped table-hover fixed">
+												<tbody >
+													<tr  class="my-buglist-bug success ">
+													
+														<th class="nowrap width-8">Username</th>
 														<th class="nowrap width-13">E-mail</th>
 														<th class="nowrap width-13">Mobile</th>
 														<th class="nowrap width-13">Designation</th>
@@ -63,7 +64,7 @@
 													</tr>
 													<c:forEach var="user" items="${allUsers}">
 													<tr class="my-buglist-bug ">
-														<td class="nowrap width-13">${user.username }</td>
+														<td class="nowrap width-8">${user.username }</td>
 														<td class="nowrap width-13">${user.email }</td>
 														<td class="nowrap width-13">${user.mobilenumber}</td>
 														<td class="nowrap width-13">${user.designation}</td>

@@ -121,6 +121,9 @@ $.ajax({
 			url : "getUserName",
 			data : {"username":username},
 			dataType : "text",
+			beforeSend : function() {
+	             $.blockUI({ message: 'Please wait' });
+	          }, 
 			success : function(data) {
 				if(data ==='true')
 					{
@@ -134,7 +137,12 @@ $.ajax({
 					$('#submit1').prop('disabled', false);
 					}
 				
-			}
+			},
+			complete: function () {
+	            
+	            $.unblockUI();
+	       },
+			error :  function(e){$.unblockUI();console.log(e);}
 			
 		});
 
