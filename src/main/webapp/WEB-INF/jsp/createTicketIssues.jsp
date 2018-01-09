@@ -119,9 +119,9 @@
 								</div>
 								<div class="space-2"></div>
 								<div class="form-group">
-									<label class="ace-file-input ace-file-multiple col-sm-3 control-label no-padding-right">Attach File(s)</label>
+									<label class="ace-file-input ace-file-multiple col-sm-3 control-label no-padding-right" >Attach File(s)</label>
 									<div class="col-md-9">
-										<input type="file" name="file" id="file" class="col-sm-9">
+										<input type="file" name="file" id="file" class="col-sm-9" multiple="multiple">
 									</div>
 									<!-- <div class="col-md-9">
 										<label class="ace-file-input ace-file-multiple " id="ace-file-multiple"> 

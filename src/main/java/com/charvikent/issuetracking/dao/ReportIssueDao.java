@@ -293,12 +293,12 @@ public List<ReportIssue> getAllReportIssues()
 	}
 
 	public void updateIssue(ReportIssue issue) {
-		
+
      System.out.println(issue);
      System.out.println("enter to edit issue dao block");
-     
+
      ReportIssue editissue=getReportIssueById(issue.getId());
-     
+
      editissue.setAssignto(issue.getAssignto());
      //editissue.setAssignby(issue.getAssignby());
      editissue.setCategory(issue.getCategory());
@@ -309,36 +309,36 @@ public List<ReportIssue> getAllReportIssues()
      editissue.setKstatus(issue.getKstatus());
     // editissue.setUploadfile(issue.getUploadfile());
 		em.merge(editissue);
-		
+
 		KpStatusLogs slogs=new KpStatusLogs();
-		
+
 		slogs.setIssueid(issue.getId().toString());
 		slogs.setIassignto(issue.getAssignto());
 		slogs.setIassignby(issue.getAssignby());
 		slogs.setSubject(issue.getSubject());
 		slogs.setDescription(issue.getDescription());
 		slogs.setKpstatus(issue.getKstatus());
-		
+
 		em.merge(slogs);
 		em.flush();
 
 
 	}
-	
-	
-	
+
+
+
 	@SuppressWarnings("unchecked")
 	public List<KpStatus> getKpStatues() {
 		return em.createQuery("SELECT kpstatus FROM KpStatus kpstatus").getResultList();
 	}
-	
-	
+
+
 	public  Map<String,Integer> getCountByStatusWise() {
-		
+
 		Map<String,Integer> statusCounts =new LinkedHashMap<String,Integer>();
-		
+
 		Integer opentotal=0;
-		
+
 		try {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
@@ -347,9 +347,9 @@ public List<ReportIssue> getAllReportIssues()
 			for (Object[] row : rows) {
 				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
 				statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
-				
+
 			}
-			
+
 			statusCounts.put("Open",opentotal);
 		} catch (Exception e) {
 			System.out.println("error here");
@@ -359,10 +359,10 @@ public List<ReportIssue> getAllReportIssues()
 
 
 	}
-	
-	
-	
-	
+
+
+
+
 
 
 }
