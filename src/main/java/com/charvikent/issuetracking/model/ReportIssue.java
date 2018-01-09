@@ -15,11 +15,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 public class ReportIssue {
 
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer  id;
-	
+
 	@CreationTimestamp
 	private Date createdTime;
 
@@ -32,17 +32,15 @@ public class ReportIssue {
 	private String assignto;
 	private String subject;
 	private String description;
-	private String uploadfile;
+	private  String uploadfile;
 	@Transient
 	private Integer gapdays;
 	@Transient
 	private Integer gapcount;
-	
+
 	private String kstatus;
 	private String additionalinfo;
 	
-	
-
 	public String getAdditionalinfo() {
 		return additionalinfo;
 	}
@@ -68,8 +66,8 @@ public class ReportIssue {
 		this.gapcount = gapcount;
 	}
 
-	private String  assignby; 
-	
+	private String  assignby;
+
 	public String getAssignby() {
 		return assignby;
 	}
@@ -82,8 +80,8 @@ public class ReportIssue {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	
+
+
 	public Date getCreatedTime() {
 		return createdTime;
 	}
@@ -132,13 +130,17 @@ public class ReportIssue {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+
+
+
+
 	public String getUploadfile() {
 		return uploadfile;
 	}
 	public void setUploadfile(String uploadfile) {
 		this.uploadfile = uploadfile;
 	}
-	
 	@Override
 	public String toString() {
 		return "ReportIssue [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", category="
@@ -147,18 +149,5 @@ public class ReportIssue {
 				+ gapdays + ", gapcount=" + gapcount + ", kstatus=" + kstatus + ", additionalinfo=" + additionalinfo
 				+ ", assignby=" + assignby + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

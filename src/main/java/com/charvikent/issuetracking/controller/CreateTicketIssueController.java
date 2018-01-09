@@ -6,7 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 //import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.mail.MessagingException;
 //import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,14 +28,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.charvikent.issuetracking.dao.ReportIssueDao;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.ReportIssue;
-import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.CategoryService;
 import com.charvikent.issuetracking.service.DepartmentService;
 import com.charvikent.issuetracking.service.PriorityService;
@@ -43,10 +44,10 @@ import com.charvikent.issuetracking.service.UserService;
 
 @Controller
 public class CreateTicketIssueController {
-	//private static final String SUBJECT_MAIL_TICKET_ISSUED = "Ticket Issued";
+	// private static final String SUBJECT_MAIL_TICKET_ISSUED = "Ticket Issued";
 
-	//@Autowired
-	//private AdminService adminService;
+	// @Autowired
+	// private AdminService adminService;
 
 	@Autowired
 	private UserService userService;
@@ -63,19 +64,18 @@ public class CreateTicketIssueController {
 	@Autowired
 	private ReportIssueService reportIssueService;
 	@Autowired
-	private DepartmentService  departmentService;
+	private DepartmentService departmentService;
 
 	@Autowired
 	private ReportIssueDao reportIssueDao;
 
-	//@Autowired
-	//private VelocityEngine velocityEngine;
+	// @Autowired
+	// private VelocityEngine velocityEngine;
 
-	//@Autowired
-	//private JavaMailSender sender;
+	// @Autowired
+	// private JavaMailSender sender;
 	@Autowired
 	UserDao userDao;
-
 
 	@RequestMapping("/createTicketIssues")
 	public String createReportIssues(Model model) {
@@ -83,58 +83,84 @@ public class CreateTicketIssueController {
 		model.addAttribute("createTicketIssues", new ReportIssue());
 		// model.addAttribute("adminNames", userService.getAdminNames());
 		model.addAttribute("userNames", userService.getUserName());
-		model.addAttribute("category",categoryService.getCategoryNames());
-		model.addAttribute("departmentNames",departmentService.getDepartmentNames());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		model.addAttribute("departmentNames", departmentService.getDepartmentNames());
 		model.addAttribute("severity", severityService.getSeverityNames());
-		model.addAttribute("priority",  priorityService.getPriorityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
 		return "createTicketIssues";
 	}
 
 	@RequestMapping(value = "/createTicketIssues", method = RequestMethod.POST)
 	public String saveAdmin(@Valid @ModelAttribute("createTicketIssues") ReportIssue reportIssue,
-			@RequestParam("file") MultipartFile file, BindingResult results, Model model, HttpServletRequest request,
-			RedirectAttributes redir) {
+			@RequestParam("file") MultipartFile[] file, BindingResult results, Model model, HttpServletRequest request,
+			RedirectAttributes redir) throws MessagingException, IOException {
 
 		String name = null;
 		//String sTomcatRootPath = null;
 		//String sDirPath = null;
-		String filepath = null;
+		StringBuffer filepath = null;
 		File serverFile = null;
-		try {
-			if (!file.isEmpty()) {
-				byte[] bytes = file.getBytes();
-				name = file.getOriginalFilename();
-				/*
-				 * int n=name.lastIndexOf("."); if(n == -1) { filepath = name;
-				 * }else { String ext1 = FilenameUtils.getExtension(name);
-				 * filepath= name+"."+ext1; //filepath=
-				 * name+file.getContentType(); }
-				 */ System.out.println("+++++++++++++" + filepath);
-				String rootPath = request.getSession().getServletContext().getRealPath("/");
-				// String rootPath = "/home/raju/Charvikent Pvt
-				// Ltd/KhaibarGas/src/main/webapp";
-				System.out.println("rootpath ---------" + rootPath);
-				File dir = new File(rootPath + File.separator + "reportDocuments");
-				if (!dir.exists()) {
-					dir.mkdirs();
-				}
+		 List<String> fileNames = new ArrayList<>();
 
-				serverFile = new File(dir.getAbsolutePath() + File.separator + name);
-				try {
-					try (InputStream is = file.getInputStream();
-							BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
-						int i;
-						while ((i = is.read()) != -1) {
-							stream.write(i);
-						}
-						stream.flush();
-					}
-				} catch (IOException e) {
-					System.out.println("error : " + e);
-				}
-				System.out.println("********after file write**********");
-				filepath = "reportDocuments/" + name;
-				reportIssue.setUploadfile(filepath);
+		//StringJoiner sj = new StringJoiner(" , ");
+
+	    for (MultipartFile fi : file) {
+	    	name = fi.getOriginalFilename();
+			fileNames.add(name);
+	    	filepath = new StringBuffer("reportDocuments/");
+			filepath.append(fileNames);
+			filepath.append(",");
+
+
+	    }
+	    for (MultipartFile files : file) {
+
+			       if (files.isEmpty()) {
+			            continue; //next pls
+			        }
+		try {
+				//if (!file.isEmpty()) {
+									byte[] bytes = files.getBytes();
+									/*name = files.getOriginalFilename();
+									fileNames.add(name);*/
+									/*
+									 * int n=name.lastIndexOf("."); if(n == -1) { filepath = name;
+									 * }else { String ext1 = FilenameUtils.getExtension(name);
+									 * filepath= name+"."+ext1; //filepath=
+									 * name+file.getContentType(); }
+									 */ //System.out.println("+++++++++++++" + filepath);
+									String rootPath = request.getSession().getServletContext().getRealPath("/");
+									// String rootPath = "/home/raju/Charvikent Pvt
+									// Ltd/KhaibarGas/src/main/webapp";
+									System.out.println("rootpath ---------" + rootPath);
+									File dir = new File(rootPath + File.separator + "reportDocuments");
+
+
+									if (!dir.exists()) {
+										dir.mkdirs();
+									}
+
+									serverFile = new File(dir.getAbsolutePath() + File.separator + name);
+									//try {
+										try (InputStream is = files.getInputStream();
+												BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
+											int i;
+											while ((i = is.read()) != -1) {
+												stream.write(i);
+											}
+											stream.flush();
+										//}
+								/*	} catch (IOException e) {
+										System.out.println("error : " + e);
+									}*/
+
+									System.out.println("********after file write**********");
+									/*filepath = new StringBuffer("reportDocuments/");
+									filepath.append(fileNames);
+									filepath.append(",");
+					*/
+
+				reportIssue.setUploadfile(filepath.toString());
 				/*
 				 * sTomcatRootPath = System.getProperty("catalina.base");
 				 * sDirPath = sTomcatRootPath + File.separator + "webapps"+
@@ -144,6 +170,7 @@ public class CreateTicketIssueController {
 				 */
 			}
 
+				//}
 			System.out.print("create report issue block");
 
 			if (results.hasErrors()) {
@@ -151,7 +178,7 @@ public class CreateTicketIssueController {
 				return "redirect:/";
 			}
 
-			reportIssueService.saveReportIssue(reportIssue,serverFile);
+			//reportIssueService.saveReportIssue(reportIssue,serverFile);
 
 
 		} catch (Exception ex) {
@@ -159,6 +186,9 @@ public class CreateTicketIssueController {
 			ex.printStackTrace();
 
 		}
+
+	    }
+	    reportIssueService.saveReportIssue(reportIssue,serverFile);
 
 		redir.addFlashAttribute("msg", "Ticket Issued Successfully");
 		redir.addFlashAttribute("cssMsg", "success");
@@ -174,40 +204,37 @@ public class CreateTicketIssueController {
 		return "viewReportIssues";
 	}
 
-
-	@RequestMapping(value="/editIssue",method = RequestMethod.POST)
-	public   String createReportIssues(@RequestParam(value="id", required=true) String id,
-			@RequestParam(value="pgn", required=false) String pgn,
-			Model model) { 
-		model.addAttribute("pagname",pgn);
+	@RequestMapping(value = "/editIssue", method = RequestMethod.POST)
+	public String createReportIssues(@RequestParam(value = "id", required = true) String id,
+			@RequestParam(value = "pgn", required = false) String pgn, Model model) {
+		model.addAttribute("pagname", pgn);
 		ReportIssue issue = reportIssueService.getReportIssueById(Integer.parseInt(id));
 		model.addAttribute("cissue", issue);
-		
+
 		model.addAttribute("departments", userService.getDepartments());
 		model.addAttribute("userNames", userService.getUserName());
-		model.addAttribute("category",categoryService.getCategoryNames());
+		model.addAttribute("category", categoryService.getCategoryNames());
 		model.addAttribute("severity", severityService.getSeverityNames());
-		model.addAttribute("priority",  priorityService.getPriorityNames());
-		
-		model.addAttribute("kpstatuses",  reportIssueService.getKpStatues());
-		
-		model.addAttribute("pagename","1");
-		
-		
-		//return "updateIssue";
+		model.addAttribute("priority", priorityService.getPriorityNames());
+
+		model.addAttribute("kpstatuses", reportIssueService.getKpStatues());
+
+		model.addAttribute("pagename", "1");
+
+		// return "updateIssue";
 		return "editTicket";
 
 	}
 
 	@RequestMapping(value = "/updateIssue", method = RequestMethod.POST)
-	public String saveIssue(@Valid @ModelAttribute ReportIssue reportIssue,HttpServletRequest request, RedirectAttributes redir) {
+	public String saveIssue(@Valid @ModelAttribute ReportIssue reportIssue, HttpServletRequest request,
+			RedirectAttributes redir) {
 
-		
 		reportIssueService.updateIssue(reportIssue);
 		System.out.println(request.getParameter("xxxxxxx"));
-		
+
 		System.out.println(request.getParameter("pagname"));
-		String pagname=request.getParameter("pagname");
+		String pagname = request.getParameter("pagname");
 
 		redir.addFlashAttribute("msg", "Record Updated Successfully");
 		redir.addFlashAttribute("cssMsg", "warning");
@@ -219,58 +246,50 @@ public class CreateTicketIssueController {
         	  return "redirect:/";
    }
 	
-	@RequestMapping(value = "/viewTicket",method=RequestMethod.POST)
-	public String viewIssue(
-	    @RequestParam(value="id", required=true) String id,Model model){
-		
+	@RequestMapping(value = "/viewTicket",method = RequestMethod.POST)
+	public String viewIssue(@RequestParam(value = "id", required = true) String id, Model model) {
+
 		System.out.print(id);
-		
+
 		ReportIssue issue = reportIssueService.getReportIssueById(Integer.parseInt(id));
 		model.addAttribute("cissue", issue);
 		model.addAttribute("departments", userService.getDepartments());
 		model.addAttribute("userNames", userService.getUserName());
-		model.addAttribute("category",categoryService.getCategoryNames());
+		model.addAttribute("category", categoryService.getCategoryNames());
 		model.addAttribute("severity", severityService.getSeverityNames());
-		model.addAttribute("priority",  priorityService.getPriorityNames());
-		model.addAttribute("kpstatuses",  reportIssueService.getKpStatues());
-		
-		
-		
-			return "ViewTicket";
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("kpstatuses", reportIssueService.getKpStatues());
+
+		return "ViewTicket";
 
 	}
-	
+
 	@RequestMapping("/postEdit")
-	public    String getUserName(HttpServletRequest request, HttpSession session,Model model)
-	{
-		String href=request.getParameter("href");
-		
+	public String getUserName(HttpServletRequest request, HttpSession session, Model model) {
+		String href = request.getParameter("href");
+
 		System.out.println(href);
-		
+
 		String id = href.substring(href.indexOf("=") + 1, href.indexOf("&"));
-		
+
 		System.out.println(id);
-		
-		System.out.println(href.substring(href.length() - 1)); 
-		
-		
-		
-		
-		String pgn=href.substring(href.length() - 1);
-		model.addAttribute("pagname",pgn);
+
+		System.out.println(href.substring(href.length() - 1));
+
+		String pgn = href.substring(href.length() - 1);
+		model.addAttribute("pagname", pgn);
 		ReportIssue issue = reportIssueService.getReportIssueById(Integer.parseInt(id));
 		model.addAttribute("cissue", issue);
 		model.addAttribute("departments", userService.getDepartments());
 		model.addAttribute("userNames", userService.getUserName());
-		model.addAttribute("category",categoryService.getCategoryNames());
+		model.addAttribute("category", categoryService.getCategoryNames());
 		model.addAttribute("severity", severityService.getSeverityNames());
-		model.addAttribute("priority",  priorityService.getPriorityNames());
-		model.addAttribute("kpstatuses",  reportIssueService.getKpStatues());
-		
-		model.addAttribute("pagename","1");
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("kpstatuses", reportIssueService.getKpStatues());
+
+		model.addAttribute("pagename", "1");
 		return "editTicket";
-		
+
 	}
 
-	
 }
