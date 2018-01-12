@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 //import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -31,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.charvikent.issuetracking.config.FilesStuff;
 import com.charvikent.issuetracking.dao.ReportIssueDao;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.ReportIssue;
@@ -65,6 +68,8 @@ public class CreateTicketIssueController {
 	private ReportIssueService reportIssueService;
 	@Autowired
 	private DepartmentService departmentService;
+	@Autowired
+	FilesStuff fileTemplate;
 
 	@Autowired
 	private ReportIssueDao reportIssueDao;
@@ -90,7 +95,7 @@ public class CreateTicketIssueController {
 		return "createTicketIssues";
 	}
 
-	@RequestMapping(value = "/createTicketIssues", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/createTicketIssues", method = RequestMethod.POST)
 	public String saveAdmin(@Valid @ModelAttribute("createTicketIssues") ReportIssue reportIssue,
 			@RequestParam("file") MultipartFile[] file, BindingResult results, Model model, HttpServletRequest request,
 			RedirectAttributes redir) throws MessagingException, IOException {
@@ -121,14 +126,14 @@ public class CreateTicketIssueController {
 		try {
 				//if (!file.isEmpty()) {
 									byte[] bytes = files.getBytes();
-									/*name = files.getOriginalFilename();
-									fileNames.add(name);*/
-									/*
+									name = files.getOriginalFilename();
+									fileNames.add(name);
+									
 									 * int n=name.lastIndexOf("."); if(n == -1) { filepath = name;
 									 * }else { String ext1 = FilenameUtils.getExtension(name);
 									 * filepath= name+"."+ext1; //filepath=
 									 * name+file.getContentType(); }
-									 */ //System.out.println("+++++++++++++" + filepath);
+									  //System.out.println("+++++++++++++" + filepath);
 									String rootPath = request.getSession().getServletContext().getRealPath("/");
 									// String rootPath = "/home/raju/Charvikent Pvt
 									// Ltd/KhaibarGas/src/main/webapp";
@@ -150,24 +155,24 @@ public class CreateTicketIssueController {
 											}
 											stream.flush();
 										//}
-								/*	} catch (IOException e) {
+									} catch (IOException e) {
 										System.out.println("error : " + e);
-									}*/
+									}
 
 									System.out.println("********after file write**********");
-									/*filepath = new StringBuffer("reportDocuments/");
+									filepath = new StringBuffer("reportDocuments/");
 									filepath.append(fileNames);
 									filepath.append(",");
-					*/
+					
 
 				reportIssue.setUploadfile(filepath.toString());
-				/*
+				
 				 * sTomcatRootPath = System.getProperty("catalina.base");
 				 * sDirPath = sTomcatRootPath + File.separator + "webapps"+
 				 * File.separator + "reportDocuments"+ File.separator;
 				 * System.out.println(sDirPath); File file1 = new
 				 * File(sDirPath); file.transferTo(file1);
-				 */
+				 
 			}
 
 				//}
@@ -177,8 +182,8 @@ public class CreateTicketIssueController {
 				//System.out.println("has some errors");
 				return "redirect:/";
 			}
+			reportIssueDao.saveReportIssue(reportIssue);
 
-			//reportIssueService.saveReportIssue(reportIssue,serverFile);
 
 
 		} catch (Exception ex) {
@@ -193,14 +198,30 @@ public class CreateTicketIssueController {
 		redir.addFlashAttribute("msg", "Ticket Issued Successfully");
 		redir.addFlashAttribute("cssMsg", "success");
 		return "redirect:viewReportIssues";
-	}
+	}*/
+	
+	@RequestMapping(value = "/createTicketIssues", method = RequestMethod.POST)
+    public String uploadFiles(@Valid @ModelAttribute("createTicketIssues") ReportIssue reportIssue,  @RequestParam("file") MultipartFile[] uploadedFiles,BindingResult results, Model model,    
+			RedirectAttributes redir) throws IOException, MessagingException {
+        try {
+			for(MultipartFile multipartFile : uploadedFiles) {
+				String fileName = multipartFile.getOriginalFilename();
+				 multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+        reportIssueService.saveReportIssue(reportIssue);
 
+		redir.addFlashAttribute("msg", "Ticket Issued Successfully");
+		redir.addFlashAttribute("cssMsg", "success");
+		return "redirect:viewReportIssues";
+    }
+	
 	@RequestMapping(value="/viewReportIssues")
 	public String viewReportIssues(Model model) {
 		System.out.println("view report Issues Block");
-
 		model.addAttribute("allReportIssues", reportIssueService.getAllReportIssues());
-
 		return "viewReportIssues";
 	}
 
@@ -267,15 +288,10 @@ public class CreateTicketIssueController {
 	@RequestMapping("/postEdit")
 	public String getUserName(HttpServletRequest request, HttpSession session, Model model) {
 		String href = request.getParameter("href");
-
 		System.out.println(href);
-
 		String id = href.substring(href.indexOf("=") + 1, href.indexOf("&"));
-
 		System.out.println(id);
-
 		System.out.println(href.substring(href.length() - 1));
-
 		String pgn = href.substring(href.length() - 1);
 		model.addAttribute("pagname", pgn);
 		ReportIssue issue = reportIssueService.getReportIssueById(Integer.parseInt(id));

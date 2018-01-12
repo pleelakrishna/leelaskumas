@@ -74,8 +74,10 @@
 														<td class="nowrap width-13">${issue.severity}</td>
 														<td class="nowrap width-13">${issue.priority}</td>
 														<td class="nowrap width-16">${issue.assignto}</td>
-														<td class="nowrap width-13"><c:set var="str" value="${issue.uploadfile}" />
-														    ${fn:substringAfter(str,"/")}</td>
+														<td class="nowrap width-16"> <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
+                                                            <c:out value="${mySplit}"/> </c:forTokens></td>
+														<%-- <td class="nowrap width-13"><c:set var="str" value="${issue.uploadfile}" />
+														    ${fn:substringAfter(str,",")}</td> --%>
 														<td class="nowrap width-13">${issue.createdTime }</td>
 														<td class="nowrap width-13">${issue.updatedTime }</td>
 														<td><c:if test="${cacheUserBean.designation == 1}"><form action="editIssue?id=${issue.id}&pgn=2" method="post">

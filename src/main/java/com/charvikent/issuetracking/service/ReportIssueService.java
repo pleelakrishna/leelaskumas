@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.apache.velocity.VelocityContext;
@@ -23,6 +25,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 //import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.charvikent.issuetracking.config.SendSMS;
 import com.charvikent.issuetracking.dao.ReportIssueDao;
@@ -50,10 +53,15 @@ public class ReportIssueService {
 	@Autowired
 	private ReportIssueDao reportIssueDao;
 
-	private User user;
-	  SendSMS smstemplate =new SendSMS();
+	@Autowired
+	HttpServletRequest request;
+
+	//private User user;
+	@Autowired
+	private SendSMS smsTemplate;
+	  //SendSMS smstemplate =new SendSMS();
 	
-	public void saveReportIssue(ReportIssue reportIssue,File serverFile) throws MessagingException, IOException
+	public void saveReportIssue(ReportIssue reportIssue) throws MessagingException, IOException
 	{
 		reportIssueDao.saveReportIssue(reportIssue);
 		//sendConfirmationEmail(reportIssue,user,serverFile);
@@ -61,10 +69,16 @@ public class ReportIssueService {
 		String msg =" A Ticket is assigned to you with id: "+reportIssue.getId();
 		System.out.println("....Sending SMS ....");
 		String  mnum=touser.getMobilenumber();
-		smstemplate.sendSMSFromClass(msg,mnum);
+		//smsTemplate.sendSMSFromClass(msg,mnum);
 	}
 	
 	public List<ReportIssue> getAllReportIssues()
+	{
+		
+		return reportIssueDao.getAllReportIssues();
+	}
+	
+	public List<ReportIssue> getattachments()
 	{
 		
 		return reportIssueDao.getAllReportIssues();
@@ -410,7 +424,12 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		
 		return listissue;
 	}  
+	
+		
+	
+	
+	}
 
 
 
-}
+
