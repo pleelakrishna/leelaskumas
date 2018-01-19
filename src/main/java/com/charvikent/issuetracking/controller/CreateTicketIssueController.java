@@ -248,8 +248,18 @@ public class CreateTicketIssueController {
 	}
 
 	@RequestMapping(value = "/updateIssue", method = RequestMethod.POST)
-	public String saveIssue(@Valid @ModelAttribute ReportIssue reportIssue, HttpServletRequest request,
-			RedirectAttributes redir) {
+	public String saveIssue(@Valid @ModelAttribute ReportIssue reportIssue, @RequestParam("file") MultipartFile[] uploadedFiles, HttpServletRequest request,
+			RedirectAttributes redir) throws IOException {
+		
+		
+		try {
+			for(MultipartFile multipartFile : uploadedFiles) {
+				String fileName = multipartFile.getOriginalFilename();
+				 multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
 
 		reportIssueService.updateIssue(reportIssue);
 		System.out.println(request.getParameter("xxxxxxx"));

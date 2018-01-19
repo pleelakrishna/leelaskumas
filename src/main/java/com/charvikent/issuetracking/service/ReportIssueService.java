@@ -420,8 +420,6 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 			listissue.addAll((Collection<? extends ReportIssue>) reportIssueDao.getIssuesAssignTo(id2));
 		
 		}
-		
-		
 		return listissue;
 	}  
 	

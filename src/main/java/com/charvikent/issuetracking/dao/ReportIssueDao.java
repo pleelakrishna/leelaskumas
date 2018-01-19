@@ -32,11 +32,23 @@ public class ReportIssueDao {
 
 	public void saveReportIssue(ReportIssue reportIssue) {
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
-
 		reportIssue.setAssignby(String.valueOf(objuserBean.getId()));
 		reportIssue.setKstatus("2");
 		reportIssue.setUploadfile(fileTemplate.concurrentFileNames()); 
 		em.persist(reportIssue);
+		KpStatusLogs slogs=new KpStatusLogs();
+
+		slogs.setIssueid(String.valueOf(reportIssue.getId()));
+		slogs.setIassignto(reportIssue.getAssignto());
+		slogs.setSubject(reportIssue.getSubject());
+		slogs.setDescription(reportIssue.getAdditionalinfo());
+		slogs.setKpstatus(reportIssue.getKstatus());
+		slogs.setUploadfiles(fileTemplate.concurrentFileNames());
+
+		em.merge(slogs);
+		
+		
+		
 
 	}
 
@@ -257,13 +269,12 @@ public List<ReportIssue> getAllReportIssues()
 
 
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings("unchecked")
 	public  List<ReportIssue> getRecentlyModified(String id) {
 
 		List<ReportIssue> listissue=new ArrayList<>();
 
 		try {
-			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
 			.createNativeQuery(" select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignby =:custName union (select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignto =:custName )").setParameter("custName", id)
 			.getResultList();
@@ -315,17 +326,18 @@ public List<ReportIssue> getAllReportIssues()
      editissue.setSubject(issue.getSubject());
      editissue.setKstatus(issue.getKstatus());
      editissue.setAdditionalinfo(issue.getAdditionalinfo());
-    // editissue.setUploadfile(issue.getUploadfile());
+     editissue.setUploadfile(fileTemplate.concurrentFileNames());
+     
 		em.merge(editissue);
 
 		KpStatusLogs slogs=new KpStatusLogs();
 
 		slogs.setIssueid(issue.getId().toString());
 		slogs.setIassignto(issue.getAssignto());
-		slogs.setIassignby(issue.getAssignby());
 		slogs.setSubject(issue.getSubject());
 		slogs.setDescription(issue.getAdditionalinfo());
 		slogs.setKpstatus(issue.getKstatus());
+		slogs.setUploadfiles(fileTemplate.concurrentFileNames());
 
 		em.merge(slogs);
 		em.flush();

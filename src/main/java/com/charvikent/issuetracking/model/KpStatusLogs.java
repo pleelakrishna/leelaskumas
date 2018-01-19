@@ -24,7 +24,7 @@ public class KpStatusLogs {
 	
 	private String iassignto;
 	
-	private String iassignby;
+	private String uploadfiles;
 	
 	private String kpstatus;
 	
@@ -64,13 +64,7 @@ public class KpStatusLogs {
 		this.iassignto = iassignto;
 	}
 
-	public String getIassignby() {
-		return iassignby;
-	}
-
-	public void setIassignby(String iassignby) {
-		this.iassignby = iassignby;
-	}
+	
 
 	public String getKpstatus() {
 		return kpstatus;
@@ -96,12 +90,22 @@ public class KpStatusLogs {
 		this.description = description;
 	}
 
+	public String getUploadfiles() {
+		return uploadfiles;
+	}
+
+	public void setUploadfiles(String uploadfiles) {
+		this.uploadfiles = uploadfiles;
+	}
+
 	@Override
 	public String toString() {
 		return "KpStatusLogs [id=" + id + ", statustime=" + statustime + ", issueid=" + issueid + ", iassignto="
-				+ iassignto + ", iassignby=" + iassignby + ", kpstatus=" + kpstatus + ", subject=" + subject
+				+ iassignto + ", uploadfiles=" + uploadfiles + ", kpstatus=" + kpstatus + ", subject=" + subject
 				+ ", description=" + description + "]";
 	}
+
+	
 	
 	
 	

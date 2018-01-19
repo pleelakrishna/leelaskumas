@@ -19,11 +19,11 @@
 							<h1>Edit Ticket</h1>
 						</div>
 						<div class="page-body">
-							<form:form  action="updateIssue" method="post"  modelAttribute="cissue" class="form-horizontal" id="formEdit">
+							<form:form  action="updateIssue" method="post"  modelAttribute="cissue" class="form-horizontal" id="formEdit" enctype="multipart/form-data">
 							<form:hidden path ="id"/> 
 							 <input type="hidden" name="pagname" value=${pagname}>
 								<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right" for="form-field-1">Category </label>
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1">Category </label> 
 									<div class="col-sm-9">
 										<form:select path="category"  class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)" >
 											<form:option value="" label="--- Select ---" />
@@ -125,6 +125,13 @@
 										<form:textarea path="additionalinfo"   class="col-xs-10 col-sm-5" rows="4"></form:textarea>
 									</div>
 								</div>
+								<div class="space-2"></div>
+								<div class="form-group">
+									<label class="ace-file-input ace-file-multiple col-sm-3 control-label no-padding-right" >Attach File(s)</label>
+									<div class="col-md-9">
+										<input type="file" name="file" id="file" class="col-sm-9" multiple="multiple">
+									</div>
+									</div>
 								<div class="space-2"></div>
 									<div class="clearfix form-actions">
 									<div class="form-group">
