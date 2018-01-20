@@ -319,6 +319,8 @@ public List<ReportIssue> getAllReportIssues()
 	}
 
 	public void updateIssue(ReportIssue issue) {
+		
+		User objuserBean = (User) session.getAttribute("cacheUserBean");
 
      System.out.println(issue);
      System.out.println("enter to edit issue dao block");
@@ -343,7 +345,7 @@ public List<ReportIssue> getAllReportIssues()
 		KpStatusLogs slogs=new KpStatusLogs();
 
 		slogs.setIssueid(issue.getId().toString());
-		slogs.setIassignto(issue.getAssignto());
+		slogs.setIassignto(String.valueOf(objuserBean.getId()));
 		slogs.setSubject(issue.getSubject());
 		slogs.setDescription(issue.getAdditionalinfo());
 		slogs.setKpstatus(issue.getKstatus());
@@ -395,12 +397,10 @@ public List<ReportIssue> getAllReportIssues()
 	public Object getRepeatlogsById(int id) {
 		
 		List<KpStatusLogs> listRepeatlogs =new ArrayList<KpStatusLogs>();
-		
-		
 		try {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
-			.createNativeQuery("select description,uploadfiles from kpstatuslogs where issueid =:custName" ).setParameter("custName", id)
+			.createNativeQuery("select l.description,l.uploadfiles,l.statustime,kp.username from kpstatuslogs l,kpusers kp where l.iassignto=kp.id and l.issueid =:custName" ).setParameter("custName", id)
 			.getResultList();
 			for (Object[] row : rows) {
 				System.out.println(row);
@@ -408,6 +408,8 @@ public List<ReportIssue> getAllReportIssues()
 
 				logs.setDescription((String) row[0]);
 				logs.setUploadfiles((String) row[1]);
+				logs.setStatustime((Date)row[2]);
+				logs.setIssueid((String) row[3]);
 				listRepeatlogs.add(logs);
 
 			}

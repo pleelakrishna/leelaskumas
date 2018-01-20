@@ -122,7 +122,7 @@
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-5">Add Note</label>
 									<div class="col-sm-9">
-										<form:textarea path="additionalinfo"   class="col-xs-10 col-sm-5" rows="4"></form:textarea>
+										<form:textarea path="additionalinfo"  placeholder="write about your changes" class="col-xs-10 col-sm-5 validate" rows="4"></form:textarea>
 									</div>
 								</div>
 								<div class="space-2"></div>

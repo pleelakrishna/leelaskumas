@@ -116,54 +116,95 @@
 									<div> <img src=${cissue.uploadfile} alt="car_image" width="150" height="100"/> </div>
 								</div> -->
 								<div class="space-2"></div>
-								<div class="clearfix form-actions">
 									<div class="col-md-offset-3 col-md-9">
 							<input type="submit" id="submit1" class="btn btn-info" value="Back"/>
-										&nbsp; &nbsp; &nbsp;
-										<!-- <button class="btn"  	onclick="javascript:window.location='myView'">
-											<i class="ace-icon fa fa-undo bigger-110"></i> Back
-										</button>
-									</div> -->
+										
 								</div>
-								
-											<input type="hidden" name="max_file_size" value="5000000" />
-	
+
 							</form:form>
 							
-							<c:if test="${not empty repeatLogs}">
-							
-							<c:forEach var="logs" items="${repeatLogs}">
-							
-							<div class="form-group">
-									<label class="col-sm-3 control-label no-padding-right" for="form-field-5">Commit</label>
-									<div class="col-sm-9">
-										<textarea name="description"   class="col-xs-10 col-sm-5" rows="4">
-										  ${logs.description}
-										
-										</textarea>
-									</div>
-						  
-						   <div class="form-group">
-						   Attachment(s)
-						   <c:forTokens items="${logs.uploadfiles}" delims="*" var="mySplit">
-			<a class="attachments" target="_blank" href="leeladocs/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
-		    <%-- < <c:out value="${mySplit}"/>  --%>
-		    </c:forTokens>
-		    </div>
-						   
-						   </c:forEach>
-						   
-						   </c:if>
-						    </div>
+								
+
+						<div class="row">
+							<div class="col-lg-12 col-xs-12">
+							<div id="assigned" class="widget-box widget-color-blue2">
+	<div class="widget-header widget-header-small">
+		<h4 class="widget-title lighter">
+			<i class="ace-icon fa fa-history"></i>
+<a class="white" href="#">Issue History</a> 		</h4>
+		<div class="widget-toolbar">
+			<a data-action="collapse" href="#">
+				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border hidden-xs">
+			<div class="widget-menu">
+     		</div>
+		</div>
+	</div>
+
+	<div style="display: block;" class="widget-body">
+		<div class="widget-main no-padding">
+			<div class="table-responsive">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+<tbody>
+
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13">Date Modified</td>
+        <td class="nowrap width-13">User Name</td>
+        <td class="nowrap width-13">Attachment</td>
+        <td class="nowrap width-13">Change</td>
+</tr>
+<c:forEach var="logs" items="${repeatLogs}">
+<tr class="my-buglist-bug ">
+		
+
+		<td>
+     	<span><a href="#">${logs.statustime}</a></span>	</td>
+     	<td class="nowrap width-13">${logs.issueid}</td>
+     	<td class="nowrap width-13">
+     	<c:forTokens items="${logs.uploadfiles}" delims="*" var="mySplit">
+     	<a class="attachments" target="_blank" href="leeladocs/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
+     	</c:forTokens>
+     	</td>
+     	
+     	<td class="nowrap width-13">  ${logs.description}</td>
+     	
+</tr>
+  </c:forEach>
+
+
+
+
+
+
+
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>	
+
+
+							</div>
+
+
+
+
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+								
 								
 						</div>
 					</div>
 				</div>
-			</div>
 			<!-- /.page-content -->
 		</div>
 		<!-- /.main-content-inner -->
-	</div>
+	
 	<!-- /.main-content -->
 
 <!-- Body ends here -->
@@ -171,8 +212,8 @@
 	<link rel="stylesheet" type="text/css" href="http://charvikent.com/mantis/css/dropzone-4.3.0.min.css" />
 <script type="text/javascript">
 $(".createTicketIssues").addClass("active");
-$(function(){
+/* $(function(){
 	 Dropzone.autoDiscover = false;
-});
+}); */
 
 </script>

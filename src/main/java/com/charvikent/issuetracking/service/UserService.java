@@ -29,7 +29,6 @@ public class UserService {
 	@Autowired
 	private SendSMS smsTemplate;
 
-	
     
     SendSMS smstemplate =new SendSMS();
 

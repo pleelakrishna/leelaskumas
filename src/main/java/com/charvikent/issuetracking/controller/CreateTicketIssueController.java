@@ -207,7 +207,10 @@ public class CreateTicketIssueController {
 			for(MultipartFile multipartFile : uploadedFiles) {
 				String fileName = multipartFile.getOriginalFilename();
 				if(!multipartFile.isEmpty())
+				{
+					reportIssue.setUploadfile("xx");
 				 multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
+				}
 			}
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
@@ -252,13 +255,15 @@ public class CreateTicketIssueController {
 	public String saveIssue(@Valid @ModelAttribute ReportIssue reportIssue, @RequestParam("file") MultipartFile[] uploadedFiles, HttpServletRequest request,
 			RedirectAttributes redir) throws IOException {
 		
-		
 		try {
 			for(MultipartFile multipartFile : uploadedFiles) {
 				String fileName = multipartFile.getOriginalFilename();
 				System.out.println("xxxxxx"+fileName);
 				if(!multipartFile.isEmpty())
+				{
+					reportIssue.setUploadfile("xxx");
 				 multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
+				}
 			}
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
