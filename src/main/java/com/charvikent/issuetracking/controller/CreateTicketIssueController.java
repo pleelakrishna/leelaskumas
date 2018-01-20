@@ -206,6 +206,7 @@ public class CreateTicketIssueController {
         try {
 			for(MultipartFile multipartFile : uploadedFiles) {
 				String fileName = multipartFile.getOriginalFilename();
+				if(!multipartFile.isEmpty())
 				 multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
 			}
 		} catch (IllegalStateException e) {
@@ -255,6 +256,8 @@ public class CreateTicketIssueController {
 		try {
 			for(MultipartFile multipartFile : uploadedFiles) {
 				String fileName = multipartFile.getOriginalFilename();
+				System.out.println("xxxxxx"+fileName);
+				if(!multipartFile.isEmpty())
 				 multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
 			}
 		} catch (IllegalStateException e) {
