@@ -112,7 +112,7 @@
 			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
 			<c:if test="${not empty issue.uploadfile}">
 			    <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
-			<a class="attachments" target="_blank" href="leeladocs/${mySplit}"><i class="fa fa-paperclip fa-lg grey"></i></a>
+			<a class="attachments" target="_blank" href="leeladocs/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
 		    <%-- < <c:out value="${mySplit}"/>  --%>
 		    </c:forTokens>
 		    <%-- <c:out value="is next ${issue.uploadfile}"/></br> --%>

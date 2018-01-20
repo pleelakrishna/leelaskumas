@@ -36,7 +36,10 @@ public class ReportIssueDao {
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
 		reportIssue.setAssignby(String.valueOf(objuserBean.getId()));
 		reportIssue.setKstatus("2");
-		reportIssue.setUploadfile(fileTemplate.concurrentFileNames()); 
+		if(reportIssue.getUploadfile()!=null)
+	     {
+			reportIssue.setUploadfile(fileTemplate.concurrentFileNames());
+	     } 
 		em.persist(reportIssue);
 		KpStatusLogs slogs=new KpStatusLogs();
 
@@ -45,7 +48,10 @@ public class ReportIssueDao {
 		slogs.setSubject(reportIssue.getSubject());
 		slogs.setDescription(reportIssue.getAdditionalinfo());
 		slogs.setKpstatus(reportIssue.getKstatus());
+		if(reportIssue.getUploadfile()!=null)
+	     {
 		slogs.setUploadfiles(fileTemplate.concurrentFileNames());
+	     }
 
 		em.merge(slogs);
 		
@@ -327,9 +333,11 @@ public List<ReportIssue> getAllReportIssues()
      editissue.setSeverity(issue.getSeverity());
      editissue.setSubject(issue.getSubject());
      editissue.setKstatus(issue.getKstatus());
-     editissue.setAdditionalinfo(issue.getAdditionalinfo());
+     //editissue.setAdditionalinfo(issue.getAdditionalinfo());
+     if(issue.getUploadfile()!=null)
+     {
      editissue.setUploadfile(fileTemplate.concurrentFileNames());
-     
+     }
 		em.merge(editissue);
 
 		KpStatusLogs slogs=new KpStatusLogs();
@@ -339,8 +347,10 @@ public List<ReportIssue> getAllReportIssues()
 		slogs.setSubject(issue.getSubject());
 		slogs.setDescription(issue.getAdditionalinfo());
 		slogs.setKpstatus(issue.getKstatus());
+		if(issue.getUploadfile()!=null)
+	     {
 		slogs.setUploadfiles(fileTemplate.concurrentFileNames());
-
+	     }
 		em.merge(slogs);
 		em.flush();
 
