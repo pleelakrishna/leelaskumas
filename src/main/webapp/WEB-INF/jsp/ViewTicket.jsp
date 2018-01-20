@@ -128,7 +128,34 @@
 								
 											<input type="hidden" name="max_file_size" value="5000000" />
 	
-							</form:form>	
+							</form:form>
+							
+							<c:if test="${not empty repeatLogs}">
+							
+							<c:forEach var="logs" items="${repeatLogs}">
+							
+							<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-5">Commit</label>
+									<div class="col-sm-9">
+										<textarea name="description"   class="col-xs-10 col-sm-5" rows="4">
+										  ${logs.description}
+										
+										</textarea>
+									</div>
+						  
+						   <div class="form-group">
+						   Attachment(s)
+						   <c:forTokens items="${logs.uploadfiles}" delims="*" var="mySplit">
+			<a class="attachments" target="_blank" href="leeladocs/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
+		    <%-- < <c:out value="${mySplit}"/>  --%>
+		    </c:forTokens>
+		    </div>
+						   
+						   </c:forEach>
+						   
+						   </c:if>
+						    </div>
+								
 						</div>
 					</div>
 				</div>

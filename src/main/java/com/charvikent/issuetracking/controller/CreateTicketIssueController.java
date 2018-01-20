@@ -290,6 +290,9 @@ public class CreateTicketIssueController {
 		model.addAttribute("severity", severityService.getSeverityNames());
 		model.addAttribute("priority", priorityService.getPriorityNames());
 		model.addAttribute("kpstatuses", reportIssueService.getKpStatues());
+		System.out.println(reportIssueService.getrepeatLogsById(Integer.parseInt(id)));
+		
+		model.addAttribute("repeatLogs",reportIssueService.getrepeatLogsById(Integer.parseInt(id)));
 
 		return "ViewTicket";
 

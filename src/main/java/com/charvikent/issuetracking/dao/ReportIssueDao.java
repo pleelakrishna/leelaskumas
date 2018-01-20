@@ -20,6 +20,8 @@ import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 @Repository
 public class ReportIssueDao {
 
@@ -378,6 +380,39 @@ public List<ReportIssue> getAllReportIssues()
 		return statusCounts;
 
 
+	}
+
+	public Object getRepeatlogsById(int id) {
+		
+		List<KpStatusLogs> listRepeatlogs =new ArrayList<KpStatusLogs>();
+		
+		
+		try {
+			@SuppressWarnings("unchecked")
+			List<Object[]> rows = em
+			.createNativeQuery("select description,uploadfiles from kpstatuslogs where issueid =:custName" ).setParameter("custName", id)
+			.getResultList();
+			for (Object[] row : rows) {
+				System.out.println(row);
+				KpStatusLogs logs=new KpStatusLogs();
+
+				logs.setDescription((String) row[0]);
+				logs.setUploadfiles((String) row[1]);
+				listRepeatlogs.add(logs);
+
+			}
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		for(KpStatusLogs l:listRepeatlogs)
+		{
+			System.out.println(l.getDescription());
+			System.out.println(l.getDescription());
+			
+		}
+		return listRepeatlogs;
 	}
 
 

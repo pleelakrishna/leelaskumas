@@ -421,7 +421,14 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		
 		}
 		return listissue;
+	}
+
+	public Object getrepeatLogsById(int id) {
+		return reportIssueDao.getRepeatlogsById(id);
 	}  
+	
+	
+	
 	
 		
 	

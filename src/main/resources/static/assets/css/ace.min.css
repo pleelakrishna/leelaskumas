@@ -1898,13 +1898,13 @@ display:inline-block
 }
 .sidebar.sidebar-fixed {
 	position:fixed;
-	top:auto;
+	top:50px;
 	float:none!important;
 	z-index:1027
 }
 .sidebar.sidebar-fixed:before {
 	height:5000px;
-	top:auto;
+	top:50px;
 	bottom:auto
 }
 .sidebar-scroll-native {
@@ -3460,13 +3460,9 @@ width:744px!important
 }
 .main-content-inner {
 	float:left;
-	width:100%
-}
-.main-content .sidebar:before {
-	top:150px
-}
-@media only screen and (min-width:992px) {
-body.mob-safari .sidebar.h-sidebar+.main-content .sidebar.sidebar-fixed:not(.h-sidebar) {
+	width:100%;
+	margin-top:50px;
+}rgar.h-sidebar+.main-content .sidebar.sidebar-fixed:not(.h-sidebar) {
 top:131px
 }
 body.mob-safari .sidebar.h-sidebar.no-gap+.main-content .sidebar.sidebar-fixed:not(.h-sidebar) {

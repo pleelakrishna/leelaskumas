@@ -9,7 +9,7 @@
 		<put-attribute name="title" value="" />
 		<put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />
 		<put-attribute name="menu" value="/WEB-INF/jsp/menu.jsp" />
-        <!-- <put-attribute name="body" value="/WEB-INF/jsp/login1.jsp" /> -->
+       <put-attribute name="body" value="/WEB-INF/jsp/login1.jsp" />
         <put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />
 	</definition>

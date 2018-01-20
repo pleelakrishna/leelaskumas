@@ -8,12 +8,12 @@
 			try{ace.settings.loadState('main-container')}catch(e){}
 		</script>
 
-		<div id="sidebar" class="sidebar sidebar-fixed responsive compact">
+		<div id="sidebar" class="sidebar  sidebar-fixed responsive compact">
 			<script type="text/javascript">
 				try{ace.settings.loadState('sidebar')}catch(e){}
 			</script>
 
-			<div class="sidebar-shortcuts sidebar-fixed sidebar-shortcuts-mini compact" id="sidebar-shortcuts">
+			<div class="sidebar-shortcuts  sidebar-shortcuts-mini compact" id="sidebar-shortcuts">
 				<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
 					<span class="btn btn-success"></span>myView
 					<span class="btn btn-info"></span>
