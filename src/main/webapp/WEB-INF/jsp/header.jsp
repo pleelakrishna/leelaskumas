@@ -140,7 +140,7 @@ span.has-error,span.hasError
 			<div class="navbar-buttons navbar-header pull-right" role="navigation">
 				<ul class="nav ace-nav">
 					<li class="blue "><a href="createTicketIssues">Create Ticket</a></li>
-					<li class="light-blue dropdown-modal">
+					<li class="blue">
 						<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 							Hi ${cacheUserBean.username} <i class="ace-icon fa fa-caret-down"></i>
 						</a>

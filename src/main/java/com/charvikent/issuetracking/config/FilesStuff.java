@@ -43,7 +43,7 @@ public class FilesStuff {
 	public  File   makeDirectory()
 	{
 		 String path = request.getServletContext().getRealPath("/");
-    	 File dir = new File (path +"leeladocs");
+    	 File dir = new File (path +"reportDocuments");
     	 if (!dir.exists()) {
 				dir.mkdirs();
 			}
@@ -63,6 +63,9 @@ public class FilesStuff {
 	{
 		File dir=makeDirectory();
 		File  moveFile = new File(dir,fileName);
+		
+		
+		
 		
 		if(moveFile.exists()){
 			  System.out.println("file exists already");
@@ -99,6 +102,16 @@ public class FilesStuff {
          System.out.println(sfn2);
 		
 		return sfn2;
+	}
+	
+	
+	/**call this method after concurrentFileNames() insertion in dao layer
+	 * 
+	 */
+	public void clearFiles()
+	{
+		 fileNames.clear();
+		
 	}
 
 

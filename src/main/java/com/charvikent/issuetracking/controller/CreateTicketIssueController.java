@@ -1,15 +1,7 @@
 package com.charvikent.issuetracking.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Timestamp;
 //import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import javax.mail.MessagingException;
 //import javax.mail.internet.MimeMessage;
@@ -71,8 +63,6 @@ public class CreateTicketIssueController {
 	@Autowired
 	FilesStuff fileTemplate;
 
-	@Autowired
-	private ReportIssueDao reportIssueDao;
 
 	// @Autowired
 	// private VelocityEngine velocityEngine;
@@ -95,111 +85,6 @@ public class CreateTicketIssueController {
 		return "createTicketIssues";
 	}
 
-	/*@RequestMapping(value = "/createTicketIssues", method = RequestMethod.POST)
-	public String saveAdmin(@Valid @ModelAttribute("createTicketIssues") ReportIssue reportIssue,
-			@RequestParam("file") MultipartFile[] file, BindingResult results, Model model, HttpServletRequest request,
-			RedirectAttributes redir) throws MessagingException, IOException {
-
-		String name = null;
-		//String sTomcatRootPath = null;
-		//String sDirPath = null;
-		StringBuffer filepath = null;
-		File serverFile = null;
-		 List<String> fileNames = new ArrayList<>();
-
-		//StringJoiner sj = new StringJoiner(" , ");
-
-	    for (MultipartFile fi : file) {
-	    	name = fi.getOriginalFilename();
-			fileNames.add(name);
-	    	filepath = new StringBuffer("reportDocuments/");
-			filepath.append(fileNames);
-			filepath.append(",");
-
-
-	    }
-	    for (MultipartFile files : file) {
-
-			       if (files.isEmpty()) {
-			            continue; //next pls
-			        }
-		try {
-				//if (!file.isEmpty()) {
-									byte[] bytes = files.getBytes();
-									name = files.getOriginalFilename();
-									fileNames.add(name);
-									
-									 * int n=name.lastIndexOf("."); if(n == -1) { filepath = name;
-									 * }else { String ext1 = FilenameUtils.getExtension(name);
-									 * filepath= name+"."+ext1; //filepath=
-									 * name+file.getContentType(); }
-									  //System.out.println("+++++++++++++" + filepath);
-									String rootPath = request.getSession().getServletContext().getRealPath("/");
-									// String rootPath = "/home/raju/Charvikent Pvt
-									// Ltd/KhaibarGas/src/main/webapp";
-									System.out.println("rootpath ---------" + rootPath);
-									File dir = new File(rootPath + File.separator + "reportDocuments");
-
-
-									if (!dir.exists()) {
-										dir.mkdirs();
-									}
-
-									serverFile = new File(dir.getAbsolutePath() + File.separator + name);
-									//try {
-										try (InputStream is = files.getInputStream();
-												BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
-											int i;
-											while ((i = is.read()) != -1) {
-												stream.write(i);
-											}
-											stream.flush();
-										//}
-									} catch (IOException e) {
-										System.out.println("error : " + e);
-									}
-
-									System.out.println("********after file write**********");
-									filepath = new StringBuffer("reportDocuments/");
-									filepath.append(fileNames);
-									filepath.append(",");
-					
-
-				reportIssue.setUploadfile(filepath.toString());
-				
-				 * sTomcatRootPath = System.getProperty("catalina.base");
-				 * sDirPath = sTomcatRootPath + File.separator + "webapps"+
-				 * File.separator + "reportDocuments"+ File.separator;
-				 * System.out.println(sDirPath); File file1 = new
-				 * File(sDirPath); file.transferTo(file1);
-				 
-			}
-
-				//}
-			System.out.print("create report issue block");
-
-			if (results.hasErrors()) {
-				//System.out.println("has some errors");
-				return "redirect:/";
-			}
-			reportIssueDao.saveReportIssue(reportIssue);
-
-
-
-		} catch (Exception ex) {
-			System.out.println(ex);
-			ex.printStackTrace();
-
-		}
-
-	    }
-	    reportIssueService.saveReportIssue(reportIssue,serverFile);
-
-		redir.addFlashAttribute("msg", "Ticket Issued Successfully");
-		redir.addFlashAttribute("cssMsg", "success");
-		return "redirect:viewReportIssues";
-	}*/
-	
 	@RequestMapping(value = "/createTicketIssues", method = RequestMethod.POST)
     public String uploadFiles(@Valid @ModelAttribute("createTicketIssues") ReportIssue reportIssue,  @RequestParam("file") MultipartFile[] uploadedFiles,BindingResult results, Model model,    
 			RedirectAttributes redir) throws IOException, MessagingException {
@@ -208,7 +93,7 @@ public class CreateTicketIssueController {
 				String fileName = multipartFile.getOriginalFilename();
 				if(!multipartFile.isEmpty())
 				{
-					reportIssue.setUploadfile("xx");
+					reportIssue.setUploadfile("user browsed file(s)");            //add dummy value to check file upload status in dao layers
 				 multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
 				}
 			}
@@ -261,7 +146,7 @@ public class CreateTicketIssueController {
 				System.out.println("xxxxxx"+fileName);
 				if(!multipartFile.isEmpty())
 				{
-					reportIssue.setUploadfile("xxx");
+					reportIssue.setUploadfile("user browsed file(s)");          //add dummy value to check file upload status in dao layers
 				 multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
 				}
 			}

@@ -54,8 +54,10 @@
 			<%-- <a class="edit"   href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> --%>
 			<i class="fa fa-minus fa-lg ${issue.severity}"  title= "${issue.priority}"></i>
 			<c:if test="${not empty issue.uploadfile}">
-			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
-			</c:if>
+			    <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
+			<a class="attachments" target="_blank" href="reportDocuments/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
+		    </c:forTokens>
+		   </c:if>
 			</div>
 		</td>
         <td>
@@ -112,10 +114,8 @@
 			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
 			<c:if test="${not empty issue.uploadfile}">
 			    <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
-			<a class="attachments" target="_blank" href="leeladocs/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
-		    <%-- < <c:out value="${mySplit}"/>  --%>
+			<a class="attachments" target="_blank" href="reportDocuments/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
 		    </c:forTokens>
-		    <%-- <c:out value="is next ${issue.uploadfile}"/></br> --%>
 		   </c:if>
 		</div>
 		</td>
@@ -173,8 +173,10 @@
             </form> --%>
 			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
 			<c:if test="${not empty issue.uploadfile}">
-			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
-		</c:if>
+			    <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
+			<a class="attachments" target="_blank" href="reportDocuments/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
+		    </c:forTokens>
+		   </c:if>
 		</div>
 		</td>
         
@@ -227,8 +229,10 @@
 			<i class="fa fa-square fa-status-box ${issue.kstatus}" title="${issue.assignby}"></i>
 			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
 			<c:if test="${not empty issue.uploadfile}">
-			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
-	      </c:if>
+			    <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
+			<a class="attachments" target="_blank" href="reportDocuments/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
+		    </c:forTokens>
+		   </c:if>
 	</div>
 		</td>
         <td>
@@ -287,8 +291,10 @@
 			<%-- <a class="edit"   href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> --%>
 			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
 			<c:if test="${not empty issue.uploadfile}">
-			<a class="attachments" target="_blank" href="${issue.uploadfile}"><i class="fa fa-paperclip fa-lg grey"></i></a>
-		  </c:if>
+			    <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
+			<a class="attachments" target="_blank" href="reportDocuments/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
+		    </c:forTokens>
+		   </c:if>
 		</div>
 		</td>
         

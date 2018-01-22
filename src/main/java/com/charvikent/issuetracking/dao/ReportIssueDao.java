@@ -39,6 +39,7 @@ public class ReportIssueDao {
 		if(reportIssue.getUploadfile()!=null)
 	     {
 			reportIssue.setUploadfile(fileTemplate.concurrentFileNames());
+			
 	     } 
 		em.persist(reportIssue);
 		KpStatusLogs slogs=new KpStatusLogs();
@@ -51,9 +52,10 @@ public class ReportIssueDao {
 		if(reportIssue.getUploadfile()!=null)
 	     {
 		slogs.setUploadfiles(fileTemplate.concurrentFileNames());
+		fileTemplate.clearFiles();
 	     }
 
-		em.merge(slogs);
+		em.persist(slogs);
 		
 		
 		
@@ -349,9 +351,11 @@ public List<ReportIssue> getAllReportIssues()
 		slogs.setSubject(issue.getSubject());
 		slogs.setDescription(issue.getAdditionalinfo());
 		slogs.setKpstatus(issue.getKstatus());
+		
 		if(issue.getUploadfile()!=null)
 	     {
 		slogs.setUploadfiles(fileTemplate.concurrentFileNames());
+		fileTemplate.clearFiles();
 	     }
 		em.merge(slogs);
 		em.flush();

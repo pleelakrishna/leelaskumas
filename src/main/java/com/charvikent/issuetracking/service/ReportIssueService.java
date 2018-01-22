@@ -69,7 +69,7 @@ public class ReportIssueService {
 		String msg =" A Ticket is assigned to you with id: "+reportIssue.getId();
 		System.out.println("....Sending SMS ....");
 		String  mnum=touser.getMobilenumber();
-		smsTemplate.sendSMSFromClass(msg,mnum);
+		//smsTemplate.sendSMSFromClass(msg,mnum);
 	}
 	
 	public List<ReportIssue> getAllReportIssues()
