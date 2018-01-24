@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,8 +21,6 @@ import com.charvikent.issuetracking.model.KpStatus;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 @Repository
 public class ReportIssueDao {
@@ -71,8 +71,8 @@ public List<ReportIssue> getAllReportIssues()
 
 
 
-	public List<ReportIssue> getIssuesAssignBy(String id) {
-		List<ReportIssue> listissue=new ArrayList<>();
+	public Set<ReportIssue> getIssuesAssignBy(String id) {
+		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
 		try {
 			@SuppressWarnings("unchecked")
@@ -105,14 +105,13 @@ public List<ReportIssue> getAllReportIssues()
 	}
 
 	public Object getIssuesAssignTo(String id) {
-		List<ReportIssue> listissue=new ArrayList<>();
+		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
 		try {
 			@SuppressWarnings("unchecked")
 			List <Object[]> rows=em.createNativeQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.created_time,c.category,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s ,kpstatus ks  where r.assignto=u.id and r.kstatus=ks.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus in(2,6) and r.assignto =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
-				System.out.println(row);
 				ReportIssue issue =new ReportIssue();
 				int j = Integer.parseInt(String.valueOf(row[0]));
 				Integer intobj=new Integer(j);
@@ -142,7 +141,9 @@ public List<ReportIssue> getAllReportIssues()
 
 
 	public Object getIssuesAssignToResolved(String id) {
-		List<ReportIssue> listissue=new ArrayList<>();
+		//List<ReportIssue> listissue=new ArrayList<>();
+		
+		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
 		try {
 			@SuppressWarnings("unchecked")
@@ -183,8 +184,8 @@ public List<ReportIssue> getAllReportIssues()
 
 
 
-	public List<ReportIssue> getAllReportIssues() {
-		List<ReportIssue> listissue=new ArrayList<>();
+	public Set<ReportIssue> getAllReportIssues() {
+		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
 		try {
 			@SuppressWarnings("unchecked")
@@ -230,9 +231,6 @@ public List<ReportIssue> getAllReportIssues()
 
 		for (Object[] row : rows) {
 			issuegap = new ReportIssue();
-			//System.out.print(Integer.parseInt(String.valueOf(row[0])));
-			//System.out.print(Integer.parseInt(String.valueOf(row[1])));
-
 			issuegap.setGapdays(Integer.parseInt(String.valueOf(row[0])));
 			issuegap.setGapcount(Integer.parseInt(String.valueOf(row[1])));
 			listissuegap.add(issuegap);
@@ -259,39 +257,27 @@ public List<ReportIssue> getAllReportIssues()
 
 		for (Object[] row : rows) {
 			issuegap = new ReportIssue();
-			System.out.print(Integer.parseInt(String.valueOf(row[0])));
-			System.out.print(Integer.parseInt(String.valueOf(row[1])));
-
 			issuegap.setGapdays(Integer.parseInt(String.valueOf(row[0])));
 			issuegap.setGapcount(Integer.parseInt(String.valueOf(row[1])));
 			listissuegap.add(issuegap);
 
 			issueTimelines.put(Integer.parseInt(String.valueOf(row[0])), Integer.parseInt(String.valueOf(row[1])));
 		}
-
-
 		return issueTimelines;
 
 	}
 
-
-
-
-
-
 	@SuppressWarnings("unchecked")
-	public  List<ReportIssue> getRecentlyModified(String id) {
+	public  Set<ReportIssue> getRecentlyModified(String id) {
 
-		List<ReportIssue> listissue=new ArrayList<>();
+		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
 		try {
 			List<Object[]> rows = em
 			.createNativeQuery(" select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignby =:custName union (select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignto =:custName )").setParameter("custName", id)
 			.getResultList();
 			for (Object[] row : rows) {
-				System.out.println(row);
 				ReportIssue issue = new ReportIssue();
-
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
 				issue.setAssignto((String) row[1]);
 				issue.setSeverity((String) row[2]);
@@ -323,12 +309,7 @@ public List<ReportIssue> getAllReportIssues()
 	public void updateIssue(ReportIssue issue) {
 		
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
-
-     System.out.println(issue);
-     System.out.println("enter to edit issue dao block");
-
      ReportIssue editissue=getReportIssueById(issue.getId());
-
      editissue.setAssignto(issue.getAssignto());
      //editissue.setAssignby(issue.getAssignby());
      editissue.setCategory(issue.getCategory());
@@ -422,12 +403,6 @@ public List<ReportIssue> getAllReportIssues()
 			e.printStackTrace();
 		}
 		
-		for(KpStatusLogs l:listRepeatlogs)
-		{
-			System.out.println(l.getDescription());
-			System.out.println(l.getDescription());
-			
-		}
 		return listRepeatlogs;
 	}
 

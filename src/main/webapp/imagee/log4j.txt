@@ -1,0 +1,1 @@
+This is a Open Source tool given by Apache, for only java projects, to record or write the status of an application at various places

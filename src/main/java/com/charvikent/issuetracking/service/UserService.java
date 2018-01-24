@@ -55,7 +55,7 @@ public class UserService {
 		{
 		List<Department> departmentList= userDao.getDepartmentslist();
 		for(Department bean: departmentList){
-			statesMap.put(bean.getId(), bean.getDepartment());
+			statesMap.put(bean.getId(), bean.getName());
 		}
 				
 	} catch (Exception e) {
@@ -157,12 +157,5 @@ public class UserService {
 		return false;
 	}
 
-	
-	
-	
-	
-	
-	
-	
 
 }

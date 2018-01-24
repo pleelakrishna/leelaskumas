@@ -1,1 +1,0 @@
-$(function(){$(".table-databar").databar()});

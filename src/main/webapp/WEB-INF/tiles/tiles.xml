@@ -8,8 +8,7 @@
 	<definition name="base.definition" template="/WEB-INF/jsp/layout.jsp">
 		<put-attribute name="title" value="" />
 		<put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />
-		<put-attribute name="menu" value="/WEB-INF/jsp/menu.jsp" />
-       <put-attribute name="body" value="/WEB-INF/jsp/login1.jsp" />
+<!--        <put-attribute name="body" value="/WEB-INF/jsp/login1.jsp" /> -->
         <put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />
 	</definition>
@@ -64,9 +63,25 @@
 <!-- 		<put-attribute name="title" value="" /> -->
 		<put-attribute name="body" value="/WEB-INF/jsp/ViewTicket.jsp" />
 	</definition>
+	
 	<definition name="editTicket" extends="base.definition">
 <!-- 		<put-attribute name="title" value="" /> -->
 		<put-attribute name="body" value="/WEB-INF/jsp/editTicket.jsp" />
 	</definition>
+	
+	<definition name="dept" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/dept.jsp" />
+	</definition>
+	<definition name="desig" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/desig.jsp" />
+	</definition>
+	<definition name="org" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/org.jsp" />
+	</definition>
+	<definition name="orgDept" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/orgDept.jsp" />
+	</definition>
+	
+	
 
 </tiles-definitions>

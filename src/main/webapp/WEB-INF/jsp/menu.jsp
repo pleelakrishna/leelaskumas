@@ -60,7 +60,31 @@
 				<li class="createUser">
 					<a href="createUser">
 						<i class="menu-icon fa fa-user"></i>
-						<span class="menu-text">Create User</span>
+						<span class="menu-text">User Master</span>
+					</a>
+				</li>
+				<li class="createDept">
+					<a href="dept">
+						<i class="menu-icon fa fa-user"></i>
+						<span class="menu-text">Department Master</span>
+					</a>
+				</li>
+				<li class="createDesig">
+					<a href="desig">
+						<i class="menu-icon fa fa-user"></i>
+						<span class="menu-text">Designation Master</span>
+					</a>
+				</li>
+				<li class="createOrg">
+					<a href="org">
+						<i class="menu-icon fa fa-user"></i>
+						<span class="menu-text">Organization Master</span>
+					</a>
+				</li>
+				<li class="createOrgDept">
+					<a href="orgDept">
+						<i class="menu-icon fa fa-user"></i>
+						<span class="menu-text">OrgDept Master</span>
 					</a>
 				</li>
 				</c:if>

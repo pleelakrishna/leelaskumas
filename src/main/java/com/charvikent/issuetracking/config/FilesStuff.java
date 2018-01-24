@@ -63,10 +63,6 @@ public class FilesStuff {
 	{
 		File dir=makeDirectory();
 		File  moveFile = new File(dir,fileName);
-		
-		
-		
-		
 		if(moveFile.exists()){
 			  System.out.println("file exists already");
 			 String reNamedFile=renameFile(fileName);

@@ -38,53 +38,14 @@ public class AdminController {
 	@Autowired
 	HttpSession session;
 
-	/*@RequestMapping("/")
-	public String homePage(Model model) {
-		model.addAttribute("adminForm", new Admin());
-		return "login";
-
-	}*/
-
-	/*@RequestMapping(value = "/summary", method = RequestMethod.POST)
-	public String saveAdmin(@Valid @ModelAttribute("adminForm") Admin admin, BindingResult bindingresults, Model model,
-			HttpSession session, HttpServletRequest request, RedirectAttributes redir) {
-		User lbean;
-
-		if (bindingresults.hasErrors()) {
-			System.out.println("has some errors");
-			return "createUser";
-		}
-
-		try {
-			lbean = userService.findWithName(admin.getName(), admin.getPassword());
-			System.out.println(lbean);
-			if (lbean != null) {
-				session.setAttribute("cacheUserBean", lbean);
-				return "summary";
-			} else {
-				redir.addFlashAttribute("msg", "Invalid Crediantals");
-				return "redirect:/";
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-			System.out.println("enter valid user name");
-		}
-
-		return "redirect:/";
-	}*/
-
 	@RequestMapping("/summary")
 	public String summary(Model model) {
 		return "summary";
 	}
 
-
-
-
 	@RequestMapping("/createUser")
 	public String homeUser(Model model) {
 		model.addAttribute("userForm", new User());
-		System.out.print(userService.getDepartments());
 		model.addAttribute("departments", userService.getDepartments());
 		model.addAttribute("roles", userService.getRoles());
 		model.addAttribute("userNames", userService.getUserName());
@@ -121,43 +82,18 @@ public class AdminController {
 
 	@RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable("id") String id) {
-		
 		userService.deleteUser(Integer.parseInt(id));
 		return "redirect:../viewUsers";
 
 	}
 
 
-
-	/*@RequestMapping(value = "/editUser/{id}", method = RequestMethod.GET)
-	public String editUser(@PathVariable("id") String id, Model model) {
-		System.out.println("enter edit block");
-
-		User users = userService.getUserById(Integer.parseInt(id));
-		model.addAttribute("users", users);
-		model.addAttribute("departments", userService.getDepartments());
-		model.addAttribute("roles", userService.getRoles());
-
-		return "editUser";
-
-	}*/
-
-
-
-
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String editProfile( Model model,HttpSession session) {
-		System.out.println(" profile edit block");
 
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
 
 		Integer id=objuserBean.getId();
-
-		System.out.println(objuserBean.getMobilenumber());
-		System.out.println(objuserBean.getDepartment());
-		System.out.println(objuserBean.getId());
-
-
 		return "redirect:edit?id="+id;
 
 	}
@@ -182,8 +118,6 @@ public class AdminController {
 
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
 	public String edit(@Valid @ModelAttribute User user, RedirectAttributes redir) {
-		System.out.println("post edit");
-		System.out.println("edit user postmethod");
 		userService.updateUser(user);
 		redir.addFlashAttribute("msg", "Record Updated Successfully");
 		redir.addFlashAttribute("cssMsg", "warning");
@@ -213,11 +147,7 @@ public class AdminController {
 	public  @ResponseBody  String setUpdatePwd(HttpServletRequest request, HttpSession session)
 	{
 		if(null != request.getParameter("upwd"))
-		{//return cylindermasterDao.getCylinderCapacityByID(Integer.parseInt(request.getParameter("cpwd")));
-
-		/*	System.out.println(request.getParameter("upwd"));
-			System.out.println(request.getParameter("cuid"));*/
-
+		{
 			User user=userService.getUserById(Integer.parseInt(request.getParameter("cuid")));
 			user.setPassword(request.getParameter("upwd").trim());
 
@@ -238,13 +168,6 @@ public class AdminController {
 		return userService.checkUserExist(username);
 	}
 	
-	
-	
-	
-
-
-
-
 }
 
 

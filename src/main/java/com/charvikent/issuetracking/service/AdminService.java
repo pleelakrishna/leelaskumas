@@ -13,17 +13,10 @@ public class AdminService {
 	@Autowired
 	private AdminDao adminDao;
 	
-	
-	
 	public void saveAdmin(Admin admin)
 	{
 		adminDao.saveAdmin(admin);
 	}
-	
-	
-	
-	
-	
 	
 
 }

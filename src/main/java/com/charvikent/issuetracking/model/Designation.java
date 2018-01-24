@@ -1,14 +1,16 @@
 package com.charvikent.issuetracking.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name="designation")
@@ -21,7 +23,29 @@ public class Designation {
 	@Column
 	private String name;
 	
-	
+	@Column
+	private String status;
+	@CreationTimestamp
+	protected Date createdTime ;
+
+	@UpdateTimestamp
+	protected Date updatedTime ;
+
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public Date getUpdatedTime() {
+		return updatedTime;
+	}
+
+	public void setUpdatedTime(Date updatedTime) {
+		this.updatedTime = updatedTime;
+	}
 
 	public String getName() {
 		return name;
@@ -31,8 +55,6 @@ public class Designation {
 		this.name = name;
 	}
 
-	
-
 	public Integer getId() {
 		return id;
 	}
@@ -40,8 +62,6 @@ public class Designation {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-
 	public Designation() {
 	}
 
@@ -49,11 +69,24 @@ public class Designation {
 		super();
 		this.name = name;
 	}
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {
-		return "Designation [id=" + id + ", name=" + name + "]";
+		return "Designation [id=" + id + ", name=" + name + ", status=" + status + ", createdTime=" + createdTime
+				+ ", updatedTime=" + updatedTime + "]";
 	}
+
+	
+
 
 	
 

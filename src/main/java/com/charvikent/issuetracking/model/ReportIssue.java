@@ -13,7 +13,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 
 @Entity
-public class ReportIssue {
+public class ReportIssue implements Comparable<ReportIssue>{
 
 
 	@Id
@@ -149,5 +149,16 @@ public class ReportIssue {
 				+ gapdays + ", gapcount=" + gapcount + ", kstatus=" + kstatus + ", additionalinfo=" + additionalinfo
 				+ ", assignby=" + assignby + "]";
 	}
+	
+	@Override
+	public int compareTo(ReportIssue o) {
+		if(id<o.id)
+			return 1;
+		else if(id>o.id)
+		return -1;
+		else
+		return 0;
+	}
+	
 
 }

@@ -3,18 +3,19 @@ package com.charvikent.issuetracking.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.velocity.VelocityContext;
@@ -25,7 +26,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 //import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.charvikent.issuetracking.config.SendSMS;
 import com.charvikent.issuetracking.dao.ReportIssueDao;
@@ -42,8 +42,6 @@ public class ReportIssueService {
 	@Autowired
 	private UserDao userDao;
 
-	/*@Autowired
-	private ReportIssue reportIssue;*/
 	@Autowired  
 	private VelocityEngine velocityEngine; 
 
@@ -55,15 +53,28 @@ public class ReportIssueService {
 
 	@Autowired
 	HttpServletRequest request;
+	
+	@Autowired
+	HttpSession session;
 
 	//private User user;
 	@Autowired
 	private SendSMS smsTemplate;
-	  //SendSMS smstemplate =new SendSMS();
 	
 	public void saveReportIssue(ReportIssue reportIssue) throws MessagingException, IOException
 	{
 		reportIssueDao.saveReportIssue(reportIssue);
+		
+		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		
+		userDao.getAllParents(String.valueOf(objuserBean.getId()));
+		userDao.getAllParents(reportIssue.getAssignto());
+		
+		
+		for(String id:UserDao.parents)
+		{
+			System.out.println(id);
+		}
 		//sendConfirmationEmail(reportIssue,user,serverFile);
 		User touser = userDao.find(Integer.parseInt(reportIssue.getAssignto()));
 		String msg =" A Ticket is assigned to you with id: "+reportIssue.getId();
@@ -72,13 +83,13 @@ public class ReportIssueService {
 		//smsTemplate.sendSMSFromClass(msg,mnum);
 	}
 	
-	public List<ReportIssue> getAllReportIssues()
+	public Set<ReportIssue> getAllReportIssues()
 	{
 		
 		return reportIssueDao.getAllReportIssues();
 	}
 	
-	public List<ReportIssue> getattachments()
+	public Set<ReportIssue> getattachments()
 	{
 		
 		return reportIssueDao.getAllReportIssues();
@@ -170,7 +181,7 @@ public class ReportIssueService {
 		}  
 	}
 
-	public List<ReportIssue> getIssuesByAssignBy(String id) {
+	public Set<ReportIssue> getIssuesByAssignBy(String id) {
 		// TODO Auto-generated method stub
 		return reportIssueDao.getIssuesAssignBy(id);
 	}
@@ -365,10 +376,8 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 	}
 	
 	
-	public List<ReportIssue> getRecentlyModified(String id)
+	public Set<ReportIssue> getRecentlyModified(String id)
 	{
-		System.out.println("xxxxxxxxxxxxx");
-		System.out.println(reportIssueDao.getRecentlyModified(id));
 		return reportIssueDao.getRecentlyModified(id);
 		
 	}
@@ -413,25 +422,28 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 	public Object getIssuesByAssignToUnderMonitor(String rto) {
 		
 		List<String> monitorList=userDao.getUsersUnderReportTo(rto);
-		List<ReportIssue> listissue=new ArrayList<>();
+		//List<ReportIssue> listissue=new ArrayList<>();
+		
+		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 		
 		for(String id2:monitorList)
 		{
 			listissue.addAll((Collection<? extends ReportIssue>) reportIssueDao.getIssuesAssignTo(id2));
 		
 		}
+		
+		for(String id2:monitorList)
+		{
+			listissue.addAll((Collection<? extends ReportIssue>) reportIssueDao.getIssuesAssignBy(id2));
+		
+		}
+		
 		return listissue;
 	}
 
 	public Object getrepeatLogsById(int id) {
 		return reportIssueDao.getRepeatlogsById(id);
 	}  
-	
-	
-	
-	
-		
-	
 	
 	}
 
