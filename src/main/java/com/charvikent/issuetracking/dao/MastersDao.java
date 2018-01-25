@@ -70,18 +70,23 @@ public class MastersDao {
 		
 	}
 
-	/*public boolean deleteDepartment(Integer id, String status) {
-		boolean delete = false;
+	
+
+	public boolean deleteDepartment(Integer id, String status) {
+		Boolean delete=false;
 		try{
-			String sql = "Update  fillingstationmaster set status='"+status+"' WHERE id=?";
-			int intDelete = entityManager.
-			if(intDelete != 0){
-				delete = true;
+			
+			Department dept= (Department)entityManager.find(Department.class ,id);
+			   dept.setStatus(status);
+			   entityManager.merge(dept);
+			if(!status.equals(dept.getStatus()))
+			{
+				delete=true;
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return false;
-	}*/
+		return delete;
+	}
 	
 }

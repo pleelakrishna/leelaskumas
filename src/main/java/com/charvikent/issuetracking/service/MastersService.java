@@ -96,9 +96,10 @@ public class MastersService {
 	}
 
 	public boolean deleteDepartment(Integer id, String status) {
-		// TODO Auto-generated method stub
-		return false;
+		return mastersDao.deleteDepartment(id,status);
 	}
+
+	
 	
 
 }
