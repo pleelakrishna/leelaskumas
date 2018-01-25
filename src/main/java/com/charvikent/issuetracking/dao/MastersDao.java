@@ -52,5 +52,36 @@ public class MastersDao {
 	{
 		entityManager.persist(orgDept);
 	}
+
+	@SuppressWarnings("unchecked")
+	public Department getDepartmentById(Department dept) {
+		
+		List< Department> deptList =(List<Department>) entityManager.createQuery("SELECT department FROM Department department where name =:custName ").setParameter("custName",dept.getName()).getResultList();
+		if(deptList.size() > 0)
+			return deptList.get(0);
+		return null;
+		
+	}
+
+	public void updateDept(Department dept) {
+		
+		entityManager.merge(dept);
+		
+		
+	}
+
+	/*public boolean deleteDepartment(Integer id, String status) {
+		boolean delete = false;
+		try{
+			String sql = "Update  fillingstationmaster set status='"+status+"' WHERE id=?";
+			int intDelete = entityManager.
+			if(intDelete != 0){
+				delete = true;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}*/
 	
 }

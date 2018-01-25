@@ -3,7 +3,6 @@ package com.charvikent.issuetracking.service;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +45,15 @@ public class MastersService {
 		
 	}
 	
+	public List<Department> deptList()
+	{
+		 List<Department> deptList= mastersDao.getDepartmentNames();
+		return deptList;
+		
+	}
+	
+	
+	
 	public Map<Integer, String> getDepartmentNames()
 	{
 		Map<Integer, String> rolesMap = new LinkedHashMap<Integer, String>();
@@ -76,6 +84,20 @@ public class MastersService {
 	public void saveOrgDept(OrgDept orgDept)
 	{
 		mastersDao.saveOrgDept(orgDept);
+	}
+
+	public Department getDepartmentsById(Department dept) {
+		return mastersDao.getDepartmentById(dept);
+	}
+
+	public void updateDept(Department dept) {
+		mastersDao.updateDept(dept);
+		
+	}
+
+	public boolean deleteDepartment(Integer id, String status) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 

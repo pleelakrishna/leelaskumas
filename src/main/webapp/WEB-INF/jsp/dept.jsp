@@ -7,7 +7,7 @@
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
 		<li><a href="#">Home</a></li>
-		<li>Filling station</li>
+		<li>Department Master</li>
 	</ol>
 	<div class="clearfix"></div>
 	<div class="container">
@@ -15,7 +15,7 @@
 			<div class="col-md-12">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>Filling Stations List</h4>
+						<h4>Department List</h4>
 						<div class="options">
 							<a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
 						</div>
@@ -24,7 +24,7 @@
 					<input type="checkbox" class="form-check-input" onclick="inactiveData();" id="inActive"> <label class="form-check-label">Show Inactive List</label>
 						<div class="table-responsive" id="tableId">
 							<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered datatables" id="example">
-								<thead><tr><th>Station Number</th><th>Station Name</th><th>Opening Balance(in KG's)</th><th>UsedGas</th><th>Closing Balance(in KG's)</th><th>Filling Machines</th><th>Quantity</th><th>Total Capacity(in KG's)</th><th>Status</th><th></th></tr></thead>
+								<thead><tr><th>Dept ID</th><th>Name</th><th>Description</th><th>Status</th><th></th></tr></thead>
 								<tbody></tbody>
 							</table>
 						</div>
@@ -37,10 +37,7 @@
 			<div class="col-md-12 col-sm-12">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>Add Filling Station</h4>
-						<div class="pull-right">
-							<a class="btn btn-danger" onclick="PopupFillingStation();">Add Gas</a>
-						</div>
+						<h4>Add Department</h4>
 					</div>
 					<form:form class="form-horizontal" commandName="deptf" role="form" id="fillingstation-form" action="dept" method="post">
 					<div class="panel-body">
@@ -48,19 +45,16 @@
                     		<div class="col-md-6">
                     			<div class="form-group">
                     				<form:hidden path="id"/>
-									<label for="focusedinput" class="col-md-6 control-label">Station Number <span class="impColor">*</span></label>
+									<label for="focusedinput" class="col-md-6 control-label">Name <span class="impColor">*</span></label>
 									<div class="col-md-5">
-										<form:select path="parentDept" class="form-control" onfocus="removeBorder(this.id)">
-											<form:option value="">-- Select Department --</form:option>
-											<form:options items="${parents}"/>
-										</form:select>	
-										<span class="hasError" id="unitpointError"></span>
+										<form:input path="name" class="form-control validate" placeholder="Enter Name"/>	
+										<span class="hasError" id="stationnameError"></span>
 								    </div>
                     			</div>
                     		</div>
                     		<div class="col-md-6">
                     			<div class="form-group">
-									<label for="focusedinput" class="col-md-6 control-label">Station Name <span class="impColor">*</span></label>
+									<label for="focusedinput" class="col-md-6 control-label">Description <span class="impColor">*</span></label>
 									<div class="col-md-5">
 										<form:textarea path="description" class="form-control validate" placeholder="Enter Description"/>	
 										<span class="hasError" id="stationnameError"></span>
@@ -116,7 +110,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Station Number</th><th>Station Name</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Name</th><th>Description</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	$.each(listOrders,function(i, orderObj) {
@@ -128,7 +122,7 @@ function displayTable(listOrders) {
 		var edit = "<a class='edit editIt' onclick='editCylinder("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
 		serviceUnitArray[orderObj.id] = orderObj;
 		var tblRow = "<tr>"
-			+ "<td title='"+orderObj.parentDept+"'>"+ orderObj.parentDept+ "</td>"
+			+ "<td title='"+orderObj.name+"'>"+ orderObj.name + "</td>"
 			+ "<td title='"+orderObj.description+"'>"+ orderObj.description + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "</td>" 
 			+ "</tr>";
@@ -141,15 +135,8 @@ function displayTable(listOrders) {
 
 function editCylinder(id) {
 	$("#id").val(serviceUnitArray[id].id);
-	$("#gasavailability").val(serviceUnitArray[id].gasavailability);
-	$("#gasavailability").prop('readonly',true);
-	$("#numberoffillingmachines").val(serviceUnitArray[id].numberoffillingmachines);
-	$("#quantity").val(serviceUnitArray[id].quantity);
-	$("#gascapacity").val(serviceUnitArray[id].gascapacity);
-	$("#availablegas").val(serviceUnitArray[id].availablegas);
-	
-	$("#stationname").val(serviceUnitArray[id].stationname);
-	$("#unitpoint").val(serviceUnitArray[id].unitpoint);
+	$("#name").val(serviceUnitArray[id].name);
+	$("#description").val(serviceUnitArray[id].description);
 	$("#submit1").val("Update");
 	$(window).scrollTop($('#moveTo').offset().top);
 }
@@ -171,55 +158,6 @@ function deleteCylinder(id,status){
 			var alldata = jsonobj.allOrders1;
 			console.log(jsonobj.allOrders1);
 			displayTable(alldata);
-		});
-	}
-}
-function PopupFillingStation() {
-	$("#myModal").modal();
-	
-}
-
-function addGas() {
-	
-	var stationId =$("#stationnames").val();
-	var newGasavail=$("#gasavail").val();
-	if((stationId == null || stationId == "" || stationId == "undefined" || newGasavail == null || newGasavail == "" || newGasavail == "undefined"))
-	{
-	 	if(stationId == null || stationId == "" || stationId == "undefined"){
-		 	$('#stationnames').css('border-color','#cc0000');
-			$('#stationnames').css('color','#cc0000');
-			$('#stationnames').addClass('placeholder-style your-class');
-			return false;
-	 	}else  if(newGasavail == null || newGasavail == ""){
-	 		$('#gasavail').css('border-color','#cc0000');
-	 		$('#gasavail').css('color','#cc0000');
-	 		$('#gasavail').attr('placeholder','Please Enter Gas');
-	 		$('#gasavail').addClass('placeholder-style your-class');
-	 		return false;
-	 	}
-	}
-	else{
-		$.ajax({
-			type : "POST",
-			url : "updateGas.htm",
-			data :"stationId="+stationId+"&newGasavail="+newGasavail,
-			beforeSend : function() {
-            	$.blockUI({ message: 'Please wait' });
-          	}, 
-			success: function (response) {
-				$.unblockUI();
-             	if(response != null ){
-            	//var resJson=JSON.parse(response);
-            	//showTableData(resJson);
-            	//alert("Delete Sucessfully");
-            	//window.location.reload();
-            	}
-             	window.location.reload();
-			},
-         	error: function (e) { 
-        	 	$.unblockUI();
-				console.log(e);
-         	}
 		});
 	}
 }
@@ -263,6 +201,6 @@ function inactiveData() {
 				});
 		
 }
-$("#pageName").text("Filling Station Master");
+$("#pageName").text("Department Master");
 $(".dept").addClass("active"); 
 </script>

@@ -32,10 +32,8 @@ public class Department {
 	private String  description;
 	
 	@Column
-	private String parentDept;
-	
-	@Column
 	private String status;
+	
 	@CreationTimestamp
 	protected Date createdTime ;
 
@@ -74,13 +72,7 @@ public class Department {
 		this.description = description;
 	}
 
-	public String getParentDept() {
-		return parentDept;
-	}
 
-	public void setParentDept(String parentDept) {
-		this.parentDept = parentDept;
-	}
 
 	public Date getCreatedTime() {
 		return createdTime;
@@ -100,10 +92,11 @@ public class Department {
 
 	@Override
 	public String toString() {
-		return "Department [id=" + id + ", name=" + name + ", description=" + description + ", parentDept=" + parentDept
-				+ ", status=" + status + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + "]";
+		return "Department [id=" + id + ", name=" + name + ", description=" + description + ", status=" + status
+				+ ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + "]";
 	}
 
+	
 	
 
 	

@@ -155,6 +155,10 @@ span.has-error,span.hasError
 			});
 		}); */
 		
+$(function() {
+    $(".chzn-select").chosen();
+	$(".select2").select2();
+});
 </script>
 </head>
 
@@ -178,7 +182,7 @@ span.has-error,span.hasError
 
     <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
         <div class="navbar-header pull-left">
-            <a class="navbar-brand" href="javascript:void(0);"><img src="${baseurl }/assets/img/khaibar_logo.png" class="img-responsive"></a>
+            <a class="navbar-brand" href="javascript:void(0);"><img src="${baseurl }/assets/img/klogo.png"  style ="width:auto;height:50px;" class="img-responsive"></a>
             <div class="clearfix"></div>
         </div>
 		<div class="masters">
@@ -216,17 +220,11 @@ span.has-error,span.hasError
             <ul class="nav navbar-nav">
             
             <li class="dashboard"><a href="${baseurl }/admin/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-            <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-tint"></i> <span>Dept</span></a></li>
-            <li class="Employees">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-users"></i> <span>Employees</span> <span class="caret"></span></a>
-            	<ul class="dropdown-menu">
-            
-             		<li class="lpo"><a href="${baseurl }/viewUsers"><i class="fa fa-users"></i> <span>Employees</span></a></li>
-              		<li class="company"><a href="${baseurl }/createUser"><i class="fa  fa-user-plus "></i> <span>New Employee</span></a></li>
-              		</ul>
-              		</li>
+            <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-tint"></i> <span>Department</span></a></li>
+             <li class="lpo"><a href="${baseurl }/admin/lpoHome"><i class="fa fa-bar-chart-o"></i> <span>LPO</span></a></li>
+              <li class="company"><a href="${baseurl }/admin/companymaster"><i class="fa fa-building"></i> <span>Company</span></a></li>
               <li class="stores"><a href="${baseurl }/admin/storeHome"><i class="fa fa-th"></i> <span>Stores</span></a></li>
-              <li class="cylinder"><a href="${baseurl }/createTicketIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>Raise A Ticket</span></a></li>
+              <li class="cylinder"><a href="${baseurl }/admin/CylinderHome"><i class="fa fa-fire-extinguisher" aria-hidden="true"></i> <span>Cylinders</span></a></li>
              <li class="truck"><a href="${baseurl }/admin/truckHome"><i class="fa fa-truck" aria-hidden="true"></i> <span>Trucks</span></a></li>
                 <li class="fillingStation"><a href="${baseurl }/admin/fillingStationHome"><i class="fa fa-archive"></i> <span>Filling Stations</span></a></li>
                 <li class="customer"><a href="${baseurl }/admin/customerHome"><i class="fa fa-group"></i> <span>Customers</span></a></li>
@@ -267,15 +265,13 @@ span.has-error,span.hasError
 		</div>
     </nav>
 
-   <!--  <div id="page-container">
+    <div id="page-container">
     	<div id="page-content" style="min-height: auto;">
     		<div id="wrap">
 	        <div id="page-heading" class="row">
 	        	<div class="col-md-6">
-						<h1 id="pageName"></h1>
-					</div>
+					<h1 id="pageName"></h1>
 				</div>
-				</div>
-				</div> -->
+				
 	        </div>
 <!-- Header ends Here -->
