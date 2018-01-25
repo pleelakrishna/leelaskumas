@@ -78,19 +78,24 @@ $(".numericOnly").keydown(function(e) {
  * return true; } else { e.preventDefault(); return false; }
  */
 // });
-var correct = false;
-function checkEmail(str) {
+var correct = true;
+
+$('.email').blur(function()
+		{
+str=$(this).val()
+
 	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	if (!re.test(str)) {
 		alert("Please enter a valid email address");
 
 		correct = false;
-		return false;
+		$('#email').css('border-color', 'red');
+		$('#email').val("");
+		return correct;
 	} else {
-		correct = true;
-		return true;
+		return correct;
 	}
-}
+})
 
 $(".emailOnly").on(	"keypress",	function(e) {
 
@@ -237,27 +242,6 @@ $('#submit1').click(function(event) {
 	}
 });
 
-//remove border validation for edit-form
-$(".editIt").click(function()
-{
-	$.each(idArray, function(i, val)
-	{
-//		var value = $("#" + idArray[i]).val();
-		/*if ($("#" +idArray[i]+"_chosen").length)
-		{
-			$("#" +idArray[i]).val("");
-			$("#" +idArray[i]).trigger("chosen:updated");
-		}*/
-		$("#"+idArray[i]).css('border-color','');
-		$("#"+idArray[i]).css('color','black');
-		$("#"+idArray[i]).removeClass('placeholder-style your-class default-class');
-		if ($("#" + idArray[i]+"_chosen").length)
-		{
-			$("#" + idArray[i]+"_chosen").children('a').css('border-color','black');
-		}
-	});
-});
-
 //reset-form
 $(".cancel").click(function()
 {
@@ -272,7 +256,6 @@ $(".cancel").click(function()
 		}
 //		$("form")[0].reset();
 		$("#"+idArray[i]).val('');
-		$("#"+idArray[i]).prop('readonly',false);
 		$("#"+idArray[i]).css('border-color','');
 		$("#"+idArray[i]).css('color','black');
 		$("#"+idArray[i]).removeClass('placeholder-style your-class default-class');

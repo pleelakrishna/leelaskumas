@@ -1,12 +1,12 @@
 Manifest-Version: 1.0
-Implementation-Vendor: Pivotal Software, Inc.
 Implementation-Title: issueTrackingBoot
 Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: raju
 Implementation-Vendor-Id: com.charvikent.khaibargas
-Build-Jdk: 1.7.0_80
-Built-By: KLS
-Created-By: Maven Integration for Eclipse
+Build-Jdk: 1.8.0_151
 Implementation-URL: http://projects.spring.io/spring-boot/issueTrackin
  gBoot/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
 Main-Class: com.charvikent.issuetracking.IssueTrackingBootApplication
 

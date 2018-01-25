@@ -2,10 +2,11 @@
   <body>  
   <h3>Hi ${name}, </h3> 
   <div>
-  you sucessfully resistered
+  The user administrator has created an account for  you with username "${name}".
+  In order to complete your registration, visit the company official Site.
   </div>
   <div> 
-  Please remember your password.that could not be changed.   
+  if y 
   </div>  
-  </body>  
+  </body>  ou did not request any registration, ignore this message and nothing will happen.
   </html> 
