@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.charvikent.issuetracking.model.Department;
-import com.charvikent.issuetracking.model.Designation;
-import com.charvikent.issuetracking.model.OrgDept;
-import com.charvikent.issuetracking.model.Orgnization;
 import com.charvikent.issuetracking.service.MastersService;
+import com.charvikent.issuetracking.service.OrgService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -32,6 +30,8 @@ public class MastersController {
 	
 	@Autowired
 	MastersService  mastersService;
+	@Autowired
+	OrgService  orgService;
 	
 	
 	
@@ -180,95 +180,6 @@ public class MastersController {
 		return String.valueOf(jsonObj);
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@RequestMapping("/desig")
-	public String  designation(Model model) {
-		model.addAttribute("desigf", new Designation());
-		return "desig";
-	}
-	
-	@RequestMapping(value = "/desig", method = RequestMethod.POST)
-	public String saveDesignation(@Valid @ModelAttribute  Designation desig, BindingResult bindingresults,
-			RedirectAttributes redir) throws IOException {
-
-		if (bindingresults.hasErrors()) {
-			System.out.println("has some errors");
-			return "redirect:/";
-		}
-		mastersService.saveDesig(desig);
-
-		redir.addFlashAttribute("msg", "Record Inserted Successfully");
-		redir.addFlashAttribute("cssMsg", "success");
-
-		return "redirect:desig";
-	}
-	
-	@RequestMapping("/org")
-	public String  orgnization(Model model) {
-		
-		model.addAttribute("orgf", new Orgnization());
-		return "org";
-	
-	}
-	
-	
-	@RequestMapping(value = "/org", method = RequestMethod.POST)
-	public String saveOrg(@Valid @ModelAttribute  Orgnization org, BindingResult bindingresults,
-			RedirectAttributes redir) throws IOException {
-
-		if (bindingresults.hasErrors()) {
-			System.out.println("has some errors");
-			return "redirect:/";
-		}
-		mastersService.saveOrg(org);
-
-		redir.addFlashAttribute("msg", "Record Inserted Successfully");
-		redir.addFlashAttribute("cssMsg", "success");
-
-		return "redirect:org";
-	}
-	@RequestMapping("/orgDept")
-	public String  orgDept(Model model) {
-		
-		model.addAttribute("orgDeptf", new OrgDept());
-		model.addAttribute("depts", mastersService.getDepartmentNames());
-		model.addAttribute("orgs", mastersService.getOrgNames());
-		
-		return "orgDept";
-	
-	}
-	
-	
-	@RequestMapping(value = "/orgDept", method = RequestMethod.POST)
-	public String saveOrgDept(@Valid @ModelAttribute  OrgDept orgDept, BindingResult bindingresults,
-			RedirectAttributes redir) throws IOException {
-
-		if (bindingresults.hasErrors()) {
-			System.out.println("has some errors");
-			return "redirect:/";
-		}
-		mastersService.saveOrgDept(orgDept);
-
-		redir.addFlashAttribute("msg", "Record Inserted Successfully");
-		redir.addFlashAttribute("cssMsg", "success");
-
-		return "redirect:orgDept";
-	}
-
-	
-	
-	
 	
 	
 }

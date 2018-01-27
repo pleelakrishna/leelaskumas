@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.charvikent.issuetracking.dao.MastersDao;
 import com.charvikent.issuetracking.model.Department;
-import com.charvikent.issuetracking.model.Designation;
-import com.charvikent.issuetracking.model.OrgDept;
-import com.charvikent.issuetracking.model.Orgnization;
 
 @Service
 @Transactional
@@ -22,28 +19,7 @@ public class MastersService {
 	MastersDao mastersDao;
 	
 	
-	public void saveOrg(Orgnization org)
-	{
-		mastersDao.saveOrg(org);
-	}
 	
-	public Map<Integer, String> getOrgNames()
-	{
-		Map<Integer, String> rolesMap = new LinkedHashMap<Integer, String>();
-		try
-		{
-		List<Orgnization> rolesList= mastersDao.getOrgNames();
-		for(Orgnization bean: rolesList){
-			rolesMap.put(bean.getId(), bean.getName());
-		}
-				
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-		return rolesMap;
-				
-		
-	}
 	
 	public List<Department> deptList()
 	{
@@ -76,15 +52,9 @@ public class MastersService {
 	{
 		mastersDao.saveDept(dept);
 	}
-	public void saveDesig(Designation desig)
-	{
-		mastersDao.saveDesig(desig);
-	}
 	
-	public void saveOrgDept(OrgDept orgDept)
-	{
-		mastersDao.saveOrgDept(orgDept);
-	}
+	
+	
 
 	public Department getDepartmentsById(Department dept) {
 		return mastersDao.getDepartmentById(dept);

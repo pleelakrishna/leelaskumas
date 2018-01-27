@@ -20,18 +20,9 @@ public class MastersDao {
 	@PersistenceContext
     private EntityManager entityManager;
 	
-	public void saveOrg(Orgnization org) {
-		entityManager.persist(org);
-		
-	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Orgnization> getOrgNames()
-	 {
-		  
-		return (List<Orgnization>)entityManager.createQuery("SELECT orgnization FROM Orgnization orgnization").getResultList();
-		 
-	 }
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<Department> getDepartmentNames()
 	 {
@@ -44,14 +35,8 @@ public class MastersDao {
 		entityManager.persist(dept);
 		
 	}
-	public void saveDesig(Designation desig)
-	{
-		entityManager.persist(desig);
-	}
-	public void saveOrgDept(OrgDept orgDept)
-	{
-		entityManager.persist(orgDept);
-	}
+	
+	
 
 	@SuppressWarnings("unchecked")
 	public Department getDepartmentById(Department dept) {
