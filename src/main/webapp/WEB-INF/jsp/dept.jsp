@@ -115,9 +115,9 @@ function displayTable(listOrders) {
 	serviceUnitArray = {};
 	$.each(listOrders,function(i, orderObj) {
 		if(orderObj.status == "1"){
-			var deleterow = "<a class='deactivate' onclick='deleteCylinder("+ orderObj.id+ ",0)'><i class='fa fa-eye'></i></a>"
+			var deleterow = "<a class='deactivate' onclick='deletedept("+ orderObj.id+ ",0)'><i class='fa fa-eye'></i></a>"
 		}else{  
-			var deleterow = "<a class='activate' onclick='deleteCylinder("+ orderObj.id+ ",1)'><i class='fa fa-eye-slash'></i></a>"
+			var deleterow = "<a class='activate' onclick='deletedept("+ orderObj.id+ ",1)'><i class='fa fa-eye-slash'></i></a>"
 		}
 		var edit = "<a class='edit editIt' onclick='editCylinder("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
 		serviceUnitArray[orderObj.id] = orderObj;
@@ -141,7 +141,7 @@ function editCylinder(id) {
 	$(window).scrollTop($('#moveTo').offset().top);
 }
 
-function deleteCylinder(id,status){
+function deletedept(id,status){
 	var checkstr=null;
 	if(status == 0){
 		 checkstr = confirm('Are you sure you want to Deactivate?');
@@ -152,7 +152,7 @@ function deleteCylinder(id,status){
 		var formData = new FormData();
 	    formData.append('id', id);
 	    formData.append('status', status);
-		$.fn.makeMultipartRequest('POST', 'deletefillingstation', false, formData, false, 'text', function(data){
+		$.fn.makeMultipartRequest('POST', 'deleteDept', false, formData, false, 'text', function(data){
 			var jsonobj = $.parseJSON(data);
 			window.location.reload();
 			var alldata = jsonobj.allOrders1;

@@ -18,8 +18,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Khaibar Gas LLC</title>
-    <link rel="shortcut icon" href="${baseurl }/img/logo.jpeg"/>
+    <title>Kumar Pumps Task Management System</title>
+    <link rel="shortcut icon" href="${baseurl }/img/klogo.png"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -221,9 +221,9 @@ $(function() {
             
             <li class="dashboard"><a href="${baseurl }/admin/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-tint"></i> <span>Department</span></a></li>
-             <li class="lpo"><a href="${baseurl }/admin/lpoHome"><i class="fa fa-bar-chart-o"></i> <span>LPO</span></a></li>
-              <li class="company"><a href="${baseurl }/admin/companymaster"><i class="fa fa-building"></i> <span>Company</span></a></li>
-              <li class="stores"><a href="${baseurl }/admin/storeHome"><i class="fa fa-th"></i> <span>Stores</span></a></li>
+              <li class="org"><a href="${baseurl }/org"><i class="fa fa-tint"></i> <span>Organization</span></a></li>
+              <li class="desig"><a href="${baseurl }/desig"><i class="fa fa-tint"></i> <span>Designation</span></a></li>
+             <li class="orgDept"><a href="${baseurl }/orgDept"><i class="fa fa-tint"></i> <span>Org-Dept</span></a></li>
               <li class="cylinder"><a href="${baseurl }/admin/CylinderHome"><i class="fa fa-fire-extinguisher" aria-hidden="true"></i> <span>Cylinders</span></a></li>
              <li class="truck"><a href="${baseurl }/admin/truckHome"><i class="fa fa-truck" aria-hidden="true"></i> <span>Trucks</span></a></li>
                 <li class="fillingStation"><a href="${baseurl }/admin/fillingStationHome"><i class="fa fa-archive"></i> <span>Filling Stations</span></a></li>
