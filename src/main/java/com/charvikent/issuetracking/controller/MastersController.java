@@ -27,14 +27,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class MastersController {
-	
+
 	@Autowired
 	MastersService  mastersService;
 	@Autowired
 	OrgService  orgService;
-	
-	
-	
+
+
+
 	@RequestMapping("/dept")
 	public String  department( @ModelAttribute("deptf")  Department deptf,Model model ,HttpServletRequest request) {
 		List<Department> listOrderBeans = null;
@@ -59,32 +59,32 @@ public class MastersController {
 			System.out.println(e);
 
 		}
-		
-		
+
+
 		return "dept";
-	
+
 	}
-	
-	
+
+
 	@RequestMapping(value = "/dept", method = RequestMethod.POST)
 	public String saveAdmin(@Valid @ModelAttribute  Department dept, BindingResult bindingresults,
 			RedirectAttributes redir) throws IOException {
-		
+
 		if (bindingresults.hasErrors()) {
 			System.out.println("has some errors");
 			return "redirect:/";
 		}
-		
+
 		int id = 0;
 		try
 		{
 			Department deptBean= mastersService.getDepartmentsById(dept);
 			int dummyId =0;
-			
+
 			if(deptBean != null){
 				dummyId = deptBean.getId();
 			}
-			
+
 			if(dept.getId()==null)
 			{
 				if(dummyId ==0)
@@ -94,17 +94,17 @@ public class MastersController {
 
 					redir.addFlashAttribute("msg", "Record Inserted Successfully");
 					redir.addFlashAttribute("cssMsg", "success");
-					
+
 				} else
 				{
 					redir.addFlashAttribute("msg", "Already Record Exist");
 					redir.addFlashAttribute("cssMsg", "danger");
-					
+
 				}
-				
-			
+
+
 			}
-			
+
 			else
 			{
 				id=dept.getId();
@@ -113,31 +113,25 @@ public class MastersController {
 					mastersService.updateDept(dept);
 					redir.addFlashAttribute("msg", "Record Updated Successfully");
 					redir.addFlashAttribute("cssMsg", "warning");
-					
+
 				} else
 				{
 					redir.addFlashAttribute("msg", "Already Record Exist");
 					redir.addFlashAttribute("cssMsg", "danger");
 				}
-				
+
 			}
-			
+
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 
 		}
-		
-		
+
+
 		return "redirect:dept";
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	@RequestMapping(value = "/deleteDept")
 	public @ResponseBody String deleteDept(Department  objdept,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
 		System.out.println("deleteEducation page...");
@@ -155,11 +149,11 @@ public class MastersController {
  					jsonObj.put("message", "delete fail");
  				}
  			}
- 				
+
 			listOrderBeans = mastersService.deptList();
 			 objectMapper = new ObjectMapper();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
-				
+
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
 				request.setAttribute("allOrders1", sJson);
@@ -175,11 +169,11 @@ public class MastersController {
 			e.printStackTrace();
 	System.out.println(e);
 			return String.valueOf(jsonObj);
-			
+
 		}
 		return String.valueOf(jsonObj);
 	}
 
-	
-	
+
+
 }

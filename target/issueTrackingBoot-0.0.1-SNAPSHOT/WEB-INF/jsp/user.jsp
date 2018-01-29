@@ -53,7 +53,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Email</label>
 									<div class="col-md-6">
-										<form:input path="email" class="form-control validate email" placeholder="Enter Email"/>
+										<form:input path="email" class="form-control" placeholder="Enter Email"/>
 									</div>
 								</div>
 								<div class="form-group">
@@ -75,6 +75,15 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<label class="col-md-3 control-label no-padding-right">ReportTo</label>
+									<div class="col-md-6">
+										<form:select path ="reportto" class="form-control validate" onfocus="removeBorder(this.id)">
+											<form:option value="">-- Select Report to --</form:option>
+								     		<form:options items="${userNames}"/>
+										</form:select>
+									</div>
+								</div>
+								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Enable</label>
 									<div class="col-md-6">
 										<form:checkbox  path="enabled" />
@@ -82,8 +91,8 @@
 								</div>
 								<div class="form-group">
 									<div class="col-md-offset-3 col-md-6">
-										<input type="submit" id="submit1" class="btn btn-success" value="Create"/>
-										<input class="btn-danger btn cancel" type="reset"  value="Reset" />
+										<input type="submit" id="submit1"  class="btn btn-success" value="Create"/>
+										<input class="btn-danger btn cancel"  type="reset"  value="Reset" />
 									</div>
 								</div>
 							</form:form>
@@ -101,4 +110,53 @@
 
 <script type="text/javascript">
 $(".createUser").addClass("active");
+
+//var username=$('#username').val();
+
+$('#username').blur(function() {
+var username=$(this).val();
+
+$.ajax({
+			type : "GET",
+			url : "getUserName",
+			data : {"username":username},
+			dataType : "text",
+			beforeSend : function() {
+	             $.blockUI({ message: 'Please wait' });
+	          }, 
+			success : function(data) {
+				if(data ==='true')
+					{
+					alert("username already exists")
+ 					$('#username').css('border-color', 'red');
+					 $('#submit1').prop('disabled', true);
+					}
+				else
+					{
+					$('#username').css('border-color', 'none');
+					$('#submit1').prop('disabled', false);
+					}
+				
+			},
+			complete: function () {
+	            
+	            $.unblockUI();
+	       },
+			error :  function(e){$.unblockUI();console.log(e);}
+			
+		});
+
+	}); 
+	
+/* $('#designation').blur(function() {
+	var role=$(this).val();
+	if(role ===  '1')
+		$('#reportto').prop('disabled', true);
+	else
+		$('#reportto').prop('disabled', false);
+	
+	
+}); */
+	
+	
 </script>

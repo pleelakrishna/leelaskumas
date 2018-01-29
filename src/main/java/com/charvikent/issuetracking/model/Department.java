@@ -24,22 +24,22 @@ public class Department {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	@Column
 	private String name;
-	
+
 	@Column
 	private String  description;
-	
+
 	@Column
 	private String status;
-	
+
 	@CreationTimestamp
 	protected Date createdTime ;
 
 	@UpdateTimestamp
 	protected Date updatedTime ;
-	
+
 
 	public String getStatus() {
 		return status;
@@ -96,9 +96,9 @@ public class Department {
 				+ ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + "]";
 	}
 
-	
-	
 
-	
+
+
+
 
 }

@@ -9,75 +9,407 @@
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
 				<ul class="breadcrumb">
-					<li class="">View Users</li>
+					<li class="">Dashboard</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
 			
 			<div class="page-content">
+			
 				<div class="row">
-					<div class="col-md-12 col-xs-12">
-						<div class="page-header">
-							<h1>Reported By Me</h1>
-<!-- 							<a href="createUser" style="float: right;color: white;"> Add User</a> -->
-						</div>
-						<div class="page-body">
-			            	<div id="assigned" class="widget-box widget-color-blue2">
-								<div class="widget-header widget-header-small">
-									<h4 class="widget-title lighter"><i class="ace-icon fa fa-list-alt"></i>
-										<a class="white" href="">Reported By Me</a> 
-									</h4>
-									<div class="widget-toolbar">
-										<a data-action="collapse" href="#">
-											<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
-										</a>
-									</div>
-									<div class="widget-toolbar no-border hidden-xs">
-										<div class="widget-menu">
-											<a class="btn btn-primary btn-white btn-round btn-sm" href="createTicketIssues">Create Issue</a>
-										</div>
-									</div>
-								</div>
-								<div style="display: block;" class="widget-body">
-									<div class="widget-main no-padding">
-										<div class="table-responsive">
-											<table class="table table-bordered table-condensed table-striped table-hover">
-												<tbody>
-													<tr class="my-buglist-bug ">
-													    <th class="nowrap width-13">Issue ID</th>
-													    <th class="nowrap width-13">AssignTo</th>
-														<!-- <th class="nowrap width-13">Created Time</th> -->
-														<!-- <th class="nowrap width-13">Category</th> -->
-														<th class="nowrap width-13">Severity</th>
-														<th class="nowrap width-13">Priority</th>
-														<th class="nowrap width-13">Attachment</th>
-														<th class="nowrap width-13">Subject</th>
-														<!-- <th class="nowrap width-13">UpdatedTime</th> -->
-														<!-- <th class="nowrap width-13">Options</th> -->
-													</tr>
-													<c:forEach var="issue" items="${reportedByMe}">
-													<tr class="my-buglist-bug ">
-														<td class="nowrap width-13">${issue.id  }</td>
-														<td class="nowrap width-13">${issue.assignto }</td>
-														<%-- <td class="nowrap width-13">${issue.createdTime }</td> --%>
-														<%-- <td class="nowrap width-13">${issue.category}</td> --%>
-														<td class="nowrap width-13">${issue.severity}</td>
-														<td class="nowrap width-13">${issue.priority}</td>
-														<td class="nowrap width-13">${issue.uploadfile}</td>
-														<td class="nowrap width-13">${issue.subject}</td>
-														<%-- <td class="nowrap width-13">${issue.updatedTime}</td> --%>
-														<%-- <td><span><a href="edit?id=${user.id}">Edit</a></span> <span><a href="deleteUser/${user.id }">Delete</a></span></td> --%>
-													</tr>
-													</c:forEach>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div>	
-						</div>
-					</div>
-				</div>
+							<div class="col-md-7">
+							<div id="assigned" class="widget-box widget-color-blue2">
+	<div class="widget-header widget-header-small">
+		<h4 class="widget-title lighter">
+			<i class="ace-icon fa fa-list-alt"></i>
+<a class="white" href="#">Assigned to Me (Unresolved)</a> </h4>
+		<div class="widget-toolbar">
+			<a data-action="collapse" href="#">
+				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border hidden-xs">
+			<div class="widget-menu">
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Tickets</a>			</div>
+		</div>
+	</div>
+
+	<div  class="widget-body" style="display: block;max-height:300px;overflow:auto;">
+		<div class="widget-main no-padding">
+			<div class="table-responsive">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+<tbody>
+<c:forEach var="issue" items="${assignToMe}">
+
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13">
+		    <form action="viewTicket?id=${issue.id}" method="post">
+            <button type="submit"  class="btn-link">${issue.id}</button>
+            </form>
+			
+			<div style="display: -webkit-inline-box;">
+			<i class="fa fa-square fa-status-box ${issue.kstatus}" title="${issue.assignto}"></i>
+			<form action="editIssue?id=${issue.id}&pgn=2" method="post">
+            <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
+            </form>
+			<%-- <a class="edit"   href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> --%>
+			<i class="fa fa-minus fa-lg ${issue.severity}"  title= "${issue.priority}"></i>
+			<c:if test="${not empty issue.uploadfile}">
+			    <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
+			<a class="attachments" target="_blank" href="reportDocuments/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
+		    </c:forTokens>
+		   </c:if>
 			</div>
+		</td>
+        <td>
+		<span><b>${issue.subject}</b></span>
+		<br>
+		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
+        </td>
+</tr>
+</c:forEach>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>	
+
+<div class="space-10"></div>
+<div class="space-10"></div>
+
+
+<div id="assigned" class="widget-box widget-color-blue2">
+	<div class="widget-header widget-header-small">
+		<h4 class="widget-title lighter">
+			<i class="ace-icon fa fa-list-alt"></i>
+<a class="white" href="#"> Reported by Me</a> </h4>
+		<div class="widget-toolbar">
+			<a data-action="collapse" href="#">
+				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border hidden-xs">
+			<div class="widget-menu">
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Tickets</a>			</div>
+		</div>
+	</div>
+
+	<div style="display: block;max-height:300px;overflow:auto;" class="widget-body">
+		<div class="widget-main no-padding">
+			<div class="table-responsive">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+<tbody>
+<c:forEach var="issue" items="${reportedByMe}">
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13">
+		    <form action="viewTicket?id=${issue.id}" method="post">
+            <button type="submit" class="btn-link">${issue.id}</button>
+            </form>
+            <div style="display: -webkit-inline-box;">
+			<i class="fa fa-square fa-status-box ${issue.kstatus}" title="${issue.assignby}"></i>
+			<form action="editIssue?id=${issue.id}&pgn=2" method="post">
+            <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
+            </form>
+			<%-- <a class="edit"   href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> --%>
+			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
+			<c:if test="${not empty issue.uploadfile}">
+			    <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
+			<a class="attachments" target="_blank" href="reportDocuments/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
+		    </c:forTokens>
+		   </c:if>
+		</div>
+		</td>
+        <td>
+		<span><b>${issue.subject}</b></span>
+		<br>
+		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
+        </td>
+</tr>
+</c:forEach>
+
+
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<div class="space-10"></div>
+
+
+<div id="assigned" class="widget-box widget-color-blue2">
+	<div class="widget-header widget-header-small">
+		<h4 class="widget-title lighter">
+			<i class="ace-icon fa fa-list-alt"></i>
+<a class="white" href="#"> Resolved</a> 	</h4>
+		<div class="widget-toolbar">
+			<a data-action="collapse" href="#">
+				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border hidden-xs">
+			<div class="widget-menu">
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Tickets</a>			</div>
+		</div>
+	</div>
+
+	<div style="display: block;max-height:300px;overflow:auto;" class="widget-body">
+		<div class="widget-main no-padding">
+			<div class="table-responsive">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+<tbody>
+
+<c:forEach var="issue" items="${assignToMeResolved}">
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13">
+		    <form action="viewTicket?id=${issue.id}" method="post">
+            <button type="submit"  class="btn-link">${issue.id}</button>
+            </form>
+            <div style="display: -webkit-inline-box;">
+			<i class="fa fa-square fa-status-box ${issue.kstatus}" title="${issue.assignto}"></i>
+			<%-- <form action="editIssue?id=${issue.id}&pgn=2" method="post">
+            <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
+            </form> --%>
+			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
+			<c:if test="${not empty issue.uploadfile}">
+			    <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
+			<a class="attachments" target="_blank" href="reportDocuments/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
+		    </c:forTokens>
+		   </c:if>
+		</div>
+		</td>
+        
+        <td>
+		<span><b>${issue.subject}</b></span>
+		<br>
+		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
+        </td>
+</tr>
+</c:forEach>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<div class="space-10"></div>
+
+
+<div id="assigned" class="widget-box widget-color-blue2">
+	<div class="widget-header widget-header-small">
+		<h4 class="widget-title lighter">
+			<i class="ace-icon fa fa-list-alt"></i>
+<a class="white" href="#"> Recently Closed (30 Days)</a> 		</h4>
+		<div class="widget-toolbar">
+			<a data-action="collapse" href="">
+				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border hidden-xs">
+			<div class="widget-menu">
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Tickets</a>			</div>
+		</div>
+	</div>
+
+	<div style="display: block;max-height:300px;overflow:auto;" class="widget-body">
+		<div class="widget-main no-padding">
+			<div class="table-responsive">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+<tbody>
+
+<c:forEach var="issue" items="${recentlyModified}">
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13">
+		    <form action="viewTicket?id=${issue.id}" method="post">
+            <button type="submit" class="btn-link">${issue.id}</button>
+            </form>
+            <div style="display: -webkit-inline-box;">
+			<i class="fa fa-square fa-status-box ${issue.kstatus}" title="${issue.assignby}"></i>
+			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
+			<c:if test="${not empty issue.uploadfile}">
+			    <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
+			<a class="attachments" target="_blank" href="reportDocuments/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
+		    </c:forTokens>
+		   </c:if>
+	</div>
+		</td>
+        <td>
+		<span><b>${issue.subject}</b></span>
+		<br>
+		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
+        </td>
+</tr>
+</c:forEach>
+
+
+
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<div class="space-10"></div>
+
+
+<div id="assigned" class="widget-box widget-color-blue2">
+	<div class="widget-header widget-header-small">
+		<h4 class="widget-title lighter">
+			<i class="ace-icon fa fa-list-alt"></i>
+<a class="white" href="#"> Monitored by Me</a> 		</h4>
+		<div class="widget-toolbar">
+			<a data-action="collapse" href="#">
+				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border hidden-xs">
+			<div class="widget-menu">
+				<a class="btn btn-primary btn-white btn-round btn-sm" href="viewReportIssues">View Tickets</a>			</div>
+		</div>
+	</div>
+
+	<div style="display: block;max-height:300px;overflow:auto;" class="widget-body">
+		<div class="widget-main no-padding">
+			<div class="table-responsive">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+<tbody>
+<c:forEach var="issue" items="${monitoryBy}">
+
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13">
+		    <form action="viewTicket?id=${issue.id}" method="post">
+            <button type="submit"  class="btn-link">${issue.id}</button>
+            </form>
+            <div style="display: -webkit-inline-box;">
+			<i class="fa fa-square fa-status-box ${issue.kstatus}" title="${issue.assignto}"></i>
+			<form action="editIssue?id=${issue.id}&pgn=2" method="post">
+            <button type="submit" title="Edit" class="btn-link fa fa-pencil  bigger-130 padding-2 grey"></button>
+            </form>
+			<%-- <a class="edit"   href="editIssue?id=${issue.id}&pgn=2"><i class="fa fa-pencil bigger-130 padding-2 grey"></i></a> --%>
+			<i class="fa fa-minus fa-lg ${issue.severity}" title="${issue.priority}"  ></i>
+			<c:if test="${not empty issue.uploadfile}">
+			    <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
+			<a class="attachments" target="_blank" href="reportDocuments/${mySplit}"><i class="fa fa-paperclip fa-lg grey" title="${mySplit}"></i></a>
+		    </c:forTokens>
+		   </c:if>
+		</div>
+		</td>
+        
+        <td>
+		<span><b>${issue.subject}</b></span>
+		<br>
+		<span class="small"> (${issue.category}) - ${issue.createdTime}</span>
+        </td>
+</tr>
+</c:forEach>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div><!-- /.col -->
+
+<div class="col-md-5">
+							<div id="assigned" class="widget-box widget-color-blue2">
+	<div class="widget-header widget-header-small">
+		<h4 class="widget-title lighter">
+			<i class="ace-icon fa fa-clock-o"></i>
+<a class="white" href="#"> Timeline</a></h4>
+		<div class="widget-toolbar">
+			<a data-action="collapse" href="#">
+				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border hidden-xs">
+			
+		</div>
+	</div>
+
+	<div style="display: block;" class="widget-body">
+		<div class="widget-main no-padding">
+			<div class="table-responsive">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+<tbody>
+
+<tr class="my-buglist-bug ">
+			<tr>
+                    		<th>By Date(days)</th>
+                    		<th>Open</th>
+                    		<th>Closed</th>
+                    		<th>Balanced</th>
+                    			
+                    	</tr>
+<c:forEach var="issue" items="${gapAndCount}">
+       
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13">${issue.key} 
+		</td>
+		 <c:forEach items="${issue.value}" var="entry">
+		<td>
+		${entry}
+        </td>
+        </c:forEach> 
+    
+</tr>
+
+</c:forEach>
+                      </table>
+        
+       
+</div>
+</div>
+
+
+
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				<div class="space-10"></div>
+							<div id="assigned" class="widget-box widget-color-blue2">
+	<div class="widget-header widget-header-small">
+		<h4 class="widget-title lighter">
+			<i class="ace-icon fa fa-clock-o"></i>
+<a class="white" href="#"> Status Wise Summary</a></h4>
+		<div class="widget-toolbar">
+			<a data-action="collapse" href="#">
+				<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border hidden-xs">
+			
+		</div>
+	</div>
+
+	<div style="display: block;" class="widget-body">
+		<div class="widget-main no-padding">
+			<div class="table-responsive">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+<tbody>
+
+<tr class="my-buglist-bug ">
+			<tr>
+                    		<th>By Status(days)</th>
+                    		<th>Total</th>
+                    	</tr>
+<c:forEach var="issue" items="${statusCount}">
+<tr class="my-buglist-bug ">
+		<td class="nowrap width-13">${issue.key} 
+		</td>
+		<td class="nowrap width-13">${issue.value} 
+		</td>
+</tr>
+</c:forEach>
+</table>
+</div>
+</div>
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+			</div>
+				</div>
+							</div>
 			<!-- /.page-content -->
 		</div>
 		<!-- /.main-content-inner -->
@@ -87,7 +419,6 @@
 $(".myView").addClass("active");
 $(document).ready(function(){
 $('.myView').on('click', function(){
-	alert('onclick is working.');
 	console.log("write your code hee") 
 	console.log("cacheUserBean") 
 });
