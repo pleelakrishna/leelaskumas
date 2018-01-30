@@ -34,7 +34,7 @@ public class LoginController {
 		try {
 			User objuserBean = (User) session.getAttribute("cacheUserBean");
 			if (objuserBean != null) {
-				return "redirect:myView";
+				return "redirect:dept";
 			}
 
 		} catch (Exception e) {
@@ -62,7 +62,7 @@ public class LoginController {
 			if(lbean != null){
 				 session.setAttribute("cacheUserBean", lbean);
 				 userService.setLoginRecord(lbean.getId(),"login");
-				 return "redirect:myView";
+				 return "redirect:dept";
 			 }else{
 				 redir.addFlashAttribute("msg","Invalid Crediantals");
 				 redir.addFlashAttribute("cssMsg", "danger");

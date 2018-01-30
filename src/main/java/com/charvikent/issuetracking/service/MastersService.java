@@ -1,5 +1,6 @@
 package com.charvikent.issuetracking.service;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.charvikent.issuetracking.dao.MastersDao;
 import com.charvikent.issuetracking.model.Department;
+import com.charvikent.issuetracking.model.KpStatus;
 
 @Service
 @Transactional
@@ -68,6 +70,25 @@ public class MastersService {
 	public boolean deleteDepartment(Integer id, String status) {
 		return mastersDao.deleteDepartment(id,status);
 	}
+	
+	public HashMap<Integer, String> getKpStatues()
+	{
+		List<KpStatus> listkpstatues=mastersDao.getKpStatues();
+		
+		
+		HashMap<Integer,String> kpstatuesmap =new HashMap<Integer,String>();
+		
+		for(KpStatus kp:listkpstatues)
+		{
+			kpstatuesmap.put(kp.getId(), kp.getName());
+			
+		}
+		
+		return kpstatuesmap;
+	}
+	
+	
+	
 
 	
 	

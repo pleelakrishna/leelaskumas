@@ -16,9 +16,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.charvikent.issuetracking.config.FilesStuff;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.service.CategoryService;
 import com.charvikent.issuetracking.service.MastersService;
@@ -47,11 +50,13 @@ public class TaskController {
 	@Autowired
 	MastersService  mastersService;
 
+	@Autowired
+	FilesStuff fileTemplate;
 	
 	
 	
 	@RequestMapping("/task")
-	public String  department( @ModelAttribute("taskf")  ReportIssue taskf,Model model ,HttpServletRequest request) {
+	public String  department( @ModelAttribute("taskf")  ReportIssue taskf,Model model , HttpServletRequest request) {
 		Set<ReportIssue> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
@@ -61,6 +66,7 @@ public class TaskController {
 		model.addAttribute("userNames", userService.getUserName());
 		model.addAttribute("category", categoryService.getCategoryNames());
 		model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		model.addAttribute("kpstatuses", mastersService.getKpStatues());
 		
 		try {
 			listOrderBeans = taskService.getAllReportIssues();
@@ -87,7 +93,7 @@ public class TaskController {
 	}
 	
 	@RequestMapping(value = "/task", method = RequestMethod.POST)
-	public String saveAdmin(@Valid @ModelAttribute  ReportIssue task, BindingResult bindingresults,
+	public String saveAdmin(@Valid @ModelAttribute  ReportIssue task, BindingResult bindingresults, @RequestParam("file") MultipartFile[] uploadedFiles,
 			RedirectAttributes redir) throws IOException {
 		
 		if (bindingresults.hasErrors()) {
@@ -114,7 +120,25 @@ public class TaskController {
 			{
 				if(dummyId ==0)
 				{
+					
+					try {
+						for(MultipartFile multipartFile : uploadedFiles) {
+							String fileName = multipartFile.getOriginalFilename();
+							if(!multipartFile.isEmpty())
+							{
+							 task.setUploadfile("user browsed file(s)");            //add dummy value to check file upload status in dao layers
+							 multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
+							}
+						}
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					}
+					
+					
+					
+					
 					task.setStatus("1");
+					
 					taskService.saveReportIssue(task);
 
 					redir.addFlashAttribute("msg", "Record Inserted Successfully");
@@ -135,6 +159,19 @@ public class TaskController {
 				id=task.getId();
 				if(id == dummyId || orgBean == null)
 				{
+					
+					try {
+						for(MultipartFile multipartFile : uploadedFiles) {
+							String fileName = multipartFile.getOriginalFilename();
+							if(!multipartFile.isEmpty())
+							{
+							 task.setUploadfile("user browsed file(s)");            //add dummy value to check file upload status in dao layers
+							 multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
+							}
+						}
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					}
 					taskService.updateIssue(task);
 					redir.addFlashAttribute("msg", "Record Updated Successfully");
 					redir.addFlashAttribute("cssMsg", "warning");

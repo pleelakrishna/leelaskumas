@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
+import com.charvikent.issuetracking.model.Category;
 import com.charvikent.issuetracking.model.Designation;
 
 @Repository
@@ -52,5 +53,12 @@ public class DesignDao {
 			e.printStackTrace();
 		}
 		return delete;
+	}
+
+	public void updatDesign(Designation design) {
+		Designation ud= (Designation)entityManager.find(Designation.class ,design.getId());
+		ud.setName(design.getName());
+		entityManager.merge(ud);
+		
 	}
 	}

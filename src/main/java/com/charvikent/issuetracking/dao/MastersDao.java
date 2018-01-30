@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.Designation;
+import com.charvikent.issuetracking.model.KpStatus;
 import com.charvikent.issuetracking.model.OrgDept;
 import com.charvikent.issuetracking.model.Orgnization;
 
@@ -73,6 +74,11 @@ public class MastersDao {
 			e.printStackTrace();
 		}
 		return delete;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<KpStatus> getKpStatues() {
+		return entityManager.createQuery("SELECT kpstatus FROM KpStatus kpstatus").getResultList();
 	}
 	
 }

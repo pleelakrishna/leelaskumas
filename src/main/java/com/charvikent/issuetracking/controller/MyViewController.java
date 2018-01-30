@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.ReportIssueService;
-@Controller
+//@Controller
 public class MyViewController {
 	@Autowired
 	HttpSession session;
@@ -43,6 +43,8 @@ public class MyViewController {
 	        	 return "redirect:/"; 
 		
 	}
+	
+	
 	/*@RequestMapping("*")
 	public String fallbackMethod(){
 		return "redirect:logoutHome";
