@@ -19,30 +19,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.charvikent.issuetracking.model.Department;
-import com.charvikent.issuetracking.service.MastersService;
-import com.charvikent.issuetracking.service.OrgService;
+import com.charvikent.issuetracking.model.Category;
+import com.charvikent.issuetracking.service.CategoryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Controller
-public class MastersController {
+public class CategoryController {
 	
 	@Autowired
-	MastersService  mastersService;
-	@Autowired
-	OrgService  orgService;
+	CategoryService categoryService;
 	
 	
-	
-	@RequestMapping("/dept")
-	public String  department( @ModelAttribute("deptf")  Department deptf,Model model ,HttpServletRequest request) {
-		List<Department> listOrderBeans = null;
+	@RequestMapping("/cate")
+	public String  department( @ModelAttribute("catef")  Category catef,Model model ,HttpServletRequest request) {
+		List<Category> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
-		model.addAttribute("deptf", new Department());
+		model.addAttribute("catef", new Category());
+		
 		try {
-			listOrderBeans =mastersService.deptList();
+			listOrderBeans = categoryService.cateList();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
@@ -61,13 +58,12 @@ public class MastersController {
 		}
 		
 		
-		return "dept";
+		return "cate";
 	
 	}
 	
-	
-	@RequestMapping(value = "/dept", method = RequestMethod.POST)
-	public String saveAdmin(@Valid @ModelAttribute  Department dept, BindingResult bindingresults,
+	@RequestMapping(value = "/cate", method = RequestMethod.POST)
+	public String saveAdmin(@Valid @ModelAttribute  Category cate, BindingResult bindingresults,
 			RedirectAttributes redir) throws IOException {
 		
 		if (bindingresults.hasErrors()) {
@@ -78,19 +74,20 @@ public class MastersController {
 		int id = 0;
 		try
 		{
-			Department deptBean= mastersService.getDepartmentsById(dept);
+			 Category orgBean= categoryService.getCateById(cate);
+			
 			int dummyId =0;
 			
-			if(deptBean != null){
-				dummyId = deptBean.getId();
+			if(orgBean != null){
+				dummyId = orgBean.getId();
 			}
 			
-			if(dept.getId()==null)
+			if(cate.getId()==null)
 			{
 				if(dummyId ==0)
 				{
-					dept.setStatus("1");
-					mastersService.saveDept(dept);
+					cate.setStatus("1");
+					categoryService.saveCate(cate);
 
 					redir.addFlashAttribute("msg", "Record Inserted Successfully");
 					redir.addFlashAttribute("cssMsg", "success");
@@ -107,10 +104,10 @@ public class MastersController {
 			
 			else
 			{
-				id=dept.getId();
-				if(id == dummyId || deptBean == null)
+				id=cate.getId();
+				if(id == dummyId || orgBean == null)
 				{
-					mastersService.updateDept(dept);
+					categoryService.updatecate(cate);
 					redir.addFlashAttribute("msg", "Record Updated Successfully");
 					redir.addFlashAttribute("cssMsg", "warning");
 					
@@ -129,26 +126,21 @@ public class MastersController {
 		}
 		
 		
-		return "redirect:dept";
+		return "redirect:cate";
 	}
 	
 	
-	
-	
-	
-	
-	
-	@RequestMapping(value = "/deleteDept")
-	public @ResponseBody String deleteDept(Department  objdept,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
+	@RequestMapping(value = "/deleteCate")
+	public @ResponseBody String deleteDept(Category  objorg,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
 		System.out.println("deleteEducation page...");
-		List<Department> listOrderBeans  = null;
+		List<Category> listOrderBeans  = null;
 		JSONObject jsonObj = new JSONObject();
 		ObjectMapper objectMapper = null;
 		String sJson=null;
 		boolean delete = false;
 		try{
-			if(objdept.getId() != 0){
- 				delete = mastersService.deleteDepartment(objdept.getId(),objdept.getStatus());
+			if(objorg.getId() != 0){
+ 				delete = categoryService.deleteCategory(objorg.getId(),objorg.getStatus());
  				if(delete){
  					jsonObj.put("message", "deleted");
  				}else{
@@ -156,7 +148,7 @@ public class MastersController {
  				}
  			}
  				
-			listOrderBeans = mastersService.deptList();
+			listOrderBeans = categoryService.cateList();
 			 objectMapper = new ObjectMapper();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				
@@ -180,6 +172,4 @@ public class MastersController {
 		return String.valueOf(jsonObj);
 	}
 
-	
-	
 }

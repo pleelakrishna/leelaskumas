@@ -21,15 +21,15 @@ import com.charvikent.issuetracking.model.User;
 @Transactional
 public class UserService {
 
-	private final static Logger logger = Logger.getLogger(AdminService.class);
+	private final static Logger logger = Logger.getLogger(AdminService.class);  
 
 	@Autowired
 	private UserDao userDao;
-
+	
 	@Autowired
 	private SendSMS smsTemplate;
 
-
+    
     SendSMS smstemplate =new SendSMS();
 
 	public void saveUser(User user) throws IOException
@@ -46,8 +46,8 @@ public class UserService {
 
 		return userDao.getAllUsers();
 	}
-
-
+	
+	
 	public Map<Integer, String> getDepartments()
 	{
 		Map<Integer, String> statesMap = new LinkedHashMap<Integer, String>();
@@ -57,16 +57,16 @@ public class UserService {
 		for(Department bean: departmentList){
 			statesMap.put(bean.getId(), bean.getName());
 		}
-
+				
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
 		return statesMap;
-
-
+				
+		
 	}
-
-
+	
+	
 	public Map<Integer, String> getRoles()
 	{
 		Map<Integer, String> rolesMap = new LinkedHashMap<Integer, String>();
@@ -76,49 +76,49 @@ public class UserService {
 		for(Designation bean: rolesList){
 			rolesMap.put(bean.getId(), bean.getName());
 		}
-
+				
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
 		return rolesMap;
-
-
+				
+		
 	}
-
+	
 		public User  findWithName(String username, String lpassword)
 	    {
-
+	 
 		 User userdao=null;
-
+		
 		try {
 			userdao= userDao.findWithName(username, lpassword);
 		} catch (Exception e) {
 			System.out.println("error occured service");
-
-
+			
+			
 			e.printStackTrace();
 		}
-
+				
 				return userdao;
-
+		
 	}
 
 	public void deleteUser(Integer id) {
-
+		
 		userDao.deleteUser(id);
-
+		
 	}
 
 	public User getUserById(Integer id) {
-
+		
 		User obj=userDao.getUserById(id);
 		return obj;
 	}
 
 	public void updateUser(User user) {
-
+		
 		userDao.updateUser(user);
-
+		
 	}
 	public Map<Integer, String> getUserName()
 	{
@@ -129,28 +129,28 @@ public class UserService {
 		for(User bean: rolesList){
 			rolesMap.put(bean.getId(), bean.getUsername());
 		}
-
+				
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
 		return rolesMap;
-
-
+				
+		
 	}
 
 	public void setLoginRecord(Integer id,String str) {
-
+          
 		userDao.setLoginRecord(id,str);
 	}
 
 	public boolean checkUserExist(String username) {
-
+		
 		List<User> usersList= userDao.getUserNames();
-
+		
 		for(User bean: usersList){
 			  if(username.equalsIgnoreCase(bean.getUsername()))
 			  {
-
+				  
 				  return true;
 		       }
 	}

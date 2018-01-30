@@ -39,7 +39,18 @@ public class ReportIssue implements Comparable<ReportIssue>{
 	private Integer gapcount;
 
 	private String kstatus;
+	private String status;
 	private String additionalinfo;
+	
+	@Transient
+	private String assigntoid;
+	@Transient
+	private String categoryid;
+	@Transient
+	private String priorityid;
+	@Transient
+	private String  severityid;
+	
 	
 	public String getAdditionalinfo() {
 		return additionalinfo;
@@ -135,21 +146,61 @@ public class ReportIssue implements Comparable<ReportIssue>{
 
 
 
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getUploadfile() {
 		return uploadfile;
 	}
 	public void setUploadfile(String uploadfile) {
 		this.uploadfile = uploadfile;
 	}
+	
+	
+	
+	
+	
+	public String getAssigntoid() {
+		return assigntoid;
+	}
+	public void setAssigntoid(String assigntoid) {
+		this.assigntoid = assigntoid;
+	}
+	public String getCategoryid() {
+		return categoryid;
+	}
+	public void setCategoryid(String categoryid) {
+		this.categoryid = categoryid;
+	}
+	public String getPriorityid() {
+		return priorityid;
+	}
+	public void setPriorityid(String priorityid) {
+		this.priorityid = priorityid;
+	}
+	public String getSeverityid() {
+		return severityid;
+	}
+	public void setSeverityid(String severityid) {
+		this.severityid = severityid;
+	}
+	
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		return "ReportIssue [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", category="
 				+ category + ", severity=" + severity + ", priority=" + priority + ", assignto=" + assignto
 				+ ", subject=" + subject + ", description=" + description + ", uploadfile=" + uploadfile + ", gapdays="
-				+ gapdays + ", gapcount=" + gapcount + ", kstatus=" + kstatus + ", additionalinfo=" + additionalinfo
-				+ ", assignby=" + assignby + "]";
+				+ gapdays + ", gapcount=" + gapcount + ", kstatus=" + kstatus + ", status=" + status
+				+ ", additionalinfo=" + additionalinfo + ", assigntoid=" + assigntoid + ", categoryid=" + categoryid
+				+ ", priorityid=" + priorityid + ", severityid=" + severityid + ", assignby=" + assignby + "]";
 	}
-	
 	@Override
 	public int compareTo(ReportIssue o) {
 		if(id<o.id)

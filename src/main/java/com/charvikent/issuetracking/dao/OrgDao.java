@@ -39,7 +39,9 @@ public class OrgDao {
 	}
 
 	public void updateDept(Orgnization org) {
-		entityManager.merge(org);
+		Orgnization uo= entityManager.find(Orgnization.class,org.getId());
+		uo.setName(org.getName());
+		entityManager.merge(uo);
 		
 	}
 

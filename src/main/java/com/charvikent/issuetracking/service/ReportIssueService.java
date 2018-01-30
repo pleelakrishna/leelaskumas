@@ -445,6 +445,11 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		return reportIssueDao.getRepeatlogsById(id);
 	}  
 	
+	
+	public boolean deleteTask(Integer id, String status) {
+		return reportIssueDao.deleteTask(id,status);
+	}
+	
 	}
 
 

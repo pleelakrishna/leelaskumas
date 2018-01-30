@@ -37,6 +37,36 @@ public class CategoryService {
 		
 	}
 	
+	public void saveCate(Category cate)
+	{
+		categoryDao.saveCategory(cate);
+	}
+	
+	
+	public List<Category> cateList()
+	{
+		 List<Category> cateList= categoryDao.getCategoryNames();
+		return cateList;
+		
+	}
+	
+	public Category getCateById(Category cate) {
+		// TODO Auto-generated method stub
+		return categoryDao.getCategoryNameById(cate);
+	}
+
+
+	public void updatecate(Category cate) {
+		categoryDao.UpdateCategory(cate);
+		
+		
+	}
+
+
+	public boolean deleteCategory(Integer id, String status) {
+		return categoryDao.deleteCategory(id,status);
+	}
+	
 	
 
 }

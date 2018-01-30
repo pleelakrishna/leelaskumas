@@ -65,7 +65,7 @@ public class DesignService {
 
 
 	public void updateDesign(Designation design) {
-		entityManager.merge(design);
+		designDao.updatDesign(design);
 		
 	}
 

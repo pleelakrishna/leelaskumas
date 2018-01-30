@@ -1,7 +1,7 @@
 package com.charvikent.issuetracking.controller;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,30 +19,51 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.charvikent.issuetracking.model.Department;
+import com.charvikent.issuetracking.model.ReportIssue;
+import com.charvikent.issuetracking.service.CategoryService;
 import com.charvikent.issuetracking.service.MastersService;
-import com.charvikent.issuetracking.service.OrgService;
+import com.charvikent.issuetracking.service.PriorityService;
+import com.charvikent.issuetracking.service.ReportIssueService;
+import com.charvikent.issuetracking.service.SeverityService;
+import com.charvikent.issuetracking.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 @Controller
-public class MastersController {
+public class TaskController {
+	
+	@Autowired
+	ReportIssueService taskService;
+	@Autowired
+	private PriorityService priorityService;
+
+	@Autowired
+	private SeverityService severityService;
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@Autowired
 	MastersService  mastersService;
-	@Autowired
-	OrgService  orgService;
+
 	
 	
 	
-	@RequestMapping("/dept")
-	public String  department( @ModelAttribute("deptf")  Department deptf,Model model ,HttpServletRequest request) {
-		List<Department> listOrderBeans = null;
+	@RequestMapping("/task")
+	public String  department( @ModelAttribute("taskf")  ReportIssue taskf,Model model ,HttpServletRequest request) {
+		Set<ReportIssue> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
-		model.addAttribute("deptf", new Department());
+		model.addAttribute("taskf", new ReportIssue());
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		
 		try {
-			listOrderBeans =mastersService.deptList();
+			listOrderBeans = taskService.getAllReportIssues();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
@@ -61,13 +82,12 @@ public class MastersController {
 		}
 		
 		
-		return "dept";
+		return "task";
 	
 	}
 	
-	
-	@RequestMapping(value = "/dept", method = RequestMethod.POST)
-	public String saveAdmin(@Valid @ModelAttribute  Department dept, BindingResult bindingresults,
+	@RequestMapping(value = "/task", method = RequestMethod.POST)
+	public String saveAdmin(@Valid @ModelAttribute  ReportIssue task, BindingResult bindingresults,
 			RedirectAttributes redir) throws IOException {
 		
 		if (bindingresults.hasErrors()) {
@@ -78,19 +98,24 @@ public class MastersController {
 		int id = 0;
 		try
 		{
-			Department deptBean= mastersService.getDepartmentsById(dept);
+			ReportIssue orgBean=null;
+			if(task.getId()!=null)
+			{
+			  orgBean= taskService.getReportIssueById(task.getId());
+			
+			}
 			int dummyId =0;
 			
-			if(deptBean != null){
-				dummyId = deptBean.getId();
+			if(orgBean != null){
+				dummyId = orgBean.getId();
 			}
 			
-			if(dept.getId()==null)
+			if(task.getId()==null)
 			{
 				if(dummyId ==0)
 				{
-					dept.setStatus("1");
-					mastersService.saveDept(dept);
+					task.setStatus("1");
+					taskService.saveReportIssue(task);
 
 					redir.addFlashAttribute("msg", "Record Inserted Successfully");
 					redir.addFlashAttribute("cssMsg", "success");
@@ -107,10 +132,10 @@ public class MastersController {
 			
 			else
 			{
-				id=dept.getId();
-				if(id == dummyId || deptBean == null)
+				id=task.getId();
+				if(id == dummyId || orgBean == null)
 				{
-					mastersService.updateDept(dept);
+					taskService.updateIssue(task);
 					redir.addFlashAttribute("msg", "Record Updated Successfully");
 					redir.addFlashAttribute("cssMsg", "warning");
 					
@@ -129,26 +154,21 @@ public class MastersController {
 		}
 		
 		
-		return "redirect:dept";
+		return "redirect:task";
 	}
 	
 	
-	
-	
-	
-	
-	
-	@RequestMapping(value = "/deleteDept")
-	public @ResponseBody String deleteDept(Department  objdept,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
+	@RequestMapping(value = "/deleteTask")
+	public @ResponseBody String deleteDept(ReportIssue  objorg,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
 		System.out.println("deleteEducation page...");
-		List<Department> listOrderBeans  = null;
+		Set<ReportIssue> listOrderBeans  = null;
 		JSONObject jsonObj = new JSONObject();
 		ObjectMapper objectMapper = null;
 		String sJson=null;
 		boolean delete = false;
 		try{
-			if(objdept.getId() != 0){
- 				delete = mastersService.deleteDepartment(objdept.getId(),objdept.getStatus());
+			if(objorg.getId() != 0){
+ 				delete = taskService.deleteTask(objorg.getId(),objorg.getStatus());
  				if(delete){
  					jsonObj.put("message", "deleted");
  				}else{
@@ -156,20 +176,20 @@ public class MastersController {
  				}
  			}
  				
-			listOrderBeans = mastersService.deptList();
+			listOrderBeans = taskService.getAllReportIssues();
 			 objectMapper = new ObjectMapper();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
 				request.setAttribute("allOrders1", sJson);
-				jsonObj.put("allOrders1", listOrderBeans);
+				jsonObj.put("allOrders1", sJson);
 				// System.out.println(sJson);
 			} else {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
 				request.setAttribute("allOrders1", "''");
-				jsonObj.put("allOrders1", listOrderBeans);
+				jsonObj.put("allOrders1", sJson);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -181,5 +201,9 @@ public class MastersController {
 	}
 
 	
-	
+
+
+
+
+
 }

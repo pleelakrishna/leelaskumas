@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.config.FilesStuff;
+import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.KpStatus;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
@@ -191,7 +192,7 @@ public List<ReportIssue> getAllReportIssues()
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em.createQuery("select r.id, c.category ,s.severity,p.priority,"
 					+ "u.username ,r.subject ,r.uploadfile,"
-					+ "r.createdTime, r.updatedTime from ReportIssue r, Category c ,Severity s,Priority p,User u  where r.category=c.id and r.severity=s.id and r.priority=p.id and r.assignto=u.id")
+					+ "DATE(r.createdTime), Date(r.updatedTime),r.status,r.description,r.assignto,r.category,r.priority,r.severity from ReportIssue r, Category c ,Severity s,Priority p,User u  where r.category=c.id and r.severity=s.id and r.priority=p.id and r.assignto=u.id")
 			.getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
@@ -206,6 +207,12 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setUploadfile((String) row[6]);
 				issue.setCreatedTime((Date) row[7]);
 				issue.setUpdatedTime((Date) row[8]);
+				issue.setStatus((String) row[9]);
+				issue.setDescription((String) row[10]);
+				issue.setAssigntoid((String) row[11]);
+				issue.setCategoryid((String) row[12]);
+				issue.setPriorityid((String) row[13]);
+				issue.setSeverityid((String) row[14]);
 				listissue.add(issue);
 
 			}
@@ -404,6 +411,25 @@ public List<ReportIssue> getAllReportIssues()
 		}
 		
 		return listRepeatlogs;
+	}
+	
+	
+	
+	public boolean deleteTask(Integer id, String status) {
+		Boolean delete=false;
+		try{
+			
+			ReportIssue task= (ReportIssue)em.find(ReportIssue.class ,id);
+			   task.setStatus(status);
+			   em.merge(task);
+			if(!status.equals(task.getStatus()))
+			{
+				delete=true;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return delete;
 	}
 
 
