@@ -31,6 +31,7 @@ import com.charvikent.issuetracking.config.SendSMS;
 import com.charvikent.issuetracking.dao.ReportIssueDao;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.KpStatus;
+import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 
@@ -441,7 +442,7 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		return listissue;
 	}
 
-	public Object getrepeatLogsById(int id) {
+	public List<KpStatusLogs> getrepeatLogsById(int id) {
 		return reportIssueDao.getRepeatlogsById(id);
 	}  
 	

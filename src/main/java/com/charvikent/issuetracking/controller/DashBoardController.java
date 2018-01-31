@@ -1,5 +1,6 @@
 package com.charvikent.issuetracking.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class DashBoardController {
 	
 	@RequestMapping("/dashBoard")
 	public String  department( @ModelAttribute("designf")  Designation designf,Model model ,HttpServletRequest request) {
-		Set<ReportIssue> listOrderBeans = null;
+		List<ReportIssue> listOrderBeans = null;
 		Set<ReportIssue> listOrderBeansTo = null;
 		Set<ReportIssue> listOrderBeansRe = null;
 		Set<ReportIssue> listOrderBeansMo = null;
@@ -38,11 +39,10 @@ public class DashBoardController {
 		String sJson = null;
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
 		try {
-			listOrderBeans = dashBoardService.getIssuesByAssignBy(String.valueOf(objuserBean.getId()));
+			listOrderBeans =  dashBoardService.getIssuesByAssignBy(String.valueOf(objuserBean.getId()));
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
-				System.out.println(sJson);
 				request.setAttribute("allOrders1by", sJson);
 				// System.out.println(sJson);
 			} 
@@ -56,10 +56,10 @@ public class DashBoardController {
 			if (listOrderBeansTo != null && listOrderBeansTo.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeansTo);
-				System.out.println(sJson);
 				request.setAttribute("allOrders1to", sJson);
 				// System.out.println(sJson);
-			} 
+			}
+			else
 			{
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeansTo);
@@ -70,14 +70,14 @@ public class DashBoardController {
 			if (listOrderBeansRe != null && listOrderBeansRe.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeansRe);
-				System.out.println(sJson);
-				request.setAttribute("allOrders1re", sJson);
+				request.setAttribute("allOrders1Re", sJson);
 				// System.out.println(sJson);
 			} 
+			else
 			{
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeansRe);
-				request.setAttribute("allOrders1re", "''");
+				request.setAttribute("allOrders1Re", "''");
 			}
 			
 			listOrderBeansMo = dashBoardService.getRecentlyModified(String.valueOf(objuserBean.getId()));
@@ -85,9 +85,10 @@ public class DashBoardController {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeansMo);
 				System.out.println(sJson);
-				request.setAttribute("allOrders1mo", sJson);
+				request.setAttribute("allOrders1Mo", sJson);
 				// System.out.println(sJson);
 			} 
+			else
 			{
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeansMo);
@@ -97,10 +98,10 @@ public class DashBoardController {
 			if (listOrderBeansMn != null && listOrderBeansMn.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeansMn);
-				System.out.println(sJson);
-				request.setAttribute("allOrders1mn", sJson);
+				request.setAttribute("allOrders1Mn", sJson);
 				// System.out.println(sJson);
 			}
+			else
 			{
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeansMn);

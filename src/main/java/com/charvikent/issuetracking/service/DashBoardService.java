@@ -1,5 +1,6 @@
 package com.charvikent.issuetracking.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -22,9 +23,9 @@ public class DashBoardService {
 	UserDao userDao;
 	
 	
-	public Set<ReportIssue> getIssuesByAssignBy(String id) {
-		// TODO Auto-generated method stub
-		return dashBoardDao.getIssuesAssignBy(id);
+	public List<ReportIssue> getIssuesByAssignBy(String id) {
+		List<ReportIssue> list = new ArrayList<ReportIssue> (dashBoardDao.getIssuesAssignBy(id));
+		return  list;
 	}
 	
 	

@@ -50,7 +50,7 @@ public class OrgDeptDao {
 
 	public OrgDept getorgDeptById(OrgDept orgDept) {
 		@SuppressWarnings("unchecked")
-		List<OrgDept> orgDeptList =(List<OrgDept>) entityManager.createQuery("SELECT OrgDept FROM OrgDept OrgDept where id =:custName ").setParameter("custName",orgDept.getId()).getResultList();
+		List<OrgDept> orgDeptList =(List<OrgDept>) entityManager.createQuery("SELECT OrgDept FROM OrgDept OrgDept where org =:custName and dept =:custDept ").setParameter("custName",orgDept.getOrg()).setParameter("custDept",orgDept.getDept()).getResultList();
 		if(orgDeptList.size() > 0)
 			return orgDeptList.get(0);
 		return null;

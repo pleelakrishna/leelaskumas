@@ -19,6 +19,8 @@ public class ReportIssue implements Comparable<ReportIssue>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer  id;
+	
+	private String taskno;
 
 	@CreationTimestamp
 	private Date createdTime;
@@ -52,6 +54,14 @@ public class ReportIssue implements Comparable<ReportIssue>{
 	private String  severityid;
 	
 	
+	
+	
+	public String getTaskno() {
+		return taskno;
+	}
+	public void setTaskno(String taskno) {
+		this.taskno = taskno;
+	}
 	public String getAdditionalinfo() {
 		return additionalinfo;
 	}
@@ -192,14 +202,16 @@ public class ReportIssue implements Comparable<ReportIssue>{
 	
 	
 	
+	
 	@Override
 	public String toString() {
-		return "ReportIssue [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", category="
-				+ category + ", severity=" + severity + ", priority=" + priority + ", assignto=" + assignto
-				+ ", subject=" + subject + ", description=" + description + ", uploadfile=" + uploadfile + ", gapdays="
-				+ gapdays + ", gapcount=" + gapcount + ", kstatus=" + kstatus + ", status=" + status
-				+ ", additionalinfo=" + additionalinfo + ", assigntoid=" + assigntoid + ", categoryid=" + categoryid
-				+ ", priorityid=" + priorityid + ", severityid=" + severityid + ", assignby=" + assignby + "]";
+		return "ReportIssue [id=" + id + ", taskno=" + taskno + ", createdTime=" + createdTime + ", updatedTime="
+				+ updatedTime + ", category=" + category + ", severity=" + severity + ", priority=" + priority
+				+ ", assignto=" + assignto + ", subject=" + subject + ", description=" + description + ", uploadfile="
+				+ uploadfile + ", gapdays=" + gapdays + ", gapcount=" + gapcount + ", kstatus=" + kstatus + ", status="
+				+ status + ", additionalinfo=" + additionalinfo + ", assigntoid=" + assigntoid + ", categoryid="
+				+ categoryid + ", priorityid=" + priorityid + ", severityid=" + severityid + ", assignby=" + assignby
+				+ "]";
 	}
 	@Override
 	public int compareTo(ReportIssue o) {

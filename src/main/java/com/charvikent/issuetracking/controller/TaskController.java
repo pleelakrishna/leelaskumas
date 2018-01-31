@@ -1,12 +1,14 @@
 package com.charvikent.issuetracking.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.charvikent.issuetracking.config.FilesStuff;
+import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.service.CategoryService;
 import com.charvikent.issuetracking.service.MastersService;
@@ -236,11 +239,27 @@ public class TaskController {
 		}
 		return String.valueOf(jsonObj);
 	}
-
 	
+	
+	@RequestMapping(value = "/viewTask",method = RequestMethod.POST)
+	public @ResponseBody Object viewIssue(@RequestParam(value = "id", required = true) String id, Model model,HttpServletRequest request, HttpSession session) throws JSONException {
 
+		ReportIssue issue = taskService.getReportIssueById(Integer.parseInt(id));
+		model.addAttribute("cissue", issue);
+		model.addAttribute("departments", userService.getDepartments());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("kpstatuses", taskService.getKpStatues());
+		
+		
+		List<KpStatusLogs> taskHistory =taskService.getrepeatLogsById(Integer.parseInt(id));
+		
+		JSONObject obj = new JSONObject();
+		obj.put("list", taskHistory);
+		return String.valueOf(obj);
 
-
-
+	}
 
 }

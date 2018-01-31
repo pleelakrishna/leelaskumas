@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -33,8 +34,10 @@ public class ReportIssueDao {
 	FilesStuff fileTemplate;
 
 	public void saveReportIssue(ReportIssue reportIssue) {
+		int randomNum =ThreadLocalRandom.current().nextInt(1,1000+1);
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
 		reportIssue.setAssignby(String.valueOf(objuserBean.getId()));
+		reportIssue.setTaskno(String.valueOf(randomNum));
 		reportIssue.setKstatus("2");
 		if(reportIssue.getUploadfile()!=null)
 	     {
@@ -389,7 +392,7 @@ public List<ReportIssue> getAllReportIssues()
 
 	}
 
-	public Object getRepeatlogsById(int id) {
+	public List<KpStatusLogs> getRepeatlogsById(int id) {
 		
 		List<KpStatusLogs> listRepeatlogs =new ArrayList<KpStatusLogs>();
 		try {

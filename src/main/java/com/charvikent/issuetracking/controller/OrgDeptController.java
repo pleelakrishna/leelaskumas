@@ -177,8 +177,5 @@ public class OrgDeptController {
 		}
 		return String.valueOf(jsonObj);
 	}
-
-	
-
 	
 }
