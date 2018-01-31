@@ -43,6 +43,7 @@
 <link rel='stylesheet' type='text/css' href='${baseurl }/assets/plugins/codeprettifier/prettify.css' /> 
 <link rel='stylesheet' type='text/css' href='${baseurl }/assets/plugins/form-toggle/toggles.css' /> 
 <link rel='stylesheet' type='text/css' href='${baseurl }/assets/plugins/datatables/dataTables.css' /> 
+<link rel='stylesheet' type='text/css' href='${baseurl }/assets/css/styles.css' /> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link href="${baseurl }/assets/css/datepicker1.css" rel="stylesheet" type="text/css" />
@@ -61,6 +62,16 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 <style type="text/css">
+
+.panel-heading {
+    font-size: 18px;
+    border-bottom: 1px solid #dddddd;
+    border-top-right-radius: 1px;
+    border-top-left-radius: 1px;
+    height: 40px;
+    line-height: 2em;
+}
+
 #page-container, #page-content{min-height: auto;}
 .control-label {
 	text-align: right;
@@ -228,8 +239,8 @@ $(function() {
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-users"></i> <span>Employees</span> <span class="caret"></span></a>
             	<ul class="dropdown-menu"> --%>
             
-             		<li class="lpo"><a href="${baseurl }/viewUsers"><i class="fa fa-users"></i> <span>Employees</span></a></li>
-              		<li class="company"><a href="${baseurl }/createUser"><i class="fa  fa-user-plus "></i> <span>New Employee</span></a></li>
+             		<li class="lpo"><a href="${baseurl }/createUser"><i class="fa fa-users"></i> <span>Employees</span></a></li>
+				<%--  <li class="company"><a href="${baseurl }/createUser"><i class="fa  fa-user-plus "></i> <span>New Employee</span></a></li> --%>
               		<!-- </ul>
               		</li> -->
               		 <li class="cylinder"><a href="${baseurl }/createTicketIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>New Task</span></a></li>
@@ -275,13 +286,13 @@ $(function() {
 		</div>
     </nav>
 
-    <div id="page-container">
+    <!-- <div id="page-container">
     	<div id="page-content" style="min-height: auto;">
     		<div id="wrap">
 	        <div id="page-heading" class="row">
 	        	<div class="col-md-6">
 					<h1 id="pageName"></h1>
-				</div>
+				</div> 
 				
-	        </div>
+	        </div>-->
 <!-- Header ends Here -->

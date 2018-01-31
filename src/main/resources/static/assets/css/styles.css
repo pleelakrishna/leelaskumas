@@ -3299,10 +3299,10 @@ button.close {
   pointer-events: none;
 }
 .breadcrumb {
-  padding: 7px 15px;
+  padding: 4px 15px;
   margin-bottom: 20px;
   list-style: none;
-  background-color: #ececec;
+  background-color: #4f8edc;
   border-radius: 1px;
   border-bottom:1px solid #d6d4d4;
     border-top:1px solid #d6d4d4;
@@ -5088,6 +5088,7 @@ i.visible-print {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #fff;
 }
 /* makes the font 33% larger relative to the icon container */
 .fa-lg {

@@ -64,7 +64,7 @@ public class UserDao {
 	public List<Department> getDepartmentslist()
 	{
 
-		return (List<Department>)em.createQuery("select department from Department department").getResultList();
+		return em.createQuery("select department from Department department").getResultList();
 
 	}
 
@@ -72,7 +72,7 @@ public class UserDao {
 	public List<Designation> getRoles()
 	{
 
-		return (List<Designation>)em.createQuery("select designation from Designation designation").getResultList();
+		return em.createQuery("select designation from Designation designation").getResultList();
 
 	}
 
@@ -128,7 +128,7 @@ public class UserDao {
 	public List<User> getUserNames()
 	{
 
-		return (List<User>)em.createQuery("SELECT user FROM User user").getResultList();
+		return em.createQuery("SELECT user FROM User user").getResultList();
 
 	}
 
@@ -157,8 +157,8 @@ public class UserDao {
 			list1.add(String.valueOf(row[0]));
 		}
 		return list1;
-	} 
-	
+	}
+
 	public static Set<String> parents=new TreeSet<String>();
 
 	@SuppressWarnings("unchecked")
@@ -172,9 +172,9 @@ public class UserDao {
 
 	}
 
-	
-	
-	
+
+
+
 
 
 
