@@ -49,6 +49,8 @@ public class AdminController {
 		model.addAttribute("departments", userService.getDepartments());
 		model.addAttribute("roles", userService.getRoles());
 		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("reportto",userService.getUserName());
+		model.addAttribute("allUsers", userService.getAllUsers());
 		return "user";
 	}
 
@@ -71,14 +73,14 @@ public class AdminController {
 		return "redirect:viewUsers";
 	}
 
-	@RequestMapping("/viewUsers")
+	/*@RequestMapping("/viewUsers")
 	public String pageView(Model model) {
 		System.out.println("view User Block");
 
 		model.addAttribute("allUsers", userService.getAllUsers());
 
 		return "viewUsers";
-	}
+	}*/
 
 	@RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable("id") String id) {
@@ -109,7 +111,7 @@ public class AdminController {
 		model.addAttribute("userNames", userService.getUserName());
 		if("1".equals(objuserBean.getDesignation()))
 			model.addAttribute("flag",false);
-		else 
+		else
 			model.addAttribute("flag",true);
 		return "editUser";
 
@@ -121,7 +123,7 @@ public class AdminController {
 		userService.updateUser(user);
 		redir.addFlashAttribute("msg", "Record Updated Successfully");
 		redir.addFlashAttribute("cssMsg", "warning");
-		return "redirect:viewUsers";
+		return "redirect:createUser";
 
 	}
 
@@ -158,16 +160,16 @@ public class AdminController {
 		else
 			return "No data found";
 	}
-	
+
 	@RequestMapping("/getUserName")
 	public  @ResponseBody  Boolean getUserName(HttpServletRequest request, HttpSession session)
 	{
 		String username=request.getParameter("username");
-		
+
 		username = username.replaceAll("\\s+","");
 		return userService.checkUserExist(username);
 	}
-	
+
 }
 
 

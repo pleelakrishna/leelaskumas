@@ -17,28 +17,28 @@ import com.charvikent.issuetracking.model.Designation;
 @Service
 @Transactional
 public class DesignService {
-	
+
 	@Autowired
 	DesignDao designDao;
-	
+
 	@PersistenceContext
     private EntityManager entityManager;
-	
-	
+
+
 	public void saveOrg(Designation design)
 	{
 		designDao.saveDesign(design);
 	}
-	
-	
+
+
 	public List<Designation> designList()
 	{
 		 List<Designation> designList= designDao.getDesignNames();
 		return designList;
-		
+
 	}
-	
-	
+
+
 	public Map<Integer, String> getDesignNames()
 	{
 		Map<Integer, String> rolesMap = new LinkedHashMap<Integer, String>();
@@ -48,13 +48,13 @@ public class DesignService {
 		for(Designation bean: rolesList){
 			rolesMap.put(bean.getId(), bean.getName());
 		}
-				
+
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
 		return rolesMap;
-				
-		
+
+
 	}
 
 
@@ -65,8 +65,8 @@ public class DesignService {
 
 
 	public void updateDesign(Designation design) {
-		designDao.updatDesign(design);
-		
+		//designDao.updatDesign(design);
+
 	}
 
 
