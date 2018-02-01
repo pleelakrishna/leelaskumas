@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class AdminController {
@@ -43,14 +44,23 @@ public class AdminController {
 		return "summary";
 	}
 
-	@RequestMapping("/createUser")
-	public String homeUser(Model model) {
+	@RequestMapping(value= {"/createUser","/deleteUser/createUser"})
+	public String homeUser(Model model,HttpServletRequest request) {
+		ObjectMapper objectMapper = null;
+		String sJson =null;
+		try {
 		model.addAttribute("userForm", new User());
 		model.addAttribute("departments", userService.getDepartments());
 		model.addAttribute("roles", userService.getRoles());
 		model.addAttribute("userNames", userService.getUserName());
 		model.addAttribute("reportto",userService.getUserName());
 		model.addAttribute("allUsers", userService.getAllUsers());
+		objectMapper = new ObjectMapper();
+		sJson = objectMapper.writeValueAsString(userService.getAllUsers());
+		request.setAttribute("allOrders1", sJson);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 		return "user";
 	}
 
@@ -67,10 +77,10 @@ public class AdminController {
 		// user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userService.saveUser(user);
 
-		redir.addFlashAttribute("msg", "Record Inserted Successfully");
+		redir.addFlashAttribute("msg", "Employee Inserted Successfully");
 		redir.addFlashAttribute("cssMsg", "success");
 
-		return "redirect:viewUsers";
+		return "redirect:createUser";
 	}
 
 	/*@RequestMapping("/viewUsers")
@@ -83,9 +93,14 @@ public class AdminController {
 	}*/
 
 	@RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.GET)
-	public String deleteUser(@PathVariable("id") String id) {
+	public String deleteUser(@PathVariable("id") String id,@ModelAttribute("userForm") User userForm, RedirectAttributes redir) {
 		userService.deleteUser(Integer.parseInt(id));
-		return "redirect:../viewUsers";
+
+		redir.addFlashAttribute("msg", "Employee Deleted Successfully");
+		redir.addFlashAttribute("cssMsg", "success");
+
+
+		return "redirect:createUser";
 
 	}
 
@@ -101,11 +116,10 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/edit")
-	public String bookmark(
-			@RequestParam(value="id", required=true) String id,Model model){
+	public String bookmark(	@RequestParam(value="id", required=true) String id,Model model){
 		User users = userService.getUserById(Integer.parseInt(id));
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
-		model.addAttribute("users", users);
+		model.addAttribute("userForm", users);
 		model.addAttribute("departments", userService.getDepartments());
 		model.addAttribute("roles", userService.getRoles());
 		model.addAttribute("userNames", userService.getUserName());
@@ -113,15 +127,16 @@ public class AdminController {
 			model.addAttribute("flag",false);
 		else
 			model.addAttribute("flag",true);
-		return "editUser";
+		return "user";
 
 	}
 
 
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
-	public String edit(@Valid @ModelAttribute User user, RedirectAttributes redir) {
+	public String edit(@PathVariable("id") String id,@Valid @ModelAttribute User user, RedirectAttributes redir) {
+
 		userService.updateUser(user);
-		redir.addFlashAttribute("msg", "Record Updated Successfully");
+		redir.addFlashAttribute("msg", "Employee Detailes Updated Successfully");
 		redir.addFlashAttribute("cssMsg", "warning");
 		return "redirect:createUser";
 

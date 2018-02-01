@@ -1,7 +1,6 @@
 package com.charvikent.issuetracking.model;
 
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,13 +20,13 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer  id;
-	
+
 	@CreationTimestamp
 	private Date createdTime ;
 
 	@UpdateTimestamp
 	private Date updatedTime ;
-	
+
 	public String getDesignation() {
 		return designation;
 	}
@@ -40,11 +39,17 @@ public class User {
 	private String password;
 	@Transient
 	private String cpassword;
-	
+	@Transient
+	private String departmentName;
+	@Transient
+	private String designationName;
+	@Transient
+	private String reportId;
+
 	@Transient
 	private String npassword;
-	
-	
+
+
 	public String getCpassword() {
 		return cpassword;
 	}
@@ -61,7 +66,7 @@ public class User {
 	private String firstname;
 	@Column
 	private String lastname;
-	
+
 	public String getLastname() {
 		return lastname;
 	}
@@ -70,7 +75,7 @@ public class User {
 	}
 	@Column
 	private String mobilenumber;
-	
+
 	@Column
 	@Email
 	private String email;
@@ -78,16 +83,37 @@ public class User {
 	//private String designation;
 	@Column
 	private String department;
-	
+
 	private String reportto;
-	
+
 	@Column
 	private Boolean enabled;
 	 private String  designation;
-	
+
+
+
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+	public String getDesignationName() {
+		return designationName;
+	}
+	public void setDesignationName(String designationName) {
+		this.designationName = designationName;
+	}
+	public String getReportId() {
+		return reportId;
+	}
+	public void setReportId(String reportId) {
+		this.reportId = reportId;
+	}
 	public User() {
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -136,14 +162,14 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public Boolean getEnabled() {
 		return enabled;
 	}
@@ -159,15 +185,17 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", username="
-				+ username + ", password=" + password + ", cpassword=" + cpassword + ", npassword=" + npassword
-				+ ", firstname=" + firstname + ", lastname=" + lastname + ", mobilenumber=" + mobilenumber + ", email="
-				+ email + ", department=" + department + ", reportto=" + reportto + ", enabled=" + enabled
+				+ username + ", password=" + password + ", cpassword=" + cpassword + ", departmentName="
+				+ departmentName + ", designationName=" + designationName + ", reportId=" + reportId + ", npassword="
+				+ npassword + ", firstname=" + firstname + ", lastname=" + lastname + ", mobilenumber=" + mobilenumber
+				+ ", email=" + email + ", department=" + department + ", reportto=" + reportto + ", enabled=" + enabled
 				+ ", designation=" + designation + "]";
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
+
 
 }

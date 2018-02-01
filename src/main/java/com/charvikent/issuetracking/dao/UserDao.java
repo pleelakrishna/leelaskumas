@@ -34,7 +34,8 @@ public class UserDao {
 
 
 		try {
-			List<Object[]> rows = em.createQuery("select  u.id,u.username,u.mobilenumber,u.email,u.enabled,dep.name,d.name from User u,Designation d,Department dep where u.department=dep.id and u.designation= d.id").getResultList();
+			List<Object[]> rows = em.createQuery("select  u.id,u.username,u.mobilenumber,u.email,u.enabled,dep.name,d.name,"
+					+ "u.firstname,u.lastname,u.reportto,u.designation ,u.department  from User u,Designation d,Department dep where u.department=dep.id and u.designation= d.id").getResultList();
 			for (Object[] row : rows) {
 				User users =new User();
 
@@ -44,9 +45,13 @@ public class UserDao {
 				users.setMobilenumber((String) row[2]);
 				users.setEmail((String) row[3]);
 				users.setEnabled((Boolean) row[4]);
-				users.setDepartment((String) row[5]);
-				users.setDesignation((String) row[6]);
-
+				users.setDepartmentName((String) row[5]);
+				users.setDesignationName((String) row[6]);
+				users.setFirstname((String) row[7]);
+				users.setLastname((String) row[8]);
+				users.setReportId((String) row[9]);
+				users.setDesignation((String) row[10]);
+				users.setDepartment((String) row[11]);
 
 				listusers.add(users);
 
