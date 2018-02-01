@@ -43,6 +43,7 @@
 <link rel='stylesheet' type='text/css' href='${baseurl }/assets/plugins/codeprettifier/prettify.css' /> 
 <link rel='stylesheet' type='text/css' href='${baseurl }/assets/plugins/form-toggle/toggles.css' /> 
 <link rel='stylesheet' type='text/css' href='${baseurl }/assets/plugins/datatables/dataTables.css' /> 
+<link rel='stylesheet' type='text/css' href='${baseurl }/assets/css/styles.css' /> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link href="${baseurl }/assets/css/datepicker1.css" rel="stylesheet" type="text/css" />
@@ -61,6 +62,16 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 <style type="text/css">
+
+.panel-heading {
+    font-size: 18px;
+    border-bottom: 1px solid #dddddd;
+    border-top-right-radius: 1px;
+    border-top-left-radius: 1px;
+    height: 40px;
+    line-height: 2em;
+}
+
 #page-container, #page-content{min-height: auto;}
 .control-label {
 	text-align: right;
@@ -117,6 +128,9 @@ span.has-error,span.hasError
 {
 /* 	max-width: 100% !important; */
 /* 	width: 100% !important; */
+}
+.fa {
+color: inherit !important;
 }
 </style>
 <script type="text/javascript">
@@ -222,11 +236,10 @@ span.has-error,span.hasError
              <li class="orgDept"><a href="${baseurl }/orgDept"><i class="fa fa-tint"></i> <span>Org-Dept</span></a></li>
               <li class="task"><a href="${baseurl }/task"><i class="fa fa-tint"></i> <span>Task</span></a></li>
               <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-tint"></i> <span>Category</span></a></li>
-             <li class="truck"><a href="${baseurl }/admin/truckHome"><i class="fa fa-truck" aria-hidden="true"></i> <span>Trucks</span></a></li>
-                <li class="fillingStation"><a href="${baseurl }/admin/fillingStationHome"><i class="fa fa-archive"></i> <span>Filling Stations</span></a></li>
-                <li class="customer"><a href="${baseurl }/admin/customerHome"><i class="fa fa-group"></i> <span>Customers</span></a></li>
-                 
-                <li class="tariffMaster"><a href="${baseurl }/admin/tariffMaster"><i class="fa fa-bar-chart-o"></i> <span>Tariff Master</span></a></li>
+             	<li class="lpo"><a href="${baseurl }/createUser"><i class="fa fa-users"></i> <span>Employees</span></a></li>
+              		 <li class="cylinder"><a href="${baseurl }/createTicketIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>New Task</span></a></li>
+              		 <li class="cylinder"><a href="${baseurl }/viewReportIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>All Tasks</span></a></li>
+              <li class="tariffMaster"><a href="${baseurl }/admin/tariffMaster"><i class="fa fa-bar-chart-o"></i> <span>Tariff Master</span></a></li>
 				<li class="transactions">
             		<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list"></i> <span>Transactions</span> <span class="caret"></span></a>
 					<ul class="dropdown-menu">
