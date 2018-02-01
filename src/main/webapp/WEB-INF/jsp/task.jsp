@@ -9,6 +9,23 @@
 		<li><a href="#">Home</a></li>
 		<li>Task Master</li>
 	</ol>
+	                       <div class="clearfix"></div><br>
+	                        <div class="row">
+                    		<div class="col-md-4">
+                    			<div class="form-horizontal">
+									<label for="focusedinput" class="col-md-6 control-label" style="padding-top:2px;">Category  <span class="impColor">*</span></label>
+									<select name="category" class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)" >
+											<option value="" label="--- Select ---" />
+											<option value="1" >assigned to me</option>
+											<option value="2" >assigned by me</option>
+											<option value="2" >monitored by me</option>
+											
+										</select>
+                    			</div>
+                    		</div>
+                    		</div>
+	
+	
 	<div class="clearfix"></div>
 	<div class="container">
 		<div class="row">
@@ -39,7 +56,7 @@
 					<div class="panel-heading">
 						<h4>Add Task</h4>
 					</div>
-					<form:form class="form-horizontal" commandName="taskf" role="form" id="fillingstation-form" action="task" method="post">
+					<form:form class="form-horizontal" commandName="taskf" role="form" id="fillingstation-form" action="task" method="post" enctype="multipart/form-data">
 					<div class="panel-body">
 						<div class="row">
                     		<div class="col-md-6">
@@ -121,7 +138,6 @@
                     		</div>
                     		</div>
                     		
-<!-- Modal Starts here-->
 <!-- Modal Ends here-->
 
 					</div>
@@ -140,7 +156,115 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<!-- Modal Starts here-->
+<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"> Task History </h4>
+        	</div>
+        	<div class="modal-body">
+				<div class="row">
+				<div class="table-responsive" id="HtableId">
+							<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered datatables" id="example">
+								<thead><tr><th>Date Modified</th><th>User Name</th><th>Attachment</th><th>Change</th><th></th></tr></thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					
+					
+				</div>
+				
+			</div>
+        	<!-- <div class="modal-footer">
+          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        	</div> -->
+      	</div>
+    </div>
+</div>
+<!-- Modal Ends here-->
 			<!-- container -->
+			
+			
+<!-- Modal Starts here-->
+<div class="modal fade" id="formModal" data-backdrop="static" data-keyboard="false" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"> Add Comment </h4>
+        	</div>
+        	<div class="modal-body">
+					<form:form class="form-horizontal" commandName="subTaskf" role="form" id="fillingstation-form" action="subTask" method="post" enctype="multipart/form-data">
+					<div class="panel-body">
+						<div class="row">
+                    		<div class="col-md-6">
+                    			<div class="form-group">
+                    				<form:hidden path="id"/>
+                    				
+                    				<form:hidden path="issueid"/>
+                    				
+									<label for="focusedinput" class="col-md-6 control-label">Status  <span class="impColor">*</span></label>
+									<form:select path="kpstatus" class="col-xs-10 col-sm-5 validateCmt" onfocus="removeBorder(this.id)" >
+											<form:option value="" label="--- Select ---" />
+											<form:options items="${kpstatuses}"/>
+										</form:select>
+                    			</div>
+                    		</div>
+                    		<div class="col-md-6">
+                    			<div class="form-group">
+									<label for="focusedinput" class="col-md-6 control-label">Comment <span class="impColor">*</span></label>
+									<div class="col-md-5">
+									<form:textarea path="comment" class="form-control validateCmt" placeholder="Enter commit"/>
+									<span class="hasError" id="stationnameError"></span>
+								    </div>
+                    			</div>
+                    		</div>
+                    		</div>
+                    		<div class="row">
+                    		<div class="form-group">
+									<label class="ace-file-input ace-file-multiple col-sm-3 control-label no-padding-right" >Attach File(s)</label>
+									<div class="col-md-9">
+										<input type="file" name="file" id="file" class="col-sm-9" multiple="multiple">
+									</div>
+							</div>
+                    		
+                    		</div>
+                    		<div class="panel-footer">
+				      	<div class="row">
+				      		<div class="col-sm-12">
+				      			<div class="btn-toolbar text-center">
+					      			<input type="submit" id="submit2" value="Submit" class="btn-primary btn"/>
+					      			<input type="reset" value="Reset" class="btn-danger btn cancel"/>
+				      			</div>
+				      		</div>
+				      	</div>
+			      	</div>
+                    		</div>
+                    		
+                    		</form:form>
+                    		
+				</div> <!-- body -->
+					
+				</div> <!-- content end here -->
+				
+			</div>  <!--  dialog ends here-->
+        	<!-- <div class="modal-footer">
+          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        	</div> -->
+      	</div> <!--  model close here-->
+<!-- Modal Ends here-->
+			<!-- container -->
+			
+			
+			
+			
+			
 
 
 </body>
@@ -161,12 +285,13 @@
 
 var listOrders1 = ${allOrders1};
 if (listOrders1 != "") {
-	displayTable(listOrders1);
+	displayTable(listOrders1)
 }
+
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Id</th><th>Summary</th><th>Category</th><th>Severity</th><th>priority</th><th>Assigned</th><th>Attachment</th><th>CreatedTime</th><th>UpdatedTime</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>TaskNo</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned</th><th>UpdatedTime</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	$.each(listOrders,function(i, orderObj) {
@@ -176,18 +301,18 @@ function displayTable(listOrders) {
 			var deleterow = "<a class='activate' onclick='deletetask("+ orderObj.id+ ",1)'><i class='fa fa-eye-slash'></i></a>"
 		}
 		var edit = "<a class='edit editIt' onclick='editCylinder("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
+		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
+		var comment = "<a class='view viewIt' onclick=addComment("	+ orderObj.id+ ")>  add comment</a>"
+		
 		serviceUnitArray[orderObj.id] = orderObj;
 		var tblRow = "<tr>"
-			+ "<td title='"+orderObj.id+"'>"+ orderObj.id + "</td>"
+			+ "<td title='"+orderObj.taskno+"'>"+ view + "</td>"
 			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
 			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
-			+ "<td title='"+orderObj.severity+"'>"+ orderObj.severity + "</td>"
 			+ "<td title='"+orderObj.priority+"'>"+ orderObj.priority + "</td>"
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
-			+ "<td title='"+orderObj.uploadfile+"'>"+ orderObj.uploadfile + "</td>"
-			+ "<td title='"+orderObj.createdTime+"'>"+ orderObj.createdTime + "</td>"
 			+ "<td title='"+orderObj.updatedTime+"'>"+ orderObj.updatedTime + "</td>"
-			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "</td>" 
+			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "</td>" 
 			+ "</tr>";
 		$(tblRow).appendTo("#tableId table tbody");
 	});
@@ -208,6 +333,110 @@ function editCylinder(id) {
 	$("#submit1").val("Update");
 	$(window).scrollTop($('#moveTo').offset().top);
 }
+
+
+
+function viewTask(id){
+		var formData = new FormData();
+	    formData.append('id', id);
+		$.fn.makeMultipartRequest('POST', 'viewTask', false, formData, false, 'text', function(data){
+			var jsonobj = $.parseJSON(data);
+			var alldata = jsonobj.list;
+			$('#HtableId').html('');
+			var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
+				+ '<thead><tr><th>Date Modified</th><th>User Name</th><th>Status</th><th>Attachment</th><th>Comment</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+		$('#HtableId').html(tableHead);
+		console.log(alldata);
+		$.each(alldata,function(i, orderObj) {
+			if(orderObj.uploadfiles==undefined) orderObj.uploadfiles='';
+			else
+				{
+					var list=orderObj.uploadfiles.split('*');
+					var uploadfiles='';
+					for(var i=0;i<list.length;i++)
+					{
+						uploadfiles=uploadfiles+'<a href="reportDocuments/'+list[i]+'" target="_blank" title="'+list[i]+'"><i class="fa fa-paperclip fa-lg grey"></i></a>';
+					}
+					orderObj.uploadfiles=uploadfiles;
+				}
+			var tblRow = "<tr>"
+				+ "<td title='"+orderObj.statustime+"'>"+ orderObj.statustime + "</td>"
+				+ "<td title='"+orderObj.issueid+"'>"+ orderObj.issueid + "</td>"
+				+ "<td title='"+orderObj.kpstatus+"'>"+ orderObj.kpstatus + "</td>"
+				+ "<td title='"+orderObj.uploadfiles+"'>"+ orderObj.uploadfiles + "</td>"
+				+ "<td title='"+orderObj.description+"'>"+ orderObj.description + "</td>"
+				+ "</tr>";
+			$(tblRow).appendTo("#HtableId table tbody");
+			
+		});
+			$("#myModal").modal();
+		});
+
+
+}
+
+
+
+
+
+
+function addComment(id){
+	$("#issueid").val(id);
+	$("#formModal").modal();
+	
+	
+}
+
+
+
+
+function addComments(id){
+	alert("hi")
+	var formData = new FormData();
+    formData.append('id', id);
+	$.fn.makeMultipartRequest('POST', 'addcomment', false, formData, false, 'text', function(data){
+		var jsonobj = $.parseJSON(data);
+		var alldata = jsonobj.list;
+		$('#HtableId').html('');
+		var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
+			+ '<thead><tr><th>Date Modified</th><th>User Name</th><th>Attachment</th><th>Change1</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+	$('#HtableId').html(tableHead);
+	console.log(alldata);
+	$.each(alldata,function(i, orderObj) {
+		if(orderObj.uploadfiles==undefined) orderObj.uploadfiles='';
+		else
+			{
+				var list=orderObj.uploadfiles.split('*');
+				var uploadfiles='';
+				for(var i=0;i<list.length;i++)
+				{
+					uploadfiles=uploadfiles+'<a href="reportDocuments/'+list[i]+'" target="_blank" title="'+list[i]+'"><i class="fa fa-paperclip fa-lg grey"></i></a>';
+				}
+				orderObj.uploadfiles=uploadfiles;
+			}
+		var tblRow = "<tr>"
+			+ "<td title='"+orderObj.statustime+"'>"+ orderObj.statustime + "</td>"
+			+ "<td title='"+orderObj.issueid+"'>"+ orderObj.issueid + "</td>"
+			+ "<td title='"+orderObj.uploadfiles+"'>"+ orderObj.uploadfiles + "</td>"
+			+ "<td title='"+orderObj.description+"'>"+ orderObj.description + "</td>"
+			+ "</tr>";
+		$(tblRow).appendTo("#HtableId table tbody");
+		
+	});
+		$("#myModal").modal();
+	});
+
+
+}
+
+
+
+
+
+
+
+
+
 
 function deletetask(id,status){
 	var checkstr=null;

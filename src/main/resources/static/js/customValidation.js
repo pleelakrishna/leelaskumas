@@ -202,6 +202,13 @@ $('.validate').blur(function() {
 var idArray = $.makeArray($('.validate').map(function() {
 	return this.id;
 }));
+
+var idArrayCmt = $.makeArray($('.validateCmt').map(function() {
+	return this.id;
+}));
+
+
+
 //console.log(idArray);
 // submit validation
 var validation = true;
@@ -229,6 +236,40 @@ $('#submit1').click(function(event) {
 	if(validation) {
 		$("#submit1").attr("disabled",true);
 		$("#submit1").val("Please wait...");
+		$("form").submit();											
+		event.preventDefault();
+	}else {
+		return false;
+		event.preventDefault();
+	}
+});
+
+
+
+
+$('#submit2').click(function(event) {
+	validation = true;
+	$.each(idArrayCmt, function(i, val) {
+		var value = $("#" + idArrayCmt[i]).val();
+		var placeholder = $("#" + idArrayCmt[i]).attr('placeholder');
+		if (value == null || value == "" || value == "undefined") {
+			$('style').append(styleBlock);
+			$("#" + idArrayCmt[i] ).attr("placeholder", placeholder);
+			$("#" + idArrayCmt[i] ).css('border-color','#e73d4a');
+			$("#" + idArrayCmt[i] ).css('color','#e73d4a');
+			$("#" + idArrayCmt[i] ).addClass('placeholder-style your-class');
+			 var id11 = $("#" + idArrayCmt[i]+"_chosen").length;
+			if ($("#" + idArrayCmt[i]+"_chosen").length)
+			{
+				$("#" + idArrayCmt[i]+"_chosen").children('a').css('border-color','#e73d4a');
+			}
+//			$("#" + idArray[i] + "Error").text("Please " + placeholder);
+			validation = false;
+		} 
+	});
+	if(validation) {
+		$("#submit2").attr("disabled",true);
+		$("#submit2").val("Please wait...");
 		$("form").submit();											
 		event.preventDefault();
 	}else {

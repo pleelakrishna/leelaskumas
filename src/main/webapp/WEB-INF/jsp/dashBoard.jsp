@@ -15,7 +15,7 @@
 			<div class="col-md-12">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>Task List</h4>
+						<h4>Tasks Created BY</h4>
 						<div class="options">
 							<a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
 						</div>
@@ -37,7 +37,7 @@
 			<div class="col-md-12">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>Task List</h4>
+						<h4>Tasks Created To</h4>
 						<div class="options">
 							<a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
 						</div>
@@ -58,7 +58,7 @@
 			<div class="col-md-12">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>Task List</h4>
+						<h4>Tasks Completed</h4>
 						<div class="options">
 							<a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
 						</div>
@@ -79,7 +79,7 @@
 			<div class="col-md-12">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>Task List</h4>
+						<h4>Tasks Recently Closed</h4>
 						<div class="options">
 							<a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
 						</div>
@@ -100,7 +100,7 @@
 			<div class="col-md-12">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>Task List</h4>
+						<h4>Task Under Monitor</h4>
 						<div class="options">
 							<a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
 						</div>
@@ -117,7 +117,7 @@
 				</div>
 			</div>
 		</div>
-
+		</div>
 </body>
 <%-- <script type='text/javascript' src='${baseurl }/js/custemValidation.js'></script>  --%>
 <script>
@@ -144,7 +144,7 @@ if (listOrders2 != "") {
 	displayTable2(listOrders2)
 }
 
-var listOrders3 = ${allOrders1re};
+var listOrders3 = ${allOrders1Re};
 if (listOrders3 != "") {
 	displayTable3(listOrders3)
 }
@@ -163,9 +163,9 @@ function displayTable1(listOrders1) {
 	$('#tableId1').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
 			+ '<thead><tr><th>Id</th><th>Summary</th><th>Category</th><th>Severity</th><th>priority</th><th>Assigned</th><th>Attachment</th><th>CreatedTime</th><th>UpdatedTime</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
-	$('#tableId').html(tableHead);
+	$('#tableId1').html(tableHead);
 	serviceUnitArray = {};
-	$.each(listOrders,function(i, orderObj) {
+	$.each(listOrders1,function(i, orderObj) {
 		if(orderObj.status == "1"){
 			var deleterow = "<a class='deactivate' onclick='deletetask("+ orderObj.id+ ",0)'><i class='fa fa-eye'></i></a>"
 		}else{  
@@ -185,7 +185,7 @@ function displayTable1(listOrders1) {
 			+ "<td title='"+orderObj.updatedTime+"'>"+ orderObj.updatedTime + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "</td>" 
 			+ "</tr>";
-		$(tblRow).appendTo("#tableId table tbody");
+		$(tblRow).appendTo("#tableId1 table tbody");
 	});
 	if(isClick=='Yes') $('.datatables').dataTable();
 	
@@ -198,9 +198,9 @@ function displayTable2(listOrders2) {
 	$('#tableId2').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
 			+ '<thead><tr><th>Id</th><th>Summary</th><th>Category</th><th>Severity</th><th>priority</th><th>Assigned</th><th>Attachment</th><th>CreatedTime</th><th>UpdatedTime</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
-	$('#tableId').html(tableHead);
+	$('#tableId2').html(tableHead);
 	serviceUnitArray = {};
-	$.each(listOrders,function(i, orderObj) {
+	$.each(listOrders2,function(i, orderObj) {
 		if(orderObj.status == "1"){
 			var deleterow = "<a class='deactivate' onclick='deletetask("+ orderObj.id+ ",0)'><i class='fa fa-eye'></i></a>"
 		}else{  
@@ -220,7 +220,7 @@ function displayTable2(listOrders2) {
 			+ "<td title='"+orderObj.updatedTime+"'>"+ orderObj.updatedTime + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "</td>" 
 			+ "</tr>";
-		$(tblRow).appendTo("#tableId table tbody");
+		$(tblRow).appendTo("#tableId2 table tbody");
 	});
 	if(isClick=='Yes') $('.datatables').dataTable();
 	
@@ -232,9 +232,9 @@ function displayTable3(listOrders3) {
 	$('#tableId3').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
 			+ '<thead><tr><th>Id</th><th>Summary</th><th>Category</th><th>Severity</th><th>priority</th><th>Assigned</th><th>Attachment</th><th>CreatedTime</th><th>UpdatedTime</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
-	$('#tableId').html(tableHead);
+	$('#tableId3').html(tableHead);
 	serviceUnitArray = {};
-	$.each(listOrders,function(i, orderObj) {
+	$.each(listOrders3,function(i, orderObj) {
 		if(orderObj.status == "1"){
 			var deleterow = "<a class='deactivate' onclick='deletetask("+ orderObj.id+ ",0)'><i class='fa fa-eye'></i></a>"
 		}else{  
@@ -254,7 +254,7 @@ function displayTable3(listOrders3) {
 			+ "<td title='"+orderObj.updatedTime+"'>"+ orderObj.updatedTime + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "</td>" 
 			+ "</tr>";
-		$(tblRow).appendTo("#tableId table tbody");
+		$(tblRow).appendTo("#tableId3 table tbody");
 	});
 	if(isClick=='Yes') $('.datatables').dataTable();
 	
@@ -266,9 +266,9 @@ function displayTable4(listOrders4) {
 	$('#tableId4').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
 			+ '<thead><tr><th>Id</th><th>Summary</th><th>Category</th><th>Severity</th><th>priority</th><th>Assigned</th><th>Attachment</th><th>CreatedTime</th><th>UpdatedTime</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
-	$('#tableId').html(tableHead);
+	$('#tableId4').html(tableHead);
 	serviceUnitArray = {};
-	$.each(listOrders,function(i, orderObj) {
+	$.each(listOrders4,function(i, orderObj) {
 		if(orderObj.status == "1"){
 			var deleterow = "<a class='deactivate' onclick='deletetask("+ orderObj.id+ ",0)'><i class='fa fa-eye'></i></a>"
 		}else{  
@@ -288,7 +288,7 @@ function displayTable4(listOrders4) {
 			+ "<td title='"+orderObj.updatedTime+"'>"+ orderObj.updatedTime + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "</td>" 
 			+ "</tr>";
-		$(tblRow).appendTo("#tableId table tbody");
+		$(tblRow).appendTo("#tableId4 table tbody");
 	});
 	if(isClick=='Yes') $('.datatables').dataTable();
 	
@@ -300,9 +300,9 @@ function displayTable5(listOrders5) {
 	$('#tableId5').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
 			+ '<thead><tr><th>Id</th><th>Summary</th><th>Category</th><th>Severity</th><th>priority</th><th>Assigned</th><th>Attachment</th><th>CreatedTime</th><th>UpdatedTime</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
-	$('#tableId').html(tableHead);
+	$('#tableId5').html(tableHead);
 	serviceUnitArray = {};
-	$.each(listOrders,function(i, orderObj) {
+	$.each(listOrders5,function(i, orderObj) {
 		if(orderObj.status == "1"){
 			var deleterow = "<a class='deactivate' onclick='deletetask("+ orderObj.id+ ",0)'><i class='fa fa-eye'></i></a>"
 		}else{  
@@ -322,7 +322,7 @@ function displayTable5(listOrders5) {
 			+ "<td title='"+orderObj.updatedTime+"'>"+ orderObj.updatedTime + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "</td>" 
 			+ "</tr>";
-		$(tblRow).appendTo("#tableId table tbody");
+		$(tblRow).appendTo("#tableId5 table tbody");
 	});
 	if(isClick=='Yes') $('.datatables').dataTable();
 	
@@ -403,6 +403,6 @@ function inactiveData() {
 				});
 		
 }
-$("#pageName").text("Task Master");
+$("#pageName").text("DashBoard");
 $(".task").addClass("active"); 
 </script>

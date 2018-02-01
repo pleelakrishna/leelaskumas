@@ -12,16 +12,16 @@
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
 				<ul class="breadcrumb">
-					<li class="">View Task</li>
+					<li class="">View Tickets</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
 			
-			<div class="page-content" style="padding: 20px;">
+			<div class="page-content">
 				<div class="row">
 					<div class="col-md-12 col-xs-12">
 						<div class="page-header">
-							<h1>Task List</h1>
-							<!-- <a href="createUser" style="float: right;color: white;"> Add User</a> -->
+							<h1>Tickets List</h1>
+<!-- 							<a href="createUser" style="float: right;color: white;"> Add User</a> -->
 						</div>
 						<div class="page-body">
 							<c:if test="${not empty msg}">
@@ -36,26 +36,26 @@
 			            	<div id="assigned" class="widget-box widget-color-blue2">
 								<div class="widget-header widget-header-small">
 									<h4 class="widget-title lighter"><i class="ace-icon fa fa-list-alt"></i>
-										<a class="white" href="">All Tasks</a> 
+										<a class="white" href="">Issues List</a> 
 									</h4>
-									<!-- <div class="widget-toolbar">
+									<div class="widget-toolbar">
 										<a data-action="collapse" href="#">
 											<i class="1 ace-icon fa bigger-125 fa-chevron-up"></i>
 										</a>
-									</div> -->
+									</div>
 									<div class="widget-toolbar no-border hidden-xs">
-										<div class="widget-menu" align="right">
-											<a class="btn btn-primary btn-white btn-round btn-sm" href="createTicketIssues"><i class="fa fa-ticket" aria-hidden="true">New Task</i></a>
-										</div><br>
+										<div class="widget-menu">
+											<a class="btn btn-primary btn-white btn-round btn-sm" href="createTicketIssues">Create Issue</a>
+										</div>
 									</div>
 								</div>
-								<div style="display: block;" class="widget-body" >
-									<div class="widget-main">
+								<div style="display: block;max-height:300px;overflow:auto;" class="widget-body">
+									<div class="widget-main no-padding">
 										<div class="table-responsive">
-											<table class="table table-bordered table-condensed table-striped table-hover datatables">
-												<thead>
+											<table class="table table-bordered table-condensed table-striped table-hover">
+												<tbody>
 													<tr class="my-buglist-bug success">
-													    <th class="nowrap width-13">TaskID</th>
+													    <th class="nowrap width-13">Issue ID</th>
 														<th class="nowrap width-13">Summary</th>
 														<th class="nowrap width-13">Category</th>
 														<th class="nowrap width-13">Severity</th>
@@ -66,8 +66,6 @@
 														<th class="nowrap width-13">UpdatedTime</th>
 														<th class="nowrap width-13"></th>
 													</tr>
-													</thead>
-													<tbody>
 													<c:forEach var="issue" items="${allReportIssues}">
 													<tr class="my-buglist-bug ">
 														<td class="nowrap width-13">${issue.id }</td>
@@ -78,6 +76,8 @@
 														<td class="nowrap width-16">${issue.assignto}</td>
 														<td class="nowrap width-16"> <c:forTokens items="${issue.uploadfile}" delims="*" var="mySplit">
                                                             <c:out value="${mySplit}"/> </c:forTokens></td>
+                                                            
+                                                            
 														<%-- <td class="nowrap width-13"><c:set var="str" value="${issue.uploadfile}" />
 														    ${fn:substringAfter(str,",")}</td> --%>
 														<td class="nowrap width-13">${issue.createdTime }</td>

@@ -155,9 +155,9 @@ function displayTable(listOrders) {
 function editCylinder(id) {
 	console.log(serviceUnitArray[id].org);
 	$("#id").val(serviceUnitArray[id].id);
-	$("#org").val(serviceUnitArray[id].org);
-	$("#dept").val(serviceUnitArray[id].dept);
-	$("#parentDept").val(serviceUnitArray[id].parentDept);
+	$("#org").val(serviceUnitArray[id].orgid);
+	$("#dept").val(serviceUnitArray[id].deptid);
+	$("#parentDept").val(serviceUnitArray[id].parentDeptId);
 	$("#submit1").val("Update");
 	$(window).scrollTop($('#moveTo').offset().top);
 }

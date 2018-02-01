@@ -155,10 +155,6 @@ span.has-error,span.hasError
 			});
 		}); */
 		
-$(function() {
-    $(".chzn-select").chosen();
-	$(".select2").select2();
-});
 </script>
 </head>
 
@@ -219,27 +215,18 @@ $(function() {
         <div class="collapse navbar-collapse navbar-ex1-collapse" id="horizontal-navbar">
             <ul class="nav navbar-nav">
             
-            <li class="dashboard"><a href="${baseurl }/admin/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+            <li class="dashBoard"><a href="${baseurl }/dashBoard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-tint"></i> <span>Department</span></a></li>
               <li class="org"><a href="${baseurl }/org"><i class="fa fa-tint"></i> <span>Organization</span></a></li>
               <li class="desig"><a href="${baseurl }/desig"><i class="fa fa-tint"></i> <span>Designation</span></a></li>
              <li class="orgDept"><a href="${baseurl }/orgDept"><i class="fa fa-tint"></i> <span>Org-Dept</span></a></li>
-               <%-- <li class="Employees">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-users"></i> <span>Employees</span> <span class="caret"></span></a>
-            	<ul class="dropdown-menu"> --%>
-            
-             		<li class="lpo"><a href="${baseurl }/viewUsers"><i class="fa fa-users"></i> <span>Employees</span></a></li>
-              		<li class="company"><a href="${baseurl }/createUser"><i class="fa  fa-user-plus "></i> <span>New Employee</span></a></li>
-              		<!-- </ul>
-              		</li> -->
-              		 <li class="cylinder"><a href="${baseurl }/createTicketIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>New Task</span></a></li>
-              		 <li class="cylinder"><a href="${baseurl }/viewReportIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>All Tasks</span></a></li>
-              <%-- <li class="cylinder"><a href="${baseurl }/admin/CylinderHome"><i class="fa fa-fire-extinguisher" aria-hidden="true"></i> <span>Cylinders</span></a></li>
+              <li class="task"><a href="${baseurl }/task"><i class="fa fa-tint"></i> <span>Task</span></a></li>
+              <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-tint"></i> <span>Category</span></a></li>
              <li class="truck"><a href="${baseurl }/admin/truckHome"><i class="fa fa-truck" aria-hidden="true"></i> <span>Trucks</span></a></li>
                 <li class="fillingStation"><a href="${baseurl }/admin/fillingStationHome"><i class="fa fa-archive"></i> <span>Filling Stations</span></a></li>
                 <li class="customer"><a href="${baseurl }/admin/customerHome"><i class="fa fa-group"></i> <span>Customers</span></a></li>
-                <li class="staff"><a href="${baseurl }/admin/staffMaster"><i class="fa fa-user"></i> <span>Staff</span></a></li>
-                <li class="tariffMaster"><a href="${baseurl }/admin/tariffMaster"><i class="fa fa-bar-chart-o"></i> <span>Tariff Master</span></a></li> --%>
+                 
+                <li class="tariffMaster"><a href="${baseurl }/admin/tariffMaster"><i class="fa fa-bar-chart-o"></i> <span>Tariff Master</span></a></li>
 				<li class="transactions">
             		<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list"></i> <span>Transactions</span> <span class="caret"></span></a>
 					<ul class="dropdown-menu">

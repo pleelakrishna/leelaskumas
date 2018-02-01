@@ -81,6 +81,17 @@
 	<definition name="orgDept" extends="base.definition">
 		<put-attribute name="body" value="/WEB-INF/jsp/orgDept.jsp" />
 	</definition>
+	<definition name="task" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/task.jsp" />
+	</definition>
+	<definition name="cate" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/cate.jsp" />
+	</definition>
+	
+	<definition name="dashBoard" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/dashBoard.jsp" />
+	</definition>
+	
 	
 	
 
