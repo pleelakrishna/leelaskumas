@@ -37,6 +37,14 @@ public class KpStatusLogs {
 	
 	
 
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 	public String getTaskno() {
 		return taskno;
 	}
@@ -95,13 +103,7 @@ public class KpStatusLogs {
 		this.subject = subject;
 	}
 
-	public String getcomment() {
-		return comment;
-	}
-
-	public void setcomment(String comment) {
-		this.comment = comment;
-	}
+	
 
 	public String getUploadfiles() {
 		return uploadfiles;
@@ -118,6 +120,7 @@ public class KpStatusLogs {
 				+ subject + ", comment=" + comment + "]";
 	}
 
+	
 	
 	
 	

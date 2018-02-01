@@ -54,7 +54,7 @@ public class ReportIssueDao {
 		slogs.setIssueid(String.valueOf(reportIssue.getId()));
 		slogs.setIassignto(reportIssue.getAssignto());
 		slogs.setSubject(reportIssue.getSubject());
-		slogs.setcomment(reportIssue.getDescription());
+		slogs.setComment(reportIssue.getDescription());
 		slogs.setKpstatus(reportIssue.getKstatus());
 		if(reportIssue.getUploadfile()!=null)
 	     {
@@ -349,7 +349,7 @@ public List<ReportIssue> getAllReportIssues()
 		slogs.setIssueid(issue.getId().toString());
 		slogs.setIassignto(String.valueOf(objuserBean.getId()));
 		slogs.setSubject(issue.getSubject());
-		slogs.setcomment(issue.getDescription());
+		slogs.setComment(issue.getDescription());
 		slogs.setKpstatus(issue.getKstatus());
 		
 		if(issue.getUploadfile()!=null)
@@ -405,11 +405,11 @@ public List<ReportIssue> getAllReportIssues()
 		try {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
-			.createNativeQuery("select l.description,l.uploadfiles,l.statustime,kp.username,s.name from kpstatuslogs l,kpusers kp,kpstatus s where l.iassignto=kp.id and l.kpstatus=s.id and l.issueid =:custName" ).setParameter("custName", id)
+			.createNativeQuery("select l.comment,l.uploadfiles,l.statustime,kp.username,s.name from kpstatuslogs l,kpusers kp,kpstatus s where l.iassignto=kp.id and l.kpstatus=s.id and l.issueid =:custName" ).setParameter("custName", id)
 			.getResultList();
 			for (Object[] row : rows) {
 				KpStatusLogs logs=new KpStatusLogs();
-				logs.setcomment((String) row[0]);
+				logs.setComment((String) row[0]);
 				logs.setUploadfiles((String) row[1]);
 				logs.setStatustime((Date)row[2]);
 				logs.setIssueid((String) row[3]);  // passing username
