@@ -450,6 +450,14 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 	public boolean deleteTask(Integer id, String status) {
 		return reportIssueDao.deleteTask(id,status);
 	}
+
+	public void saveSubTask(KpStatusLogs subtask) {
+		 reportIssueDao.saveSubTask(subtask);
+		
+		
+	}
+
+	
 	
 	}
 

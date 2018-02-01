@@ -20,6 +20,8 @@ public class KpStatusLogs {
 	@CreationTimestamp
 	private Date  statustime ;
 	
+	private String taskno;
+	
 	private String issueid;
 	
 	private String iassignto;
@@ -30,7 +32,18 @@ public class KpStatusLogs {
 	
 	private String  subject;
 	
-	private String description;
+	private String comment;
+	
+	
+	
+
+	public String getTaskno() {
+		return taskno;
+	}
+
+	public void setTaskno(String taskno) {
+		this.taskno = taskno;
+	}
 
 	public Integer getId() {
 		return id;
@@ -82,12 +95,12 @@ public class KpStatusLogs {
 		this.subject = subject;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getcomment() {
+		return comment;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setcomment(String comment) {
+		this.comment = comment;
 	}
 
 	public String getUploadfiles() {
@@ -100,11 +113,12 @@ public class KpStatusLogs {
 
 	@Override
 	public String toString() {
-		return "KpStatusLogs [id=" + id + ", statustime=" + statustime + ", issueid=" + issueid + ", iassignto="
-				+ iassignto + ", uploadfiles=" + uploadfiles + ", kpstatus=" + kpstatus + ", subject=" + subject
-				+ ", description=" + description + "]";
+		return "KpStatusLogs [id=" + id + ", statustime=" + statustime + ", taskno=" + taskno + ", issueid=" + issueid
+				+ ", iassignto=" + iassignto + ", uploadfiles=" + uploadfiles + ", kpstatus=" + kpstatus + ", subject="
+				+ subject + ", comment=" + comment + "]";
 	}
 
+	
 	
 	
 	

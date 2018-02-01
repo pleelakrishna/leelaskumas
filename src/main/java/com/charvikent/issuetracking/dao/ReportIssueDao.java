@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.config.FilesStuff;
+import com.charvikent.issuetracking.config.KptsUtil;
 import com.charvikent.issuetracking.model.KpStatus;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
@@ -32,12 +33,15 @@ public class ReportIssueDao {
 	HttpSession session;
 	@Autowired
 	FilesStuff fileTemplate;
+	
+	@Autowired
+	KptsUtil utilities;
 
 	public void saveReportIssue(ReportIssue reportIssue) {
-		int randomNum =ThreadLocalRandom.current().nextInt(1,1000+1);
+		String randomNum = utilities.randNum();
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
 		reportIssue.setAssignby(String.valueOf(objuserBean.getId()));
-		reportIssue.setTaskno(String.valueOf(randomNum));
+		reportIssue.setTaskno(randomNum);
 		reportIssue.setKstatus("2");
 		if(reportIssue.getUploadfile()!=null)
 	     {
@@ -50,7 +54,7 @@ public class ReportIssueDao {
 		slogs.setIssueid(String.valueOf(reportIssue.getId()));
 		slogs.setIassignto(reportIssue.getAssignto());
 		slogs.setSubject(reportIssue.getSubject());
-		slogs.setDescription(reportIssue.getAdditionalinfo());
+		slogs.setcomment(reportIssue.getDescription());
 		slogs.setKpstatus(reportIssue.getKstatus());
 		if(reportIssue.getUploadfile()!=null)
 	     {
@@ -86,6 +90,7 @@ public List<ReportIssue> getAllReportIssues()
 				int j = Integer.parseInt(String.valueOf(row[0]));
 				Integer intobj=new Integer(j);
 				issue.setId(intobj);
+				
 				issue.setAssignto((String) row[1]);
 				issue.setSeverity((String) row[2]);
 				issue.setPriority((String) row[3]);
@@ -194,7 +199,7 @@ public List<ReportIssue> getAllReportIssues()
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em.createQuery("select r.id, c.category ,s.severity,p.priority,"
 					+ "u.username ,r.subject ,r.uploadfile,"
-					+ "DATE(r.createdTime), Date(r.updatedTime),r.status,r.description,r.assignto,r.category,r.priority,r.severity from ReportIssue r, Category c ,Severity s,Priority p,User u  where r.category=c.id and r.severity=s.id and r.priority=p.id and r.assignto=u.id")
+					+ "DATE(r.createdTime), Date(r.updatedTime),r.status,r.description,r.assignto,r.category,r.priority,r.severity,r.taskno from ReportIssue r, Category c ,Severity s,Priority p,User u  where r.category=c.id and r.severity=s.id and r.priority=p.id and r.assignto=u.id")
 			.getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
@@ -215,6 +220,7 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setCategoryid((String) row[12]);
 				issue.setPriorityid((String) row[13]);
 				issue.setSeverityid((String) row[14]);
+				issue.setTaskno((String) row[15]);
 				listissue.add(issue);
 
 			}
@@ -343,7 +349,7 @@ public List<ReportIssue> getAllReportIssues()
 		slogs.setIssueid(issue.getId().toString());
 		slogs.setIassignto(String.valueOf(objuserBean.getId()));
 		slogs.setSubject(issue.getSubject());
-		slogs.setDescription(issue.getAdditionalinfo());
+		slogs.setcomment(issue.getDescription());
 		slogs.setKpstatus(issue.getKstatus());
 		
 		if(issue.getUploadfile()!=null)
@@ -364,6 +370,7 @@ public List<ReportIssue> getAllReportIssues()
 		return em.createQuery("SELECT kpstatus FROM KpStatus kpstatus").getResultList();
 	}
 
+	
 
 	public  Map<String,Integer> getCountByStatusWise() {
 
@@ -398,16 +405,15 @@ public List<ReportIssue> getAllReportIssues()
 		try {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
-			.createNativeQuery("select l.description,l.uploadfiles,l.statustime,kp.username from kpstatuslogs l,kpusers kp where l.iassignto=kp.id and l.issueid =:custName" ).setParameter("custName", id)
+			.createNativeQuery("select l.description,l.uploadfiles,l.statustime,kp.username,s.name from kpstatuslogs l,kpusers kp,kpstatus s where l.iassignto=kp.id and l.kpstatus=s.id and l.issueid =:custName" ).setParameter("custName", id)
 			.getResultList();
 			for (Object[] row : rows) {
-				System.out.println(row);
 				KpStatusLogs logs=new KpStatusLogs();
-
-				logs.setDescription((String) row[0]);
+				logs.setcomment((String) row[0]);
 				logs.setUploadfiles((String) row[1]);
 				logs.setStatustime((Date)row[2]);
-				logs.setIssueid((String) row[3]);
+				logs.setIssueid((String) row[3]);  // passing username
+				logs.setKpstatus((String) row[4]);
 				listRepeatlogs.add(logs);
 
 			}
@@ -436,6 +442,22 @@ public List<ReportIssue> getAllReportIssues()
 			e.printStackTrace();
 		}
 		return delete;
+	}
+
+	public void saveSubTask(KpStatusLogs subtask) {
+		
+		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		subtask.setIassignto(String.valueOf(objuserBean.getId()));
+		
+		if(subtask.getUploadfiles()!=null)
+	     {
+		subtask.setUploadfiles(fileTemplate.concurrentFileNames());
+		fileTemplate.clearFiles();
+	     }
+		em.persist(subtask);
+		
+		
+		
 	}
 
 

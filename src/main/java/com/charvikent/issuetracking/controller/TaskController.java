@@ -64,6 +64,7 @@ public class TaskController {
 		ObjectMapper objectMapper = null;
 		String sJson = null;
 		model.addAttribute("taskf", new ReportIssue());
+		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
 		model.addAttribute("severity", severityService.getSeverityNames());
 		model.addAttribute("priority", priorityService.getPriorityNames());
 		model.addAttribute("userNames", userService.getUserName());
@@ -244,15 +245,6 @@ public class TaskController {
 	@RequestMapping(value = "/viewTask",method = RequestMethod.POST)
 	public @ResponseBody Object viewIssue(@RequestParam(value = "id", required = true) String id, Model model,HttpServletRequest request, HttpSession session) throws JSONException {
 
-		ReportIssue issue = taskService.getReportIssueById(Integer.parseInt(id));
-		model.addAttribute("cissue", issue);
-		model.addAttribute("departments", userService.getDepartments());
-		model.addAttribute("userNames", userService.getUserName());
-		model.addAttribute("category", categoryService.getCategoryNames());
-		model.addAttribute("severity", severityService.getSeverityNames());
-		model.addAttribute("priority", priorityService.getPriorityNames());
-		model.addAttribute("kpstatuses", taskService.getKpStatues());
-		
 		
 		List<KpStatusLogs> taskHistory =taskService.getrepeatLogsById(Integer.parseInt(id));
 		
@@ -261,5 +253,36 @@ public class TaskController {
 		return String.valueOf(obj);
 
 	}
+	
+	
+
+	@RequestMapping(value = "/subTask", method = RequestMethod.POST)
+	public String saveSubtask(@Valid @ModelAttribute  KpStatusLogs subtask, BindingResult bindingresults, @RequestParam("file") MultipartFile[] uploadedFiles,
+			RedirectAttributes redir) throws IOException {
+		
+		
+		try {
+			for(MultipartFile multipartFile : uploadedFiles) {
+				String fileName = multipartFile.getOriginalFilename();
+				if(!multipartFile.isEmpty())
+				{
+					subtask.setUploadfiles("user browsed file(s)");            //add dummy value to check file upload status in dao layers
+				 multipartFile.transferTo(fileTemplate.moveFileTodir(fileName));
+				}
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+		
+		taskService.saveSubTask(subtask);
+
+		redir.addFlashAttribute("msg", " Sub Task Inserted Successfully");
+		redir.addFlashAttribute("cssMsg", "success");
+		
+		return "redirect:task";
+		
+	}
+	
+		
 
 }
