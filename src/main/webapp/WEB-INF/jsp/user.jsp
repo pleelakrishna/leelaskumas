@@ -177,7 +177,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Designation</label>
 									<div class="col-md-6">
-										<form:select path="designation" class="form-control validate" onfocus="removeBorder(this.id)">
+										<form:select path="designation" class="form-control " >
 											<form:option value="">-- Select Designation --</form:option>
 											<form:options items="${roles}"/>
 										</form:select>
@@ -187,9 +187,9 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Department</label>
 									<div class="col-md-6">
-										<form:select path ="department" class="form-control validate" onfocus="removeBorder(this.id)">
+										<form:select path ="department" class="form-control validate" selected="selected" onfocus="removeBorder(this.id)">
 											<form:option value="">-- Select Department --</form:option>
-								     		<form:options items="${departments}"/>
+								     		<form:options  items="${departments}"/>
 										</form:select>
 									</div>
 								</div></div>
@@ -202,13 +202,18 @@
 								     		<form:options items="${userNames}"/>
 										</form:select>
 									</div>
-								</div></div><div class="col-md-6">
+								</div></div>
+								
+								<%-- <div class="col-md-6">
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Enable</label>
 									<div class="col-md-6">
 										<form:checkbox  path="enabled" />
 									</div>
-								</div></div><div class="col-md-12" style="text-align:right;">
+								</div>
+								</div> --%>
+								
+								<div class="col-md-12" style="text-align:right;">
 								<div class="form-group">
 									<div class="col-md-offset-3 col-md-6">
 										<input type="submit" id="submit1"  class="btn btn-success" value="Create"/>
@@ -292,11 +297,11 @@
 														<td class="nowrap width-8">${user.username }</td>
 														<td class="nowrap width-13">${user.email }</td>
 														<td class="nowrap width-13">${user.mobilenumber}</td>
-														<td class="nowrap width-13">${user.designation}</td>
-														<td class="nowrap width-13">${user.department}</td>
+														<td class="nowrap width-13">${user.designationName}</td>
+														<td class="nowrap width-13">${user.departmentName}</td>
 														<%-- <td class="nowrap width-13">${user.reportto}</td> --%>
 														<td class="nowrap width-13">${user.enabled}</td>
-														<td><span><a onclick='editEmployeeDetails("${user}")'><i class="fa fa-pencil bigger-130 padding-2 black" title=Edit ></i></a></span> <span><a href="deleteUser/${user.id }"><i class="fa fa-trash bigger-130 padding-2 grey" title="Delete" ></i></a></span></td>
+														<td><span><a onclick='editEmployeeDetails(${user.id})' ><i class="fa fa-pencil bigger-130 padding-2 black" title=Edit ></i></a></span> <span><a href="deleteUser/${user.id }"><i class="fa fa-trash bigger-130 padding-2 grey" title="Delete" ></i></a></span></td>
 														<%--<td><span><a href="edit?id=${user.id}"><i class="fa fa-pencil bigger-130 padding-2 grey" title=Edit ></i></a></span> <span><a href="deleteUser/${user.id }"><i class="fa fa-trash bigger-130 padding-2 grey" title="Delete" ></i></a></span></td>  --%>
 													</tr>
 													</c:forEach>
@@ -375,23 +380,32 @@ $.ajax({
 	
 	
 }); */
-
-
-function editEmployeeDetails(user)
+var allUsers =${allOrders1};
+if(allUsers !=""){
+// 	allUsers = JSON.stringify(allUsers);
+	displayTable(allUsers);
+}
+ 
+function displayTable(allUsers){
+	serviceUnitArray = {};
+$.each(allUsers,function(i, orderObj) {
+	serviceUnitArray[orderObj.id] = orderObj;
+});
+}
+function editEmployeeDetails(id)
 {	
-	console.log(user);
 	$("#passwordDiv").css("display","none");
-	var user=JSON.parse(user);
-	console.log(user);
-	$("#username").val(user.username);
-	$("#firstname").val(user.firstname);
-	$("#lastname").val(user.lastname);
-	$("#mobilenumber").val(user.mobilenumber);
-	$("#email").val(user.email);
-	$("#designation").val(user.designation);
-	$("#department").val(user.department);
-	$("#reportto").val(user.reportto);
- 	$("#enabled").val(user.enabled);
+// 	var user=JSON.parse(user);
+// 	console.log(user);
+	$("#username").val(serviceUnitArray[id].username);
+	$("#firstname").val(serviceUnitArray[id].firstname);
+	$("#lastname").val(serviceUnitArray[id].lastname);
+	$("#mobilenumber").val(serviceUnitArray[id].mobilenumber);
+	$("#email").val(serviceUnitArray[id].email);
+	$("#designation").val(serviceUnitArray[id].designation);
+	$("#department").val(serviceUnitArray[id].department);
+	$("#reportto").val(serviceUnitArray[id].reportId);
+//  	$("#enabled").val(serviceUnitArray[id].enabled);
 	$("#submit1").val("Update");
 	$(window).scrollTop($('body').offset().top);
 }

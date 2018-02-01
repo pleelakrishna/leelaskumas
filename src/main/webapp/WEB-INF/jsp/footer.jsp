@@ -12,7 +12,8 @@
             <ul class="list-unstyled list-inline pull-left">
                 <li>CHARVIKENT.COM</li>
             </ul>
-            <button class="pull-right btn btn-inverse-alt btn-xs hidden-print" id="back-to-top"><i class="fa fa-arrow-up"></i></button>
+            <button class="pull-right btn btn-inverse-alt btn-xs hidden-print" id="back-to-top"><i class="fa fa-arrow-up" style="
+    color:  black;"></i></button>
         </div>
     </footer>
 </div> <!-- page-container -->
