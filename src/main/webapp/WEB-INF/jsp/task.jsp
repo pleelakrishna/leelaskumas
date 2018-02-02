@@ -10,20 +10,36 @@
 		<li>Task Master</li>
 	</ol>
 	                       <div class="clearfix"></div><br>
+	                       <form:form commandName="taskf">
 	                        <div class="row">
                     		<div class="col-md-4">
                     			<div class="form-horizontal">
-									<label for="focusedinput" class="col-md-6 control-label" style="padding-top:2px;">Category  <span class="impColor">*</span></label>
-									<select name="category" class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)" >
-											<option value="" label="--- Select ---" />
-											<option value="1" >assigned to me</option>
-											<option value="2" >assigned by me</option>
-											<option value="2" >monitored by me</option>
+									<label for="focusedinput" class="col-md-6 control-label" style="padding-top:2px;">Tasks Types <span class="impColor">*</span></label>
+									<select name="ttype" id="ttype" class="col-xs-10 col-sm-5" onfocus="removeBorder(this.id)" >
+											<option value="0">All</option>
+											<option value="1" >Assigned to</option>
+											<option value="2" >Assigned by</option>
+											<option value="3" >Monitored by</option>
 											
 										</select>
                     			</div>
                     		</div>
+                    		<div class="col-md-4">
+                    			<div class="form-horizontal">
+									<label for="focusedinput" class="col-md-6 control-label" style="padding-top:2px;">Department  <span class="impColor">*</span></label>
+									<form:select path="additionalinfo" class="col-xs-10 col-sm-5 " onfocus="removeBorder(this.id)" >
+											<form:option value="0" label="All" />
+											<form:options items="${departmentNames}"/>
+										</form:select>
+                    			</div>
                     		</div>
+                    		<div class="col-md-4">
+                    			<div class="form-horizontal">
+									<input type="button"  onclick="Go()" value="Go" >	
+                    			</div>
+                    		</div>
+                    		</div>
+                    		</form:form>
 	
 	
 	<div class="clearfix"></div>
@@ -187,7 +203,9 @@
     </div>
 </div>
 <!-- Modal Ends here-->
-			<!-- container -->
+			
+			
+			<!-- form model start here or add comment  -->
 			
 			
 <!-- Modal Starts here-->
@@ -200,7 +218,7 @@
 				<h4 class="modal-title"> Add Comment </h4>
         	</div>
         	<div class="modal-body">
-					<form:form class="form-horizontal" commandName="subTaskf" role="form" id="fillingstation-form" action="subTask" method="post" enctype="multipart/form-data">
+					<form:form class="form-horizontal" commandName="subTaskf"  method="post" enctype="multipart/form-data">
 					<div class="panel-body">
 						<div class="row">
                     		<div class="col-md-6">
@@ -230,7 +248,8 @@
                     		<div class="form-group">
 									<label class="ace-file-input ace-file-multiple col-sm-3 control-label no-padding-right" >Attach File(s)</label>
 									<div class="col-md-9">
-										<input type="file" name="file" id="file" class="col-sm-9" multiple="multiple">
+										<input type="file" name="media" id="media" class="col-sm-9">
+										<input type="text" name="mediaNames" />
 									</div>
 							</div>
                     		
@@ -239,7 +258,7 @@
 				      	<div class="row">
 				      		<div class="col-sm-12">
 				      			<div class="btn-toolbar text-center">
-					      			<input type="submit" id="submit2" value="Submit" class="btn-primary btn"/>
+					      			<input type="button" id="submit2" value="Submit"  onclick="submitCommet()" class="btn-primary btn"/>
 					      			<input type="reset" value="Reset" class="btn-danger btn cancel"/>
 				      			</div>
 				      		</div>
@@ -316,7 +335,7 @@ function displayTable(listOrders) {
 			+ "</tr>";
 		$(tblRow).appendTo("#tableId table tbody");
 	});
-	if(isClick=='Yes') $('.datatables').dataTable();
+	if(isClick=='Yes') $('#example').dataTable();
 	
 }
 
@@ -388,7 +407,7 @@ function addComment(id){
 }
 
 
-
+/*  view task history here */
 
 function addComments(id){
 	alert("hi")
@@ -429,11 +448,50 @@ function addComments(id){
 
 }
 
+/* display datatable by  user selection    */
 
+function Go(){
+	var dept1=$('#additionalinfo').val();
+	var ttype=$('#ttype').val();
+	
+	alert("dept"+dept1);
+	alert("ttype"+ttype);
+	
+	var formData = new FormData();
+	    formData.append('ttypeid', ttype);
+	    formData.append('deptid', dept1);
+	
+	$.fn.makeMultipartRequest('POST', 'setdata', false, formData, false, 'text', function(data){
+		var jsonobj = $.parseJSON(data);
+		var alldata = jsonobj.list;
+		console.log(alldata);
+			displayTable(alldata)
+	
+	 
+	 
+	 });
+}
 
-
-
-
+function submitCommet()
+{
+	
+	var kpstatus=$('#kpstatus').val();
+	var comment=$('#comment').val();	
+	var file=$('#file').val();
+	var imageName=$("#media")[0].files[0];
+	console.log(imageName);
+	var formData = new FormData();
+    formData.append('kpstatus', kpstatus);
+    formData.append('comment', comment);
+    formData.append('file', imageName);
+	$.fn.makeMultipartRequest('POST', 'subTask', false, formData, false, 'text', function(data){
+	
+		alert("hello");
+		
+	});
+	
+	
+	}
 
 
 

@@ -30,7 +30,7 @@ public class DashBoardController {
 	
 	@RequestMapping("/dashBoard")
 	public String  department( @ModelAttribute("designf")  Designation designf,Model model ,HttpServletRequest request) {
-		List<ReportIssue> listOrderBeans = null;
+		Set<ReportIssue> listOrderBeans = null;
 		Set<ReportIssue> listOrderBeansTo = null;
 		Set<ReportIssue> listOrderBeansRe = null;
 		Set<ReportIssue> listOrderBeansMo = null;

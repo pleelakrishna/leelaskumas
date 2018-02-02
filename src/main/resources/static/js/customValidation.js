@@ -247,7 +247,7 @@ $('#submit1').click(function(event) {
 
 
 
-$('#submit2').click(function(event) {
+$('#submit3').click(function(event) {
 	validation = true;
 	$.each(idArrayCmt, function(i, val) {
 		var value = $("#" + idArrayCmt[i]).val();

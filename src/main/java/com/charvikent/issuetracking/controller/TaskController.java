@@ -26,7 +26,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.charvikent.issuetracking.config.FilesStuff;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
+import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.CategoryService;
+import com.charvikent.issuetracking.service.DashBoardService;
 import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.PriorityService;
 import com.charvikent.issuetracking.service.ReportIssueService;
@@ -55,6 +57,9 @@ public class TaskController {
 
 	@Autowired
 	FilesStuff fileTemplate;
+	
+	@Autowired
+	DashBoardService dashBoardService;
 	
 	
 	
@@ -257,7 +262,7 @@ public class TaskController {
 	
 
 	@RequestMapping(value = "/subTask", method = RequestMethod.POST)
-	public String saveSubtask(@Valid @ModelAttribute  KpStatusLogs subtask, BindingResult bindingresults, @RequestParam("file") MultipartFile[] uploadedFiles,
+	public String saveSubtask(@RequestParam(value = "comment", required = true) String comment, @RequestParam(value = "kpstatus", required = true) String kpstatus, @Valid @ModelAttribute  KpStatusLogs subtask, BindingResult bindingresults, @RequestParam("file") MultipartFile[] uploadedFiles,
 			RedirectAttributes redir) throws IOException {
 		
 		
@@ -276,11 +281,55 @@ public class TaskController {
 		
 		taskService.saveSubTask(subtask);
 
-		redir.addFlashAttribute("msg", " Sub Task Inserted Successfully");
-		redir.addFlashAttribute("cssMsg", "success");
+		
 		
 		return "redirect:task";
 		
+	}
+	
+	
+	
+	@RequestMapping(value = "/setdata",method = RequestMethod.POST)
+	public @ResponseBody Object setTasks(@RequestParam(value = "ttypeid", required = true) String ttypeid, @RequestParam(value = "deptid", required = true) String deptid, Model model,HttpServletRequest request, HttpSession session) throws JSONException {
+		
+		System.out.println(ttypeid);
+		System.out.println(deptid);
+		
+		Set<ReportIssue> listOrderBeans = null;
+		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		
+		if(ttypeid.equals("1"))
+		
+		{
+		
+		listOrderBeans = dashBoardService.getIssuesByAssignTo(String.valueOf(objuserBean.getId()));
+		}
+		
+		if(ttypeid.equals("2"))
+			
+		{
+		
+		listOrderBeans = dashBoardService.getIssuesByAssignBy(String.valueOf(objuserBean.getId()));
+		}
+		
+        if(ttypeid.equals("3"))
+			
+		{
+		
+		listOrderBeans = dashBoardService.getIssuesByAssignToUnderMonitor(String.valueOf(objuserBean.getId()));
+		}
+		
+		
+		
+
+		JSONObject obj = new JSONObject();
+		obj.put("list", listOrderBeans);
+		
+		return String.valueOf(obj);
+		
+		
+		
+
 	}
 	
 		
