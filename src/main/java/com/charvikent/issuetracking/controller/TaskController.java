@@ -77,6 +77,10 @@ public class TaskController {
 		model.addAttribute("departmentNames", mastersService.getDepartmentNames());
 		model.addAttribute("kpstatuses", mastersService.getKpStatues());
 		
+		//model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		
+		
 		try {
 			listOrderBeans = taskService.getAllReportIssues();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
@@ -262,7 +266,7 @@ public class TaskController {
 	
 
 	@RequestMapping(value = "/subTask", method = RequestMethod.POST)
-	public String saveSubtask(@RequestParam(value = "comment", required = true) String comment, @RequestParam(value = "kpstatus", required = true) String kpstatus, @Valid @ModelAttribute  KpStatusLogs subtask, BindingResult bindingresults, @RequestParam("file") MultipartFile[] uploadedFiles,
+	public @ResponseBody String saveSubtask(@RequestParam(value = "comment", required = true) String comment, @RequestParam(value = "kpstatus", required = true) String kpstatus, @RequestParam(value = "issueid", required = true) String issueid, @Valid @ModelAttribute  KpStatusLogs subtask, BindingResult bindingresults, @RequestParam("file[]") MultipartFile[] uploadedFiles,
 			RedirectAttributes redir) throws IOException {
 		
 		
@@ -278,12 +282,15 @@ public class TaskController {
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		}
+		subtask.setIssueid(issueid);
 		
 		taskService.saveSubTask(subtask);
+		
+		String str="success";
 
 		
 		
-		return "redirect:task";
+		return str;
 		
 	}
 	

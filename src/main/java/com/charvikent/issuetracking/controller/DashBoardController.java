@@ -1,22 +1,14 @@
 package com.charvikent.issuetracking.controller;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.charvikent.issuetracking.model.Designation;
-import com.charvikent.issuetracking.model.ReportIssue;
-import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.DashBoardService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.charvikent.issuetracking.service.ReportIssueService;
 
 @Controller
 public class DashBoardController {
@@ -28,7 +20,11 @@ public class DashBoardController {
 	DashBoardService dashBoardService;
 	
 	
-	@RequestMapping("/dashBoard")
+	@Autowired
+	private ReportIssueService reportIssueService;
+	
+	
+	/*@RequestMapping("/dashBoard")
 	public String  department( @ModelAttribute("designf")  Designation designf,Model model ,HttpServletRequest request) {
 		Set<ReportIssue> listOrderBeans = null;
 		Set<ReportIssue> listOrderBeansTo = null;
@@ -118,6 +114,21 @@ public class DashBoardController {
 		return "dashBoard";
 	
 	}
+*/
+   
+	@RequestMapping("/dashBoard")
+	public String showDashBoard(Model model)
+	{
+		
+		 model.addAttribute("statusCount" ,reportIssueService.getCountByStatusWise());
+		 model.addAttribute("gapAndCount", reportIssueService.getGapAndCount());
+		return "dashBoard";
+		
+	}
+	
+	
+	
+	}
+	
+	
 
-
-}

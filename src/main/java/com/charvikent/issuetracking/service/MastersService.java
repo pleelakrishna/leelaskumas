@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.charvikent.issuetracking.dao.MastersDao;
 import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.KpStatus;
+import com.charvikent.issuetracking.model.User;
 
 @Service
 @Transactional
@@ -19,6 +22,10 @@ public class MastersService {
 	
 	@Autowired
 	MastersDao mastersDao;
+	
+	@Autowired
+	HttpSession session;
+	
 	
 	
 	
@@ -49,6 +56,47 @@ public class MastersService {
 				
 		
 	}
+	
+	
+	
+	
+	public Map<Integer, String> getSortedDepartments()
+	{
+		Map<Integer, String> rolesMap = new LinkedHashMap<Integer, String>();
+		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		try
+		{
+		List<Department> rolesList= mastersDao.getDepartmentNames();
+		if(objuserBean.getDesignation().equals("1"))
+		{
+		for(Department bean: rolesList){
+			rolesMap.put(bean.getId(), bean.getName());
+		}
+			
+		}
+		else
+			
+		{
+			
+			for(Department bean: rolesList){
+				if(objuserBean.getDepartment().equals(bean.getId()))
+				rolesMap.put(bean.getId(), bean.getName());
+			}
+			
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+		return rolesMap;
+				
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	public void saveDept(Department dept)
 	{
