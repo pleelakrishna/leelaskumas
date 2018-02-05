@@ -196,6 +196,15 @@ public class UserDao {
 
 	}
 
+	public void updatePassword(User user) {
+
+		em.merge(user);
+
+		em.flush();
+
+
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<User> getUserNames()
 	{

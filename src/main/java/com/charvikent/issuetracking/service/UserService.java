@@ -120,6 +120,13 @@ public class UserService {
 		userDao.updateUser(user);
 
 	}
+
+	public void updatePassword(User user) {
+
+		userDao.updatePassword(user);
+
+	}
+
 	public Map<Integer, String> getUserName()
 	{
 		Map<Integer, String> rolesMap = new LinkedHashMap<Integer, String>();
