@@ -22,7 +22,10 @@ public class UserDao {
 	@PersistenceContext
 	private EntityManager em;
 
+
+
 	public void saveuser(User user) {
+		//user.setEnabled("1");
 		em.persist(user);
 
 	}
@@ -34,8 +37,8 @@ public class UserDao {
 
 
 		try {
-			List<Object[]> rows = em.createQuery("select  u.id,u.username,u.mobilenumber,u.email,u.enabled,dep.name,d.name,"
-					+ "u.firstname,u.lastname,u.reportto,u.designation ,u.department  from User u,Designation d,Department dep where u.department=dep.id and u.designation= d.id").getResultList();
+			List<Object[]> rows = em.createQuery("select  u.id,u.username,u.mobilenumber,u.email,CASE WHEN u.enabled IN ('0') THEN 'Deactive' WHEN u.enabled IN ('1') THEN 'Active' ELSE '-----' END AS enabled,dep.name,d.name,"
+					+ "u.firstname,u.lastname,u.reportto,u.designation ,u.department , u.enabled as status from User u,Designation d,Department dep where u.department=dep.id and u.designation= d.id").getResultList();
 			for (Object[] row : rows) {
 				User users =new User();
 
@@ -44,7 +47,7 @@ public class UserDao {
 				users.setUsername((String) row[1]);
 				users.setMobilenumber((String) row[2]);
 				users.setEmail((String) row[3]);
-				users.setEnabled((Boolean) row[4]);
+				users.setEnabled((String) row[4]);
 				users.setDepartmentName((String) row[5]);
 				users.setDesignationName((String) row[6]);
 				users.setFirstname((String) row[7]);
@@ -52,7 +55,7 @@ public class UserDao {
 				users.setReportId((String) row[9]);
 				users.setDesignation((String) row[10]);
 				users.setDepartment((String) row[11]);
-
+				users.setStatus((String) row[12]);
 				listusers.add(users);
 
 			}
@@ -84,7 +87,7 @@ public class UserDao {
 	public User findWithName(String username,String lpassword) {
 		User userbean =null;
 		try {
-			userbean=  (User) em.createQuery(" select u FROM User u where  enabled=true and u.username =:custName AND u.password =:custPass ")
+			userbean=  (User) em.createQuery(" select u FROM User u where  enabled='1' and u.username =:custName AND u.password =:custPass ")
 					.setParameter("custName", username)
 					.setParameter("custPass", lpassword)
 					.getSingleResult();
@@ -104,11 +107,75 @@ public class UserDao {
 		return em.find(User.class, id);
 	}
 
-	public void deleteUser(Integer id) {
+	/*public void deleteUser(Integer id,String enabled) {
 
-		em.remove(getUserById(id));
+		User user=getUserById(id);
+		User users= new User();
+
+		//users.setId(id);
+
+
+		users.setPassword(user.getPassword());
+		users.setDepartment(user.getDepartment());
+		users.setDesignation(user.getDesignation());
+		users.setEmail(user.getEmail());
+
+		if(enabled.equals("Active")) {
+			users.setEnabled("0");
+			//enabled="0";
+
+		}else {
+			users.setEnabled("1");
+			//enabled="1";
+		}
+		//users.setEnabled(user.getEnabled());
+		users.setFirstname(user.getFirstname());
+		users.setLastname(user.getLastname());
+		users.setMobilenumber(user.getMobilenumber());
+		users.setUsername(user.getUsername());
+		users.setReportto(user.getReportto());
+
+		em.merge(users);
+
+		em.flush();
+
+		String sql="update User u set u.enabled='"+enabled+"' where u.id='"+id+"' ";
+		users.setEnabled(user.getEnabled());
+		//String sql="update User u set u.enabled=? where u.id=?";
+
+		//Query query = em.createQuery(sql).setParameter("enabled",enabled ).setParameter("id", id);
+	Query qry = sessionFactory.;
+	qry.setParameter(0,enabled);
+	qry.setParameter(1, id);
+    int res = qry.executeUpdate();
+
+		//query.executeUpdate();
+		String hql = "UPDATE Buchung as b set " +
+		          "STORNO = :Storno," +
+		          "NAME = :Name " +
+		           ......
+		          "where ID = :BuchungID";
+
+		Query qr = session.createSQLQuery(hql);
+
+		qr.setParameter("Storno","sto_value");
+
+		qr.setParameter("Name","name_value");
+
+		...
+
+		qr.executeUpdate();
+
+		// int result = em.createQuery("UPDATE User u set u.enabled='\"+enabled+\"' where u.id='\"+id+\"' ").executeUpdate();
+
+	 //User result=
+
+		//em.flush();
+
+
+
 	}
-
+*/
 	public void updateUser(User user) {
 		User users=getUserById(user.getId());
 		users.setPassword(user.getCpassword());
@@ -175,6 +242,24 @@ public class UserDao {
  			parents.add(String.valueOf(row[0]));
  		}
 
+	}
+
+
+	public boolean deleteUser(Integer id, String status) {
+		Boolean delete=false;
+		try{
+
+			User design= em.find(User.class ,id);
+			   design.setEnabled(status);
+			   em.merge(design);
+			if(!status.equals(design.getEnabled()))
+			{
+				delete=true;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return delete;
 	}
 
 

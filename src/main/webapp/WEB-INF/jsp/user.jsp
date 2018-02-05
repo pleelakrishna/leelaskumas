@@ -2,41 +2,25 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%--  --%><spring:url var="viewUsers" value="/viewUsers"></spring:url>
-<style>
-
-.fa-pencil:before {
-    content: "\f040";
-    font-weight: 400;
-    color: #006699;
-}
-.fa-trash:before {
-    content: "\f1f8";
-    color:red;
-}
-</style>
     
-<!-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script> -->
+    <div class="clearfix"></div>
+	<ol class="breadcrumb">
+		<li><a href="#">Home</a></li>
+		<li>Employee Master</li>
+	</ol>
+	<div class="clearfix"></div>
 <!-- Body starts here -->
-<br>
-	<div class="main-content">
+	<!-- <div class="main-content"> -->
 		<div class="main-content-inner">
-			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
-				<ul class="breadcrumb" style="margin:  20px;">
-				
-					<li class=""><h5><i class="fa  fa-user-plus "> Add Employee</i>	</h5></li>
-				
-				</ul><!-- /.breadcrumb -->
-			</div><br>
+       <div class="clearfix"></div>
+		<br><br>
+		<div class="col-md-12 col-xs-12">
 			
-			<div class="page-content">
+				<%--<div class="page-content">
 				<div class="row">
-					<%-- <div class="col-md-12 col-xs-12">
+				 <div class="col-md-12 col-xs-12">
 						<!-- <div class="page-header">
 							<h1>Create User</h1>div
 						</div> --><b></b>
@@ -122,6 +106,14 @@
 					</div> --%>
 					
 					<div class="col-md-12">
+					<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h4><i class="fa  fa-user-plus "> Add Employee</i>	</h4>
+						<div class="options">
+							<a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
+						</div>
+					</div>
+					<div class="panel-body collapse in">
 					
 					<div class="page-body">
 							<form:form modelAttribute="userForm" action="createUser" class="form-horizontal" method="Post" >
@@ -197,7 +189,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">ReportTo</label>
 									<div class="col-md-6">
-										<form:select path ="reportto" class="form-control validate" onfocus="removeBorder(this.id)">
+										<form:select path ="reportto" class="form-control" onfocus="removeBorder(this.id)">
 											<form:option value="">-- Select Report to --</form:option>
 								     		<form:options items="${userNames}"/>
 										</form:select>
@@ -220,26 +212,22 @@
 										<input class="btn-danger btn cancel"  type="reset"  value="Reset" />
 									</div>
 								</div></div>
-								</form:form></div>
+								</form:form>
+								</div>
+								</div>
+								
+								</div>
 					
 					</div>
 				</div>
 			</div>
 			<!-- /.page-content -->
-		</div>
 		<!-- /.main-content-inner -->
-	</div>
 	<!-- /.main-content -->
 	
-	<div class="main-content">
+	<div class="main-content container">
 		<div class="main-content-inner">
-			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
-				<ul class="breadcrumb" style="margin: 20px;">
-					<li class=""><h5><i class="fa  fa-users "> Employee List</i></h5></li>
-				</ul><!-- /.breadcrumb -->
-			
-			</div>
-			
+		<br>
 			
 			<div class="page-content">
 				<div class="row">
@@ -248,6 +236,14 @@
 							<h1>All Employees</h1>
 							<a href="createUser" style="float: right;color: white;"> Add User</a>
 						</div> -->
+						<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h4><i class="fa  fa-users "> Employee List</i>	</h4>
+						<div class="options">
+							<a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
+						</div>
+					</div>
+					<div class="panel-body collapse in">
 						<div class="page-body">
 							<c:if test="${not empty msg}">
 								<div class="row">
@@ -277,7 +273,7 @@
 								<div style="display: block;overflow:auto; padding: 20px;"  class="widget-body">
 									<div class="widget-main no-padding">
 										<div class="table-responsive">
-											<table class="table table-bordered table-condensed table-striped table-hover fixed datatables">
+											<table  cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered datatables" id="example">
 												<thead >
 													<tr  class="">
 													
@@ -286,7 +282,7 @@
 														<th class="nowrap width-13">Mobile</th>
 														<th class="nowrap width-13">Designation</th>
 														<th class="nowrap width-13">Department</th>
-														<!-- <th class="nowrap width-13">Report To</th> -->
+														 <th class="nowrap width-13">Report To</th> 
 														<th class="nowrap width-13">Enabled</th>
 														<th class="nowrap width-13">Options</th>
 													</tr>
@@ -299,9 +295,28 @@
 														<td class="nowrap width-13">${user.mobilenumber}</td>
 														<td class="nowrap width-13">${user.designationName}</td>
 														<td class="nowrap width-13">${user.departmentName}</td>
-														<%-- <td class="nowrap width-13">${user.reportto}</td> --%>
+														 <td class="nowrap width-13">${user.reportto}</td> 
 														<td class="nowrap width-13">${user.enabled}</td>
-														<td><span><a onclick='editEmployeeDetails(${user.id})' ><i class="fa fa-pencil bigger-130 padding-2 black" title=Edit ></i></a></span> <span><a href="deleteUser/${user.id }"><i class="fa fa-trash bigger-130 padding-2 grey" title="Delete" ></i></a></span></td>
+														<td><span><a onclick='editEmployeeDetails(${user.id})' ><i class="fa fa-pencil bigger-130 padding-2 black" title=Edit ></i>Edit</a></span> </td>
+														
+														
+														<c:if test="${user.status eq '1'}">
+													 <td><span><a onclick="deleteEmployeeDetails(${user.id},'0')">Deactive</a></span></td>
+														</c:if>
+														<c:if test="${user.status eq '0'}">
+													 <td><span><a onclick="deleteEmployeeDetails(${user.id},'1')">Active</a></span></td>
+														</c:if>
+														<%-- 
+														<c:choose>
+														  <c:when test="${user.enabled} == '1' ">
+														 
+														  </c:when> 
+														  <c:otherwise>
+														  <td><span><a onclick="deleteEmployeeDetails(${user.id},'1')">Active</a></span></td>
+														  </c:otherwise>
+														</c:choose> --%>
+														
+														
 														<%--<td><span><a href="edit?id=${user.id}"><i class="fa fa-pencil bigger-130 padding-2 grey" title=Edit ></i></a></span> <span><a href="deleteUser/${user.id }"><i class="fa fa-trash bigger-130 padding-2 grey" title="Delete" ></i></a></span></td>  --%>
 													</tr>
 													</c:forEach>
@@ -311,7 +326,7 @@
 									</div>
 								</div>
 							</div>	
-						</div>
+						</div></div></div>
 					</div>
 				</div>
 			</div>
@@ -332,8 +347,9 @@ $(".viewUsers").addClass("active");
 <!-- Body ends here -->
 
 <script type="text/javascript">
+$("#pageName").text("Employee Master");
 $(".createUser").addClass("active");
-
+var alldata = ${allOrders1};
 //var username=$('#username').val();
 
 $('#username').blur(function() {
@@ -409,6 +425,44 @@ function editEmployeeDetails(id)
 	$("#submit1").val("Update");
 	$(window).scrollTop($('body').offset().top);
 }
+function deleteEmployeeDetails(id,enabled){
+	var checkstr=null;
+	if(enabled == 0){
+		
+		checkstr = confirm("Are You Sure, You Want to De-Activate The Employeee?");
+	}else{
+		checkstr = confirm("Are You Sure, You Want to Activate The Employeee?");
+
+	}
+	if(checkstr==true){
+		
+		var formData = new FormData();
+	    formData.append('id', id);
+	    formData.append('enabled', enabled);
+	    
+	    
+	    $.fn.makeMultipartRequest('POST', 'deleteUser', false, formData, false, 'text', function(data){
+			var jsonobj = $.parseJSON(data);
+			window.location.reload();
+			var alldata = jsonobj.allOrders1;
+			console.log(jsonobj.allOrders1);
+			displayTable(alldata);
+		});
+		
+		/* $.ajax({
+			type:"POST",
+			url:"deleteUser",
+			data:"id="+id+"&enabled="+enabled,
+			success:function(response){
+				console.log(reponse);
+				window.location.reload();
+			}
+			
+		}) */
+	}
+	
+}
+
 
 	
 	
