@@ -91,8 +91,9 @@
 	<definition name="dashBoard" extends="base.definition">
 		<put-attribute name="body" value="/WEB-INF/jsp/dashBoard.jsp" />
 	</definition>
-	
-	
-	
+	<definition name="changePassword" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/changePassword.jsp" />
+	</definition>
+		
 
 </tiles-definitions>
