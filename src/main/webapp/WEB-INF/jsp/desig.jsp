@@ -191,5 +191,5 @@ function inactiveData() {
 		
 }
 $("#pageName").text("Designation Master");
-$(".dept").addClass("active"); 
+$(".desig").addClass("active"); 
 </script>

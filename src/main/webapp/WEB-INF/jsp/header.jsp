@@ -140,8 +140,8 @@ color: inherit !important;
 		        $(this).remove(); 
 		    });
 		}, 5000);
-		/* $(document).ready(function(){
-			$('.view').attr('data-toggle','tooltip');
+		 $(document).ready(function(){
+			/* $('.view').attr('data-toggle','tooltip');
 			$('.view').attr('data-original-title','View');
 			$('.edit').attr('data-toggle','tooltip');
 			$('.edit').attr('data-original-title','Edit');
@@ -151,7 +151,7 @@ color: inherit !important;
 			$('.activate').attr('data-original-title','Activate');
 			$('.deactivate').attr('data-toggle','tooltip');
 			$('.deactivate').attr('data-original-title','Deactivate');
-			$('[data-toggle="tooltip"]').tooltip();
+			$('[data-toggle="tooltip"]').tooltip(); */
 			
 			var formData = new FormData();
 		    
@@ -159,15 +159,13 @@ color: inherit !important;
 					formData, false, 'text', function(data){
 				var jsonobj = $.parseJSON(data);
 //		 		alert(jsonobj.cylinderCount);
-				$("#cylinderCount1").text(jsonobj.totalCylinderCount);
-				$("#customerCount1").text(jsonobj.customerCount);
-				$("#totalGas1").text(jsonobj.totalGas);
+				$("#unseentasks").text(jsonobj.unseentasks);
 				
 //		 		var alldata = jsonobj.allOrders1;
 //		 		console.log(jsonobj.allOrders1);
 //		 		displayTable(alldata);
 			});
-		}); */
+		}); 
 		
 </script>
 </head>
@@ -190,7 +188,7 @@ color: inherit !important;
 			</div>
 		</div>
 
-    <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <header class="navbar navbar-inverse navbar-fixed-top" role="banner" style="background: #4f8edc;">
         <div class="navbar-header pull-left">
             <a class="navbar-brand" href="javascript:void(0);"><img src="${baseurl }/assets/img/klogo.png"  style ="width:auto;height:50px;" class="img-responsive"></a>
             <div class="clearfix"></div>
@@ -198,7 +196,7 @@ color: inherit !important;
 		<div class="masters">
 	        <ul class="nav navbar-nav pull-right toolbar">
 	            <li class="dropdown">
-	                <a href="#" class="dropdown-toggle username" data-toggle="dropdown"><span class="hidden-xs">Master Admin <i class="fa fa-caret-down"></i></span><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt="Dangerfield" /></a>
+	                <a href="#" class="dropdown-toggle username" data-toggle="dropdown" style="color: white;"><span class="hidden-xs">Master Admin <i class="fa fa-caret-down"></i></span><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt="Dangerfield" /></a>
 	                <ul class="dropdown-menu userinfo arrow">
 	                    <li class="username">
 	                        <a href="#">
@@ -230,43 +228,19 @@ color: inherit !important;
             <ul class="nav navbar-nav">
             
             <li class="dashBoard"><a href="${baseurl }/dashBoard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-            <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-tint"></i> <span>Department</span></a></li>
-              <li class="org"><a href="${baseurl }/org"><i class="fa fa-tint"></i> <span>Organization</span></a></li>
-              <li class="desig"><a href="${baseurl }/desig"><i class="fa fa-tint"></i> <span>Designation</span></a></li>
-             <li class="orgDept"><a href="${baseurl }/orgDept"><i class="fa fa-tint"></i> <span>Org-Dept</span></a></li>
-              <li class="task"><a href="${baseurl }/task"><i class="fa fa-tint"></i> <span>Task</span></a></li>
-              <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-tint"></i> <span>Category</span></a></li>
+            <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-building"></i> <span>Department</span></a></li>
+              <li class="org"><a href="${baseurl }/org"><i class="fa fa-sitemap"></i> <span>Organization</span></a></li>
+              <li class="desig"><a href="${baseurl }/desig"><i class="fa fa-plane"></i> <span>Designation</span></a></li>
+             <li class="orgDept"><a href="${baseurl }/orgDept"><i class="fa fa-american-sign-language-interpreting"></i> <span>Org-Dept</span></a></li>
+              <li class="task"><a href="${baseurl }/task"><i class="fa fa-tasks"></i> <span>Task</span></a></li>
+              <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-black-tie"></i> <span>Category</span></a></li>
              	<li class="lpo"><a href="${baseurl }/createUser"><i class="fa fa-users"></i> <span>Employees</span></a></li>
               		 <li class="cylinder"><a href="${baseurl }/createTicketIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>New Task</span></a></li>
               		 <li class="cylinder"><a href="${baseurl }/viewReportIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>All Tasks</span></a></li>
               <li class="tariffMaster"><a href="${baseurl }/admin/tariffMaster"><i class="fa fa-bar-chart-o"></i> <span>Tariff Master</span></a></li>
-				<li class="transactions">
-            		<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list"></i> <span>Transactions</span> <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li class="cylinderMovetofillingStation"><a href="${baseurl }/admin/cylinderMovetofillingStation"><i class="fa fa-bar-chart-o"></i> <span>Cylinder Move to FillingStation</span></a></li>
-						<li class="cylinderFilledStatus"><a href="${baseurl }/admin/cylinderFilledStatus"><i class="fa fa-bar-chart-o"></i> <span>Cylinder Filled Status</span></a></li>
-                		<li class="cylinderQualityCheck"><a href="${baseurl }/admin/cylinderQualityCheck"><i class="fa fa-bar-chart-o"></i> <span>Cylinder Quality Check</span></a></li>
-						<li class="cylinderMovetoTruck"><a href="${baseurl }/admin/cylinderMovetoTruck"><i class="fa fa-bar-chart-o"></i> <span>Cylinder Move to Truck</span></a></li>
-						<li class="cylinderDeliver"><a href="${baseurl }/admin/cylinderDeliver"><i class="fa fa-bar-chart-o"></i> <span>Cylinder Delivered to Customer</span></a></li>
-						<li class="qualityCheckHome"><a href="${baseurl }/admin/qualityCheckHome"><i class="fa fa-bar-chart-o"></i> <span>Return Cylinder Quality Check And Move To Store</span></a></li>
-						
-					</ul>
-				</li>
-				<li class="transactions">
-            		<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list"></i> <span>Truck Tracking</span> <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li class="truckTracking"><a href="${baseurl }/admin/TruckTrakingHome"><i class="fa fa-bar-chart-o"></i> <span>Truck is going out from Factory </span></a></li>
-						<li class="truckTracking1"><a href="${baseurl }/admin/TruckComingintoFactory"><i class="fa fa-bar-chart-o"></i> <span>Truck Coming into Factory</span></a></li>
-					</ul>
-				</li>
-				<li class="expenseTracker"><a href="${baseurl }/admin/expenseTrackerHome"><i class="fa fa-bar-chart-o"></i> <span>Expense Tracker</span></a></li>
-				<li class="reports">
-            		<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-list"></i> <span>Reports</span> <span class="caret"></span></a>
-					<ul class="dropdown-menu" style="margin-left:-50px;">
-						<li class="CylinderReport"><a href="${baseurl }/admin/reportsHome"><i class="fa fa-bar-chart-o"></i> <span>Cylinder Report </span></a></li>
-						<li class="expensesReport"><a href="${baseurl }/admin/expensesReport"><i class="fa fa-bar-chart-o"></i> <span>Expenses Report</span></a></li>
-					</ul>
-				</li>
+				
+				
+				
 				
 				
 				
@@ -282,6 +256,10 @@ color: inherit !important;
 	        	<div class="col-md-6">
 					<h1 id="pageName"></h1>
 				</div>
-				
+				<div class="btn-toolbar pull-right">
+		                    <a href="#" class="btn btn-danger "><span id="unseentasks">15 </span><br>UnSeen Tasks</a>
+		                    <a href="#" class="btn btn-warning"><span id="reopentasks"></span><br>Reopen Tasks</a>
+		                    <!-- <a href="#" class="btn btn-info"><span id="totalGas1">27956</span><br>Gas in Kgs</a> -->
+		                </div>
 	        </div>
 <!-- Header ends Here -->

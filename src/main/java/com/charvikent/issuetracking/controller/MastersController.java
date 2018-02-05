@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.OrgService;
+import com.charvikent.issuetracking.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -33,6 +34,10 @@ public class MastersController {
 	@Autowired
 	OrgService  orgService;
 	
+	@Autowired
+	private UserService userService;
+
+	
 	
 	
 	@RequestMapping("/dept")
@@ -41,6 +46,7 @@ public class MastersController {
 		ObjectMapper objectMapper = null;
 		String sJson = null;
 		model.addAttribute("deptf", new Department());
+		model.addAttribute("users",userService.getUserName());
 		try {
 			listOrderBeans =mastersService.deptList();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
@@ -140,7 +146,6 @@ public class MastersController {
 	
 	@RequestMapping(value = "/deleteDept")
 	public @ResponseBody String deleteDept(Department  objdept,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
-		System.out.println("deleteEducation page...");
 		List<Department> listOrderBeans  = null;
 		JSONObject jsonObj = new JSONObject();
 		ObjectMapper objectMapper = null;

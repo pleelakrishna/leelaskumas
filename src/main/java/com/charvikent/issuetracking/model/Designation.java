@@ -25,6 +25,7 @@ public class Designation {
 	
 	@Column
 	private String status;
+	
 	@CreationTimestamp
 	protected Date createdTime ;
 

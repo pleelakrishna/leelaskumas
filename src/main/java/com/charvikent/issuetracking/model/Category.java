@@ -1,10 +1,15 @@
 package com.charvikent.issuetracking.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 /**
  * @author Charvik101
  *
@@ -20,6 +25,12 @@ public class Category {
 	private String category;
 	
 	private String status;
+	
+	@CreationTimestamp
+	private Date createdTime;
+
+	@UpdateTimestamp
+	private Date updatedTime;
 	
 	
 
@@ -48,12 +59,32 @@ public class Category {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
+
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public Date getUpdatedTime() {
+		return updatedTime;
+	}
+
+	public void setUpdatedTime(Date updatedTime) {
+		this.updatedTime = updatedTime;
+	}
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", category=" + category + ", status=" + status + "]";
+		return "Category [id=" + id + ", category=" + category + ", status=" + status + ", createdTime=" + createdTime
+				+ ", updatedTime=" + updatedTime + "]";
 	}
 
+	
 	
 	
 }

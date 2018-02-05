@@ -53,7 +53,6 @@ public class ReportIssueDao {
 
 		slogs.setIssueid(String.valueOf(reportIssue.getId()));
 		slogs.setIassignto(reportIssue.getAssignto());
-		slogs.setSubject(reportIssue.getSubject());
 		slogs.setComment(reportIssue.getDescription());
 		slogs.setKpstatus(reportIssue.getKstatus());
 		if(reportIssue.getUploadfile()!=null)
@@ -75,8 +74,7 @@ public List<ReportIssue> getAllReportIssues()
 	 return (List<ReportIssue>) em.createQuery("select reportIssue from ReportIssue reportIssue").getResultList();
  }
 	 */
-
-
+ 
 
 	public Set<ReportIssue> getIssuesAssignBy(String id) {
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
@@ -112,6 +110,8 @@ public List<ReportIssue> getAllReportIssues()
 
 	}
 
+
+	    public static Integer assigntocount =null;
 	public Object getIssuesAssignTo(String id) {
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
@@ -138,11 +138,13 @@ public List<ReportIssue> getAllReportIssues()
 				listissue.add(issue);
 
 			}
+			
 		} catch (Exception e) {
 			System.out.println("error here");
 			e.printStackTrace();
 		}
-
+           
+		assigntocount =listissue.size();
 		return  listissue;
 
 	}
@@ -348,7 +350,6 @@ public List<ReportIssue> getAllReportIssues()
 
 		slogs.setIssueid(issue.getId().toString());
 		slogs.setIassignto(String.valueOf(objuserBean.getId()));
-		slogs.setSubject(issue.getSubject());
 		slogs.setComment(issue.getDescription());
 		slogs.setKpstatus(issue.getKstatus());
 		
@@ -458,6 +459,12 @@ public List<ReportIssue> getAllReportIssues()
 		
 		
 		
+	}
+
+	public Integer getCountReopenTasks() {
+		
+		
+		return null;
 	}
 
 

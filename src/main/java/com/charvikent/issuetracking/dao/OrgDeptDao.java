@@ -47,6 +47,7 @@ public class OrgDeptDao {
 		return list;
 		 
 	 }
+	
 
 	public OrgDept getorgDeptById(OrgDept orgDept) {
 		@SuppressWarnings("unchecked")

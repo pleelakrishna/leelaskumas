@@ -42,7 +42,7 @@
 					<form:form class="form-horizontal" commandName="deptf" role="form" id="fillingstation-form" action="dept" method="post">
 					<div class="panel-body">
 						<div class="row">
-                    		<div class="col-md-6">
+                    		<div class="col-md-4">
                     			<div class="form-group">
                     				<form:hidden path="id"/>
 									<label for="focusedinput" class="col-md-6 control-label">Name <span class="impColor">*</span></label>
@@ -52,18 +52,29 @@
 								    </div>
                     			</div>
                     		</div>
-                    		<div class="col-md-6">
+                    		<div class="col-md-4">
+                    			<div class="form-group">
+									<label class="col-md-5 control-label no-padding-right">Department Head</label>
+									<div class="col-md-6">
+										<form:select path="depthead" class="form-control " >
+											<form:option value="">-- Select Department Head --</form:option>
+											<form:options items="${users}"/>
+										</form:select>
+									</div>
+								</div>
+                    		</div>
+                    		                    		
+                    		<div class="col-md-4">
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Description <span class="impColor">*</span></label>
-									<div class="col-md-5">
+									<div class="col-md-6">
 										<form:textarea path="description" class="form-control validate" placeholder="Enter Description"/>	
 										<span class="hasError" id="stationnameError"></span>
+										
 								    </div>
                     			</div>
+                    		</div>         		
                     		</div>
-                    		
-                    		
-                    	</div>
                     		
 <!-- Modal Starts here-->
 <!-- Modal Ends here-->
@@ -110,7 +121,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Name</th><th>Description</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Name</th><th>Department Head</th><th>Description</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	$.each(listOrders,function(i, orderObj) {
@@ -123,6 +134,7 @@ function displayTable(listOrders) {
 		serviceUnitArray[orderObj.id] = orderObj;
 		var tblRow = "<tr>"
 			+ "<td title='"+orderObj.name+"'>"+ orderObj.name + "</td>"
+			+ "<td title='"+orderObj.depthead+"'>"+ orderObj.depthead + "</td>"
 			+ "<td title='"+orderObj.description+"'>"+ orderObj.description + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "</td>" 
 			+ "</tr>";
@@ -137,6 +149,7 @@ function editCylinder(id) {
 	$("#id").val(serviceUnitArray[id].id);
 	$("#name").val(serviceUnitArray[id].name);
 	$("#description").val(serviceUnitArray[id].description);
+	$("#depthead").val(serviceUnitArray[id].deptheadid);
 	$("#submit1").val("Update");
 	$(window).scrollTop($('#moveTo').offset().top);
 }

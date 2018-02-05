@@ -1,3 +1,4 @@
+
 package com.charvikent.issuetracking.model;
 
 import java.util.Date;
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,6 +32,14 @@ public class Department {
 	
 	@Column
 	private String  description;
+	
+	@Column
+	private String  depthead;
+	
+	@Column
+	@Transient
+	private String  deptheadid;
+	
 	
 	@Column
 	private String status;
@@ -89,16 +99,37 @@ public class Department {
 	public void setUpdatedTime(Date updatedTime) {
 		this.updatedTime = updatedTime;
 	}
+	
+	
 
-	@Override
-	public String toString() {
-		return "Department [id=" + id + ", name=" + name + ", description=" + description + ", status=" + status
-				+ ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + "]";
+	
+	public String getDeptheadid() {
+		return deptheadid;
 	}
 
 	
+	public void setDeptheadid(String deptheadid) {
+		this.deptheadid = deptheadid;
+	}
+
 	
+	public String getDepthead() {
+		return depthead;
+	}
+
+	
+	public void setDepthead(String depthead) {
+		this.depthead = depthead;
+	
+	}
 
 	
 
+
+	@Override
+	public String toString() {
+		return "Department [id=" + id + ", name=" + name + ", description=" + description + ", depthead=" + depthead
+				+ ", deptheadid=" + deptheadid + ", status=" + status + ", createdTime=" + createdTime
+				+ ", updatedTime=" + updatedTime + "]";
+	}
 }

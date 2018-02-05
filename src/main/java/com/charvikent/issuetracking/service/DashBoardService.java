@@ -68,6 +68,13 @@ public Set getIssuesByAssignToUnderMonitor(String rto) {
 		return listissue;
 	}
 
+
+
+public Set<ReportIssue> getIssuesByDepartmentWise(String deptid) {
+	
+	return dashBoardDao.getDepartmentWise(deptid);
+}
+
 	
 	
 	

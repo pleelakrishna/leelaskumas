@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/img/favicon.ico">
 <title>Kumar Ticket Tracking System</title>
 <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
@@ -30,7 +30,7 @@ window.setTimeout(function() {
   <div class="login-wrapper">
     <div class="login">
       <div class="login-header">
-        <div class="logo"><img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo"></div>
+        <div class="logo"><img src="${pageContext.request.contextPath}/img/klogo.png" alt="Logo"></div>
         <h5>Login to access to your dashboard.</h5>
       </div>
       <c:if test="${not empty msg}">

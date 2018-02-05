@@ -77,9 +77,13 @@ public class MastersService {
 		else
 			
 		{
+			System.out.println(objuserBean.getDepartment());
+			
+			
 			
 			for(Department bean: rolesList){
-				if(objuserBean.getDepartment().equals(bean.getId()))
+				System.out.println(bean.getId());
+				if(objuserBean.getDepartment().equals(String.valueOf(bean.getId())))
 				rolesMap.put(bean.getId(), bean.getName());
 			}
 			

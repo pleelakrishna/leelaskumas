@@ -56,7 +56,7 @@ window.setTimeout(function() {
 
 <body class="focusedform">
 <div class="verticalcenter">
-<div><img src="assets/img/klogin.png" class="img-responsive"></div>
+<div><img src="assets/img/klogo.png" class="img-responsive"></div>
 <!-- 	<h1 align="center">KHAIBAR GAS</h1> -->
 	<div class="panel panel-primary">
 		<form:form modelAttribute="adminForm" action="${loginAction}" class="form-horizontal" method="POST"  style="margin-bottom: 0px !important;">

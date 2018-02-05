@@ -1,11 +1,16 @@
 package com.charvikent.issuetracking.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name="kpstatus")
@@ -20,7 +25,11 @@ public class KpStatus {
 	
 	private String scolour;
 	
-	
+	@CreationTimestamp
+	private Date createdTime;
+
+	@UpdateTimestamp
+	private Date updatedTime;
 	
 
 	
@@ -48,11 +57,30 @@ public class KpStatus {
 		this.name = name;
 	}
 
-	@Override
-	public String toString() {
-		return "KpStatus [id=" + id + ", name=" + name + ", scolour=" + scolour + "]";
+	
+	public Date getCreatedTime() {
+		return createdTime;
 	}
 
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public Date getUpdatedTime() {
+		return updatedTime;
+	}
+
+	public void setUpdatedTime(Date updatedTime) {
+		this.updatedTime = updatedTime;
+	}
+
+	@Override
+	public String toString() {
+		return "KpStatus [id=" + id + ", name=" + name + ", scolour=" + scolour + ", createdTime=" + createdTime
+				+ ", updatedTime=" + updatedTime + "]";
+	}
+
+	
 	
 
 	

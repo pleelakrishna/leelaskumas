@@ -1,7 +1,7 @@
 package com.charvikent.issuetracking.dao;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,10 +9,8 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.Department;
-import com.charvikent.issuetracking.model.Designation;
 import com.charvikent.issuetracking.model.KpStatus;
 import com.charvikent.issuetracking.model.OrgDept;
-import com.charvikent.issuetracking.model.Orgnization;
 
 @Repository
 public class MastersDao {
@@ -27,11 +25,31 @@ public class MastersDao {
 	@SuppressWarnings("unchecked")
 	public List<Department> getDepartmentNames()
 	 {
+       List<Department> list=new ArrayList<Department>();
+		
+		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,kp.username,d.depthead,d.description,d.status from department d,kpusers kp where d.depthead=kp.id").getResultList();
+		for(Object[] row: rows)
+		{
+		 
+
+		Department dept =new Department();
+		dept.setId( Integer.parseInt(String.valueOf(row[0])));
+		dept.setName((String)row[1]);
+		dept.setDepthead((String)row[2]);
+		dept.setDeptheadid((String)row[3]);
+		dept.setDescription((String)row[4]);
+		dept.setStatus((String)row[5]);
+		list.add(dept);
+		}
+		return list;
+		
+	
+		
 		  
-		return (List<Department>)entityManager.createQuery("SELECT department FROM Department department").getResultList();
 		 
 	 }
 
+	
 	public void saveDept(Department dept) {
 		entityManager.persist(dept);
 		
@@ -52,6 +70,8 @@ public class MastersDao {
 	public void updateDept(Department dept) {
 		Department ud =entityManager.find(Department.class,dept.getId());
 		ud.setName(dept.getName());
+		ud.setDepthead(dept.getDepthead());
+		
 		entityManager.merge(ud);
 		
 		

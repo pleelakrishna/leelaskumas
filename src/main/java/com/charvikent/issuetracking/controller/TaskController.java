@@ -34,6 +34,7 @@ import com.charvikent.issuetracking.service.PriorityService;
 import com.charvikent.issuetracking.service.ReportIssueService;
 import com.charvikent.issuetracking.service.SeverityService;
 import com.charvikent.issuetracking.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
@@ -64,7 +65,7 @@ public class TaskController {
 	
 	
 	@RequestMapping("/task")
-	public String  department( @ModelAttribute("taskf")  ReportIssue taskf,Model model , HttpServletRequest request) {
+	public String  department( @ModelAttribute("taskf")  ReportIssue taskf,Model model , HttpServletRequest request,HttpSession session) {
 		Set<ReportIssue> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
@@ -74,15 +75,16 @@ public class TaskController {
 		model.addAttribute("priority", priorityService.getPriorityNames());
 		model.addAttribute("userNames", userService.getUserName());
 		model.addAttribute("category", categoryService.getCategoryNames());
-		model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		//model.addAttribute("departmentNames", mastersService.getDepartmentNames());
 		model.addAttribute("kpstatuses", mastersService.getKpStatues());
 		
-		//model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
 		
-		
+		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		model.addAttribute("msg", "Welcome to the Netherlands!");
 		
 		try {
-			listOrderBeans = taskService.getAllReportIssues();
+			listOrderBeans = dashBoardService.getIssuesByAssignTo(String.valueOf(objuserBean.getId()));
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
@@ -297,10 +299,8 @@ public class TaskController {
 	
 	
 	@RequestMapping(value = "/setdata",method = RequestMethod.POST)
-	public @ResponseBody Object setTasks(@RequestParam(value = "ttypeid", required = true) String ttypeid, @RequestParam(value = "deptid", required = true) String deptid, Model model,HttpServletRequest request, HttpSession session) throws JSONException {
+	public @ResponseBody Object setTasks(@RequestParam(value = "ttypeid", required = true) String ttypeid,Model model,HttpServletRequest request, HttpSession session) throws JSONException {
 		
-		System.out.println(ttypeid);
-		System.out.println(deptid);
 		
 		Set<ReportIssue> listOrderBeans = null;
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
@@ -325,6 +325,19 @@ public class TaskController {
 		
 		listOrderBeans = dashBoardService.getIssuesByAssignToUnderMonitor(String.valueOf(objuserBean.getId()));
 		}
+        
+        if(ttypeid.equals("4"))
+		{
+		
+		listOrderBeans = dashBoardService.getIssuesByAssignToResolved(String.valueOf(objuserBean.getId()));
+		}
+		
+        
+        if(ttypeid.equals("5"))
+		{
+		
+		listOrderBeans = dashBoardService.getRecentlyModified(String.valueOf(objuserBean.getId()));
+		}
 		
 		
 		
@@ -338,6 +351,72 @@ public class TaskController {
 		
 
 	}
+	
+	
+	@RequestMapping(value = "/setdataDeptWise",method = RequestMethod.POST)
+	public @ResponseBody Object setTasksDepartmentWise(@RequestParam(value = "deptid", required = true) String dept,Model model,HttpServletRequest request, HttpSession session) throws JSONException, JsonProcessingException {
+		
+		
+		Set<ReportIssue> listOrderBeans = null;
+		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		JSONObject jsonObj = new JSONObject();
+		
+		listOrderBeans = dashBoardService.getIssuesByDepartmentWise(String.valueOf(dept));
+		
+		 objectMapper = new ObjectMapper();
+		if (listOrderBeans != null && listOrderBeans.size() > 0) {
+			
+			objectMapper = new ObjectMapper();
+			sJson = objectMapper.writeValueAsString(listOrderBeans);
+			request.setAttribute("allOrders1", sJson);
+			jsonObj.put("allOrders1", listOrderBeans);
+			// System.out.println(sJson);
+		} else {
+			objectMapper = new ObjectMapper();
+			sJson = objectMapper.writeValueAsString(listOrderBeans);
+			request.setAttribute("allOrders1", "''");
+			jsonObj.put("allOrders1", listOrderBeans);
+		}
+		
+		
+		
+		return String.valueOf(jsonObj);
+
+	}
+	
+	
+	
+	
+	@RequestMapping(value = "/getCount")
+	public @ResponseBody String getCount(ReportIssue  objorg,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
+		JSONObject jsonObj = new JSONObject();
+		Integer unseentasks =0;
+		try{
+			
+ 				
+			unseentasks = taskService.getCountUnseenTasks();
+			if(unseentasks!=null)
+			{
+			jsonObj.put("unseentasks",unseentasks);
+			}
+			else
+				jsonObj.put("unseentasks","0");
+			
+		}catch(Exception e){
+			e.printStackTrace();
+	System.out.println(e);
+			return String.valueOf(jsonObj);
+			
+		}
+		return String.valueOf(jsonObj);
+	}
+	
+	
+	
+	
+	
 	
 		
 

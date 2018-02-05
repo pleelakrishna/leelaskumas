@@ -457,6 +457,11 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		
 	}
 
+	public Integer getCountUnseenTasks() {
+		
+		return  reportIssueDao.getCountReopenTasks();
+	}
+
 	
 	
 	}

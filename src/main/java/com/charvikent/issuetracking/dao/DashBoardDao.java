@@ -60,6 +60,7 @@ public class DashBoardDao {
 
 	}
 	
+	 public static Integer assigntocount =null;
 	public Set getIssuesAssignTo(String id) {
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
@@ -90,6 +91,8 @@ public class DashBoardDao {
 			System.out.println("error here");
 			e.printStackTrace();
 		}
+		
+		assigntocount =listissue.size();
 
 		return  listissue;
 
@@ -191,6 +194,38 @@ public class DashBoardDao {
 
 
 	}
+
+	public Set<ReportIssue> getDepartmentWise(String deptid) {
+		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
+		
+		
+		try {
+			List<Object[]> rows = em.createNativeQuery("select r.id , u.username, s.severity, p.priority,r.uploadfile,r.subject ,r.created_time,c.category,ks.name  from report_issue r, category c, priority p, kpusers u, severity s, kpstatus ks   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  u.department =:custName").setParameter("custName", deptid).getResultList();
+			for (Object[] row : rows) {
+				ReportIssue issue = new ReportIssue();
+				issue.setId(Integer.parseInt(String.valueOf(row[0])));
+				issue.setAssignto((String) row[1]);
+				issue.setSeverity((String) row[2]);
+				issue.setPriority((String) row[3]);
+				issue.setUploadfile((String) row[4]);
+				issue.setSubject((String) row[5]);
+				issue.setCreatedTime((Date) row[6]);
+				issue.setCategory((String) row[7]);
+				issue.setKstatus((String) row[8]);
+				listissue.add(issue);
+
+			}
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		
+		return listissue;
+	}
+	
+	
+	
 
 
 

@@ -5,8 +5,8 @@
 %>
 
 <!-- Footer Starts Here -->
-		</div> <!-- #wrap -->
-	</div> <!-- page-content -->
+		<!-- </div> #wrap
+	</div> page-content -->
     <footer role="contentinfo">
         <div class="clearfix">
             <ul class="list-unstyled list-inline pull-left">
@@ -16,7 +16,10 @@
     color:  black;"></i></button>
         </div>
     </footer>
-</div> <!-- page-container -->
+    
+   
+    
+<!-- </div> page-container -->
  
 <script type='text/javascript' src='${baseurl }/assets/js/jqueryui-1.10.3.min.js'></script> 
 

@@ -78,6 +78,8 @@ public class Orgnization {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
 
 	@Override
 	public String toString() {
