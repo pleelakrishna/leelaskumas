@@ -28,7 +28,6 @@ import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.CategoryService;
-import com.charvikent.issuetracking.service.DashBoardService;
 import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.PriorityService;
 import com.charvikent.issuetracking.service.ReportIssueService;
@@ -65,12 +64,11 @@ public class TaskController {
 	
 	
 	@RequestMapping("/task")
-	public String  department( @ModelAttribute("taskf")  ReportIssue taskf,Model model , HttpServletRequest request,HttpSession session) {
+	public String  department( @ModelAttribute("taskf")  ReportIssue taskf, Model model , HttpServletRequest request,HttpSession session) {
 		Set<ReportIssue> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
-//		model.addAttribute("taskf", new ReportIssue());
-		model.addAttribute("taskff", new ReportIssue());
+	/*	model.addAttribute("taskf", new ReportIssue());*/
 		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
 		model.addAttribute("severity", severityService.getSeverityNames());
 		model.addAttribute("priority", priorityService.getPriorityNames());
@@ -107,8 +105,8 @@ public class TaskController {
 	
 	}
 	
-	@RequestMapping(value = "/savetask")
-	public String saveAdmin(@Valid @ModelAttribute("taskf")  ReportIssue task, BindingResult bindingresults, @RequestParam("file") MultipartFile[] uploadedFiles,
+	@RequestMapping(value = "/savetask" ,method = RequestMethod.POST)
+	public String saveAdmin(@Valid @ModelAttribute("taskf")  ReportIssue task, BindingResult bindingresults, @RequestParam("file1") MultipartFile[] uploadedFiles,
 			RedirectAttributes redir) throws IOException {
 		
 		if (bindingresults.hasErrors()) {
@@ -268,8 +266,14 @@ public class TaskController {
 	
 
 	@RequestMapping(value = "/subTask", method = RequestMethod.POST)
-	public @ResponseBody String saveSubtask(@RequestParam(value = "comment", required = true) String comment, @RequestParam(value = "kpstatus", required = true) String kpstatus, @RequestParam(value = "issueid", required = true) String issueid, @Valid @ModelAttribute  KpStatusLogs subtask, BindingResult bindingresults, @RequestParam("file[]") MultipartFile[] uploadedFiles,
+	public @ResponseBody String saveSubtask(@RequestParam(value = "comment", required = true) String comment, @RequestParam(value = "kpstatus", required = true) String kpstatus, @RequestParam(value = "issueid", required = true) String issueid,  @RequestParam("file[]") MultipartFile[] uploadedFiles,
 			RedirectAttributes redir) throws IOException {
+		
+		KpStatusLogs subtask =new KpStatusLogs();
+		subtask.setComment(comment);
+		subtask.setIssueid(issueid);
+		subtask.setKpstatus(kpstatus);
+		
 		
 		
 		try {

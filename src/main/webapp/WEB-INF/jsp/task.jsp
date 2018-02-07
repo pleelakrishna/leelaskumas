@@ -10,7 +10,7 @@
 		<li>Task Master</li>
 	</ol>
 	                       <div class="clearfix"></div><br>
-	                       <form:form modelAttribute="taskff">
+	                       <form>
 	                        <div class="row">
                     		<div class="col-md-4">
                     			<div class="form-horizontal">
@@ -26,13 +26,15 @@
                     		<div class="col-md-4">
                     			<div class="form-horizontal">
 									<label for="focusedinput" class="col-md-6 control-label" style="padding-top:2px;">Department  <span class="impColor">*</span></label>
-									<form:select path="additionalinfo" class="col-xs-10 col-sm-5 " onfocus="removeBorder(this.id)" >
-											<form:options items="${departmentNames}"/>
-										</form:select>
+									<select  class="col-xs-10 col-sm-5 " >
+											<c:forEach var="list" items="${departmentNames}">
+											<option value="">${list.value} </option>
+											</c:forEach>
+										</select>
                     			</div>
                     		</div>
                     		</div>
-                    		</form:form>
+                    		</form>
 	
 	
 	<div class="clearfix"></div>
@@ -65,7 +67,7 @@
 					<div class="panel-heading">
 						<h4>Add Task</h4>
 					</div>
-					<form:form class="form-horizontal" modelAttribute="taskf" role="form" id="fillingstation-form" action="savetask" method="post" enctype="multipart/form-data">
+					<form:form class="form-horizontal" modelAttribute="taskf"  action="savetask" method="post" enctype="multipart/form-data">
 					<div class="panel-body">
 						<div class="row">
                     		<div class="col-md-6">
@@ -141,7 +143,7 @@
                     		<div class="form-group">
                     		<label class="ace-file-input ace-file-multiple col-sm-3 col-md-push-3 control-label no-padding-right" >Attach File(s)</label>
 									<div class="col-md-8">
-										<input type="file" name="file" id="file" class="col-sm-9 col-md-push-5" multiple="multiple" style="margin: 7px 0px 0px 0px;">
+										<input type="file" name="file1" id="file1" class="col-sm-9 col-md-push-5" multiple="multiple" style="margin: 7px 0px 0px 0px;">
 									</div>
                     		</div>
                     		</div>
@@ -154,7 +156,7 @@
 				      	<div class="row">
 				      		<div class="col-sm-12">
 				      			<div class="btn-toolbar text-center">
-					      			<input type="submit" id="submit1" value="Submit" class="btn-primary btn"/>
+					      			<input type="submit"  value="Submit" class="btn-primary btn"/>
 					      			<input type="reset" value="Reset" class="btn-danger btn cancel"/>
 				      			</div>
 				      		</div>
@@ -211,21 +213,21 @@
 				<h4 class="modal-title" style="color: white;"> Add Comment </h4>
         	</div>
         	<div class="modal-body">
-					<form:form class="form-horizontal" modelAttribute="subTaskf"  method="post" enctype="multipart/form-data">
+					<form class="form-horizontal">
 					<div class="panel-body">
 						<div class="row">
                     		<div class="col-md-5">
                     			<div class="form-group">
-                    			<%-- 	<form:hidden path="id"/> --%>
+                    				<input type=hidden path="id"/>
                     				
-                    				<form:hidden path="issueid"/>
+                    				<input type=hidden path="issueid"/>
                     				
 									<label for="focusedinput" class="col-md-6 control-label">Status  <span class="impColor">*</span></label>
-									<form:select path="kpstatus" class="col-xs-10 col-sm-5 validateCmt" onfocus="removeBorder(this.id)" style="margin: 6px 0px 0px 0px;
-    width: 50%;" >
-											<form:option value="" label="--- Select ---" />
-											<form:options items="${kpstatuses}"/>
-										</form:select>
+										<select  class="col-xs-10 col-sm-5 " >
+											<c:forEach var="list" items="${kpstatuses}">
+											<option value="">${list.value} </option>
+											</c:forEach>
+										</select>
                     			</div>
                     		</div>
                     		<div class="col-md-6">
@@ -243,7 +245,7 @@
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Comment <span class="impColor">*</span></label>
 									<div class="col-md-6">
-									<form:textarea path="comment" class="form-control validateCmt" placeholder="Enter commit" style="width: 320px;"/>
+									<input type="text"  class="form-control validateCmt" placeholder="Enter commit" style="width: 320px;">
 									<span class="hasError" id="stationnameError"></span>
 								    </div>
                     			</div>
@@ -264,7 +266,7 @@
 			      	</div>
                     		</div>
                     		
-                    		</form:form>
+                    		
                     		
 				</div> <!-- body -->
 					
