@@ -266,7 +266,7 @@ public class TaskController {
 	
 
 	@RequestMapping(value = "/subTask", method = RequestMethod.POST)
-	public @ResponseBody String saveSubtask(@RequestParam(value = "comment", required = true) String comment, @RequestParam(value = "kpstatus", required = true) String kpstatus, @RequestParam(value = "issueid", required = true) String issueid,  @RequestParam("file[]") MultipartFile[] uploadedFiles,
+	public @ResponseBody String saveSubtask(@RequestParam(value = "commet", required = true) String comment, @RequestParam(value = "kpstatus", required = true) String kpstatus, @RequestParam(value = "issueid", required = true) String issueid,  @RequestParam("file[]") MultipartFile[] uploadedFiles,
 			RedirectAttributes redir) throws IOException {
 		
 		KpStatusLogs subtask =new KpStatusLogs();

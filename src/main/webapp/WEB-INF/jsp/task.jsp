@@ -26,9 +26,9 @@
                     		<div class="col-md-4">
                     			<div class="form-horizontal">
 									<label for="focusedinput" class="col-md-6 control-label" style="padding-top:2px;">Department  <span class="impColor">*</span></label>
-									<select  class="col-xs-10 col-sm-5 " >
+									<select id="deptid"  class="col-xs-10 col-sm-5 " >
 											<c:forEach var="list" items="${departmentNames}">
-											<option value="">${list.value} </option>
+											<option value=${list.key}>${list.value} </option>
 											</c:forEach>
 										</select>
                     			</div>
@@ -218,14 +218,14 @@
 						<div class="row">
                     		<div class="col-md-5">
                     			<div class="form-group">
-                    				<input type=hidden path="id"/>
+                    				<!-- <input type=hidden path="id"/> -->
                     				
-                    				<input type=hidden path="issueid"/>
+                    				<input type=hidden name="issueid" id="issueid" value="">
                     				
 									<label for="focusedinput" class="col-md-6 control-label">Status  <span class="impColor">*</span></label>
-										<select  class="col-xs-10 col-sm-5 " >
+										<select  name="kpstatus" id="kpstatus" class="col-xs-10 col-sm-5 " >
 											<c:forEach var="list" items="${kpstatuses}">
-											<option value="">${list.value} </option>
+											<option value=${list.key}>${list.value} </option>
 											</c:forEach>
 										</select>
                     			</div>
@@ -245,7 +245,7 @@
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Comment <span class="impColor">*</span></label>
 									<div class="col-md-6">
-									<input type="text"  class="form-control validateCmt" placeholder="Enter commit" style="width: 320px;">
+									<input type="text"  name="commet" id="commet" class="form-control validateCmt" placeholder="Enter commit" style="width: 320px;">
 									<span class="hasError" id="stationnameError"></span>
 								    </div>
                     			</div>
@@ -467,10 +467,6 @@ function addComments(id){
 	
 $('#ttype').on('change', function() {
 	  var ttype=$('#ttype').val();
-	  
-	  
-		 
-		  
 	  var formData = new FormData();
 	    formData.append('ttypeid', ttype);
 	$.fn.makeMultipartRequest('POST', 'setdata', false, formData, false, 'text', function(data){
@@ -478,9 +474,6 @@ $('#ttype').on('change', function() {
 		var alldata = jsonobj.list;
 		console.log(alldata);
 			displayTable(alldata)
-	
-	 
-	 
 	 });
 	  
 	  
@@ -490,10 +483,8 @@ $('#ttype').on('change', function() {
 	
 	
 	
-	$('#additionalinfo').on('change', function() {
-		
-		 var dept=$('#additionalinfo').val();
-		 
+	$("#deptid").on('change', function() {
+		 var dept=$('#deptid').val();
 		 var formData = new FormData();
 		    formData.append('deptid', dept);
 		$.fn.makeMultipartRequest('POST', 'setdataDeptWise', false, formData, false, 'text', function(data){
@@ -514,14 +505,16 @@ $('#ttype').on('change', function() {
 	function submitCommet()
 	{
 			var kpstatus=$('#kpstatus').val();
-		    var comment=$('#comment').val();
+		    var commet=$('#commet').val();
 		    var issueid=$('#issueid').val();
 			   
 			   var formData = new FormData();
 			   
-			   formData.append('comment', comment);
+			   formData.append('commet', commet);
 			   formData.append('kpstatus', kpstatus);
 			   formData.append('issueid', issueid);
+			   
+			   alert(commet);
 			   
 			   
 	    	var ins = document.getElementById('fileupload').files.length;
