@@ -8905,7 +8905,7 @@ footer #back-to-top {
   }
 }
 .focusedform {
-  background: #e6e7e8 url(../img/bbg.jpg);
+/*   //background: #e6e7e8 url(../img/bbg.jpg); */
   padding: 0;
 }
 .focusedform .panel {

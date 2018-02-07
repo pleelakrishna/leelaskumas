@@ -59,8 +59,8 @@ public class TaskController {
 	@Autowired
 	FilesStuff fileTemplate;
 	
-	@Autowired
-	DashBoardService dashBoardService;
+	/*@Autowired
+	DashBoardService dashBoardService;*/
 	
 	
 	
@@ -69,7 +69,8 @@ public class TaskController {
 		Set<ReportIssue> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
-		model.addAttribute("taskf", new ReportIssue());
+//		model.addAttribute("taskf", new ReportIssue());
+		model.addAttribute("taskff", new ReportIssue());
 		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
 		model.addAttribute("severity", severityService.getSeverityNames());
 		model.addAttribute("priority", priorityService.getPriorityNames());
@@ -81,10 +82,9 @@ public class TaskController {
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
 		
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
-		model.addAttribute("msg", "Welcome to the Netherlands!");
 		
 		try {
-			listOrderBeans = dashBoardService.getIssuesByAssignTo(String.valueOf(objuserBean.getId()));
+			listOrderBeans = taskService.getissuesByselectionAssignTo();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
@@ -107,8 +107,8 @@ public class TaskController {
 	
 	}
 	
-	@RequestMapping(value = "/task", method = RequestMethod.POST)
-	public String saveAdmin(@Valid @ModelAttribute  ReportIssue task, BindingResult bindingresults, @RequestParam("file") MultipartFile[] uploadedFiles,
+	@RequestMapping(value = "/savetask")
+	public String saveAdmin(@Valid @ModelAttribute("taskf")  ReportIssue task, BindingResult bindingresults, @RequestParam("file") MultipartFile[] uploadedFiles,
 			RedirectAttributes redir) throws IOException {
 		
 		if (bindingresults.hasErrors()) {
@@ -309,34 +309,34 @@ public class TaskController {
 		
 		{
 		
-		listOrderBeans = dashBoardService.getIssuesByAssignTo(String.valueOf(objuserBean.getId()));
+		listOrderBeans = taskService.getissuesByselectionAssignTo();
 		}
 		
 		if(ttypeid.equals("2"))
 			
 		{
 		
-		listOrderBeans = dashBoardService.getIssuesByAssignBy(String.valueOf(objuserBean.getId()));
+		listOrderBeans = taskService.getissuesByselectionAssignBy();
 		}
 		
         if(ttypeid.equals("3"))
 			
 		{
 		
-		listOrderBeans = dashBoardService.getIssuesByAssignToUnderMonitor(String.valueOf(objuserBean.getId()));
+		listOrderBeans = taskService.getIssuesByAssignToUnderMonitor();
 		}
         
         if(ttypeid.equals("4"))
 		{
 		
-		listOrderBeans = dashBoardService.getIssuesByAssignToResolved(String.valueOf(objuserBean.getId()));
+		listOrderBeans = taskService.getIssuesByAssignToResolved(String.valueOf(objuserBean.getId()));
 		}
 		
         
         if(ttypeid.equals("5"))
 		{
 		
-		listOrderBeans = dashBoardService.getRecentlyModified(String.valueOf(objuserBean.getId()));
+		listOrderBeans = taskService.getRecentlyModified(String.valueOf(objuserBean.getId()));
 		}
 		
 		
@@ -363,7 +363,7 @@ public class TaskController {
 		String sJson = null;
 		JSONObject jsonObj = new JSONObject();
 		
-		listOrderBeans = dashBoardService.getIssuesByDepartmentWise(String.valueOf(dept));
+		listOrderBeans = taskService.getIssuesByDepartmentWise(String.valueOf(dept));
 		
 		 objectMapper = new ObjectMapper();
 		if (listOrderBeans != null && listOrderBeans.size() > 0) {
@@ -389,7 +389,7 @@ public class TaskController {
 	
 	
 	
-	@RequestMapping(value = "/getCount")
+	/*@RequestMapping(value = "/getCount")
 	public @ResponseBody String getCount(ReportIssue  objorg,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
 		JSONObject jsonObj = new JSONObject();
 		Integer unseentasks =0;
@@ -412,7 +412,7 @@ public class TaskController {
 		}
 		return String.valueOf(jsonObj);
 	}
-	
+	*/
 	
 	
 	

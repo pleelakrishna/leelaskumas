@@ -27,7 +27,7 @@ public class MastersDao {
 	 {
        List<Department> list=new ArrayList<Department>();
 		
-		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,kp.username,d.depthead,d.description,d.status from department d,kpusers kp where d.depthead=kp.id").getResultList();
+		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,kp.username,d.depthead,d.description,d.status from kpdepartment d,kpusers kp where d.depthead=kp.id").getResultList();
 		for(Object[] row: rows)
 		{
 		 

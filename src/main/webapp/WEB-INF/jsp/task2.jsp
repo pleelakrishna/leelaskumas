@@ -10,7 +10,7 @@
 		<li>Task Master</li>
 	</ol>
 	                       <div class="clearfix"></div><br>
-	                       <form:form modelAttribute="taskff">
+	                       <form:form commandName="taskf">
 	                        <div class="row">
                     		<div class="col-md-4">
                     			<div class="form-horizontal">
@@ -20,6 +20,8 @@
 											<option value="1" >Assigned to</option>
 											<option value="2" >Assigned by</option>
 											<option value="3" >Monitored by</option>
+											<option value="4" >Resolved</option>
+											
 										</select>
                     			</div>
                     		</div>
@@ -65,7 +67,7 @@
 					<div class="panel-heading">
 						<h4>Add Task</h4>
 					</div>
-					<form:form class="form-horizontal" modelAttribute="taskf" role="form" id="fillingstation-form" action="savetask" method="post" enctype="multipart/form-data">
+					<form:form class="form-horizontal" commandName="taskf" role="form" id="fillingstation-form" action="task" method="post" enctype="multipart/form-data">
 					<div class="panel-body">
 						<div class="row">
                     		<div class="col-md-6">
@@ -200,7 +202,7 @@
 			
 			<!-- form model start here or add comment  -->
 			
-			
+<%-- 			
 <!-- Modal Starts here-->
 <div class="modal fade" id="formModal" data-backdrop="static" data-keyboard="false" role="dialog">
 	<div class="modal-dialog">
@@ -211,12 +213,12 @@
 				<h4 class="modal-title" style="color: white;"> Add Comment </h4>
         	</div>
         	<div class="modal-body">
-					<form:form class="form-horizontal" modelAttribute="subTaskf"  method="post" enctype="multipart/form-data">
+					<form:form class="form-horizontal" commandName="subTaskf"  method="post" enctype="multipart/form-data">
 					<div class="panel-body">
 						<div class="row">
                     		<div class="col-md-5">
                     			<div class="form-group">
-                    			<%-- 	<form:hidden path="id"/> --%>
+                    				<form:hidden path="id"/>
                     				
                     				<form:hidden path="issueid"/>
                     				
@@ -277,7 +279,7 @@
       	</div> <!--  model close here-->
 <!-- Modal Ends here-->
 			<!-- container -->
-			
+ --%>			
 			
 			
 			
@@ -297,7 +299,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned</th><th>Created Time</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>TaskNo</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned</th><th>UpdatedTime</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	$.each(listOrders,function(i, orderObj) {
@@ -317,7 +319,7 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
 			+ "<td title='"+orderObj.priority+"'>"+ orderObj.priority + "</td>"
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
-			+ "<td title='"+orderObj.createdTime+"'>"+ orderObj.createdTime + "</td>"
+			+ "<td title='"+orderObj.updatedTime+"'>"+ orderObj.updatedTime + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time + "</td>" 
 			+ "</tr>";
 		$(tblRow).appendTo("#tableId table tbody");
@@ -436,7 +438,7 @@ function addComments(id){
 
 /* display datatable by  user selection    */
 
-/* function Go(){
+function Go(){
 	var dept1=$('#additionalinfo').val();
 	var ttype=$('#ttype').val();
 	
@@ -457,7 +459,7 @@ function addComments(id){
 	 
 	 });
 }
- */
+
 
 	
 	
@@ -466,7 +468,8 @@ function addComments(id){
 $('#ttype').on('change', function() {
 	  var ttype=$('#ttype').val();
 	  
-	  
+	  if($('#ttype').val()!='0')
+	  {
 		 
 		  
 	  var formData = new FormData();
@@ -480,8 +483,11 @@ $('#ttype').on('change', function() {
 	 
 	 
 	 });
-	  
-	  
+	  }
+	  else
+		  {
+		  alert("to be implemented");
+		  }
 	  
 	})
 	

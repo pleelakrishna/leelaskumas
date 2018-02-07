@@ -22,18 +22,18 @@ public class DashBoardService {
 	UserDao userDao;
 	
 	
-	public Set<ReportIssue> getIssuesByAssignBy(String id) {
+	/*public Set<ReportIssue> getIssuesByAssignBy(String id) {
 		Set<ReportIssue> list=(dashBoardDao.getIssuesAssignBy(id));
 		return  list;
 	}
+	*/
 	
 	
-	
-	public Set getIssuesByAssignTo(String id) {
+	/*public Set getIssuesByAssignTo(String id) {
  
 		return dashBoardDao.getIssuesAssignTo(id);
 	}  
-	
+	*/
 	public Set getIssuesByAssignToResolved(String id) {
 		 
 		return dashBoardDao.getIssuesAssignToResolved(id);
@@ -70,10 +70,6 @@ public Set getIssuesByAssignToUnderMonitor(String rto) {
 
 
 
-public Set<ReportIssue> getIssuesByDepartmentWise(String deptid) {
-	
-	return dashBoardDao.getDepartmentWise(deptid);
-}
 
 	
 	

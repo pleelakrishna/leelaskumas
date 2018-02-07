@@ -7,7 +7,7 @@
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
 		<li><a href="#">Home</a></li>
-		<li>Orgnization Master</li>
+		<li>Organization Master</li>
 	</ol>
 	<div class="clearfix"></div>
 	<div class="container">
@@ -15,7 +15,7 @@
 			<div class="col-md-12">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>Orgnization List</h4>
+						<h4>Organization List</h4>
 						<div class="options">
 							<a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
 						</div>
@@ -37,7 +37,7 @@
 			<div class="col-md-12 col-sm-12">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>Add Orgnization</h4>
+						<h4>Add Organization</h4>
 					</div>
 					<form:form class="form-horizontal" commandName="orgf" role="form" id="fillingstation-form" action="org" method="post">
 					<div class="panel-body">
@@ -201,6 +201,6 @@ function inactiveData() {
 				});
 		
 }
-$("#pageName").text("Orgnization Master");
+$("#pageName").text("Organization Master");
 $(".org").addClass("active"); 
 </script>

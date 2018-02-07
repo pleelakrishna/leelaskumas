@@ -27,7 +27,7 @@ public class OrgDeptDao {
 		
 		List<OrgDept> list=new ArrayList<OrgDept>();
 		
-		List <Object[]> rows=entityManager.createNativeQuery("select od.id,d.name as pd2 ,o.name,d1.name as pd1,od.status,od.dept,od.org,od.parent_dept from org_dept od,department d,orgnization o, department d1 where od.dept=d.id and od.org=o.id and od.parent_dept=d1.id").getResultList();
+		List <Object[]> rows=entityManager.createNativeQuery("select od.id,d.name as pd2 ,o.name,d1.name as pd1,od.status,od.dept,od.org,od.parent_dept from kporgdept od,kpdepartment d,kporgnization o, kpdepartment d1 where od.dept=d.id and od.org=o.id and od.parent_dept=d1.id").getResultList();
 		  
 		for(Object[] row: rows)
 		{

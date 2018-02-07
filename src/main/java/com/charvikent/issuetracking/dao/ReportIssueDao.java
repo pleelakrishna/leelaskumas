@@ -81,7 +81,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.createdTime,ks.scolour,ks.name from ReportIssue r, Category c, Priority p, User u, Severity s, KpStatus ks where r.assignto=u.id and r.kstatus=ks.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus<>'1'  and  r.assignby =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.createdTime,ks.scolour,ks.name ,r.status, r.taskno from ReportIssue r, Category c, Priority p, User u, Severity s, KpStatus ks where r.assignto=u.id and r.kstatus=ks.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus<>'1'  and  r.assignby =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();
@@ -96,8 +96,10 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setSubject((String) row[5]);
 				issue.setCategory((String) row[6]);
 				issue.setCreatedTime((Date) row[7]);
-				issue.setKstatus( row[8].toString());         // ticket colour assigned to this variable
-				issue.setAssignby((String) row[9]);           // assume setassignby is status of ticket status assigned to this variable
+				issue.setKstatus( row[8].toString());         
+				issue.setAssignby((String) row[9]);
+				issue.setStatus((String) row[10]);
+				issue.setTaskno((String) row[11]);
 				listissue.add(issue);
 
 			}
@@ -111,13 +113,12 @@ public List<ReportIssue> getAllReportIssues()
 	}
 
 
-	    public static Integer assigntocount =null;
-	public Object getIssuesAssignTo(String id) {
+	public Set getIssuesAssignTo(String id) {
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createNativeQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.created_time,c.category,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s ,kpstatus ks  where r.assignto=u.id and r.kstatus=ks.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus in(2,6) and r.assignto =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.assignto=:custid").setParameter("custid", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();
@@ -131,8 +132,10 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setSubject((String) row[5]);
 				issue.setCreatedTime((Date) row[6]);
 				issue.setCategory((String) row[7]);
-				issue.setAssignto((String) row[8]);                    // assume setassignby is status of ticket status assigned to this variable
-				issue.setKstatus( (String) row[9]);                   // ticket colour assigned to this variable
+				issue.setAssignto((String) row[8]);                  
+				issue.setKstatus( (String) row[9]);
+				issue.setStatus((String) row[10]);
+				issue.setTaskno((String) row[11]);
 
 
 				listissue.add(issue);
@@ -144,20 +147,19 @@ public List<ReportIssue> getAllReportIssues()
 			e.printStackTrace();
 		}
            
-		assigntocount =listissue.size();
 		return  listissue;
 
 	}
 
 
-	public Object getIssuesAssignToResolved(String id) {
+	public Set getIssuesAssignToResolved(String id) {
 		//List<ReportIssue> listissue=new ArrayList<>();
 		
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category,ks.scolour,ks.name  from ReportIssue r, Category c, Priority p, User u, Severity s, KpStatus ks   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='4' and  r.assignto =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category,ks.scolour,ks.name, t.status ,r.taskno  from ReportIssue r, Category c, Priority p, User u, Severity s, KpStatus ks   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='4' and  r.assignto =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();
@@ -173,6 +175,8 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setCategory((String) row[7]);
 				issue.setKstatus((String) row[8]);
 				issue.setAssignto((String) row[9]);
+				issue.setStatus((String) row[10]);
+				issue.setTaskno((String) row[11]);
 
 
 				listissue.add(issue);
@@ -201,7 +205,7 @@ public List<ReportIssue> getAllReportIssues()
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em.createQuery("select r.id, c.category ,s.severity,p.priority,"
 					+ "u.username ,r.subject ,r.uploadfile,"
-					+ "DATE(r.createdTime), Date(r.updatedTime),r.status,r.description,r.assignto,r.category,r.priority,r.severity,r.taskno from ReportIssue r, Category c ,Severity s,Priority p,User u  where r.category=c.id and r.severity=s.id and r.priority=p.id and r.assignto=u.id")
+					+ "DATE(r.createdTime), Date(r.updatedTime),r.status,r.description,r.assignto,r.category,r.priority,r.severity,r.status from ReportIssue r, Category c ,Severity s,Priority p,User u  where r.category=c.id and r.severity=s.id and r.priority=p.id and r.assignto=u.id")
 			.getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
@@ -291,7 +295,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		try {
 			List<Object[]> rows = em
-			.createNativeQuery(" select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignby =:custName union (select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignto =:custName )").setParameter("custName", id)
+			.createNativeQuery(" select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour,r.status ,r.taskno from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignby =:custName union (select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignto =:custName )").setParameter("custName", id)
 			.getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
@@ -305,6 +309,8 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setCreatedTime((Date) row[7]);
 				issue.setKstatus((String) row[9]);
 				issue.setAssignby((String) row[8]);
+				issue.setStatus((String) row[10]);
+				issue.setTaskno((String) row[11]);
 				listissue.add(issue);
 
 			}
@@ -326,6 +332,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		return em.find(ReportIssue.class, id);
 	}
+	
 
 	public void updateIssue(ReportIssue issue) {
 		
@@ -461,12 +468,140 @@ public List<ReportIssue> getAllReportIssues()
 		
 	}
 
-	public Integer getCountReopenTasks() {
-		
-		
-		return null;
-	}
+	
 
+	public Set<ReportIssue> getissuesByselectionAssignTo() {
+		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
+		User sessionBean = (User) session.getAttribute("cacheUserBean");
+		try {
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description  from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.assignto =:id").setParameter("id", sessionBean.getId()).getResultList();
+			for (Object[] row : rows) {
+				ReportIssue issue = new ReportIssue();
+				issue.setId(Integer.parseInt(String.valueOf(row[0])));
+				issue.setTaskno((String) row[1]);
+				issue.setSubject((String) row[2]);
+				issue.setCategory((String) row[3]);
+				issue.setCategoryid((String) row[4]);
+				issue.setPriority((String) row[5]);
+				issue.setPriorityid((String) row[6]);
+				issue.setAssignto((String) row[7]);
+				issue.setAssigntoid((String) row[8]);
+				issue.setCreatedTime((Date) row[9]);
+				issue.setSeverity((String) row[10]);
+				issue.setSeverityid((String) row[11]);
+				issue.setStatus((String) row[12]);
+				issue.setDescription((String) row[13]);
+
+				
+				listissue.add(issue);
+
+			}
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		
+		return listissue;
+	}
+	
+	
+	
+	public Set<ReportIssue> getissuesByselectionAssignBy() {
+		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
+		User sessionBean = (User) session.getAttribute("cacheUserBean");
+		try {
+			List<Object[]> rows = em.createNativeQuery(" select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.assignby=:id").setParameter("id", sessionBean.getId()).getResultList();
+			for (Object[] row : rows) {
+				ReportIssue issue = new ReportIssue();
+				issue.setId(Integer.parseInt(String.valueOf(row[0])));
+				issue.setTaskno((String) row[1]);
+				issue.setSubject((String) row[2]);
+				issue.setCategory((String) row[3]);
+				issue.setCategoryid((String) row[4]);
+				issue.setPriority((String) row[5]);
+				issue.setPriorityid((String) row[6]);
+				issue.setAssignto((String) row[7]);
+				issue.setAssigntoid((String) row[8]);
+				issue.setCreatedTime((Date) row[9]);
+				issue.setSeverity((String) row[10]);
+				issue.setSeverityid((String) row[11]);
+				issue.setStatus((String) row[12]);
+				issue.setDescription((String) row[13]);
+
+				
+				listissue.add(issue);
+
+			}
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		
+		return listissue;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public Set<ReportIssue> getDepartmentWise(String deptid) {
+		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
+		
+		
+		try {
+			List<Object[]> rows = em.createNativeQuery("select r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  u.department =:custName").setParameter("custName", deptid).getResultList();
+			for (Object[] row : rows) {
+				ReportIssue issue = new ReportIssue();
+				issue.setId(Integer.parseInt(String.valueOf(row[0])));
+				issue.setAssignto((String) row[1]);
+				issue.setSeverity((String) row[2]);
+				issue.setPriority((String) row[3]);
+				issue.setUploadfile((String) row[4]);
+				issue.setSubject((String) row[5]);
+				issue.setCreatedTime((Date) row[6]);
+				issue.setCategory((String) row[7]);
+				issue.setKstatus((String) row[8]);
+				issue.setStatus((String) row[9]);
+				issue.setTaskno((String) row[10]);
+				
+				
+				issue.setSeverityid((String) row[11]);
+				issue.setPriorityid((String) row[12]);
+				issue.setAssigntoid((String) row[13]);
+			    issue.setCategoryid((String) row[14]);
+			    issue.setDescription((String) row[15]);
+				
+				listissue.add(issue);
+
+			}
+			
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		
+		return listissue;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 

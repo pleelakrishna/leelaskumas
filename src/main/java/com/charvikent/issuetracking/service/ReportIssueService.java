@@ -187,12 +187,12 @@ public class ReportIssueService {
 		return reportIssueDao.getIssuesAssignBy(id);
 	}
 
-	public Object getIssuesByAssignTo(String id) {
+	public Set getIssuesByAssignTo(String id) {
  
 		return reportIssueDao.getIssuesAssignTo(id);
 	}  
 	
-	public Object getIssuesByAssignToResolved(String id) {
+	public Set getIssuesByAssignToResolved(String id) {
 		 
 		return reportIssueDao.getIssuesAssignToResolved(id);
 	} 
@@ -420,22 +420,24 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Object getIssuesByAssignToUnderMonitor(String rto) {
+	public Set getIssuesByAssignToUnderMonitor() {
 		
-		List<String> monitorList=userDao.getUsersUnderReportTo(rto);
+		User sessionBean = (User) session.getAttribute("cacheUserBean");
+		
+		List<String> monitorList=userDao.getUsersUnderReportTo(String.valueOf(sessionBean.getId()));
 		//List<ReportIssue> listissue=new ArrayList<>();
 		
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 		
 		for(String id2:monitorList)
 		{
-			listissue.addAll((Collection<? extends ReportIssue>) reportIssueDao.getIssuesAssignTo(id2));
+			listissue.addAll((Collection<? extends ReportIssue>) reportIssueDao.getissuesByselectionAssignTo());
 		
 		}
 		
 		for(String id2:monitorList)
 		{
-			listissue.addAll((Collection<? extends ReportIssue>) reportIssueDao.getIssuesAssignBy(id2));
+			listissue.addAll((Collection<? extends ReportIssue>) reportIssueDao.getissuesByselectionAssignTo());
 		
 		}
 		
@@ -456,12 +458,24 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		
 		
 	}
-
-	public Integer getCountUnseenTasks() {
+	
+	
+public Set<ReportIssue> getIssuesByDepartmentWise(String deptid) {
 		
-		return  reportIssueDao.getCountReopenTasks();
+		return reportIssueDao.getDepartmentWise(deptid);
 	}
 
+public Set<ReportIssue> getissuesByselectionAssignTo() {
+	// TODO Auto-generated method stub
+	return reportIssueDao.getissuesByselectionAssignTo();
+}
+
+public Set<ReportIssue> getissuesByselectionAssignBy() {
+	// TODO Auto-generated method stub
+	return reportIssueDao.getissuesByselectionAssignBy();
+}
+
+	
 	
 	
 	}

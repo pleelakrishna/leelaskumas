@@ -34,7 +34,7 @@ public class MyViewController {
 		model.addAttribute("gapAndCount", reportIssueService.getGapAndCount());
 		model.addAttribute("recentlyModified", reportIssueService.getRecentlyModified(String.valueOf(objuserBean.getId())));
 	     model.addAttribute("statusCount" ,reportIssueService.getCountByStatusWise());
-	     model.addAttribute("monitoryBy",reportIssueService.getIssuesByAssignToUnderMonitor(String.valueOf(objuserBean.getId())));
+	    // model.addAttribute("monitoryBy",reportIssueService.getIssuesByAssignToUnderMonitor(String.valueOf(objuserBean.getId())));
 		
 		return "myView";
 	         }

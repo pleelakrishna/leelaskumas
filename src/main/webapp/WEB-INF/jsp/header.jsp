@@ -153,7 +153,7 @@ color: inherit !important;
 			$('.deactivate').attr('data-original-title','Deactivate');
 			$('[data-toggle="tooltip"]').tooltip(); */
 			
-			var formData = new FormData();
+			/* var formData = new FormData();
 		    
 			$.fn.makeMultipartRequest('POST', 'getCount', false,
 					formData, false, 'text', function(data){
@@ -164,7 +164,7 @@ color: inherit !important;
 //		 		var alldata = jsonobj.allOrders1;
 //		 		console.log(jsonobj.allOrders1);
 //		 		displayTable(alldata);
-			});
+			}); */
 		}); 
 		
 </script>
@@ -195,6 +195,7 @@ color: inherit !important;
         </div>
 		<div class="masters">
 	        <ul class="nav navbar-nav pull-right toolbar">
+	             <li style="float:left;margin-right:35px"><a href="${baseurl}/task" style="color:white;">Create Task</a></li>
 	            <li class="dropdown">
 	                <a href="#" class="dropdown-toggle username" data-toggle="dropdown" style="color: white;"><span class="hidden-xs">Master Admin <i class="fa fa-caret-down"></i></span><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt="Dangerfield" /></a>
 	                <ul class="dropdown-menu userinfo arrow">
@@ -207,9 +208,9 @@ color: inherit !important;
 	                    <li class="userlinks">
 	                        <ul class="dropdown-menu">
 	                            <li><a href="#">Edit Profile <i class="pull-right fa fa-pencil"></i></a></li>
-	                            <li><a href="#">Change Password <i class="pull-right fa fa-cog"></i></a></li>
+	                            <li><a href="changePassword">Change Password <i class="pull-right fa fa-cog"></i></a></li>
 	                            <li class="divider"></li>
-	                            <li><a href="../logoutHome" class="text-right">Sign Out</a></li>
+	                            <li><a href="${baseurl }/logoutHome" class="text-right">Sign Out</a></li>
 	                        </ul>
 	                    </li>
 	                </ul>
@@ -235,10 +236,10 @@ color: inherit !important;
               <li class="task"><a href="${baseurl }/task"><i class="fa fa-tasks"></i> <span>Task</span></a></li>
               <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-black-tie"></i> <span>Category</span></a></li>
              	<li class="lpo"><a href="${baseurl }/createUser"><i class="fa fa-users"></i> <span>Employees</span></a></li>
-              		 <li class="cylinder"><a href="${baseurl }/createTicketIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>New Task</span></a></li>
+              		 <%-- <li class="cylinder"><a href="${baseurl }/createTicketIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>New Task</span></a></li>
               		 <li class="cylinder"><a href="${baseurl }/viewReportIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>All Tasks</span></a></li>
               <li class="tariffMaster"><a href="${baseurl }/admin/tariffMaster"><i class="fa fa-bar-chart-o"></i> <span>Tariff Master</span></a></li>
-				
+				 --%>
 				
 				
 				
