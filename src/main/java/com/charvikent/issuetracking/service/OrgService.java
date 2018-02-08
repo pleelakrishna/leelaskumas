@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.charvikent.issuetracking.dao.OrgDao;
-import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.Orgnization;
 
 @Service
@@ -66,7 +65,7 @@ public class OrgService {
 
 
 	public void updateOrg(Orgnization org) {
-		orgDao.updateDept(org);
+		orgDao.updateOrg(org);
 	}
 
 

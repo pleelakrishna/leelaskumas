@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.Orgnization;
 
 @Repository
@@ -38,14 +38,28 @@ public class OrgDao {
 		return null;
 	}
 
-	public void updateDept(Orgnization org) {
+	public void updateDept1(Orgnization org) {
 		Orgnization uo= entityManager.find(Orgnization.class,org.getId());
 		uo.setName(org.getName());
 		entityManager.merge(uo);
 		
 	}
+	
+	
+	
+	public void updateOrg(Orgnization org) {
+		String hql="update Orgnization set  description =:d, name =:n   where  id =:i";
+		
+		Query query =entityManager.createQuery(hql); 
+		
+		query.setParameter("d", org.getDescription());
+		query.setParameter("n", org.getName());
+		query.setParameter("i", org.getId());
+		query.executeUpdate(); 
+		
+	}
 
-	public boolean deleteOrgnization(Integer id, String status) {
+	/*public boolean deleteOrgnization1(Integer id, String status) {
 		Boolean delete=false;
 		try{
 			
@@ -60,7 +74,26 @@ public class OrgDao {
 			e.printStackTrace();
 		}
 		return delete;
+	}*/
+	
+	public boolean deleteOrgnization(Integer id, String status) {
+		
+		String hql="update Orgnization set status =:s where  id =:i";
+		Query query =entityManager.createQuery(hql);  
+		query.setParameter("s", status);
+		query.setParameter("i", id);
+		int result=query.executeUpdate(); 
+		if(result == 1)
+			return true;
+			else
+		return false;
+		
 	}
+	
+	
+	
+	
+	
 	}
 
 
