@@ -273,7 +273,8 @@ public class TaskController {
 		subtask.setComment(comment);
 		subtask.setIssueid(issueid);
 		subtask.setKpstatus(kpstatus);
-		
+		String str =null;
+		try{
 		
 		
 		try {
@@ -292,9 +293,12 @@ public class TaskController {
 		
 		taskService.saveSubTask(subtask);
 		
-		String str="success";
+		 str="Comment inserted successfully";
 
-		
+		}catch(Exception e){
+			e.printStackTrace();
+			str = String.valueOf(e);
+		}
 		
 		return str;
 		

@@ -74,7 +74,7 @@
                     			<div class="form-group">
                     				<form:hidden path="id"/>
 									<label for="focusedinput" class="col-md-6 control-label">Category  <span class="impColor">*</span></label>
-									<form:select path="category" class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)" >
+									<form:select path="category" class="col-xs-10 col-sm-5 validate1" onfocus="removeBorder(this.id)" >
 											<form:option value="" label="--- Select ---" />
 											<form:options items="${category}"/>
 										</form:select>
@@ -84,7 +84,7 @@
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Severity <span class="impColor">*</span></label>
 									
-										<form:select path="severity" class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)">
+										<form:select path="severity" class="col-xs-10 col-sm-5 validate1" onfocus="removeBorder(this.id)">
 										<form:option value="" label="--- Select ---" />
 										 <form:options items="${severity}"/>
 										</form:select>	
@@ -99,7 +99,7 @@
                     		<div class="col-md-6">
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Priority  <span class="impColor">*</span></label>
-									<form:select path="priority" class="col-xs-10 col-sm-5 validate" >
+									<form:select path="priority" class="col-xs-10 col-sm-5 validate1" >
 											<form:option value="" label="--- Select ---" />
 											<form:options items="${priority}"></form:options>
 										</form:select>
@@ -109,7 +109,7 @@
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Assigned to <span class="impColor">*</span></label>
 									
-										<form:select path="assignto" class="col-xs-10 col-sm-5 validate" onfocus="removeBorder(this.id)">
+										<form:select path="assignto" class="col-xs-10 col-sm-5 validate1" onfocus="removeBorder(this.id)">
 											<form:option value="" label="--- Select ---" />
 										 	<form:options items="${userNames}"/>
 										</form:select>
@@ -124,14 +124,14 @@
                     		<div class="col-md-6">
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Summary  <span class="impColor">*</span></label>
-									<form:input path="subject"  placeholder="Summary" class="col-xs-10 col-sm-5 validate" />
+									<form:input path="subject"  placeholder="Summary" class="col-xs-10 col-sm-5 validate1" />
                     			</div>
                     		</div>
                     		<div class="col-md-6">
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Description <span class="impColor">*</span></label>
 									<div class="col-md-5">
-									<form:textarea path="description" class="form-control validate" placeholder="Enter Description"/>
+									<form:textarea path="description" class="form-control validate1" placeholder="Enter Description"/>
 									<span class="hasError" id="stationnameError"></span>
 								    </div>
                     			</div>
@@ -156,7 +156,7 @@
 				      	<div class="row">
 				      		<div class="col-sm-12">
 				      			<div class="btn-toolbar text-center">
-					      			<input type="submit"  value="Submit" class="btn-primary btn"/>
+					      			<input type="submit" id="submitMainForm"  value="Submit" class="btn-primary btn"/>
 					      			<input type="reset" value="Reset" class="btn-danger btn cancel"/>
 				      			</div>
 				      		</div>
@@ -223,7 +223,7 @@
                     				<input type=hidden name="issueid" id="issueid" value="">
                     				
 									<label for="focusedinput" class="col-md-6 control-label">Status  <span class="impColor">*</span></label>
-										<select  name="kpstatus" id="kpstatus" class="col-xs-10 col-sm-5 " >
+										<select  name="kpstatus" id="kpstatus" class="col-xs-10 col-sm-5  validate2 " >
 											<c:forEach var="list" items="${kpstatuses}">
 											<option value=${list.key}>${list.value} </option>
 											</c:forEach>
@@ -245,7 +245,7 @@
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Comment <span class="impColor">*</span></label>
 									<div class="col-md-6">
-									<input type="text"  name="commet" id="commet" class="form-control validateCmt" placeholder="Enter commit" style="width: 320px;">
+									<input type="text"  name="commet" id="commet"  onkeyup="removeBorder(this.id)" class="form-control validate2" placeholder="Enter commit" style="width: 320px;">
 									<span class="hasError" id="stationnameError"></span>
 								    </div>
                     			</div>
@@ -258,7 +258,7 @@
 				      	<div class="row">
 				      		<div class="col-sm-12">
 				      			<div class="btn-toolbar text-center">
-					      			<input type="button" id="submit2" value="Submit"  onclick="submitCommet()" class="btn-primary btn"/>
+					      			<input type="button" id="modelSubmit" value="Submit"  onclick="submitCommet()" class="btn-primary btn"/>
 					      			<input type="reset" value="Reset" class="btn-danger btn cancel"/>
 				      			</div>
 				      		</div>
@@ -313,7 +313,7 @@ function displayTable(listOrders) {
 			var deleterow = "<a class='activate' onclick='deletetask("+ orderObj.id+ ",1)'><i class='fa fa-eye-slash'></i></a>"
 		}
 		
-		var edit = "<a class='edit editIt' onclick='editCylinder("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
+		var edit = "<a class='edit editIt' onclick='editTask("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
 		
 			}
 		else
@@ -345,7 +345,7 @@ function displayTable(listOrders) {
 }
 
 
-function editCylinder(id) {
+function editTask(id) {
 	$("#id").val(serviceUnitArray[id].id);
 	$("#subject").val(serviceUnitArray[id].subject);
 	$("#category").val(serviceUnitArray[id].categoryid);
@@ -358,7 +358,7 @@ function editCylinder(id) {
 	$(window).scrollTop($('#moveTo').offset().top);
 }
 
-
+/* view task history */
 
 function viewTask(id){
 		var formData = new FormData();
@@ -370,7 +370,6 @@ function viewTask(id){
 			var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
 				+ '<thead><tr><th>Date Modified</th><th>User Name</th><th>Status</th><th>Attachment</th><th>Comment</th></tr></thead><tbody></tbody></table>';
 		$('#HtableId').html(tableHead);
-		console.log(alldata);
 		$.each(alldata,function(i, orderObj) {
 			if(orderObj.uploadfiles==undefined) orderObj.uploadfiles='';
 			else
@@ -411,52 +410,6 @@ function addComment(id){
 	
 }
 
-
-/*  view task history here */
-
-function addComments(id){
-	var formData = new FormData();
-    formData.append('id', id);
-	$.fn.makeMultipartRequest('POST', 'addcomment', false, formData, false, 'text', function(data){
-		var jsonobj = $.parseJSON(data);
-		var alldata = jsonobj.list;
-		$('#HtableId').html('');
-		var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Date Modified</th><th>User Name</th><th>Attachment</th><th>Change1</th></tr></thead><tbody></tbody></table>';
-	$('#HtableId').html(tableHead);
-	console.log(alldata);
-	$.each(alldata,function(i, orderObj) {
-		if(orderObj.uploadfiles==undefined) orderObj.uploadfiles='';
-		else
-			{
-				var list=orderObj.uploadfiles.split('*');
-				var uploadfiles='';
-				for(var i=0;i<list.length;i++)
-				{
-					uploadfiles=uploadfiles+'<a href="reportDocuments/'+list[i]+'" target="_blank" title="'+list[i]+'"><i class="fa fa-paperclip fa-lg grey"></i></a>';
-				}
-				orderObj.uploadfiles=uploadfiles;
-			}
-		var tblRow = "<tr>"
-			+ "<td title='"+orderObj.statustime+"'>"+ orderObj.statustime + "</td>"
-			+ "<td title='"+orderObj.issueid+"'>"+ orderObj.issueid + "</td>"
-			+ "<td title='"+orderObj.uploadfiles+"'>"+ orderObj.uploadfiles + "</td>"
-			+ "<td title='"+orderObj.description+"'>"+ orderObj.description + "</td>"
-			+ "</tr>";
-		$(tblRow).appendTo("#HtableId table tbody");
-		
-	});
-		$("#myModal").modal();
-	});
-
-
-}
-
-
-
-	
-	
-	
 	
 $('#ttype').on('change', function() {
 	  var ttype=$('#ttype').val();
@@ -465,7 +418,6 @@ $('#ttype').on('change', function() {
 	$.fn.makeMultipartRequest('POST', 'setdata', false, formData, false, 'text', function(data){
 		var jsonobj = $.parseJSON(data);
 		var alldata = jsonobj.list;
-		console.log(alldata);
 			displayTable(alldata)
 	 });
 	  
@@ -483,7 +435,6 @@ $('#ttype').on('change', function() {
 		$.fn.makeMultipartRequest('POST', 'setdataDeptWise', false, formData, false, 'text', function(data){
 			var jsonobj = $.parseJSON(data);
 			var alldata = jsonobj.allOrders1;
-			console.log(alldata);
 			var myJSON = JSON.stringify(alldata);
 				displayTable(alldata)
 		
@@ -497,6 +448,33 @@ $('#ttype').on('change', function() {
 	
 	function submitCommet()
 	{
+	var idArrayCmt11 = $.makeArray($('.validate2').map(function() {
+		return this.id;
+		}));
+	validation = true;
+	$.each(idArrayCmt11, function(i, val) {
+		var value = $("#" + idArrayCmt11[i]).val();
+		var placeholder = $("#" + idArrayCmt11[i]).attr('placeholder');
+		if (value == null || value == "" || value == "undefined") {
+			$('style').append(styleBlock);
+			$("#" + idArrayCmt11[i] ).attr("placeholder", placeholder);
+			$("#" + idArrayCmt11[i] ).css('border-color','#e73d4a');
+			$("#" + idArrayCmt11[i] ).css('color','#e73d4a');
+			$("#" + idArrayCmt11[i] ).addClass('placeholder-style your-class');
+			 var id11 = $("#" + idArrayCmt11[i]+"_chosen").length;
+			if ($("#" + idArrayCmt11[i]+"_chosen").length)
+			{
+				$("#" + idArrayCmt11[i]+"_chosen").children('a').css('border-color','#e73d4a');
+			}
+//			$("#" + idArray[i] + "Error").text("Please " + placeholder);
+			validation = false;
+		} 
+	});
+	if(validation) {
+		
+	}else {
+		return false;
+	}
 			var kpstatus=$('#kpstatus').val();
 		    var commet=$('#commet').val();
 		    var issueid=$('#issueid').val();
@@ -507,7 +485,6 @@ $('#ttype').on('change', function() {
 			   formData.append('kpstatus', kpstatus);
 			   formData.append('issueid', issueid);
 			   
-			   alert(commet);
 			   
 			   
 	    	var ins = document.getElementById('fileupload').files.length;
@@ -517,9 +494,7 @@ $('#ttype').on('change', function() {
 	    	var portfolio_values = document.getElementById('fileupload').files[i];
 			formData.append('file[]', portfolio_values);
 			}
-	    	console.log("files data"+portfolio_values);
 	    	
-	    	console.log(formData);
 	    	
 	 		$.ajax({
 				type:"post",
@@ -530,11 +505,14 @@ $('#ttype').on('change', function() {
 				contentType: false,  // tell jQuery not to set contentType
 			  	
 			  	success: function(result){
+			  		if(result !="" && result != null){
+			  			
+			  		alert(result)
+			  		}
 			  		$('#kpstatus').val("");
-			  		$('#comment').val("");
+			  		$('#commet').val("");
 			  		$('#fileupload').val("");
-			  		$('#submit2').hide();
-			  		alert("comment inserted successfully");
+			  		 $('#formModal').modal('toggle');
 			  	
 			    },
 			    error: function (e) {
@@ -570,7 +548,6 @@ function deletetask(id,status){
 			var jsonobj = $.parseJSON(data);
 			window.location.reload();
 			var alldata = jsonobj.allOrders1;
-			console.log(jsonobj.allOrders1);
 			displayTable(alldata);
 		});
 	}
@@ -578,13 +555,8 @@ function deletetask(id,status){
 
 
 $('#kpstatus').on('change',function() {
-	
-	
 	var issueCreatedBY =$('#ttype').val();
-	
 	var loginid=${cacheUserBean.id};
-	/* var tassignby=${cissue.assignby}; */
-	
 	if($('#kpstatus').val()=='1')
 		{
 		
@@ -594,8 +566,14 @@ $('#kpstatus').on('change',function() {
 		alert("you are not authorized to close ticket");
 		$('#kstatus').css('border-color', 'red');
 		$('#kstatus').val("");
-		return false;
+		$('modelSubmit').prop('disabled',true)
 		}
+	else
+		{
+		
+		$('modelSubmit').prop('disabled',false)
+		}
+	
 		}
 });
 
@@ -604,27 +582,9 @@ $('#kpstatus').on('change',function() {
 
 
 
-function validate(id, errorMessage)
-{
-	var styleBlock = '.placeholder-style.placeholder-style::-moz-placeholder {color: #cc0000;} .placeholder-style::-webkit-input-placeholder {color: #cc0000;}';
-	if($('#'+id).val() ==  null || $('#'+id).val() == ""  || $('#'+id).val()=="undefined" ) {
-		$('style').append(styleBlock);
-		$('#'+id).css('border-color','#cc0000');
-		$('#'+id).css('color','#cc0000');
-		$('#'+id).attr('placeholder',errorMessage);
-		$('#'+id).addClass('placeholder-style your-class');
-//			$('#'+id).css('color','#cc0000');
-//			$('#'+id+'Error').text(errorMessage);
-	}else{
-		$('#'+id).css('border-color','');
-		$('#'+id).removeClass('placeholder-style your-class');
-//			$('#'+id).css('color','');
-//			$('#'+id+'Error').text("");
-	}
-	
-}
+ 
 
-function inactiveData() {
+/* function inactiveData() {
 	var status="0";
 	if($('#inActive').is(":checked") == true){
 		status="0";
@@ -642,7 +602,48 @@ function inactiveData() {
 			console.log(jsonobj.allOrders1);
 				});
 		
-}
+} */
+
+// main form validation
+
+var idArrayCmt1 = $.makeArray($('.validate1').map(function() {
+	return this.id;
+}));
+$('#submitMainForm').click(function(event) {
+	validation = true;
+	$.each(idArrayCmt1, function(i, val) {
+		var value = $("#" + idArrayCmt1[i]).val();
+		var placeholder = $("#" + idArrayCmt1[i]).attr('placeholder');
+		if (value == null || value == "" || value == "undefined") {
+			$('style').append(styleBlock);
+			$("#" + idArrayCmt1[i] ).attr("placeholder", placeholder);
+			$("#" + idArrayCmt1[i] ).css('border-color','#e73d4a');
+			$("#" + idArrayCmt1[i] ).css('color','#e73d4a');
+			$("#" + idArrayCmt1[i] ).addClass('placeholder-style your-class');
+			 var id11 = $("#" + idArrayCmt1[i]+"_chosen").length;
+			if ($("#" + idArrayCmt1[i]+"_chosen").length)
+			{
+				$("#" + idArrayCmt1[i]+"_chosen").children('a').css('border-color','#e73d4a');
+			}
+//			$("#" + idArray[i] + "Error").text("Please " + placeholder);
+			validation = false;
+		} 
+	});
+	if(validation) {
+		$("#submitMainForm").attr("disabled",true);
+		$("#submitMainForm").val("Please wait...");
+		$("#taskf").submit();											
+		event.preventDefault();
+	}else {
+		return false;
+		event.preventDefault();
+	}
+});
+
+
+
+
+
 $("#pageName").text("Task Master");
 $(".task").addClass("active"); 
 </script>
