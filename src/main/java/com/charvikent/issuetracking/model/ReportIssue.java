@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -216,7 +215,6 @@ public class ReportIssue  {
 				+ "]";
 	}
 	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -361,6 +359,8 @@ public class ReportIssue  {
 		return true;
 	}
 
+	
+	
 	
 	
 	

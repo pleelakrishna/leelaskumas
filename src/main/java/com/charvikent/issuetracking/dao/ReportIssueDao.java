@@ -474,7 +474,7 @@ public List<ReportIssue> getAllReportIssues()
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		User sessionBean = (User) session.getAttribute("cacheUserBean");
 		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description  from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks , kpstatuslogs kpl  where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id  order by kpl.statustime").setParameter("id", sessionBean.getId()).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description  from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks , kpstatuslogs kpl  where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id  order by kpl.statustime desc").setParameter("id", sessionBean.getId()).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -511,7 +511,7 @@ public List<ReportIssue> getAllReportIssues()
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		User sessionBean = (User) session.getAttribute("cacheUserBean");
 		try {
-			List<Object[]> rows = em.createNativeQuery(" select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks ,kpstatuslogs kpl   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby=:id  order by kpl.statustime").setParameter("id", sessionBean.getId()).getResultList();
+			List<Object[]> rows = em.createNativeQuery(" select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks ,kpstatuslogs kpl   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby=:id  order by kpl.statustime desc").setParameter("id", sessionBean.getId()).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -558,7 +558,7 @@ public List<ReportIssue> getAllReportIssues()
 		
 		
 		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks, kpstatuslogs kpl    where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category   and  kpl.issueid=r.id and u.department =:custName order by   kpl.statustime desc").setParameter("custName", deptid).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description  from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks, kpstatuslogs kpl    where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category   and  kpl.issueid=r.id and u.department =:custName order by kpl.statustime desc").setParameter("custName", deptid).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -573,12 +573,12 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setStatus((String) row[9]);
 				issue.setTaskno((String) row[10]);
 				
-				
 				issue.setSeverityid((String) row[11]);
 				issue.setPriorityid((String) row[12]);
 				issue.setAssigntoid((String) row[13]);
 			    issue.setCategoryid((String) row[14]);
 			    issue.setDescription((String) row[15]);
+			    
 				
 				listissue.add(issue);
 
