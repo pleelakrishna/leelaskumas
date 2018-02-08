@@ -181,6 +181,8 @@ $('#kstatus').on('change',function() {
 		}
 });
 
+
+
 $(document).ready(function() { 
 
 	$('#formEdit')

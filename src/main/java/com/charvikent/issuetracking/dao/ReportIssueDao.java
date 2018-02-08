@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.ThreadLocalRandom;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -407,9 +407,9 @@ public List<ReportIssue> getAllReportIssues()
 
 	}
 
-	public List<KpStatusLogs> getRepeatlogsById(int id) {
+	public Set<KpStatusLogs> getRepeatlogsById(int id) {
 		
-		List<KpStatusLogs> listRepeatlogs =new ArrayList<KpStatusLogs>();
+		Set<KpStatusLogs> listRepeatlogs =new TreeSet<KpStatusLogs>();
 		try {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
@@ -471,10 +471,10 @@ public List<ReportIssue> getAllReportIssues()
 	
 
 	public Set<ReportIssue> getissuesByselectionAssignTo() {
-		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
+		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		User sessionBean = (User) session.getAttribute("cacheUserBean");
 		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description  from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.assignto =:id").setParameter("id", sessionBean.getId()).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description  from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks , kpstatuslogs kpl  where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id  order by kpl.statustime").setParameter("id", sessionBean.getId()).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -508,10 +508,10 @@ public List<ReportIssue> getAllReportIssues()
 	
 	
 	public Set<ReportIssue> getissuesByselectionAssignBy() {
-		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
+		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		User sessionBean = (User) session.getAttribute("cacheUserBean");
 		try {
-			List<Object[]> rows = em.createNativeQuery(" select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.assignby=:id").setParameter("id", sessionBean.getId()).getResultList();
+			List<Object[]> rows = em.createNativeQuery(" select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks ,kpstatuslogs kpl   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby=:id  order by kpl.statustime").setParameter("id", sessionBean.getId()).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -554,11 +554,11 @@ public List<ReportIssue> getAllReportIssues()
 	
 	
 	public Set<ReportIssue> getDepartmentWise(String deptid) {
-		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
+		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		
 		
 		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  u.department =:custName").setParameter("custName", deptid).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks, kpstatuslogs kpl    where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category   and  kpl.issueid=r.id and u.department =:custName order by   kpl.statustime desc").setParameter("custName", deptid).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));

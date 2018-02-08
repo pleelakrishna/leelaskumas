@@ -444,7 +444,7 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		return listissue;
 	}
 
-	public List<KpStatusLogs> getrepeatLogsById(int id) {
+	public Set<KpStatusLogs> getrepeatLogsById(int id) {
 		return reportIssueDao.getRepeatlogsById(id);
 	}  
 	

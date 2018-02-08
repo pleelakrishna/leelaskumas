@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Table(name="kpstatuslogs")
-public class KpStatusLogs {
+public class KpStatusLogs implements Comparable<KpStatusLogs>{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -104,6 +104,14 @@ public class KpStatusLogs {
 	public String toString() {
 		return "KpStatusLogs [id=" + id + ", statustime=" + statustime + ", issueid=" + issueid + ", iassignto="
 				+ iassignto + ", uploadfiles=" + uploadfiles + ", kpstatus=" + kpstatus + ", comment=" + comment + "]";
+	}
+	
+	
+	
+	@Override
+	public int compareTo(KpStatusLogs o) {
+		return -statustime.compareTo(o.statustime);
+		
 	}
 
 	

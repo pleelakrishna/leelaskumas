@@ -255,7 +255,7 @@ public class TaskController {
 	public @ResponseBody Object viewIssue(@RequestParam(value = "id", required = true) String id, Model model,HttpServletRequest request, HttpSession session) throws JSONException {
 
 		
-		List<KpStatusLogs> taskHistory =taskService.getrepeatLogsById(Integer.parseInt(id));
+		Set<KpStatusLogs> taskHistory =taskService.getrepeatLogsById(Integer.parseInt(id));
 		
 		JSONObject obj = new JSONObject();
 		obj.put("list", taskHistory);

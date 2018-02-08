@@ -291,6 +291,7 @@
 <script>
 </script>
 <script type="text/javascript">
+var loginUserId =${cacheUserBean.id};
 var listOrders1 = ${allOrders1};
 if (listOrders1 != "") {
 	displayTable(listOrders1)
@@ -302,13 +303,28 @@ function displayTable(listOrders) {
 			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned</th><th>Created Time</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
+	
 	$.each(listOrders,function(i, orderObj) {
+		if(loginUserId == "1")
+			{
 		if(orderObj.status == "1"){
 			var deleterow = "<a class='deactivate' onclick='deletetask("+ orderObj.id+ ",0)'><i class='fa fa-eye'></i></a>"
 		}else{  
 			var deleterow = "<a class='activate' onclick='deletetask("+ orderObj.id+ ",1)'><i class='fa fa-eye-slash'></i></a>"
 		}
+		
 		var edit = "<a class='edit editIt' onclick='editCylinder("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
+		
+			}
+		else
+		{
+			edit ="";
+			deleterow ="";
+		}
+		
+		
+		
+		
 		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
 		var comment = "<a class='view viewIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
 		var time = "<a class='view viewIt' onclick='showdeadline()'> <i class='fa fa-hourglass-half'></i> </a>"
@@ -436,30 +452,7 @@ function addComments(id){
 
 }
 
-/* display datatable by  user selection    */
 
-/* function Go(){
-	var dept1=$('#additionalinfo').val();
-	var ttype=$('#ttype').val();
-	
-	alert("dept"+dept1);
-	alert("ttype"+ttype);
-	
-	var formData = new FormData();
-	    formData.append('ttypeid', ttype);
-	    formData.append('deptid', dept1);
-	
-	$.fn.makeMultipartRequest('POST', 'setdata', false, formData, false, 'text', function(data){
-		var jsonobj = $.parseJSON(data);
-		var alldata = jsonobj.list;
-		console.log(alldata);
-			displayTable(alldata)
-	
-	 
-	 
-	 });
-}
- */
 
 	
 	
@@ -582,6 +575,34 @@ function deletetask(id,status){
 		});
 	}
 }
+
+
+$('#kpstatus').on('change',function() {
+	
+	
+	var issueCreatedBY =$('#ttype').val();
+	
+	var loginid=${cacheUserBean.id};
+	/* var tassignby=${cissue.assignby}; */
+	
+	if($('#kpstatus').val()=='1')
+		{
+		
+	if( issueCreatedBY!= "2")
+		{
+		
+		alert("you are not authorized to close ticket");
+		$('#kstatus').css('border-color', 'red');
+		$('#kstatus').val("");
+		return false;
+		}
+		}
+});
+
+
+
+
+
 
 function validate(id, errorMessage)
 {
