@@ -177,7 +177,6 @@ function deleteorg(id,status){
 			var jsonobj = $.parseJSON(data);
 			window.location.reload();
 			var alldata = jsonobj.allOrders1;
-			console.log(jsonobj.allOrders1);
 			displayTable(alldata);
 		});
 	}
@@ -196,7 +195,8 @@ $('#dept').on('change',function() {
 		    formData.append('dept', deptval);
 		    formData.append('org', orgval);
 		$.fn.makeMultipartRequest('POST', 'existOrNot', false, formData, false, 'text', function(data){
-			if(data === true)
+			alert(data);
+			if(data === 'true')
 				{
 				alert("selected department is already exists");
 			   $('#dept').val("");
