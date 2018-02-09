@@ -1,7 +1,6 @@
 package com.charvikent.issuetracking.controller;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +31,7 @@ import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.PriorityService;
 import com.charvikent.issuetracking.service.ReportIssueService;
 import com.charvikent.issuetracking.service.SeverityService;
+import com.charvikent.issuetracking.service.TasksSelectionService;
 import com.charvikent.issuetracking.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,6 +58,9 @@ public class TaskController {
 	@Autowired
 	FilesStuff fileTemplate;
 	
+	@Autowired
+	TasksSelectionService tasksSelectionService;
+	
 	/*@Autowired
 	DashBoardService dashBoardService;*/
 	
@@ -76,6 +79,7 @@ public class TaskController {
 		model.addAttribute("category", categoryService.getCategoryNames());
 		//model.addAttribute("departmentNames", mastersService.getDepartmentNames());
 		model.addAttribute("kpstatuses", mastersService.getKpStatues());
+		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
 		
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
 		

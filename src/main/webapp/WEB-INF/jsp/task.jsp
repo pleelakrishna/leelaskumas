@@ -15,11 +15,10 @@
                     		<div class="col-md-4">
                     			<div class="form-horizontal">
 									<label for="focusedinput" class="col-md-6 control-label" style="padding-top:2px;">Tasks Types <span class="impColor">*</span></label>
-									<select name="ttype" id="ttype" class="col-xs-10 col-sm-5" onfocus="removeBorder(this.id)" >
-											<!-- <option value="0">Select</option> -->
-											<option value="1" >Assigned to</option>
-											<option value="2" >Assigned by</option>
-											<option value="3" >Monitored by</option>
+									<select id="deptid"  class="col-xs-10 col-sm-5 " >
+											<c:forEach var="list" items="${tasksSelection}">
+											<option value=${list.key}>${list.value} </option>
+											</c:forEach>
 										</select>
                     			</div>
                     		</div>
