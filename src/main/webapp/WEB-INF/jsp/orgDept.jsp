@@ -48,7 +48,7 @@
 									<label for="focusedinput" class="col-md-6 control-label">Organization <span class="impColor">*</span></label>
 									<div class="col-md-5">
 										<form:select path="org" class="form-control validate" onfocus="removeBorder(this.id)">
-											<form:option value="">-- Select Designation --</form:option>
+											<form:option value="0">-- Select Designation --</form:option>
 											<form:options items="${orgs}"/>
 										</form:select>	
 										<span class="hasError" id="stationnameError"></span>
@@ -182,6 +182,63 @@ function deleteorg(id,status){
 		});
 	}
 }
+
+
+
+$('#dept').on('change',function() {
+	
+	var deptval=$(this).val();
+	var orgval=$('#org').val();
+	if(orgval>0)
+		{
+		
+		 var formData = new FormData();
+		    formData.append('dept', deptval);
+		    formData.append('org', orgval);
+		$.fn.makeMultipartRequest('POST', 'existOrNot', false, formData, false, 'text', function(data){
+			if(data === true)
+				{
+				alert("selected department is already exists");
+			   $('#dept').val("");
+			   
+			   return true
+				}
+		 });
+		
+		
+		}
+
+	else
+		{
+		   alert("please select orgnization");
+		   $('#dept').val("");
+		
+		}
+})
+
+
+
+$('#parentDept').blur(function() {
+	if($('#parentDept').val() != 0)
+		{
+	
+	if( $('#dept').val() == $('#parentDept').val())
+		{
+		
+		alert("please select valid Parent Department");
+		 $('#parentDept').val("");
+		return false;
+		
+		}
+		}
+	
+})
+
+
+
+
+
+
 
 function validate(id, errorMessage)
 {

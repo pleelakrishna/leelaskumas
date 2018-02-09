@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -178,4 +179,15 @@ public class OrgDeptController {
 		return String.valueOf(jsonObj);
 	}
 	
+	
+	
+	@RequestMapping(value = "/existOrNot")
+	public @ResponseBody Boolean deptExistOrnot(
+			@RequestParam(value = "dept", required = true) String dept,
+			@RequestParam(value = "org", required = true) String org,
+			Model model,HttpServletRequest request, HttpSession session) {
+		
+		Boolean result =orgDeptService.checkDeptExistsOrnot(dept,org);
+		return result;
+	}	
 }
