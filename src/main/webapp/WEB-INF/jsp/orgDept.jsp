@@ -190,7 +190,6 @@ $('#dept').on('change',function() {
 	var orgval=$('#org').val();
 	if(orgval>0)
 		{
-		
 		 var formData = new FormData();
 		    formData.append('dept', deptval);
 		    formData.append('org', orgval);

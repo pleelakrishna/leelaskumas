@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.persistence.Cache;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpSession;
@@ -415,6 +416,10 @@ public List<ReportIssue> getAllReportIssues()
 			List<Object[]> rows = em
 			.createNativeQuery("select l.comment,l.uploadfiles,l.statustime,kp.username,s.name from kpstatuslogs l,kpusers kp,kpstatus s where l.iassignto=kp.id and l.kpstatus=s.id and l.issueid =:custName" ).setParameter("custName", id)
 			.getResultList();
+
+			
+			
+
 			for (Object[] row : rows) {
 				KpStatusLogs logs=new KpStatusLogs();
 				logs.setComment((String) row[0]);
@@ -429,6 +434,8 @@ public List<ReportIssue> getAllReportIssues()
 			System.out.println("error here");
 			e.printStackTrace();
 		}
+		
+		
 		
 		return listRepeatlogs;
 	}

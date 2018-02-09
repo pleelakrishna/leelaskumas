@@ -2,6 +2,7 @@ package com.charvikent.issuetracking.dao;
 
 import java.util.List;
 
+import javax.persistence.Cache;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.Category;
 import com.charvikent.issuetracking.model.Designation;
+import com.charvikent.issuetracking.model.KpStatusLogs;
 
 @Repository
 public class DesignDao {
@@ -49,6 +51,18 @@ public class DesignDao {
 			{
 				delete=true;
 			}
+			
+//		   test case of second level cache
+           /*Cache cache = entityManager.getEntityManagerFactory().getCache();
+			
+			if (cache.contains(Designation.class, id)) {
+				System.out.println("the data is  cached");
+
+			} else {
+				  System.out.println("the data is NOT cached");
+			}
+*/
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}

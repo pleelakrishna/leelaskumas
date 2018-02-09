@@ -82,6 +82,8 @@ public class OrgDao {
 		Query query =entityManager.createQuery(hql);  
 		query.setParameter("s", status);
 		query.setParameter("i", id);
+		
+		
 		int result=query.executeUpdate(); 
 		if(result == 1)
 			return true;
