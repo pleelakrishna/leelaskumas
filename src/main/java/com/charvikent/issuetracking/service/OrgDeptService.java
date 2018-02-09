@@ -66,4 +66,10 @@ public class OrgDeptService {
 	public boolean deleteOrgDept(Integer id, String status) {
 		return orgDeptDao.deleteOrgDept(id,status);
 	}
+	
+	
+	public Boolean checkDeptExistsOrnot(String dept, String org) {
+		return orgDeptDao.checkDeptExistsOrnot(dept,org);
+	}
+
 }

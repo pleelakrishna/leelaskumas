@@ -5,10 +5,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.OrgDept;
+import com.charvikent.issuetracking.model.TasksSelection;
 
 @Repository
 public class OrgDeptDao {
@@ -50,8 +52,9 @@ public class OrgDeptDao {
 	
 
 	public OrgDept getorgDeptById(OrgDept orgDept) {
-		@SuppressWarnings("unchecked")
-		List<OrgDept> orgDeptList =(List<OrgDept>) entityManager.createQuery("SELECT OrgDept FROM OrgDept OrgDept where org =:custName and dept =:custDept ").setParameter("custName",orgDept.getOrg()).setParameter("custDept",orgDept.getDept()).getResultList();
+		List<OrgDept> orgDeptList=null;
+	           orgDeptList =(List<OrgDept>) entityManager.createQuery("SELECT OrgDept FROM OrgDept OrgDept where org =:custName and dept =:custDept ").setParameter("custName",orgDept.getOrg()).setParameter("custDept",orgDept.getDept()).getResultList();
+		
 		if(orgDeptList.size() > 0)
 			return orgDeptList.get(0);
 		return null;
@@ -62,6 +65,8 @@ public class OrgDeptDao {
 		OrgDept uod = entityManager.find(OrgDept.class,orgDept.getId());
 		       uod.setDept(orgDept.getDept());
 		entityManager.flush();
+		
+		
 		
 	}
 
@@ -81,5 +86,23 @@ public class OrgDeptDao {
 		}
 		return delete;
 	}
+	
+	
+	public Boolean checkDeptExistsOrnot(String dept ,String org)
+	{
+		String hql="from OrgDept od where od.org =:o and ( od.dept =:d or od.parentDept =:d ) ";
+		Query query =entityManager.createQuery(hql);  
+		query.setParameter("o", org);
+		query.setParameter("d", dept);
+		
+		List<OrgDept> list=query.getResultList();
+		 
+		if(list.size()>0)
+			return true;
+			else
+		return false;
+	}
+	
+	
 	}
 
