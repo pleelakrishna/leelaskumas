@@ -420,24 +420,23 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Set getIssuesByAssignToUnderMonitor() {
+	public Set getIssuesByAssignToUnderMonitor(String id) {
 		
-		User sessionBean = (User) session.getAttribute("cacheUserBean");
 		
-		List<String> monitorList=userDao.getUsersUnderReportTo(String.valueOf(sessionBean.getId()));
+		List<String> monitorList=userDao.getUsersUnderReportTo(id);
 		//List<ReportIssue> listissue=new ArrayList<>();
 		
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 		
 		for(String id2:monitorList)
 		{
-			listissue.addAll((Collection<? extends ReportIssue>) reportIssueDao.getissuesByselectionAssignTo());
+			listissue.addAll((Collection<? extends ReportIssue>) reportIssueDao.getissuesByselectionAssignTo(id2));
 		
 		}
 		
 		for(String id2:monitorList)
 		{
-			listissue.addAll((Collection<? extends ReportIssue>) reportIssueDao.getissuesByselectionAssignTo());
+			listissue.addAll((Collection<? extends ReportIssue>) reportIssueDao.getissuesByselectionAssignTo(id2));
 		
 		}
 		
@@ -465,14 +464,14 @@ public Set<ReportIssue> getIssuesByDepartmentWise(String deptid) {
 		return reportIssueDao.getDepartmentWise(deptid);
 	}
 
-public Set<ReportIssue> getissuesByselectionAssignTo() {
+public Set<ReportIssue> getissuesByselectionAssignTo(String id) {
 	// TODO Auto-generated method stub
-	return reportIssueDao.getissuesByselectionAssignTo();
+	return reportIssueDao.getissuesByselectionAssignTo(id);
 }
 
-public Set<ReportIssue> getissuesByselectionAssignBy() {
+public Set<ReportIssue> getissuesByselectionAssignBy(String id) {
 	// TODO Auto-generated method stub
-	return reportIssueDao.getissuesByselectionAssignBy();
+	return reportIssueDao.getissuesByselectionAssignBy(id);
 }
 
 	

@@ -80,9 +80,10 @@ public class TaskController {
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
 		
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		String id=String.valueOf(objuserBean.getId());
 		
 		try {
-			listOrderBeans = taskService.getissuesByselectionAssignTo();
+			listOrderBeans = taskService.getissuesByselectionAssignTo(id);
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
@@ -313,25 +314,27 @@ public class TaskController {
 		Set<ReportIssue> listOrderBeans = null;
 		User objuserBean = (User) session.getAttribute("cacheUserBean");
 		
+		String id=String.valueOf(objuserBean.getId());
+		
 		if(ttypeid.equals("1"))
 		
 		{
 		
-		listOrderBeans = taskService.getissuesByselectionAssignTo();
+		listOrderBeans = taskService.getissuesByselectionAssignTo(id);
 		}
 		
 		if(ttypeid.equals("2"))
 			
 		{
 		
-		listOrderBeans = taskService.getissuesByselectionAssignBy();
+		listOrderBeans = taskService.getissuesByselectionAssignBy(id);
 		}
 		
         if(ttypeid.equals("3"))
 			
 		{
 		
-		listOrderBeans = taskService.getIssuesByAssignToUnderMonitor();
+		listOrderBeans = taskService.getIssuesByAssignToUnderMonitor(id);
 		}
         
         if(ttypeid.equals("4"))
