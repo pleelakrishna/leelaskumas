@@ -4,6 +4,38 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css">
+<script type='text/javascript'>
+$(function () {
+
+	 $('#taskdeadline').datetimepicker({        
+
+	    useCurrent: false,
+	    format: 'DD-MMM-YYYY hh:mm A',
+	    showTodayButton: true,
+	    sideBySide: true,
+// 	    showClose: true,
+// 	    showClear: true,
+	    toolbarPlacement: 'top'
+
+	  });
+	});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
 		<li><a href="#">Home</a></li>
@@ -146,7 +178,17 @@
 									</div>
                     		</div>
                     		</div>
+                    		<div class="col-md-6">
+                    			<div class="form-group">
+									<label for="focusedinput" class="col-md-6 control-label">Task DeadLine <span class="impColor">*</span></label>
+									<div class="col-md-6">
+								    	<form:input path="taskdeadline" value="" class="form-control validate "  placeholder="Task deadLine" />
+								    </div>
+                    			</div>
                     		</div>
+                    		</div>
+                    		
+                    		<div id="getting-started"></div>
                     		
 <!-- Modal Ends here-->
 
@@ -278,17 +320,64 @@
       	</div> <!--  model close here-->
 <!-- Modal Ends here-->
 			<!-- container -->
+
+
+<!--  Count Down timer model-->
+<div class="modal fade" id="timeModal" data-backdrop="static"
+	data-keyboard="false" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header" style="background: #2973cf;">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title" style="color: white;">Task Count Down</h4>
+			</div>
+			<div> </div>
+			<p id="demo"></p>
 			
-			
-			
-			
-			
+			</div>
+			<!-- model body -->
+		</div>
+		<!-- model content -->
+	</div>
+	<!--  model content-->
+</div>
+<!--  model classs-->
+
+
 
 
 </body>
-<%-- <script type='text/javascript' src='${baseurl }/js/custemValidation.js'></script>  --%>
-<script>
+<!-- <script>
+// Set the date we're counting down to
+var countDownDate = new Date("Sep 5,2019 15:37:25").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+    // Get todays date and time
+    var now = new Date().getTime();
+    
+    // Find the distance between now an the count down date
+    var distance = countDownDate - now;
+    
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // Output the result in an element with id="demo"
+    document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+    + minutes + "m " + seconds + "s ";
+    
+    // If the count down is over, write some text 
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "EXPIRED";
+    }
+}, 1000);
 </script>
+ -->
 <script type="text/javascript">
 var loginUserId =${cacheUserBean.id};
 var listOrders1 = ${allOrders1};
@@ -326,7 +415,7 @@ function displayTable(listOrders) {
 		
 		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
 		var comment = "<a class='view viewIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
-		var time = "<a class='view viewIt' onclick='showdeadline()'> <i class='fa fa-hourglass-half'></i> </a>"
+		var time = "<a class='view viewIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
 		serviceUnitArray[orderObj.id] = orderObj;
 		var tblRow = "<tr>"
 			+ "<td title='"+orderObj.taskno+"'>"+ view + "</td>"
@@ -353,6 +442,7 @@ function editTask(id) {
 	$("#assignto").val(serviceUnitArray[id].assigntoid);
 	$("#uploadfile").val(serviceUnitArray[id].uploadfile);
 	$("#description").val(serviceUnitArray[id].description);
+	$("#taskdeadline").val(serviceUnitArray[id].taskdeadline);
 	$("#submit1").val("Update");
 	$(window).scrollTop($('#moveTo').offset().top);
 }
@@ -409,6 +499,46 @@ function addComment(id){
 	
 }
 
+var countDownDate;
+
+function showdeadline(id){
+	
+	countDownDate=serviceUnitArray[id].taskdeadline
+	
+	  var count = new Date(countDownDate).getTime();
+	
+
+	// Update the count down every 1 second
+	var x = setInterval(function() {
+
+	    // Get todays date and time
+	    var now = new Date().getTime();
+	    
+	    // Find the distance between now an the count down date
+	    var distance = count - now;
+	    
+	    // Time calculations for days, hours, minutes and seconds
+	    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+	    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+	    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+	    // Output the result in an element with id="demo"
+	    document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+	    + minutes + "m " + seconds + "s ";
+	    
+	    // If the count down is over, write some text 
+	    if (distance < 0) {
+	        clearInterval(x);
+	        document.getElementById("demo").innerHTML = "EXPIRED";
+	    }
+	}, 1000);
+	
+	$("#timeModal").modal();
+	
+	
+	
+}
+
 	
 $('#ttype').on('change', function() {
 	  var ttype=$('#ttype').val();
@@ -417,7 +547,7 @@ $('#ttype').on('change', function() {
 	$.fn.makeMultipartRequest('POST', 'setdata', false, formData, false, 'text', function(data){
 		var jsonobj = $.parseJSON(data);
 		var alldata = jsonobj.list;
-			displayTable(alldata)
+			displayTable(alldata);
 	 });
 	  
 	  
@@ -435,7 +565,7 @@ $('#ttype').on('change', function() {
 			var jsonobj = $.parseJSON(data);
 			var alldata = jsonobj.allOrders1;
 			var myJSON = JSON.stringify(alldata);
-				displayTable(alldata)
+				displayTable(alldata);
 		
 		 
 		 
@@ -575,8 +705,6 @@ $('#kpstatus').on('change',function() {
 	
 		}
 });
-
-
 
 
 

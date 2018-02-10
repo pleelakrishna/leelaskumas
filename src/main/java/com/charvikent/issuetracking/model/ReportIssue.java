@@ -2,21 +2,17 @@ package com.charvikent.issuetracking.model;
 
 import java.util.Date;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 
 @Entity
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ReportIssue  {
 
 
@@ -48,6 +44,12 @@ public class ReportIssue  {
 	private String kstatus;
 	private String status;
 	private String additionalinfo;
+	
+	private String taskdeadline;
+	@Transient
+	private String taskdeadlineid;
+	
+	
 	
 	@Transient
 	private String assigntoid;
@@ -208,15 +210,35 @@ public class ReportIssue  {
 	
 	
 	
+	public String getTaskdeadline() {
+		return taskdeadline;
+	}
+	public void setTaskdeadline(String taskdeadline) {
+		this.taskdeadline = taskdeadline;
+	}
+	
+	
+	
+	public String getTaskdeadlineid() {
+		return taskdeadlineid;
+	}
+	public void setTaskdeadlineid(String taskdeadlineid) {
+		this.taskdeadlineid = taskdeadlineid;
+	}
+	
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		return "ReportIssue [id=" + id + ", taskno=" + taskno + ", createdTime=" + createdTime + ", updatedTime="
 				+ updatedTime + ", category=" + category + ", severity=" + severity + ", priority=" + priority
 				+ ", assignto=" + assignto + ", subject=" + subject + ", description=" + description + ", uploadfile="
 				+ uploadfile + ", gapdays=" + gapdays + ", gapcount=" + gapcount + ", kstatus=" + kstatus + ", status="
-				+ status + ", additionalinfo=" + additionalinfo + ", assigntoid=" + assigntoid + ", categoryid="
-				+ categoryid + ", priorityid=" + priorityid + ", severityid=" + severityid + ", assignby=" + assignby
-				+ "]";
+				+ status + ", additionalinfo=" + additionalinfo + ", taskdeadline=" + taskdeadline + ", taskdeadlineid="
+				+ taskdeadlineid + ", assigntoid=" + assigntoid + ", categoryid=" + categoryid + ", priorityid="
+				+ priorityid + ", severityid=" + severityid + ", assignby=" + assignby + "]";
 	}
 	
 	@Override
