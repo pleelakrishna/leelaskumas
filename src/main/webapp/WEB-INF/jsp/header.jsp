@@ -236,6 +236,7 @@ color: inherit !important;
               <li class="task"><a href="${baseurl }/task"><i class="fa fa-tasks"></i> <span>Task</span></a></li>
               <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-black-tie"></i> <span>Category</span></a></li>
              	<li class="lpo"><a href="${baseurl }/createUser"><i class="fa fa-users"></i> <span>Employees</span></a></li>
+             	<li class="employee"><a href="${baseurl }/employee"><i class="fa fa-users"></i> <span>Employees2</span></a></li>
               		 <%-- <li class="cylinder"><a href="${baseurl }/createTicketIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>New Task</span></a></li>
               		 <li class="cylinder"><a href="${baseurl }/viewReportIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>All Tasks</span></a></li>
               <li class="tariffMaster"><a href="${baseurl }/admin/tariffMaster"><i class="fa fa-bar-chart-o"></i> <span>Tariff Master</span></a></li>

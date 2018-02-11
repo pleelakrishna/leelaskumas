@@ -27,9 +27,6 @@ public class MastersService {
 	HttpSession session;
 	
 	
-	
-	
-	
 	public List<Department> deptList()
 	{
 		 List<Department> deptList= mastersDao.getDepartmentNames();

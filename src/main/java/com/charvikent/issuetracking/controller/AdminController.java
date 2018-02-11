@@ -27,7 +27,6 @@ import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Controller
 public class AdminController {
 
 

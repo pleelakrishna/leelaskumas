@@ -32,7 +32,6 @@ public class User {
 	private String mobilenumber;
 
 	@Column
-	@Email
 	private String email;
 	// @Column
 	// private String designation;
@@ -42,14 +41,12 @@ public class User {
 	private String reportto;
 
 	@Column
-	@NotNull
 	private String enabled;
 	private String designation;
 
 	@Column(unique = true)
 	private String username;
 	@Column
-	@NotNull
 	private String password;
 	@Transient
 	private String npassword;
@@ -225,5 +222,19 @@ public class User {
 	public void setReportto(String reportto) {
 		this.reportto = reportto;
 	}
+
+	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", mobilenumber="
+				+ mobilenumber + ", email=" + email + ", department=" + department + ", reportto=" + reportto
+				+ ", enabled=" + enabled + ", designation=" + designation + ", username=" + username + ", password="
+				+ password + ", npassword=" + npassword + ", cpassword=" + cpassword + ", departmentName="
+				+ departmentName + ", designationName=" + designationName + ", reportId=" + reportId + ", status="
+				+ status + ", firstname=" + firstname + ", lastname=" + lastname + "]";
+	}
+	
+	
+	
 
 }

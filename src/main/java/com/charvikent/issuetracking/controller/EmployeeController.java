@@ -16,30 +16,47 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.charvikent.issuetracking.model.Orgnization;
-import com.charvikent.issuetracking.service.MastersService;
-import com.charvikent.issuetracking.service.OrgService;
+import com.charvikent.issuetracking.dao.UserDao;
+import com.charvikent.issuetracking.model.User;
+import com.charvikent.issuetracking.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Controller
-public class OrgController {
+public class EmployeeController {
+	
 	
 	@Autowired
-	OrgService orgService;
+	private UserService userService;
+
+
 	@Autowired
-	MastersService  mastersService;
+	UserDao userDao;
+
+	@Autowired
+	HttpSession session;
+
 	
 	
-	@RequestMapping("/org")
-	public String  department( @ModelAttribute("orgf")  Orgnization orgf,Model model ,HttpServletRequest request) {
-		List<Orgnization> listOrderBeans = null;
+	@RequestMapping("/employee")
+	public String homeUser(Model model,HttpServletRequest request) {
+		List<User> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
-		model.addAttribute("orgf", new Orgnization());
+		model.addAttribute("userForm", new User());
+		model.addAttribute("departments", userService.getDepartments());
+		model.addAttribute("roles", userService.getRoles());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("reportto",userService.getUserName());
+		model.addAttribute("allUsers", userService.getAllUsers());
+		
+		
 		try {
-			listOrderBeans = orgService.orgList();
+			listOrderBeans = userService.getAllUsers();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
@@ -57,14 +74,12 @@ public class OrgController {
 
 		}
 		
-		
-		return "org";
-	
+
+		return "employee";
 	}
 	
-	
-	@RequestMapping(value = "/org", method = RequestMethod.POST)
-	public String saveAdmin(@Valid @ModelAttribute  Orgnization org, BindingResult bindingresults,
+	@RequestMapping(value = "/employee" ,method = RequestMethod.POST)
+	public String saveAdmin(@Valid @ModelAttribute  User user, BindingResult bindingresults, 
 			RedirectAttributes redir) throws IOException {
 		
 		if (bindingresults.hasErrors()) {
@@ -75,19 +90,27 @@ public class OrgController {
 		int id = 0;
 		try
 		{
-			Orgnization  orgBean= orgService.getOrgById(org);
+			User userBean=null;
+			if(user.getId()!=null)
+			{
+			  userBean= userService.getUserById(user.getId());
+			
+			}
 			int dummyId =0;
 			
-			if(orgBean != null){
-				dummyId = orgBean.getId();
+			if(userBean != null){
+				dummyId = userBean.getId();
 			}
 			
-			if(org.getId()==null)
+			if(user.getId()==null)
 			{
 				if(dummyId ==0)
 				{
-					org.setStatus("1");
-					orgService.saveOrg(org);
+					
+					
+					user.setEnabled("1");
+					
+					userService.saveUser(user);
 
 					redir.addFlashAttribute("msg", "Record Inserted Successfully");
 					redir.addFlashAttribute("cssMsg", "success");
@@ -104,10 +127,10 @@ public class OrgController {
 			
 			else
 			{
-				id=org.getId();
-				if(id == dummyId || orgBean == null)
+				id=user.getId();
+				if(id == dummyId || userBean == null)
 				{
-					orgService.updateOrg(org);
+					userService.updateUser(user);
 					redir.addFlashAttribute("msg", "Record Updated Successfully");
 					redir.addFlashAttribute("cssMsg", "warning");
 					
@@ -122,35 +145,32 @@ public class OrgController {
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
-
 		}
-		
-		
-		return "redirect:org";
+		return "redirect:employee";
 	}
 	
 	
-	@RequestMapping(value = "/deleteOrg")
-	public @ResponseBody String deleteDept(Orgnization  objorg,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
-		List<Orgnization> listOrderBeans  = null;
+	@RequestMapping(value = "/deleteUser")
+	public @ResponseBody String deleteEmployee(User  objUser,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
+		List<User> listOrderBeans  = null;
 		JSONObject jsonObj = new JSONObject();
 		ObjectMapper objectMapper = null;
 		String sJson=null;
 		boolean delete = false;
 		try{
-			if(objorg.getId() != 0){
- 				delete = orgService.deleteOrgnization(objorg.getId(),objorg.getStatus());
+			if(objUser.getId() != 0){
+ 				delete = userService.deleteUser(objUser.getId(),objUser.getStatus());
  				if(delete){
  					jsonObj.put("message", "deleted");
  				}else{
  					jsonObj.put("message", "delete fail");
  				}
  			}
- 				
-			listOrderBeans = orgService.orgList();
+
+			listOrderBeans = userService.getAllUsers();
 			 objectMapper = new ObjectMapper();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
-				
+
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
 				request.setAttribute("allOrders1", sJson);
@@ -166,12 +186,41 @@ public class OrgController {
 			e.printStackTrace();
 	System.out.println(e);
 			return String.valueOf(jsonObj);
-			
+
 		}
 		return String.valueOf(jsonObj);
 	}
 	
 	
+	@RequestMapping("/changePassword")
+	public String changePasswordHome(@ModelAttribute("changePassword") User user){
+
+		return "changePassword";
+
+	}
+	@RequestMapping(value="/changePassword", method= RequestMethod.POST )
+	public String changePassword(@ModelAttribute("changePassword") User user,RedirectAttributes redir,HttpServletRequest request){
+
+		User objuserBean = (User) session.getAttribute("cacheUserBean");
+
+		User users = userService.getUserById(objuserBean.getId());
+		if(users.getPassword().equals(user.getPassword())) {
+
+			users.setPassword(user.getCpassword());
+			userService.updatePassword(users);
+			redir.addFlashAttribute("msg", "Password Updated Successfully");
+			redir.addFlashAttribute("cssMsg", "warning");
+			return "redirect:/";
+		}else {
+			request.setAttribute("msg", "You Entered Wrong Password");
+			request.setAttribute("cssMsg", "warning");
+			return "changePassword";
+		}
+
+
+
+	}
+
 
 
 

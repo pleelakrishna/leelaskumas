@@ -152,9 +152,6 @@ public class TaskController {
 						e.printStackTrace();
 					}
 					
-					
-					
-					
 					task.setStatus("1");
 					
 					taskService.saveReportIssue(task);
