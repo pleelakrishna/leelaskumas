@@ -39,8 +39,10 @@
 					<div class="panel-heading">
 						<h4>Add Employee</h4>
 					</div>
-					<form:form modelAttribute="userForm" action="employee" class="form-horizontal" method="Post" >
-					<div class="col-md-6">
+					
+					<form:form modelAttribute="userForm" action="employee" class="form-horizontal " method="Post">
+	
+					<div class="col-md-6"><br>
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Username</label>
 									<div class="col-md-6">
@@ -49,7 +51,7 @@
 								</div>
 								
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-6"><br>
 								<div class="form-group" id="passwordDiv">
 									<label class="col-md-3 control-label no-padding-right">Password</label>
 									<div class="col-md-6">

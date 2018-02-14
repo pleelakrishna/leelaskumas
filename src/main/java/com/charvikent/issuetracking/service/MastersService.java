@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,7 +61,8 @@ public class MastersService {
 	public Map<Integer, String> getSortedDepartments()
 	{
 		Map<Integer, String> rolesMap = new LinkedHashMap<Integer, String>();
-		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		try
 		{
 		List<Department> rolesList= mastersDao.getDepartmentNames();

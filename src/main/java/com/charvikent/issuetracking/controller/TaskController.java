@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -83,8 +84,10 @@ public class TaskController {
 		
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
 		
-		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
+		
+		model.addAttribute("objuserBean", objuserBean);
 		
 		try {
 			listOrderBeans = taskService.getissuesByselectionAssignTo(id);
@@ -313,8 +316,7 @@ public class TaskController {
 		
 		
 		Set<ReportIssue> listOrderBeans = null;
-		User objuserBean = (User) session.getAttribute("cacheUserBean");
-		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
 		
 		if(ttypeid.equals("1"))
@@ -324,35 +326,20 @@ public class TaskController {
 		listOrderBeans = taskService.getissuesByselectionAssignTo(id);
 		}
 		
-		if(ttypeid.equals("2"))
+		else if(ttypeid.equals("2"))
 			
 		{
 		
 		listOrderBeans = taskService.getissuesByselectionAssignBy(id);
 		}
 		
-        if(ttypeid.equals("3"))
+		else  if(ttypeid.equals("3"))
 			
 		{
 		
 		listOrderBeans = taskService.getIssuesByAssignToUnderMonitor(id);
 		}
         
-        if(ttypeid.equals("4"))
-		{
-		
-		listOrderBeans = taskService.getIssuesByAssignToResolved(String.valueOf(objuserBean.getId()));
-		}
-		
-        
-        if(ttypeid.equals("5"))
-		{
-		
-		listOrderBeans = taskService.getRecentlyModified(String.valueOf(objuserBean.getId()));
-		}
-		
-		
-		
 
 		JSONObject obj = new JSONObject();
 		obj.put("list", listOrderBeans);
@@ -370,7 +357,8 @@ public class TaskController {
 		
 		
 		Set<ReportIssue> listOrderBeans = null;
-		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		//String id=String.valueOf(objuserBean.getId());
 		ObjectMapper objectMapper = null;
 		String sJson = null;
 		JSONObject jsonObj = new JSONObject();

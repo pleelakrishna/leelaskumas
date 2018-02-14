@@ -56,15 +56,13 @@ window.setTimeout(function() {
 
 <body class="focusedform">
 <div class="verticalcenter">
-<div><img src="assets/img/klogo.png" style="width:250px;" class="img-responsive"></div>
+<div><img src="assets/img/klogo.png" class="img-responsive"></div>
 <!-- 	<h1 align="center">KHAIBAR GAS</h1> -->
 	<div class="panel panel-primary">
-		<form  action=login class="form-horizontal" method="POST"  style="margin-bottom: 0px !important;">
+		<form:form modelAttribute="adminForm" action="${loginAction}" class="form-horizontal" method="POST"  style="margin-bottom: 0px !important;">
 		<div class="panel-body">
 			<h4 class="text-center" style="margin-bottom: 25px;">Login to get started</h4>
-			<c:if test="${param.error ne null}">
-				<!-- <div class="alert-danger">Invalid username and password.</div> -->
-			
+			<c:if test="${not empty msg}">
 				<div class="col-sm-12" style="margin-bottom: -1.3em;">
 					<div class="form-group">
 						<div class="msgcss fadeIn animated alert alert-danger" style="text-align: center;">${msg}</div>
@@ -75,7 +73,7 @@ window.setTimeout(function() {
 				<div class="col-sm-12">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-user"></i></span>
-						<input type="text"  name= "username" class="form-control validate"  placeholder="Username"/>
+						<form:input path="name" class="form-control validate"  placeholder="Username"/>
 					</div>
 				</div>
 			</div>
@@ -83,7 +81,7 @@ window.setTimeout(function() {
 				<div class="col-sm-12">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-						<input type="password" name="password" class="form-control validate"  placeholder="Password"/>
+						<form:password path="password" class="form-control validate"  placeholder="Password"/>
 					</div>
 				</div>
 			</div>
@@ -94,12 +92,10 @@ window.setTimeout(function() {
 		<div class="panel-footer">
 			<div class="pull-right">
 				<input type="reset" value="Reset" class="btn btn-default cancel"/>
-				<input type="submit" value="sign-in"  class="btn btn-primary">
+				<input type="submit" value="Login" id="submit1" class="btn btn-primary">
 			</div>
 		</div>
-		<input type="hidden" name="${_csrf.parameterName}"
-			value="${_csrf.token}" />
-		</form>
+		</form:form>
 	</div>
 </div>
 <script type='text/javascript' src='js/customValidation.js'></script> 

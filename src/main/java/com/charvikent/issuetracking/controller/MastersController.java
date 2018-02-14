@@ -9,6 +9,9 @@ import javax.validation.Valid;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.charvikent.issuetracking.model.Department;
+import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.OrgService;
 import com.charvikent.issuetracking.service.UserService;
@@ -41,12 +45,20 @@ public class MastersController {
 	
 	
 	@RequestMapping("/dept")
-	public String  department( @ModelAttribute("deptf")  Department deptf,Model model ,HttpServletRequest request) {
+	public String  department( @ModelAttribute("deptf")  Department deptf,Model model ,HttpServletRequest request,Authentication authentication) {
 		List<Department> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
 		model.addAttribute("deptf", new Department());
 		model.addAttribute("users",userService.getUserName());
+		
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		System.out.println("User has authorities: " + userDetails.getAuthorities());
+		System.out.println("User has authorities: " + userDetails.getUsername());
+		System.out.println("User has authorities: " + userDetails.getAuthorities());
+		
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println(user.getEmail()+""+user.getDepartment());
 		try {
 			listOrderBeans =mastersService.deptList();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {

@@ -19,7 +19,7 @@ import com.charvikent.issuetracking.model.Admin;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.UserService;
 
-@Controller
+//@Controller
 //@RequestMapping(value = "/kptts")
 public class LoginController {
 	@Autowired UserService userService;

@@ -10,12 +10,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.persistence.Cache;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.config.FilesStuff;
@@ -40,8 +40,10 @@ public class ReportIssueDao {
 
 	public void saveReportIssue(ReportIssue reportIssue) {
 		String randomNum = utilities.randNum();
-		User objuserBean = (User) session.getAttribute("cacheUserBean");
-		reportIssue.setAssignby(String.valueOf(objuserBean.getId()));
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+		reportIssue.setAssignby(id);
 		reportIssue.setTaskno(randomNum);
 		reportIssue.setKstatus("2");
 		if(reportIssue.getUploadfile()!=null)
@@ -337,7 +339,8 @@ public List<ReportIssue> getAllReportIssues()
 
 	public void updateIssue(ReportIssue issue) {
 		
-		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
      ReportIssue editissue=getReportIssueById(issue.getId());
      editissue.setAssignto(issue.getAssignto());
      //editissue.setAssignby(issue.getAssignby());
@@ -358,7 +361,7 @@ public List<ReportIssue> getAllReportIssues()
 		KpStatusLogs slogs=new KpStatusLogs();
 
 		slogs.setIssueid(issue.getId().toString());
-		slogs.setIassignto(String.valueOf(objuserBean.getId()));
+		slogs.setIassignto(id);
 		slogs.setComment(issue.getDescription());
 		slogs.setKpstatus(issue.getKstatus());
 		
@@ -462,8 +465,9 @@ public List<ReportIssue> getAllReportIssues()
 
 	public void saveSubTask(KpStatusLogs subtask) {
 		
-		User objuserBean = (User) session.getAttribute("cacheUserBean");
-		subtask.setIassignto(String.valueOf(objuserBean.getId()));
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		subtask.setIassignto(id);
 		
 		if(subtask.getUploadfiles()!=null)
 	     {
@@ -480,7 +484,7 @@ public List<ReportIssue> getAllReportIssues()
 
 	public Set<ReportIssue> getissuesByselectionAssignTo(String id) {
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
-		User sessionBean = (User) session.getAttribute("cacheUserBean");
+		//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
 			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks , kpstatuslogs kpl  where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id  order by kpl.statustime desc").setParameter("id",id).getResultList();
 			for (Object[] row : rows) {
@@ -518,7 +522,6 @@ public List<ReportIssue> getAllReportIssues()
 	
 	public Set<ReportIssue> getissuesByselectionAssignBy(String id) {
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
-		User sessionBean = (User) session.getAttribute("cacheUserBean");
 		try {
 			List<Object[]> rows = em.createNativeQuery(" select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks ,kpstatuslogs kpl   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby=:id  order by kpl.statustime desc").setParameter("id",id).getResultList();
 			for (Object[] row : rows) {

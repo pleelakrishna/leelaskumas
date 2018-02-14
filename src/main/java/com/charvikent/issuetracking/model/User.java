@@ -135,6 +135,30 @@ public class User {
 	public User() {
 	}
 
+	
+
+	public User(User user) {
+		this.id = user.id;
+		this.createdTime = user.createdTime;
+		this.updatedTime = user.updatedTime;
+		this.mobilenumber = user.mobilenumber;
+		this.email = user.email;
+		this.department = user.department;
+		this.reportto = user.reportto;
+		this.enabled = user.enabled;
+		this.designation = user.designation;
+		this.username = user.username;
+		this.password = user.password;
+		this.npassword = user.npassword;
+		this.cpassword = user.cpassword;
+		this.departmentName = user.departmentName;
+		this.designationName = user.designationName;
+		this.reportId = user.reportId;
+		this.status = user.status;
+		this.firstname = user.firstname;
+		this.lastname = user.lastname;
+	}
+
 	public String getPassword() {
 		return password;
 	}

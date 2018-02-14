@@ -271,7 +271,21 @@ public class UserDao {
 		return delete;
 	}
 
+	public User findByUserName(String userName)
+	{
+		User user= (User) em.createQuery("select user from User user where username=:Custname").setParameter("Custname", userName).getSingleResult();
+		System.out.println(user);
+		return user;
+	}
+	@SuppressWarnings("unchecked")
+	public List<String> findRoleByUserName(String Username)
+	{
+		List<String> list= em.createNativeQuery("SELECT d.name FROM  kpusers k,kpdesignation d where k.designation=d.id and k.username=:Custname").setParameter("Custname", Username).getResultList();
+		System.out.println(list);
+		return list;
+		
 
+	}
 
 
 

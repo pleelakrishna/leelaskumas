@@ -2,17 +2,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%> 
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%
 	String baseurl =  request.getScheme() + "://" + request.getServerName() +      ":" +   request.getServerPort() +  request.getContextPath();
 	session.setAttribute("baseurl", baseurl);
 	
-	HttpSession sess = request.getSession(false);
+	/* HttpSession sess = request.getSession(false);
 	 
 	if (sess.getAttribute("cacheUserBean") == null) {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 		dispatcher.forward(request, response);
-	}
+	} */
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -141,7 +142,7 @@ color: inherit !important;
 		    });
 		}, 5000);
 		 $(document).ready(function(){
-			/* $('.view').attr('data-toggle','tooltip');
+			 $('.view').attr('data-toggle','tooltip');
 			$('.view').attr('data-original-title','View');
 			$('.edit').attr('data-toggle','tooltip');
 			$('.edit').attr('data-original-title','Edit');
@@ -151,7 +152,12 @@ color: inherit !important;
 			$('.activate').attr('data-original-title','Activate');
 			$('.deactivate').attr('data-toggle','tooltip');
 			$('.deactivate').attr('data-original-title','Deactivate');
-			$('[data-toggle="tooltip"]').tooltip(); */
+			$('.comment').attr('data-toggle', 'tooltip');
+			$('.comment').attr('data-original-title', 'Add Comment');
+			$('.time').attr('data-toggle', 'tooltip');
+			$('.time').attr('data-original-title', 'view Deadline');
+			
+			$('[data-toggle="tooltip"]').tooltip(); 
 			
 			/* var formData = new FormData();
 		    
@@ -202,7 +208,7 @@ color: inherit !important;
 	                    <li class="username">
 	                        <a href="#">
 	                            <div class="pull-left"><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt=""/></div>
-	                            <div class="pull-right"><h5>Master Admin!</h5><small>Logged in as <span>Master</span></small></div> 
+	                            <div class="pull-right"><h5> hi ${pageContext.request.userPrincipal.name} !</h5><small>Logged in as <span>Master</span></small></div> 
 	                        </a>
 	                    </li>
 	                    <li class="userlinks">
@@ -210,7 +216,9 @@ color: inherit !important;
 	                            <li><a href="#">Edit Profile <i class="pull-right fa fa-pencil"></i></a></li>
 	                            <li><a href="changePassword">Change Password <i class="pull-right fa fa-cog"></i></a></li>
 	                            <li class="divider"></li>
-	                            <li><a href="${baseurl }/logoutHome" class="text-right">Sign Out</a></li>
+	                            <c:url value="${peContext.request.contextPath}/logout" var="logoutUrl" />
+	
+	                            <li><a href="<c:url value="${baseurl}/logout" />"> Sign Out</a></li>
 	                        </ul>
 	                    </li>
 	                </ul>
@@ -229,24 +237,16 @@ color: inherit !important;
             <ul class="nav navbar-nav">
             
             <li class="dashBoard"><a href="${baseurl }/dashBoard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+            
+            <security:authorize access="hasRole('ROLE_ADMIN')">
             <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-building"></i> <span>Department</span></a></li>
               <li class="org"><a href="${baseurl }/org"><i class="fa fa-sitemap"></i> <span>Organization</span></a></li>
               <li class="desig"><a href="${baseurl }/desig"><i class="fa fa-plane"></i> <span>Designation</span></a></li>
              <li class="orgDept"><a href="${baseurl }/orgDept"><i class="fa fa-american-sign-language-interpreting"></i> <span>Org-Dept</span></a></li>
-              <li class="task"><a href="${baseurl }/task"><i class="fa fa-tasks"></i> <span>Task</span></a></li>
               <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-black-tie"></i> <span>Category</span></a></li>
-             	<li class="lpo"><a href="${baseurl }/createUser"><i class="fa fa-users"></i> <span>Employees</span></a></li>
-             	<li class="employee"><a href="${baseurl }/employee"><i class="fa fa-users"></i> <span>Employees2</span></a></li>
-              		 <%-- <li class="cylinder"><a href="${baseurl }/createTicketIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>New Task</span></a></li>
-              		 <li class="cylinder"><a href="${baseurl }/viewReportIssues"><i class="fa fa-ticket" aria-hidden="true"></i> <span>All Tasks</span></a></li>
-              <li class="tariffMaster"><a href="${baseurl }/admin/tariffMaster"><i class="fa fa-bar-chart-o"></i> <span>Tariff Master</span></a></li>
-				 --%>
-				
-				
-				
-				
-				
-				
+             	<li class="employee"><a href="${baseurl }/employee"><i class="fa fa-users"></i> <span>Employees</span></a></li>
+              </security:authorize>
+              <li class="task"><a href="${baseurl }/task"><i class="fa fa-tasks"></i> <span>Task</span></a></li>
 			</ul>
 		</div>
     </nav>
@@ -260,8 +260,11 @@ color: inherit !important;
 				</div>
 				<div class="btn-toolbar pull-right">
 		                    <a href="#" class="btn btn-danger "><span id="unseentasks">15 </span><br>UnSeen Tasks</a>
-		                    <a href="#" class="btn btn-warning"><span id="reopentasks"></span><br>Reopen Tasks</a>
+		                    <a href="#" class="btn btn-warning"><span id="reopentasks">8</span><br>Reopen Tasks</a>
 		                    <!-- <a href="#" class="btn btn-info"><span id="totalGas1">27956</span><br>Gas in Kgs</a> -->
 		                </div>
 	        </div>
+	        </div>
+	       
+	        
 <!-- Header ends Here -->

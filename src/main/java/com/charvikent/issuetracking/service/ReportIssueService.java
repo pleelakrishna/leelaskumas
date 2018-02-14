@@ -6,11 +6,11 @@ import java.io.StringWriter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -426,7 +426,7 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		List<String> monitorList=userDao.getUsersUnderReportTo(id);
 		//List<ReportIssue> listissue=new ArrayList<>();
 		
-		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
+		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		
 		for(String id2:monitorList)
 		{

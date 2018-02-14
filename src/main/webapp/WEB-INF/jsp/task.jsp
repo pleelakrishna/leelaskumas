@@ -66,8 +66,7 @@ $(function () {
                     		</div>
                     		</div>
                     		</form>
-	
-	
+                    		<br>
 	<div class="clearfix"></div>
 	<div class="container">
 		<div class="row">
@@ -91,7 +90,6 @@ $(function () {
 				</div>
 			</div>
 		</div>
-<!-- 		<a class="btn btn-info btn-lg"  onclick="PopupFillingStation();">Add Gas</a><br><br> -->
 		<div class="row" id="moveTo">
 			<div class="col-md-12 col-sm-12">
 				<div class="panel panel-primary">
@@ -190,7 +188,7 @@ $(function () {
                     		
                     		<div id="getting-started"></div>
                     		
-<!-- Modal Ends here-->
+
 
 					</div>
 					<div class="panel-footer">
@@ -210,7 +208,7 @@ $(function () {
 	</div>
 	
 	
-	<!-- Modal Starts here-->
+	<!-- Task History Modal Starts here-->
 <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
@@ -227,24 +225,18 @@ $(function () {
 								<tbody></tbody>
 							</table>
 						</div>
-					
-					
 				</div>
-				
 			</div>
-        	<!-- <div class="modal-footer">
-          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        	</div> -->
       	</div>
     </div>
 </div>
 <!-- Modal Ends here-->
 			
 			
-			<!-- form model start here or add comment  -->
 			
 			
-<!-- Modal Starts here-->
+			
+<!-- add comment Modal Starts here-->
 <div class="modal fade" id="formModal" data-backdrop="static" data-keyboard="false" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
@@ -306,23 +298,17 @@ $(function () {
 				      	</div>
 			      	</div>
                     		</div>
+                    		</form>
                     		
-                    		
-                    		
-				</div> <!-- body -->
+				</div> 
 					
-				</div> <!-- content end here -->
+				</div> 
 				
-			</div>  <!--  dialog ends here-->
-        	<!-- <div class="modal-footer">
-          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        	</div> -->
-      	</div> <!--  model close here-->
-<!-- Modal Ends here-->
-			<!-- container -->
+			</div>  
+      	</div> <!--  add comment model close here-->
 
+<!--  Count Down timer model--> 
 
-<!--  Count Down timer model-->
 <div class="modal fade" id="timeModal" data-backdrop="static"
 	data-keyboard="false" role="dialog">
 	<div class="modal-dialog">
@@ -332,54 +318,20 @@ $(function () {
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title" style="color: white;">Task Count Down</h4>
 			</div>
-			<div> </div>
+			<div> </div>	<div class="modal-body">
 			<p id="demo"></p>
 			
 			</div>
-			<!-- model body -->
 		</div>
-		<!-- model content -->
 	</div>
-	<!--  model content-->
-</div>
-<!--  model classs-->
+	</div>   <!-- deadline Model ends here -->
+	
+	
+	
 
 
-
-
-</body>
-<!-- <script>
-// Set the date we're counting down to
-var countDownDate = new Date("Sep 5,2019 15:37:25").getTime();
-
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-    // Get todays date and time
-    var now = new Date().getTime();
-    
-    // Find the distance between now an the count down date
-    var distance = countDownDate - now;
-    
-    // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    // Output the result in an element with id="demo"
-    document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-    + minutes + "m " + seconds + "s ";
-    
-    // If the count down is over, write some text 
-    if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("demo").innerHTML = "EXPIRED";
-    }
-}, 1000);
-</script>
- -->
 <script type="text/javascript">
-var loginUserId =${cacheUserBean.id};
+var loginUserId =${objuserBean.id};
 var listOrders1 = ${allOrders1};
 if (listOrders1 != "") {
 	displayTable(listOrders1)
@@ -414,8 +366,8 @@ function displayTable(listOrders) {
 		
 		
 		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
-		var comment = "<a class='view viewIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
-		var time = "<a class='view viewIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
+		var comment = "<a class='comment commentIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
+		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
 		serviceUnitArray[orderObj.id] = orderObj;
 		var tblRow = "<tr>"
 			+ "<td title='"+orderObj.taskno+"'>"+ view + "</td>"
@@ -423,7 +375,7 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
 			+ "<td title='"+orderObj.priority+"'>"+ orderObj.priority + "</td>"
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
-			+ "<td title='"+orderObj.createdTime+"'>"+ orderObj.createdTime + "</td>"
+			+ "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time + "</td>" 
 			+ "</tr>";
 		$(tblRow).appendTo("#tableId table tbody");
@@ -501,39 +453,87 @@ function addComment(id){
 
 var countDownDate;
 
+var x =0;
+
 function showdeadline(id){
 	
+	
+	//$('#timeModal').html('');
 	countDownDate=serviceUnitArray[id].taskdeadline
 	
 	  var count = new Date(countDownDate).getTime();
-	
+	/*  x=setInterval(function() {clearInterval();}); */
 
 	// Update the count down every 1 second
-	var x = setInterval(function() {
-
+	if(x == 0)
+		{
+	 x = setInterval(function() {
 	    // Get todays date and time
 	    var now = new Date().getTime();
 	    
 	    // Find the distance between now an the count down date
 	    var distance = count - now;
 	    
+	    document.getElementById("demo").innerHTML='';    
+	    
 	    // Time calculations for days, hours, minutes and seconds
 	    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
 	    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 	    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 	    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+	    document.getElementById("demo").innerHTML='';
 	    // Output the result in an element with id="demo"
 	    document.getElementById("demo").innerHTML = days + "d " + hours + "h "
 	    + minutes + "m " + seconds + "s ";
 	    
+	    
 	    // If the count down is over, write some text 
 	    if (distance < 0) {
-	        clearInterval(x);
 	        document.getElementById("demo").innerHTML = "EXPIRED";
+	        showdeadline();
 	    }
 	}, 1000);
+	 
+	 $("#timeModal").modal();
+		}
+	else
+		{
+		clearInterval(x);
+		  document.getElementById("demo").innerHTML=''; 
+		
+		x = setInterval(function() {
+		    // Get todays date and time
+		    var now = new Date().getTime();
+		    
+		    // Find the distance between now an the count down date
+		    var distance = count - now;
+		    
+		    document.getElementById("demo").innerHTML='';    
+		    
+		    // Time calculations for days, hours, minutes and seconds
+		    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+		    document.getElementById("demo").innerHTML='';
+		    // Output the result in an element with id="demo"
+		    document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+		    + minutes + "m " + seconds + "s ";
+		    
+		    
+		    // If the count down is over, write some text 
+		    if (distance < 0) {
+		        document.getElementById("demo").innerHTML = "EXPIRED";
+		        showdeadline();
+		    }
+		}, 1000);
+		$("#timeModal").modal();
+		 
+		
+		}
+		
 	
-	$("#timeModal").modal();
+	
 	
 	
 	
@@ -650,7 +650,6 @@ $('#ttype').on('change', function() {
 					    
 			});
 		
-		
 	}
 		
 	
@@ -685,7 +684,8 @@ function deletetask(id,status){
 
 $('#kpstatus').on('change',function() {
 	var issueCreatedBY =$('#ttype').val();
-	var loginid=${cacheUserBean.id};
+	var loginid=${objuserBean.id}
+	
 	if($('#kpstatus').val()=='1')
 		{
 		
