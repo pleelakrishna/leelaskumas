@@ -202,7 +202,7 @@ public List<ReportIssue> getAllReportIssues()
 
 
 	public Set<ReportIssue> getAllReportIssues() {
-		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
+		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 
 		try {
 			@SuppressWarnings("unchecked")
@@ -598,6 +598,60 @@ public List<ReportIssue> getAllReportIssues()
 
 			}
 			
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		
+		return listissue;
+	}
+
+	public boolean openTask(Integer id, String status) {
+		Boolean delete=false;
+		try{
+			
+			ReportIssue task= (ReportIssue)em.find(ReportIssue.class ,id);
+			   task.setAdditionalinfo(status);
+			   em.merge(task);
+			if(!status.equals(task.getAdditionalinfo()))
+			{
+				delete=true;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return delete;
+	}
+
+	public Set<ReportIssue> getOpenTasks(String id) {
+		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+		//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		try {
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,r.additionalinfo from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks , kpstatuslogs kpl  where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id  and r.additionalinfo ='0' order by kpl.statustime desc").setParameter("id",id).getResultList();
+			for (Object[] row : rows) {
+				ReportIssue issue = new ReportIssue();
+				issue.setId(Integer.parseInt(String.valueOf(row[0])));
+				issue.setTaskno((String) row[1]);
+				issue.setSubject((String) row[2]);
+				issue.setCategory((String) row[3]);
+				issue.setCategoryid((String) row[4]);
+				issue.setPriority((String) row[5]);
+				issue.setPriorityid((String) row[6]);
+				issue.setAssignto((String) row[7]);
+				issue.setAssigntoid((String) row[8]);
+				issue.setCreatedTime((Date) row[9]);
+				issue.setSeverity((String) row[10]);
+				issue.setSeverityid((String) row[11]);
+				issue.setStatus((String) row[12]);
+				issue.setDescription((String) row[13]);
+				issue.setTaskdeadline((String) row[14]);
+				issue.setAdditionalinfo((String) row[15]);
+
+				
+				listissue.add(issue);
+
+			}
 		} catch (Exception e) {
 			System.out.println("error here");
 			e.printStackTrace();

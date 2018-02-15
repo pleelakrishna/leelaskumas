@@ -121,10 +121,129 @@
 		</div>
 		<!-- /.main-content-inner -->
 	</div>
+	
+	<div id="notifyModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+<div class="col-md-12">
+				<div class="panel panel-primary">
+				
+					<div class="panel-heading">
+						<h4>Task List</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="panel-body collapse in">
+					<!-- <input type="checkbox" class="form-check-input" onclick="inactiveData();" id="inActive"> <label class="form-check-label">Show Inactive List</label> -->
+						<div class="table-responsive" id="tableId">
+							<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered datatables" id="notification">
+								<thead><tr><th>Dept ID</th><th>Name</th><th>Description</th><th>Status</th><th></th></tr></thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+  </div>
+</div>
 <script type="text/javascript">
+$(window).load(function(){
+	var formData = new FormData();
+    formData.append('ttypeid', "1");
+$.fn.makeMultipartRequest('POST', 'setNotifyData', false, formData, false, 'text', function(data){
+	var jsonobj = $.parseJSON(data);
+	var alldata = jsonobj.allOrders1;
+	console.log(alldata)
+	if (alldata != "") {
+		displayTable(alldata)
+		$('#notifyModal').modal('show');
+	}
+	 
+ });
+});
+
 $(".dashBoard").addClass("active");
 $(document).ready(function(){
 $('.dashBoard').on('click', function(){
 });
 });
 </script>
+<script>
+/* $(window).load(function(){        
+   $('#notifyModal').modal('show');
+    });  */
+    
+    
+    
+    
+    
+    var loginUserId ="1"
+    
+function displayTable(listOrders) {
+	$('#tableId').html('');
+	var tableHead = '<table id="notification" class="table table-striped table-bordered datatables">'
+			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned</th><th>Created Time</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+	$('#tableId').html(tableHead);
+	serviceUnitArray = {};
+	
+	$.each(listOrders,function(i, orderObj) {
+		if(orderObj.additionalinfo == "0"){
+			var deleterow = "<a class='deactivate' onclick='opentasks("+ orderObj.id+ ",0)'><i class='fa fa-folder-open-o'></i></a>"
+		}else{  
+			var deleterow = "<a class='activate' onclick='opentasks("+ orderObj.id+ ",1)'><i class='fa fa-eye-slash'></i></a>"
+		}
+		
+		var edit = "<a class='edit editIt' onclick='editTask("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
+		
+		
+		
+		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
+		var comment = "<a class='comment commentIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
+		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
+		serviceUnitArray[orderObj.id] = orderObj;
+		var tblRow = "<tr>"
+			+ "<td title='"+orderObj.taskno+"'>"+ view + "</td>"
+			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
+			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
+			+ "<td title='"+orderObj.priority+"'>"+ orderObj.priority + "</td>"
+			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
+			+ "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>"
+			+ "<td style='text-align: center;white-space: nowrap;'>" + deleterow +  "</td>" 
+			+ "</tr>";
+		$(tblRow).appendTo("#tableId table tbody");
+	});
+	if(isClick=='Yes') $('#notification').dataTable();
+	
+}
+    
+    
+    
+    function opentasks(id,status){
+    	var checkstr=null;
+    	if(status == 0	){
+    		status=1;
+    		 checkstr = confirm('Do you want to Task acknowledged');
+    	}
+    	if(checkstr == true){
+    		var formData = new FormData();
+    	    formData.append('id', id);
+    	    formData.append('additionalinfo', status);
+    		$.fn.makeMultipartRequest('POST', 'openTask', false, formData, false, 'text', function(data){
+    			var jsonobj = $.parseJSON(data);
+    			var alldata = jsonobj.allOrders1;
+    			var result=$.parseJSON(alldata);
+    			displayTable(result);
+    		});
+    	}
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </script>

@@ -24,18 +24,6 @@ $(function () {
 	});
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
 		<li><a href="#">Home</a></li>
@@ -362,9 +350,6 @@ function displayTable(listOrders) {
 			deleterow ="";
 		}
 		
-		
-		
-		
 		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
 		var comment = "<a class='comment commentIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
 		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
@@ -551,13 +536,7 @@ $('#ttype').on('change', function() {
 			toolTips()
 				
 	 });
-	  
-	  
-	  
 	})
-	
-	
-	
 	
 	$("#deptid").on('change', function() {
 		 var dept=$('#deptid').val();
@@ -569,10 +548,6 @@ $('#ttype').on('change', function() {
 			var myJSON = JSON.stringify(alldata);
 				displayTable(alldata);
 				toolTips()
-					
-		
-		 
-		 
 		 });
 	})
 	
@@ -678,9 +653,9 @@ function deletetask(id,status){
 	    formData.append('status', status);
 		$.fn.makeMultipartRequest('POST', 'deleteTask', false, formData, false, 'text', function(data){
 			var jsonobj = $.parseJSON(data);
-			window.location.reload();
 			var alldata = jsonobj.allOrders1;
-			displayTable(alldata);
+			var result=$.parseJSON(alldata);
+			displayTable(result);
 		});
 	}
 }

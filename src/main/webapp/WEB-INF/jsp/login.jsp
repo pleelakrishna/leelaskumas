@@ -45,11 +45,11 @@
 
 <script type='text/javascript' src='assets/js/jquery-1.10.2.min.js'></script>
 <script type="text/javascript">
-window.setTimeout(function() {
+/* window.setTimeout(function() {
     $(".msgcss").fadeTo(500, 0).slideUp(500, function(){
         $(this).remove(); 
     });
-}, 5000);
+}, 5000); */
 </script>
 
 </head>
@@ -63,7 +63,7 @@ window.setTimeout(function() {
 		<div class="panel-body">
 			<h4 class="text-center" style="margin-bottom: 25px;">Login to get started</h4>
 			<c:if test="${param.error ne null}">
-				<!-- <div class="alert-danger">Invalid username and password.</div> -->
+				<div class="alert-danger">Invalid username and password.</div>
 			
 				<div class="col-sm-12" style="margin-bottom: -1.3em;">
 					<div class="form-group">

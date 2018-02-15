@@ -145,6 +145,12 @@ color: inherit !important;
 			 toolTips()
 			 
 			
+	  
+	  
+	  
+	  
+	
+			
 			/* var formData = new FormData();
 		    
 			$.fn.makeMultipartRequest('POST', 'getCount', false,
@@ -160,10 +166,11 @@ color: inherit !important;
 		}); 
 		
 </script>
+
+
 <script> 
 function toolTips(){
-	
-	 $('.view').attr('data-toggle','tooltip');
+	    $('.view').attr('data-toggle','tooltip');
 		$('.view').attr('data-original-title','View');
 		$('.edit').attr('data-toggle','tooltip');
 		$('.edit').attr('data-original-title','Edit');
@@ -177,10 +184,7 @@ function toolTips(){
 		$('.comment').attr('data-original-title', 'Add Comment');
 		$('.time').attr('data-toggle', 'tooltip');
 		$('.time').attr('data-original-title', 'view Deadline');
-		
 		$('[data-toggle="tooltip"]').tooltip(); 
-		
-	
 }
 
 </script>
@@ -275,6 +279,5 @@ function toolTips(){
 		                </div>
 	        </div>
 	        </div>
-	       
 	        
 <!-- Header ends Here -->

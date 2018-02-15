@@ -1,3 +1,4 @@
+
 package com.charvikent.issuetracking.config;
 
 import org.springframework.beans.factory.annotation.Autowired;

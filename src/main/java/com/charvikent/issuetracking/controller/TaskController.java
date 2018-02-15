@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
 import org.json.JSONException;
@@ -72,6 +73,7 @@ public class TaskController {
 		Set<ReportIssue> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
+		
 	/*	model.addAttribute("taskf", new ReportIssue());*/
 		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
 		model.addAttribute("severity", severityService.getSeverityNames());
@@ -156,7 +158,7 @@ public class TaskController {
 					}
 					
 					task.setStatus("1");
-					
+					task.setAdditionalinfo("0");
 					taskService.saveReportIssue(task);
 
 					redir.addFlashAttribute("msg", "Record Inserted Successfully");
@@ -221,6 +223,10 @@ public class TaskController {
 		ObjectMapper objectMapper = null;
 		String sJson=null;
 		boolean delete = false;
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
 		try{
 			if(objorg.getId() != 0){
  				delete = taskService.deleteTask(objorg.getId(),objorg.getStatus());
@@ -231,7 +237,7 @@ public class TaskController {
  				}
  			}
  				
-			listOrderBeans = taskService.getAllReportIssues();
+			listOrderBeans = taskService.getissuesByselectionAssignBy(id);
 			 objectMapper = new ObjectMapper();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				
@@ -414,6 +420,88 @@ public class TaskController {
 	}
 	*/
 	
+	@RequestMapping(value = "/openTask")
+	public @ResponseBody String opentask(ReportIssue  objorg,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
+		System.out.println("deleteEducation page...");
+		Set<ReportIssue> listOrderBeans  = null;
+		JSONObject jsonObj = new JSONObject();
+		ObjectMapper objectMapper = null;
+		String sJson=null;
+		boolean delete = false;
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+		try{
+			if(objorg.getId() != 0){
+ 				delete = taskService.openTask(objorg.getId(),objorg.getAdditionalinfo());
+ 				if(delete){
+ 					jsonObj.put("message", "deleted");
+ 				}else{
+ 					jsonObj.put("message", "delete fail");
+ 				}
+ 			}
+ 				
+			listOrderBeans = taskService.getOpenTasks(id);
+			 objectMapper = new ObjectMapper();
+			if (listOrderBeans != null && listOrderBeans.size() > 0) {
+				
+				objectMapper = new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(listOrderBeans);
+				request.setAttribute("allOrders1", sJson);
+				jsonObj.put("allOrders1", sJson);
+				// System.out.println(sJson);
+			} else {
+				objectMapper = new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(listOrderBeans);
+				request.setAttribute("allOrders1", "''");
+				jsonObj.put("allOrders1", sJson);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+	System.out.println(e);
+			return String.valueOf(jsonObj);
+			
+		}
+		return String.valueOf(jsonObj);
+	}
+	
+	
+	
+	@RequestMapping(value = "/setNotifyData",method = RequestMethod.POST)
+	public @ResponseBody Object setNotificationData(@RequestParam(value = "ttypeid", required = true) String ttypeid,Model model,HttpServletRequest request, HttpSession session) throws JSONException, JsonProcessingException {
+		
+		
+		
+		Set<ReportIssue> listOrderBeans = null;
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		JSONObject jsonObj = new JSONObject();
+		
+		listOrderBeans = taskService.getOpenTasks(id);
+		
+		 objectMapper = new ObjectMapper();
+		if (listOrderBeans != null && listOrderBeans.size() > 0) {
+			
+			objectMapper = new ObjectMapper();
+			sJson = objectMapper.writeValueAsString(listOrderBeans);
+			request.setAttribute("allOrders1", sJson);
+			jsonObj.put("allOrders1", listOrderBeans);
+			// System.out.println(sJson);
+		} else {
+			objectMapper = new ObjectMapper();
+			sJson = objectMapper.writeValueAsString(listOrderBeans);
+			request.setAttribute("allOrders1", "''");
+			jsonObj.put("allOrders1", listOrderBeans);
+		}
+		
+		
+		
+		return String.valueOf(jsonObj);
+
+	}
 	
 	
 	
