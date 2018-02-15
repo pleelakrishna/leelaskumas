@@ -175,9 +175,9 @@ function deleteorg(id,status){
 	    formData.append('status', status);
 		$.fn.makeMultipartRequest('POST', 'deleteorgDept', false, formData, false, 'text', function(data){
 			var jsonobj = $.parseJSON(data);
-			window.location.reload();
 			var alldata = jsonobj.allOrders1;
 			displayTable(alldata);
+			toolTips()
 		});
 	}
 }

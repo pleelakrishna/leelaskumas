@@ -548,6 +548,8 @@ $('#ttype').on('change', function() {
 		var jsonobj = $.parseJSON(data);
 		var alldata = jsonobj.list;
 			displayTable(alldata);
+			toolTips()
+				
 	 });
 	  
 	  
@@ -566,6 +568,8 @@ $('#ttype').on('change', function() {
 			var alldata = jsonobj.allOrders1;
 			var myJSON = JSON.stringify(alldata);
 				displayTable(alldata);
+				toolTips()
+					
 		
 		 
 		 

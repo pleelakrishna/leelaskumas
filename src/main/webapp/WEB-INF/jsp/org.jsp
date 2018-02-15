@@ -88,20 +88,7 @@
 
 
 </body>
-<%-- <script type='text/javascript' src='${baseurl }/js/custemValidation.js'></script>  --%>
-<script>
-</script>
 <script type="text/javascript">
-
-/* $(document).ready(function() {
-	 var table = $('#example').DataTable();
-	  
-	 $('#example tbody').on('click', 'tr', function () {
-	     var data = table.row( this ).data();
-	     alert( 'You clicked on '+data[0]+'\'s row' );
-	 } );
-}); */
-
 
 var listOrders1 = ${allOrders1};
 if (listOrders1 != "") {
@@ -119,7 +106,7 @@ function displayTable(listOrders) {
 		}else{  
 			var deleterow = "<a class='activate' onclick='deleteorg("+ orderObj.id+ ",1)'><i class='fa fa-eye-slash'></i></a>"
 		}
-		var edit = "<a class='edit editIt' onclick='editCylinder("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
+		var edit = "<a class='edit editIt' onclick='editOrganization("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
 		serviceUnitArray[orderObj.id] = orderObj;
 		var tblRow = "<tr>"
 			+ "<td title='"+orderObj.name+"'>"+ orderObj.name + "</td>"
@@ -133,7 +120,7 @@ function displayTable(listOrders) {
 }
 
 
-function editCylinder(id) {
+function editOrganization(id) {
 	$("#id").val(serviceUnitArray[id].id);
 	$("#name").val(serviceUnitArray[id].name);
 	$("#description").val(serviceUnitArray[id].description);
@@ -154,10 +141,9 @@ function deleteorg(id,status){
 	    formData.append('status', status);
 		$.fn.makeMultipartRequest('POST', 'deleteOrg', false, formData, false, 'text', function(data){
 			var jsonobj = $.parseJSON(data);
-			window.location.reload();
 			var alldata = jsonobj.allOrders1;
-			console.log(jsonobj.allOrders1);
 			displayTable(alldata);
+			toolTips()
 		});
 	}
 }

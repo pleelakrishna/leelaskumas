@@ -201,9 +201,9 @@ function deleteEmployee(id,status){
 	    formData.append('status', status);
 		$.fn.makeMultipartRequest('POST', 'deleteUser', false, formData, false, 'text', function(data){
 			var jsonobj = $.parseJSON(data);
-			window.location.reload();
 			var alldata = jsonobj.allOrders1;
 			displayTable(alldata);
+			toolTips() //calling tool tips defined at header
 		});
 	}
 }

@@ -87,9 +87,6 @@ window.setTimeout(function() {
 					</div>
 				</div>
 			</div>
-			<!-- <div class="clearfix">
-				<div class="pull-right"><label><input type="checkbox" style="margin-bottom: -5px;"> Remember Me</label></div>
-			</div> -->
 		</div>
 		<div class="panel-footer">
 			<div class="pull-right">

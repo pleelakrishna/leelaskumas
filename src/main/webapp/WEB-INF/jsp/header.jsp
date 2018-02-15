@@ -142,22 +142,8 @@ color: inherit !important;
 		    });
 		}, 5000);
 		 $(document).ready(function(){
-			 $('.view').attr('data-toggle','tooltip');
-			$('.view').attr('data-original-title','View');
-			$('.edit').attr('data-toggle','tooltip');
-			$('.edit').attr('data-original-title','Edit');
-			$('.delete').attr('data-toggle','tooltip');
-			$('.delete').attr('data-original-title','Delete');
-			$('.activate').attr('data-toggle','tooltip');
-			$('.activate').attr('data-original-title','Activate');
-			$('.deactivate').attr('data-toggle','tooltip');
-			$('.deactivate').attr('data-original-title','Deactivate');
-			$('.comment').attr('data-toggle', 'tooltip');
-			$('.comment').attr('data-original-title', 'Add Comment');
-			$('.time').attr('data-toggle', 'tooltip');
-			$('.time').attr('data-original-title', 'view Deadline');
-			
-			$('[data-toggle="tooltip"]').tooltip(); 
+			 toolTips()
+			 
 			
 			/* var formData = new FormData();
 		    
@@ -173,6 +159,30 @@ color: inherit !important;
 			}); */
 		}); 
 		
+</script>
+<script> 
+function toolTips(){
+	
+	 $('.view').attr('data-toggle','tooltip');
+		$('.view').attr('data-original-title','View');
+		$('.edit').attr('data-toggle','tooltip');
+		$('.edit').attr('data-original-title','Edit');
+		$('.delete').attr('data-toggle','tooltip');
+		$('.delete').attr('data-original-title','Delete');
+		$('.activate').attr('data-toggle','tooltip');
+		$('.activate').attr('data-original-title','Activate');
+		$('.deactivate').attr('data-toggle','tooltip');
+		$('.deactivate').attr('data-original-title','Deactivate');
+		$('.comment').attr('data-toggle', 'tooltip');
+		$('.comment').attr('data-original-title', 'Add Comment');
+		$('.time').attr('data-toggle', 'tooltip');
+		$('.time').attr('data-original-title', 'view Deadline');
+		
+		$('[data-toggle="tooltip"]').tooltip(); 
+		
+	
+}
+
 </script>
 </head>
 
