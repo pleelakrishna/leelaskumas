@@ -148,7 +148,7 @@ function deletedesign(id,status){
 	}
 }
 
-function validate(id, errorMessage)
+/* function validate(id, errorMessage)
 {
 	var styleBlock = '.placeholder-style.placeholder-style::-moz-placeholder {color: #cc0000;} .placeholder-style::-webkit-input-placeholder {color: #cc0000;}';
 	if($('#'+id).val() ==  null || $('#'+id).val() == ""  || $('#'+id).val()=="undefined" ) {
@@ -166,9 +166,9 @@ function validate(id, errorMessage)
 //			$('#'+id+'Error').text("");
 	}
 	
-}
+} */
 
-function inactiveData() {
+/* function inactiveData() {
 	var status="0";
 	if($('#inActive').is(":checked") == true){
 		status="0";
@@ -186,7 +186,7 @@ function inactiveData() {
 			console.log(jsonobj.allOrders1);
 				});
 		
-}
+} */
 $("#pageName").text("Designation Master");
 $(".desig").addClass("active"); 
 </script>

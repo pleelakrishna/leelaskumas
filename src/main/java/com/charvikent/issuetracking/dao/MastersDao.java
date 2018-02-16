@@ -71,6 +71,7 @@ public class MastersDao {
 		Department ud =entityManager.find(Department.class,dept.getId());
 		ud.setName(dept.getName());
 		ud.setDepthead(dept.getDepthead());
+		ud.setDescription(dept.getDescription());;
 		
 		entityManager.merge(ud);
 		

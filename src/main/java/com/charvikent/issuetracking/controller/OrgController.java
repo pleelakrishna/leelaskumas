@@ -32,7 +32,7 @@ public class OrgController {
 	MastersService  mastersService;
 	
 	
-	@RequestMapping("/org")
+	@RequestMapping("/kporg")
 	public String  department( @ModelAttribute("orgf")  Orgnization orgf,Model model ,HttpServletRequest request) {
 		List<Orgnization> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
@@ -58,12 +58,12 @@ public class OrgController {
 		}
 		
 		
-		return "org";
+		return "kporg";
 	
 	}
 	
 	
-	@RequestMapping(value = "/org", method = RequestMethod.POST)
+	@RequestMapping(value = "/kporg", method = RequestMethod.POST)
 	public String saveAdmin(@Valid @ModelAttribute  Orgnization org, BindingResult bindingresults,
 			RedirectAttributes redir) throws IOException {
 		
@@ -126,7 +126,7 @@ public class OrgController {
 		}
 		
 		
-		return "redirect:org";
+		return "redirect:kporg";
 	}
 	
 	

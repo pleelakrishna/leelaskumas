@@ -453,10 +453,7 @@ public List<ReportIssue> getAllReportIssues()
 			ReportIssue task= (ReportIssue)em.find(ReportIssue.class ,id);
 			   task.setStatus(status);
 			   em.merge(task);
-			if(!status.equals(task.getStatus()))
-			{
-				delete=true;
-			}
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -613,11 +610,28 @@ public List<ReportIssue> getAllReportIssues()
 			
 			ReportIssue task= (ReportIssue)em.find(ReportIssue.class ,id);
 			   task.setAdditionalinfo(status);
+			   task.setKstatus("3");
 			   em.merge(task);
 			if(!status.equals(task.getAdditionalinfo()))
 			{
 				delete=true;
 			}
+			
+			if(!status.equals(task.getStatus()))
+			{
+				delete=true;
+			}
+			
+//			recording task history
+			KpStatusLogs slogs=new KpStatusLogs();
+
+			slogs.setIssueid(String.valueOf(id));
+			slogs.setIassignto(task.getAssignto());
+			slogs.setComment("task acknowledged");
+			slogs.setKpstatus(task.getKstatus());
+			
+
+			em.persist(slogs);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -647,6 +661,7 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setDescription((String) row[13]);
 				issue.setTaskdeadline((String) row[14]);
 				issue.setAdditionalinfo((String) row[15]);
+				
 
 				
 				listissue.add(issue);

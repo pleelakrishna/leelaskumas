@@ -39,7 +39,7 @@
 					<div class="panel-heading">
 						<h4>Add Organization</h4>
 					</div>
-					<form:form class="form-horizontal" commandName="orgf" role="form" id="fillingstation-form" action="org" method="post">
+					<form:form class="form-horizontal" commandName="orgf" role="form" id="fillingstation-form" action="kporg" method="post">
 					<div class="panel-body">
 						<div class="row">
                     		<div class="col-md-6">

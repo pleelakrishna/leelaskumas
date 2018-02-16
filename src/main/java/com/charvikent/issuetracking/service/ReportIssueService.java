@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.context.SecurityContextHolder;
 //import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +67,7 @@ public class ReportIssueService {
 	{
 		reportIssueDao.saveReportIssue(reportIssue);
 		
-		User objuserBean = (User) session.getAttribute("cacheUserBean");
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		userDao.getAllParents(String.valueOf(objuserBean.getId()));
 		userDao.getAllParents(reportIssue.getAssignto());

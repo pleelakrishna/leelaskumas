@@ -151,18 +151,18 @@ color: inherit !important;
 	  
 	
 			
-			/* var formData = new FormData();
+			/*  var formData = new FormData();
 		    
 			$.fn.makeMultipartRequest('POST', 'getCount', false,
 					formData, false, 'text', function(data){
 				var jsonobj = $.parseJSON(data);
-//		 		alert(jsonobj.cylinderCount);
-				$("#unseentasks").text(jsonobj.unseentasks);
+		 		alert(jsonobj.cylinderCount);
+				//$("#unseentasks").text(jsonobj.unseentasks);
 				
 //		 		var alldata = jsonobj.allOrders1;
 //		 		console.log(jsonobj.allOrders1);
 //		 		displayTable(alldata);
-			}); */
+			});  */
 		}); 
 		
 </script>
@@ -254,8 +254,8 @@ function toolTips(){
             
             <security:authorize access="hasRole('ROLE_ADMIN')">
             <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-building"></i> <span>Department</span></a></li>
-              <li class="org"><a href="${baseurl }/org"><i class="fa fa-sitemap"></i> <span>Organization</span></a></li>
-              <li class="desig"><a href="${baseurl }/desig"><i class="fa fa-plane"></i> <span>Designation</span></a></li>
+              <li class="org"><a href="${baseurl }/kporg"><i class="fa fa-sitemap"></i> <span>Organization</span></a></li>
+              <%-- <li class="desig"><a href="${baseurl }/desig"><i class="fa fa-plane"></i> <span>Designation</span></a></li> --%>
              <li class="orgDept"><a href="${baseurl }/orgDept"><i class="fa fa-american-sign-language-interpreting"></i> <span>Org-Dept</span></a></li>
               <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-black-tie"></i> <span>Category</span></a></li>
              	<li class="employee"><a href="${baseurl }/employee"><i class="fa fa-users"></i> <span>Employees</span></a></li>

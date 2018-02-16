@@ -47,7 +47,7 @@
                     				<form:hidden path="id"/>
 									<label for="focusedinput" class="col-md-6 control-label">Name <span class="impColor">*</span></label>
 									<div class="col-md-5">
-										<form:input path="name" class="form-control validate" placeholder="Enter Name"/>	
+										<form:input path="name" class="form-control validate nospecialCharacter" placeholder="Enter Name"/>	
 										<span class="hasError" id="stationnameError"></span>
 								    </div>
                     			</div>

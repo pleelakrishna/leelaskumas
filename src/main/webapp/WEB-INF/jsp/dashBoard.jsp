@@ -182,7 +182,7 @@ $('.dashBoard').on('click', function(){
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="notification" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned</th><th>Created Time</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned</th><th>Created Time</th><th>Description</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -208,6 +208,7 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.priority+"'>"+ orderObj.priority + "</td>"
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
 			+ "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>"
+			+ "<td title='"+orderObj.description+"'>"+ orderObj.description + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + deleterow +  "</td>" 
 			+ "</tr>";
 		$(tblRow).appendTo("#tableId table tbody");

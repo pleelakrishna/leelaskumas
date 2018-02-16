@@ -168,7 +168,7 @@ $(function () {
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Task DeadLine <span class="impColor">*</span></label>
 									<div class="col-md-6">
-								    	<form:input path="taskdeadline" value="" class="form-control validate "  placeholder="Task deadLine" />
+								    	<form:input path="taskdeadline" value="" class="form-control validate " readonly="readonly" placeholder="Task deadLine" />
 								    </div>
                     			</div>
                     		</div>
@@ -319,7 +319,7 @@ $(function () {
 
 
 <script type="text/javascript">
-var loginUserId =${objuserBean.id};
+var loginUserId =${objuserBean.designation};
 var listOrders1 = ${allOrders1};
 if (listOrders1 != "") {
 	displayTable(listOrders1)
@@ -341,15 +341,14 @@ function displayTable(listOrders) {
 			var deleterow = "<a class='activate' onclick='deletetask("+ orderObj.id+ ",1)'><i class='fa fa-eye-slash'></i></a>"
 		}
 		
-		var edit = "<a class='edit editIt' onclick='editTask("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
+		
 		
 			}
 		else
 		{
-			edit ="";
 			deleterow ="";
 		}
-		
+		var edit = "<a class='edit editIt' onclick='editTask("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
 		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
 		var comment = "<a class='comment commentIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
 		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
