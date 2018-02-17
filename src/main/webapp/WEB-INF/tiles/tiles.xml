@@ -75,8 +75,8 @@
 	<definition name="desig" extends="base.definition">
 		<put-attribute name="body" value="/WEB-INF/jsp/desig.jsp" />
 	</definition>
-	<definition name="org" extends="base.definition">
-		<put-attribute name="body" value="/WEB-INF/jsp/org.jsp" />
+	<definition name="kporg" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/kporg.jsp" />
 	</definition>
 	<definition name="orgDept" extends="base.definition">
 		<put-attribute name="body" value="/WEB-INF/jsp/orgDept.jsp" />

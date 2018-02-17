@@ -23,7 +23,7 @@
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-clock-o"></i>
-<a class="white" href="#">Timeline</a></h4>
+<a class="white" href="#">Performance Timeline</a></h4>
 		<div class="widget-toolbar">
 			<a data-action="collapse" href="#">
 				<!-- <i class="1 ace-icon fa bigger-125 fa-chevron-up"></i> -->
@@ -75,7 +75,7 @@
 					</div>
 					<div class="col-sm-4">
 				<div class="space-10"></div>
-							<div id="assigned" class="widget-box widget-color-blue2">
+							<%-- <div id="assigned" class="widget-box widget-color-blue2">
 	<div class="widget-header widget-header-small">
 		<h4 class="widget-title lighter">
 			<i class="ace-icon fa fa-clock-o"></i>
@@ -111,7 +111,7 @@
 </c:forEach>
 </table>
 </div>
-</div>
+</div> --%>
 						</div><!-- /.row -->
 					</div><!-- /.page-content -->
 					</div>

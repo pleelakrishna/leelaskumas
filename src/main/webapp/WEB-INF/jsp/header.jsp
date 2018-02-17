@@ -143,26 +143,20 @@ color: inherit !important;
 		}, 5000);
 		 $(document).ready(function(){
 			 toolTips()
-			 
 			
-	  
-	  
-	  
-	  
-	
-			
-			/*  var formData = new FormData();
+			  var formData = new FormData();
 		    
 			$.fn.makeMultipartRequest('POST', 'getCount', false,
 					formData, false, 'text', function(data){
 				var jsonobj = $.parseJSON(data);
-		 		alert(jsonobj.cylinderCount);
-				//$("#unseentasks").text(jsonobj.unseentasks);
+				$("#unseentasks").text(jsonobj.unseentasks);
+				
+				$("#reopentaskscount").text(jsonobj.reopentaskscount);
 				
 //		 		var alldata = jsonobj.allOrders1;
 //		 		console.log(jsonobj.allOrders1);
 //		 		displayTable(alldata);
-			});  */
+			});  
 		}); 
 		
 </script>
@@ -273,8 +267,8 @@ function toolTips(){
 					<h1 id="pageName"></h1>
 				</div>
 				<div class="btn-toolbar pull-right">
-		                    <a href="#" class="btn btn-danger "><span id="unseentasks">15 </span><br>UnSeen Tasks</a>
-		                    <a href="#" class="btn btn-warning"><span id="reopentasks">8</span><br>Reopen Tasks</a>
+		                    <a href="#" class="btn btn-danger "><span id="unseentasks"> </span><br>UnSeen Tasks</a>
+		                    <a href="#" class="btn btn-warning"><span id="reopentaskscount"></span><br>Reopen Tasks</a>
 		                    <!-- <a href="#" class="btn btn-info"><span id="totalGas1">27956</span><br>Gas in Kgs</a> -->
 		                </div>
 	        </div>

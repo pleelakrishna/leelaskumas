@@ -7,23 +7,6 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css">
-<script type='text/javascript'>
-$(function () {
-
-	 $('#taskdeadline').datetimepicker({        
-
-	    useCurrent: false,
-	    format: 'DD-MMM-YYYY hh:mm A',
-	    showTodayButton: true,
-	    sideBySide: true,
-// 	    showClose: true,
-// 	    showClear: true,
-	    toolbarPlacement: 'top'
-
-	  });
-	});
-
-</script>
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
 		<li><a href="#">Home</a></li>
@@ -168,7 +151,8 @@ $(function () {
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Task DeadLine <span class="impColor">*</span></label>
 									<div class="col-md-6">
-								    	<form:input path="taskdeadline" value="" class="form-control validate " readonly="readonly" placeholder="Task deadLine" />
+								    	<%-- <form:input type="datetime-local" path="taskdeadline"  class="form-control validate"   /> --%>
+								    <form:input  path="taskdeadline"  class="form-control validate"    />
 								    </div>
                     			</div>
                     		</div>
@@ -266,7 +250,7 @@ $(function () {
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Comment <span class="impColor">*</span></label>
 									<div class="col-md-6">
-									<input type="text"  name="commet" id="commet"  onkeyup="removeBorder(this.id)" class="form-control validate2" placeholder="Enter commit" style="width: 320px;">
+									<input type="text"  name="commet" id="commet"  onkeyup="removeBorder(this.id)" class="form-control validate2" readonly="readonly" placeholder="Enter commit" style="width: 320px;">
 									<span class="hasError" id="stationnameError"></span>
 								    </div>
                     			</div>
@@ -319,6 +303,31 @@ $(function () {
 
 
 <script type="text/javascript">
+
+$("#taskdeadline").keypress(function(){
+	return false;
+})
+
+$(document).ready(function () {
+// 	$("#taskdeadline").attr('readonly', 'readonly');
+	 $('#taskdeadline').datetimepicker({        
+
+		    useCurrent: false,
+		    format: 'DD-MMM-YYYY hh:mm A',
+		    showTodayButton: true,
+		    sideBySide: true,
+//		    showClose: true,
+//		    showClear: true,
+		    toolbarPlacement: 'top',
+		        focusOnShow: false,
+
+		  });
+});
+ 
+
+// $("#taskdeadline").prop("readonly", true);
+
+
 var loginUserId =${objuserBean.designation};
 var listOrders1 = ${allOrders1};
 if (listOrders1 != "") {
@@ -342,13 +351,20 @@ function displayTable(listOrders) {
 		}
 		
 		
-		
 			}
 		else
 		{
 			deleterow ="";
 		}
+		
+		if($('#ttype').val() =='1')
+		{
+		var	edit ="";
+		}
+		else
+			{
 		var edit = "<a class='edit editIt' onclick='editTask("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
+			}
 		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
 		var comment = "<a class='comment commentIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
 		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"

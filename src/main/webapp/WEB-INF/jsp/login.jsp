@@ -91,7 +91,7 @@
 		<div class="panel-footer">
 			<div class="pull-right">
 				<input type="reset" value="Reset" class="btn btn-default cancel"/>
-				<input type="submit" value="sign-in"  class="btn btn-primary">
+				<input type="submit" value="Sign-in"  class="btn btn-primary">
 			</div>
 		</div>
 		<input type="hidden" name="${_csrf.parameterName}"

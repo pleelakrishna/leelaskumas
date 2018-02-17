@@ -10,6 +10,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.mail.MessagingException;
@@ -484,6 +485,48 @@ public Set<ReportIssue> getOpenTasks(String id) {
 	// TODO Auto-generated method stub
 	return reportIssueDao.getOpenTasks(id);
 }
+
+
+public Integer getUnseenTaskCount() {
+	
+	Integer count =null;
+	
+ Map<String,Integer> list=	reportIssueDao.getCountByStatusWise();
+ 
+     for(Entry<String,Integer> entry: list.entrySet())
+     {
+    	 if(entry.getKey().equals("Assigned"))
+    		 count=entry.getValue();
+     }
+     if(null != count)
+    	return count;
+    	else
+    		
+	return 0;
+	
+	
+}
+
+public Integer getReopenTaskCount() {
+	
+	Integer count =null;
+	
+ Map<String,Integer> list=	reportIssueDao.getCountByStatusWise();
+ 
+     for(Entry<String,Integer> entry: list.entrySet())
+     {
+    	 if(entry.getKey().equals("Reopen"))
+    		 count=entry.getValue();
+     }
+     if(null != count)
+    	return count;
+    	else
+    		
+	return 0;
+	
+	
+}
+
 
 	
 	

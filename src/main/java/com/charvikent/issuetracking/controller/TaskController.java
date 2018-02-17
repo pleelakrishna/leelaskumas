@@ -395,20 +395,17 @@ public class TaskController {
 	
 	
 	
-	/*@RequestMapping(value = "/getCount")
+	@RequestMapping(value = "/getCount")
 	public @ResponseBody String getCount(ReportIssue  objorg,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
 		JSONObject jsonObj = new JSONObject();
 		Integer unseentasks =0;
 		try{
 			
  				
-			unseentasks = taskService.getCountUnseenTasks();
-			if(unseentasks!=null)
-			{
+			unseentasks = taskService.getUnseenTaskCount();
 			jsonObj.put("unseentasks",unseentasks);
-			}
-			else
-				jsonObj.put("unseentasks","0");
+			
+			jsonObj.put("reopentaskscount",taskService.getReopenTaskCount());
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -418,7 +415,6 @@ public class TaskController {
 		}
 		return String.valueOf(jsonObj);
 	}
-	*/
 	
 	@RequestMapping(value = "/openTask")
 	public @ResponseBody String opentask(ReportIssue  objorg,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {

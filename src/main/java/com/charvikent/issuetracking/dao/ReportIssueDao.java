@@ -363,7 +363,7 @@ public List<ReportIssue> getAllReportIssues()
 		slogs.setIssueid(issue.getId().toString());
 		slogs.setIassignto(id);
 		slogs.setComment(issue.getDescription());
-		slogs.setKpstatus(issue.getKstatus());
+		slogs.setKpstatus(editissue.getKstatus());
 		
 		if(issue.getUploadfile()!=null)
 	     {
@@ -386,6 +386,11 @@ public List<ReportIssue> getAllReportIssues()
 	
 
 	public  Map<String,Integer> getCountByStatusWise() {
+		
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
 
 		Map<String,Integer> statusCounts =new LinkedHashMap<String,Integer>();
 
@@ -394,8 +399,7 @@ public List<ReportIssue> getAllReportIssues()
 		try {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
-			.createNativeQuery(" select ks.name,count(*)as count from report_issue r,kpstatus ks  where  r.kstatus=ks.id group by kstatus")
-			.getResultList();
+			.createNativeQuery(" select ks.name,count(*)as count from report_issue r,kpstatus ks  where  r.kstatus=ks.id  and r.assignto =:id group by kstatus").setParameter("id", id).getResultList();
 			for (Object[] row : rows) {
 				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
 				statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
