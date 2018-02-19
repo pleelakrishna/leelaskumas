@@ -134,6 +134,13 @@ public class MastersService {
 		
 		return kpstatuesmap;
 	}
+
+
+
+	public List<Department> getAllInActiveDepartments() {
+		// TODO Auto-generated method stub
+		return mastersDao.getAllInActiveDepartments();
+	}
 	
 	
 	

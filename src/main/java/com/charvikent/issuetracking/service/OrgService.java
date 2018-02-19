@@ -74,6 +74,12 @@ public class OrgService {
 	}
 
 
+	public List<Orgnization> orgInactiveList() {
+		// TODO Auto-generated method stub
+		return orgDao.getInActiveList();
+	}
+
+
 	
 
 	

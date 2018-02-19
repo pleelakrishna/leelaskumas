@@ -66,6 +66,11 @@ public class CategoryService {
 	public boolean deleteCategory(Integer id, String status) {
 		return categoryDao.deleteCategory(id,status);
 	}
+
+	public List<Category> inActiveCategoriesList() {
+		// TODO Auto-generated method stub
+		return categoryDao.getAllInActiveList();
+	}
 	
 	
 

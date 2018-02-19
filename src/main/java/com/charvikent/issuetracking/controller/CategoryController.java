@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.charvikent.issuetracking.model.Category;
+import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.service.CategoryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -149,6 +150,43 @@ public class CategoryController {
  			}
  				
 			listOrderBeans = categoryService.cateList();
+			 objectMapper = new ObjectMapper();
+			if (listOrderBeans != null && listOrderBeans.size() > 0) {
+				
+				objectMapper = new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(listOrderBeans);
+				request.setAttribute("allOrders1", sJson);
+				jsonObj.put("allOrders1", listOrderBeans);
+				// System.out.println(sJson);
+			} else {
+				objectMapper = new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(listOrderBeans);
+				request.setAttribute("allOrders1", "''");
+				jsonObj.put("allOrders1", listOrderBeans);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+	System.out.println(e);
+			return String.valueOf(jsonObj);
+			
+		}
+		return String.valueOf(jsonObj);
+	}
+	
+	@RequestMapping(value = "/inActiveCategories")
+	public @ResponseBody String getAllActiveOrInactiveCategories(Category  objdept,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
+		List<Category> listOrderBeans  = null;
+		JSONObject jsonObj = new JSONObject();
+		ObjectMapper objectMapper = null;
+		String sJson=null;
+		try{
+			if(objdept.getStatus().equals("0"))
+				listOrderBeans = categoryService.inActiveCategoriesList();
+				else
+					listOrderBeans = categoryService.cateList();
+					
+					
+ 				
 			 objectMapper = new ObjectMapper();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				

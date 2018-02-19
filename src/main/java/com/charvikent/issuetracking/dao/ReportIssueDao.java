@@ -654,7 +654,7 @@ public List<ReportIssue> getAllReportIssues()
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,r.additionalinfo from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks , kpstatuslogs kpl  where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id  and r.additionalinfo ='0' order by kpl.statustime desc").setParameter("id",id).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,r.additionalinfo,u1.username as asby,r.assignby from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks , kpstatuslogs kpl ,kpusers u1 where  r.kstatus=ks.id and r.assignto=u.id and r.assignby =u1.id  and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id  and r.additionalinfo ='0' order by kpl.statustime desc").setParameter("id",id).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -673,6 +673,10 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setDescription((String) row[13]);
 				issue.setTaskdeadline((String) row[14]);
 				issue.setAdditionalinfo((String) row[15]);
+				
+				issue.setAssignby((String) row[16]);
+				issue.setAssignbyid((String) row[17]);
+
 				
 
 				

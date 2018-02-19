@@ -190,7 +190,7 @@ function inactiveData() {
 		var formData = new FormData();
 		formData.append('status', status);
 		
-		$.fn.makeMultipartRequest('POST', 'inActiveFillingStation', false,
+		$.fn.makeMultipartRequest('POST', 'inActiveCategories', false,
 				formData, false, 'text', function(data) {
 			var jsonobj = $.parseJSON(data);
 			var alldata = jsonobj.allOrders1;
@@ -199,6 +199,8 @@ function inactiveData() {
 				});
 		
 }
+
+
 $("#pageName").text("Category Master");
 $(".cate").addClass("active"); 
 </script>

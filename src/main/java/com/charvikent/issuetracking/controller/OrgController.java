@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.Orgnization;
 import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.OrgService;
@@ -170,6 +171,45 @@ public class OrgController {
 		}
 		return String.valueOf(jsonObj);
 	}
+	
+	
+	@RequestMapping(value = "/inActiveKPorgs")
+	public @ResponseBody String getAllActiveOrInactiveOrgnizations(Department  objdept,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
+		List<Orgnization> listOrderBeans  = null;
+		JSONObject jsonObj = new JSONObject();
+		ObjectMapper objectMapper = null;
+		String sJson=null;
+		try{
+			if(objdept.getStatus().equals("0"))
+				listOrderBeans = orgService.orgInactiveList();
+				else
+					listOrderBeans = orgService.orgList();
+					
+					
+ 				
+			 objectMapper = new ObjectMapper();
+			if (listOrderBeans != null && listOrderBeans.size() > 0) {
+				
+				objectMapper = new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(listOrderBeans);
+				request.setAttribute("allOrders1", sJson);
+				jsonObj.put("allOrders1", listOrderBeans);
+				// System.out.println(sJson);
+			} else {
+				objectMapper = new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(listOrderBeans);
+				request.setAttribute("allOrders1", "''");
+				jsonObj.put("allOrders1", listOrderBeans);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+	System.out.println(e);
+			return String.valueOf(jsonObj);
+			
+		}
+		return String.valueOf(jsonObj);
+	}
+
 	
 	
 

@@ -3,6 +3,7 @@ package com.charvikent.issuetracking.dao;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,9 +14,11 @@ import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.ReportIssue;
+import com.charvikent.issuetracking.model.User;
 
 @Repository
 public class DashBoardDao {
@@ -196,6 +199,35 @@ public class DashBoardDao {
 		return  listissue;
 
 
+	}
+
+
+	public Object getSeverityCount() {
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+
+		Map<String,Integer> statusCounts =new LinkedHashMap<String,Integer>();
+
+		Integer opentotal=0;
+
+		try {
+			@SuppressWarnings("unchecked")
+			List<Object[]> rows = em
+			.createNativeQuery(" select ks.name,count(*)as count from report_issue r,kpseverity ks  where  r.severity=ks.id  and r.assignto =:id group by severity").setParameter("id", id).getResultList();
+			for (Object[] row : rows) {
+				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
+				statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
+
+			}
+
+			statusCounts.put("Open",opentotal);
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		return opentotal;
 	}
 
 	

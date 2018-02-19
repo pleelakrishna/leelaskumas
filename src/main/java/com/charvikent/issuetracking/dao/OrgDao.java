@@ -26,7 +26,7 @@ public class OrgDao {
 	public List<Orgnization> getOrgNames()
 	 {
 		  
-		return (List<Orgnization>)entityManager.createQuery("SELECT orgnization FROM Orgnization orgnization").getResultList();
+		return (List<Orgnization>)entityManager.createQuery("from Orgnization where status='1'").getResultList();
 		 
 	 }
 
@@ -91,6 +91,12 @@ public class OrgDao {
 		return false;
 		
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Orgnization> getInActiveList() {
+		// TODO Auto-generated method stub
+		return (List<Orgnization>)entityManager.createQuery(" from Orgnization where status='0'").getResultList();
+		 	}
 	
 	
 	

@@ -122,6 +122,7 @@ public class DashBoardController {
 		
 		 model.addAttribute("statusCount" ,reportIssueService.getCountByStatusWise());
 		 model.addAttribute("gapAndCount", reportIssueService.getGapAndCount());
+		 model.addAttribute("severityCount",dashBoardService.getSeverityWiseCount() );
 		return "dashBoard";
 		
 	}

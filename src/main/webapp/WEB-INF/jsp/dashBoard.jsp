@@ -129,7 +129,7 @@
 				<div class="panel panel-primary">
 				
 					<div class="panel-heading">
-						<h4>Task List</h4>
+						<h4>Unread Tasks List</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 					<div class="panel-body collapse in">
@@ -182,7 +182,7 @@ $('.dashBoard').on('click', function(){
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="notification" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned</th><th>Created Time</th><th>Description</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned By</th><th>Created Time</th><th>Description</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -206,7 +206,7 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
 			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
 			+ "<td title='"+orderObj.priority+"'>"+ orderObj.priority + "</td>"
-			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
+			+ "<td title='"+orderObj.assignby+"'>"+ orderObj.assignby + "</td>"
 			+ "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>"
 			+ "<td title='"+orderObj.description+"'>"+ orderObj.description + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + deleterow +  "</td>" 
@@ -223,9 +223,8 @@ function displayTable(listOrders) {
     	var checkstr=null;
     	if(status == 0	){
     		status=1;
-    		 checkstr = confirm('Do you want to Task acknowledged');
+    	 alert('Task Marked as Read');
     	}
-    	if(checkstr == true){
     		var formData = new FormData();
     	    formData.append('id', id);
     	    formData.append('additionalinfo', status);
@@ -233,9 +232,13 @@ function displayTable(listOrders) {
     			var jsonobj = $.parseJSON(data);
     			var alldata = jsonobj.allOrders1;
     			var result=$.parseJSON(alldata);
-    			displayTable(result);
+    			if(result.length>0)
+    			displayTable(result)
+    			else
+    				location.reload()
+    				
     		});
-    	}
+    	
     }
     
     

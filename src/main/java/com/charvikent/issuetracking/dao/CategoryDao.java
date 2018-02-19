@@ -24,7 +24,7 @@ public class CategoryDao {
 	public List<Category> getCategoryNames()
 	 {
 
-		return entityManager.createQuery("SELECT category FROM Category category").getResultList();
+		return entityManager.createQuery("  from Category where status='1'").getResultList();
 
 	 }
 	public Category getCategoryNameById(Category cate) {
@@ -62,5 +62,10 @@ public class CategoryDao {
 			e.printStackTrace();
 		}
 		return delete;
+	}
+
+	public List<Category> getAllInActiveList() {
+		// TODO Auto-generated method stub
+		return entityManager.createQuery("  from Category where status='0'").getResultList();
 	}
 }

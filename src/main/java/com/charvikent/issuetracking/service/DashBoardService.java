@@ -68,6 +68,11 @@ public Set getIssuesByAssignToUnderMonitor(String rto) {
 		return listissue;
 	}
 
+public Object getSeverityWiseCount() {
+	// TODO Auto-generated method stub
+	return dashBoardDao.getSeverityCount();
+}
+
 
 
 
