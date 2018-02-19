@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.charvikent.issuetracking.config.SendSMS;
@@ -129,12 +130,17 @@ public class UserService {
 
 	public Map<Integer, String> getUserName()
 	{
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		Map<Integer, String> rolesMap = new LinkedHashMap<Integer, String>();
 		try
 		{
 		List<User> rolesList= userDao.getUserNames();
 		for(User bean: rolesList){
+			if(bean.getId()!=(objuserBean.getId()))
+			{
 			rolesMap.put(bean.getId(), bean.getUsername());
+			}
 		}
 
 	} catch (Exception e) {
@@ -162,6 +168,11 @@ public class UserService {
 		       }
 	}
 		return false;
+	}
+
+	public User getUserByObject(User user) {
+		// TODO Auto-generated method stub
+		return userDao.getUserByObject(user);
 	}
 
 

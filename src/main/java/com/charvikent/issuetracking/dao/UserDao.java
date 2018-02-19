@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -280,13 +281,32 @@ public class UserDao {
 	@SuppressWarnings("unchecked")
 	public List<String> findRoleByUserName(String Username)
 	{
-		List<String> list= em.createNativeQuery("SELECT d.name FROM  kpusers k,kpdesignation d where k.designation=d.id and k.username=:Custname").setParameter("Custname", Username).getResultList();
+		//List<String> list= em.createNativeQuery("SELECT d.name FROM  kpusers u,kpdesignation d,kpmultiroles m  where u.designation=d.id  and k.username=:Custname").setParameter("Custname", Username).getResultList();
+		//List<String> list= em.createNativeQuery("select m.desigrole from kpusers u,kpdesignation d,kpmultiroles m  where u.designation=d.id and m.designationid=u.designation and u.username =:Custname").setParameter("Custname", Username).getResultList();
+		List<String> list= em.createNativeQuery("select m.desigrole from kpusers u,kpmultiroles m  where  m.designationid=u.designation and u.username =:Custname").setParameter("Custname", Username).getResultList();
+		
+		
 		System.out.println(list);
 		return list;
 		
 
 	}
 
+	public User getUserByObject(User user) {
+		
+		String hql ="from User where username =:n";
+				
+		Query query =em.createQuery(hql);	
+		query.setParameter("n", user.getUsername());
+		
+		List<User>usersList =query.getResultList();
+		if(usersList.isEmpty())
+               return null;
+               else
+		return usersList.get(0);
+	}
+
+	
 
 
 

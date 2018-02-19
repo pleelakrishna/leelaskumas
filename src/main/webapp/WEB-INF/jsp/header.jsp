@@ -226,7 +226,7 @@ function toolTips(){
 	                            <li class="divider"></li>
 	                            <c:url value="${peContext.request.contextPath}/logout" var="logoutUrl" />
 	
-	                            <li><a href="<c:url value="${baseurl}/logout" />"> Sign Out</a></li>
+	                           <li><a href="<c:url value="${baseurl}/logout" />"> Sign Out</a></li>
 	                        </ul>
 	                    </li>
 	                </ul>

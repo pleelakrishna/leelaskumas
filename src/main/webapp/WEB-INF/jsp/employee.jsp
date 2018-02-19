@@ -41,7 +41,7 @@
 					</div>
 					
 					<form:form modelAttribute="userForm" action="employee" class="form-horizontal " method="Post">
-	
+	                  <form:hidden path="id"/>
 					<div class="col-md-6"><br>
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Username</label>
@@ -174,6 +174,7 @@ function displayTable(listOrders) {
 
 
 function editEmployee(id) {
+	
 	$("#id").val(serviceUnitArray[id].id);
 	$("#username").val(serviceUnitArray[id].username);
 	$("#password").val(serviceUnitArray[id].password);
@@ -209,6 +210,42 @@ function deleteEmployee(id,status){
 }
 
 
+
+$('#username').blur(function() {
+	var username=$(this).val();
+
+	$.ajax({
+				type : "GET",
+				url : "getUserName",
+				data : {"username":username},
+				dataType : "text",
+				beforeSend : function() {
+		             $.blockUI({ message: 'Please wait' });
+		          }, 
+				success : function(data) {
+					if(data ==='true')
+						{
+						//alert("username already exists")
+	 					$('#username').css('border-color', 'red');
+						 $('#submit1').prop('disabled', true);
+						}
+					else
+						{
+						$('#username').css('border-color', 'none');
+						$('#submit1').prop('disabled', false);
+						}
+					
+				},
+				complete: function () {
+		            
+		            $.unblockUI();
+		       },
+				error :  function(e){$.unblockUI();console.log(e);}
+				
+			});
+
+		}); 
+		
 
 
 

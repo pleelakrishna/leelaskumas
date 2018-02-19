@@ -308,7 +308,25 @@ $("#taskdeadline").keypress(function(){
 	return false;
 })
 
+
+function makeEmpty()
+{
+	
+	$('#taskdeadline').val(" ");
+	$('#subject').val(" ");
+	$('#category').val("");
+	$('#priority').val("");
+	$("#severity").val("");
+	$("#assignto").val("");
+	$("#description").val("");
+	
+	}
+
 $(document).ready(function () {
+	//$("#taskdeadline").attr("disabled", "disabled"); 
+	
+	
+	
 // 	$("#taskdeadline").attr('readonly', 'readonly');
 	 $('#taskdeadline').datetimepicker({        
 
@@ -337,7 +355,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned</th><th>Created Time</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned By</th><th>Assigned To</th><th>Created Time</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -374,6 +392,7 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
 			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
 			+ "<td title='"+orderObj.priority+"'>"+ orderObj.priority + "</td>"
+			+ "<td title='"+orderObj.assignby+"'>"+ orderObj.assignby + "</td>"
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
 			+ "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time + "</td>" 
@@ -391,6 +410,7 @@ function editTask(id) {
 	$("#category").val(serviceUnitArray[id].categoryid);
 	$("#severity").val(serviceUnitArray[id].severityid);
 	$("#priority").val(serviceUnitArray[id].priorityid);
+	$("#assignby").val(serviceUnitArray[id].assignbyid);
 	$("#assignto").val(serviceUnitArray[id].assigntoid);
 	$("#uploadfile").val(serviceUnitArray[id].uploadfile);
 	$("#description").val(serviceUnitArray[id].description);
@@ -549,6 +569,7 @@ $('#ttype').on('change', function() {
 		var alldata = jsonobj.list;
 			displayTable(alldata);
 			toolTips()
+			makeEmpty()
 				
 	 });
 	})
@@ -563,6 +584,7 @@ $('#ttype').on('change', function() {
 			var myJSON = JSON.stringify(alldata);
 				displayTable(alldata);
 				toolTips()
+				makeEmpty()
 		 });
 	})
 	

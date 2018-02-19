@@ -93,7 +93,7 @@ public class EmployeeController {
 			User userBean=null;
 			if(user.getId()!=null)
 			{
-			  userBean= userService.getUserById(user.getId());
+			  userBean= userService.getUserByObject(user);
 			
 			}
 			int dummyId =0;
@@ -219,6 +219,16 @@ public class EmployeeController {
 
 
 
+	}
+	
+	
+	@RequestMapping("/getUserName")
+	public  @ResponseBody  Boolean getUserName(HttpServletRequest request, HttpSession session)
+	{
+		String username=request.getParameter("username");
+
+		username = username.replaceAll("\\s+","");
+		return userService.checkUserExist(username);
 	}
 
 

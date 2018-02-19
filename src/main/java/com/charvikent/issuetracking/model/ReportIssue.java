@@ -59,10 +59,19 @@ public class ReportIssue  {
 	private String priorityid;
 	@Transient
 	private String  severityid;
+	@Transient
+	private String assignbyid;
 	
 	
 	
 	
+	
+	public String getAssignbyid() {
+		return assignbyid;
+	}
+	public void setAssignbyid(String assignbyid) {
+		this.assignbyid = assignbyid;
+	}
 	public String getTaskno() {
 		return taskno;
 	}
