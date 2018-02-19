@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     .usernameParameter("username").passwordParameter("password")
     .defaultSuccessUrl("/dashBoard")
     .and()
-    .logout()
+    .logout().logoutUrl("/logOutKptms")
     .logoutSuccessUrl("/") 
    .and()
    .exceptionHandling().accessDeniedPage("/403")

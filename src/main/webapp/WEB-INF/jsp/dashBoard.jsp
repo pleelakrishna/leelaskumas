@@ -15,6 +15,13 @@
 			
 			<div class="page-content">
 			
+			<c:forEach var="issue" items="${severityCount}">
+			<div class="btn-toolbar pull-left">
+		                    <a href="severity?id=${issue.key}" class="btn btn-danger "><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		                    		                </div>
+		                </c:forEach>
+		                
+			
 				<div class="row" style="background: white;">
 							<div class="col-md-12">
 

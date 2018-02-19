@@ -202,7 +202,7 @@ public class DashBoardDao {
 	}
 
 
-	public Object getSeverityCount() {
+	public Map<String,Integer> getSeverityCount() {
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
@@ -215,7 +215,8 @@ public class DashBoardDao {
 		try {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
-			.createNativeQuery(" select ks.name,count(*)as count from report_issue r,kpseverity ks  where  r.severity=ks.id  and r.assignto =:id group by severity").setParameter("id", id).getResultList();
+			.createNativeQuery(" select ks.severity,count(*)as count from report_issue r,kpseverity ks" + 
+					" where  r.severity=ks.id  and r.assignto =:id  and r.kstatus in(2,3) group by severity").setParameter("id", id).getResultList();
 			for (Object[] row : rows) {
 				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
 				statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
@@ -227,7 +228,7 @@ public class DashBoardDao {
 			System.out.println("error here");
 			e.printStackTrace();
 		}
-		return opentotal;
+		return statusCounts;
 	}
 
 	

@@ -42,7 +42,7 @@ public class HomeController {
 		return "login";
 	}
 	
-	@RequestMapping("/logout")
+	@RequestMapping("/logOutKptms")
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 		//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		

@@ -224,9 +224,9 @@ function toolTips(){
 	                            <li><a href="#">Edit Profile <i class="pull-right fa fa-pencil"></i></a></li>
 	                            <li><a href="changePassword">Change Password <i class="pull-right fa fa-cog"></i></a></li>
 	                            <li class="divider"></li>
-	                            <c:url value="${peContext.request.contextPath}/logout" var="logoutUrl" />
+	                         <%--    <c:url value="${peContext.request.contextPath}/logout" var="logoutUrl" /> --%>
 	
-	                           <li><a href="<c:url value="${baseurl}/logout" />"> Sign Out</a></li>
+	                           <li><a href="<c:url value="${baseurl}/logOutKptms" />"> Sign Out</a></li>
 	                        </ul>
 	                    </li>
 	                </ul>
