@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -215,11 +216,24 @@ public class DashBoardDao {
 		try {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
-			.createNativeQuery(" select ks.name,count(*)as count from report_issue r,kpseverity ks  where  r.severity=ks.id  and r.assignto =:id group by severity").setParameter("id", id).getResultList();
+			.createNativeQuery(" select ks.severity,count(*)as count from report_issue r,kpseverity ks  where  r.severity=ks.id  and r.assignto =:id  and r.kstatus in(2,3) group by severity").setParameter("id", id).getResultList();
 			for (Object[] row : rows) {
+				
 				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
+				if(row[0].equals("Minor"))
 				statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
-
+				else
+				statusCounts.put("Minor", 0);	
+				
+				if(row[0].equals("Major"))
+					statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
+					else
+					statusCounts.put("Major", 0);	
+				
+				if(row[0].equals("Critical"))
+					statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
+					else
+					statusCounts.put("Critical", 0);
 			}
 
 			statusCounts.put("Open",opentotal);
@@ -227,6 +241,10 @@ public class DashBoardDao {
 			System.out.println("error here");
 			e.printStackTrace();
 		}
+		
+		
+		for(Entry<String,Integer> entry :statusCounts.entrySet())
+			System.out.println(entry.getKey()+" ......"+entry.getValue());
 		return opentotal;
 	}
 
