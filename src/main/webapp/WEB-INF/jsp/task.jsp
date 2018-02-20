@@ -250,7 +250,7 @@
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Comment <span class="impColor">*</span></label>
 									<div class="col-md-6">
-									<input type="text"  name="commet" id="commet"  onkeyup="removeBorder(this.id)" class="form-control validate2" readonly="readonly" placeholder="Enter commit" style="width: 320px;">
+									<input type="text"  name="commet" id="commet"  onkeyup="removeBorder(this.id)" class="form-control validate2"  placeholder="Enter commit" style="width: 320px;">
 									<span class="hasError" id="stationnameError"></span>
 								    </div>
                     			</div>

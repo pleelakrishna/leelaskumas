@@ -105,6 +105,11 @@ public Map<String,Integer> getSeverityWiseCount() {
 	return Severitymap;
 }
 
+public List<ReportIssue> getTasksBySeverity(String id) {
+	// TODO Auto-generated method stub
+	return dashBoardDao.getTasksBySeverity(id);
+}
+
 
 
 

@@ -1,8 +1,24 @@
+<style>
+.btn-toolbar {
+    margin-left: 5px;
+}
+
+
+   
+
+
+
+</style>
+
+
+
 <!-- Body starts here -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+
 <!-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script> -->
 <!-- Body starts here -->
 	<div class="main-content">
@@ -12,14 +28,27 @@
 					<li class="">Dashboard</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
-			
-			<div class="page-content">
+			<br>
+			<div class="page-content container">
 			
 			<c:forEach var="issue" items="${severityCount}">
+			<c:set var="String" value="${issue.key}"/>  
+			<c:if test="${fn:contains(String, 'Critical')}"> 
+			<div class="btn-toolbar pull-left" style=margin-left:5px !important">
+		                    <a href="severity?id=${issue.key}" class="btn btn-danger " style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		   </div>
+		   </c:if>
+		   <c:if test="${fn:contains(String, 'Major')}"> 
 			<div class="btn-toolbar pull-left">
-		                    <a href="severity?id=${issue.key}" class="btn btn-danger "><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
-		                    		                </div>
-		                </c:forEach>
+		                    <a href="severity?id=${issue.key}" class="btn btn-warning "  style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		   </div>
+		   </c:if>
+		   <c:if test="${fn:contains(String, 'Minor')}"> 
+			<div class="btn-toolbar pull-left">
+		                    <a href="severity?id=${issue.key}" class="btn btn-primary "  style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		   </div>
+		   </c:if>
+		      </c:forEach>
 		                
 			
 				<div class="row" style="background: white;">
