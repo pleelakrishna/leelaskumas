@@ -1,7 +1,10 @@
 package com.charvikent.issuetracking.service;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -68,9 +71,38 @@ public Set getIssuesByAssignToUnderMonitor(String rto) {
 		return listissue;
 	}
 
-public Object getSeverityWiseCount() {
-	// TODO Auto-generated method stub
-	return dashBoardDao.getSeverityCount();
+public Map<String,Integer> getSeverityWiseCount() {
+	Map<String,Integer> obj= dashBoardDao.getSeverityCount();
+	
+	Map<String,Integer> Severitymap= new LinkedHashMap<String,Integer>();
+	 
+	Integer criticalCount =0;
+	Integer MajorCount =0;
+	Integer MinorCount =0;
+	
+	 for(Entry<String,Integer> entry:obj.entrySet())
+	 {
+		 System.out.println(entry.getKey()+" ....."+entry.getValue());
+	         if(entry.getKey().equals("Critical"))
+	        	 criticalCount=entry.getValue();
+	         else if(entry.getKey().equals("Major"))
+	        	 MajorCount=entry.getValue();
+	         else if(entry.getKey().equals("Minor"))
+	        	 MinorCount=entry.getValue();
+	        	 
+	        	 
+	        	 
+	 }
+	 
+	 Severitymap.put("Critical",criticalCount);
+	 
+	 Severitymap.put("Major",MajorCount);
+	 
+	 Severitymap.put("Minor",MinorCount);
+	 
+	 
+	  
+	return Severitymap;
 }
 
 

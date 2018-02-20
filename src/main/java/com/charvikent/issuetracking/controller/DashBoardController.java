@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.DashBoardService;
 import com.charvikent.issuetracking.service.ReportIssueService;
 
@@ -126,6 +128,16 @@ public class DashBoardController {
 		return "dashBoard";
 		
 	}
+	
+	
+	@RequestMapping(value = "/severity")
+	public String tasksFilter(	@RequestParam(value="id", required=true) String id,Model model){
+		
+		
+		return "tasksFilter";
+
+	}
+
 	
 	
 	
