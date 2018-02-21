@@ -13,6 +13,8 @@ import java.util.TreeSet;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
@@ -22,6 +24,8 @@ import com.charvikent.issuetracking.model.User;
 
 @Repository
 public class DashBoardDao {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DashBoardDao.class);
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -34,6 +38,8 @@ public class DashBoardDao {
 	
 	public Set<ReportIssue> getIssuesAssignBy(String id) {
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
+		
+		LOGGER.debug("In getIssuesAssignBy calling createQuery with id {}", id);
 
 		try {
 			@SuppressWarnings("unchecked")
@@ -68,6 +74,9 @@ public class DashBoardDao {
 	
 	 public static Integer assigntocount =null;
 	public Set getIssuesAssignTo(String id) {
+		
+		
+		LOGGER.debug("In getIssuesAssignTo calling createNativeQuery with AssignTo {}", id);
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
 		try {
@@ -108,6 +117,8 @@ public class DashBoardDao {
 	public Set getIssuesAssignToResolved(String id) {
 		//List<ReportIssue> listissue=new ArrayList<>();
 		
+		LOGGER.debug("In getIssuesAssignToResolved calling createQuery with AssignTo {}", id);
+		
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
 		try {
@@ -146,6 +157,9 @@ public class DashBoardDao {
 	
 	@SuppressWarnings("unchecked")
 	public Map<Integer, Integer>  getGapAndCountForClosed() {
+		
+		
+		LOGGER.debug("In getGapAndCountForClosed calling createNativeQuery ");
 
 		List<ReportIssue> listissuegap=new ArrayList<>();
 		ReportIssue issuegap =null;
@@ -170,6 +184,9 @@ public class DashBoardDao {
 
 	@SuppressWarnings("unchecked")
 	public  Set<ReportIssue> getRecentlyModified(String id) {
+		
+		
+		LOGGER.debug("In getRecentlyModified calling createNativeQuery with assignTo{} ",id);
 
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
@@ -209,7 +226,7 @@ public class DashBoardDao {
 		/*User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
 		*/
-		
+		LOGGER.debug("In getSeverityCount calling createQuery with AssignTo {}", id);
 
 		Map<String,Integer> statusCounts =new LinkedHashMap<String,Integer>();
 
@@ -243,7 +260,8 @@ public class DashBoardDao {
 		String uid=String.valueOf(objuserBean.getId());
 		List<ReportIssue> listissue=new LinkedList<ReportIssue>();
 		
-		
+		LOGGER.debug("In getSeverityCount calling createQuery with AssignTo {}", sev);
+
 		/*String hql ="select r.id,r.taskno,r.subject,c.category as cname ,r.category,p.priority as pname,r.priority,ks.severity ksname,r.severity,r.assignto,u.username  as asto,r.assignby,u1.username as asby, r.created_time"+
 				    "from report_issue r,kpseverity ks,kpcategory  c, kppriority p, kpusers u, kpusers u1"+
 				    "where  r.assignby=u1.id and p.id=r.priority  and c.id=r.category and  r.severity=ks.id  and r.assignto =u.id and"+
@@ -294,6 +312,8 @@ public Map<String,Integer> getSeverityCountsByassignedBy(String id) {
 		/*User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());*/
 		
+	LOGGER.debug("In getSeverityCountsByassignedBy calling createQuery with AssignBy {}", id);
+
 
 		Map<String,Integer> statusCounts =new LinkedHashMap<String,Integer>();
 
@@ -328,6 +348,9 @@ public List<ReportIssue> getTasksBySeverityOnAssignedBy(String sev) {
 	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	String uid=String.valueOf(objuserBean.getId());
 	List<ReportIssue> listissue=new LinkedList<ReportIssue>();
+	
+	LOGGER.debug("In getTasksBySeverityOnAssignedBy calling createQuery with AssignBy {}", sev);
+
 	
 	try {
 		@SuppressWarnings("unchecked")
@@ -380,7 +403,8 @@ public List<ReportIssue> getTasksBySeverityOnAssignedBy(String sev) {
 
 public Map<String, Integer> getSeverityCountsUnderReportTo()
 {
-	
+	LOGGER.debug("In getSeverityCountsUnderReportTo calling createnativeQuery");
+
 	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	String id=String.valueOf(objuserBean.getId());
 	
