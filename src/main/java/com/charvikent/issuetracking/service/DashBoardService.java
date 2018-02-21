@@ -2,6 +2,7 @@ package com.charvikent.issuetracking.service;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -9,11 +10,13 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.charvikent.issuetracking.dao.DashBoardDao;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.ReportIssue;
+import com.charvikent.issuetracking.model.User;
 
 @Service
 public class DashBoardService {
@@ -37,6 +40,10 @@ public class DashBoardService {
 		return dashBoardDao.getIssuesAssignTo(id);
 	}  
 	*/
+	
+	
+	
+	
 	public Set getIssuesByAssignToResolved(String id) {
 		 
 		return dashBoardDao.getIssuesAssignToResolved(id);
@@ -72,7 +79,9 @@ public Set getIssuesByAssignToUnderMonitor(String rto) {
 	}
 
 public Map<String,Integer> getSeverityWiseCount() {
-	Map<String,Integer> obj= dashBoardDao.getSeverityCount();
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getId());
+	Map<String,Integer> obj= dashBoardDao.getSeverityCount(id);
 	
 	Map<String,Integer> Severitymap= new LinkedHashMap<String,Integer>();
 	 
@@ -82,7 +91,6 @@ public Map<String,Integer> getSeverityWiseCount() {
 	
 	 for(Entry<String,Integer> entry:obj.entrySet())
 	 {
-		 System.out.println(entry.getKey()+" ....."+entry.getValue());
 	         if(entry.getKey().equals("Critical"))
 	        	 criticalCount=entry.getValue();
 	         else if(entry.getKey().equals("Major"))
@@ -105,9 +113,60 @@ public Map<String,Integer> getSeverityWiseCount() {
 	return Severitymap;
 }
 
+
+
+
 public List<ReportIssue> getTasksBySeverity(String id) {
 	// TODO Auto-generated method stub
 	return dashBoardDao.getTasksBySeverity(id);
+}
+
+
+
+public Map<String,Integer> getSeverityWiseCountsByAssignedBy() {
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getId());
+	Map<String,Integer> obj= dashBoardDao.getSeverityCountsByassignedBy(id);
+	
+	Map<String,Integer> Severitymap= new LinkedHashMap<String,Integer>();
+	 
+	Integer criticalCount =0;
+	Integer MajorCount =0;
+	Integer MinorCount =0;
+	
+	 for(Entry<String,Integer> entry:obj.entrySet())
+	 {
+		 System.out.println(entry.getKey()+" ....."+entry.getValue());
+	         if(entry.getKey().equals("Critical"))
+	        	 criticalCount=entry.getValue();
+	         else if(entry.getKey().equals("Major"))
+	        	 MajorCount=entry.getValue();
+	         else if(entry.getKey().equals("Minor"))
+	        	 MinorCount=entry.getValue();
+	 }
+	 
+	 Severitymap.put("Critical",criticalCount);
+	 
+	 Severitymap.put("Major",MajorCount);
+	 
+	 Severitymap.put("Minor",MinorCount);
+	 
+	 
+	  
+	return Severitymap;
+}
+
+
+public List<ReportIssue> getTasksBySeverityOnAssignedBy(String sev) {
+	// TODO Auto-generated method stub
+	return dashBoardDao.getTasksBySeverityOnAssignedBy(sev);
+}
+
+	
+
+public  Map<String, Integer> getSeverityCountsUnderReportTo() {
+	return  dashBoardDao.getSeverityCountsUnderReportTo();
+	
 }
 
 

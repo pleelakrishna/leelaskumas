@@ -161,13 +161,18 @@ public class DashBoardController {
 		 model.addAttribute("statusCount" ,reportIssueService.getCountByStatusWise());
 		 model.addAttribute("gapAndCount", reportIssueService.getGapAndCount());
 		 model.addAttribute("severityCount",dashBoardService.getSeverityWiseCount() );
-		return "dashBoard";
+		 model.addAttribute("severityCountsBY",dashBoardService.getSeverityWiseCountsByAssignedBy() );
+		 
+		 model.addAttribute("SevMonitoredCounts", dashBoardService.getSeverityCountsUnderReportTo());
+		 	
+		 
+		 return "dashBoard";
 		
 	}
 	
 	
 	@RequestMapping(value = "/severity")
-	public String tasksFilter(	@RequestParam(value="id", required=true) String sev,Model model,HttpServletRequest request,HttpSession session){
+	public String  tasksFilterByseverityOnAssignedTo(	@RequestParam(value="id", required=true) String sev,Model model,HttpServletRequest request,HttpSession session){
 		List<ReportIssue> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
@@ -193,6 +198,57 @@ public class DashBoardController {
 		
 			try {
 				listOrderBeans = dashBoardService.getTasksBySeverity(sev);
+				if (listOrderBeans != null && listOrderBeans.size() > 0) {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", sJson);
+					// System.out.println(sJson);
+				} else {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", "''");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e);
+
+			}
+			
+			
+			return "task";
+
+	}
+	
+	
+	
+	@RequestMapping(value = "/severityby")
+	public String tasksFilterByseverityOnAssignedBY(	@RequestParam(value="id", required=true) String sev,Model model,HttpServletRequest request,HttpSession session){
+		List<ReportIssue> listOrderBeans = null;
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		
+		model.addAttribute("taskf", new ReportIssue());
+		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		//model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		model.addAttribute("kpstatuses", mastersService.getKpStatues());
+		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
+		
+		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+		model.addAttribute("objuserBean", objuserBean);
+		
+			
+		
+			try {
+				listOrderBeans = dashBoardService.getTasksBySeverityOnAssignedBy(sev);
 				if (listOrderBeans != null && listOrderBeans.size() > 0) {
 					objectMapper = new ObjectMapper();
 					sJson = objectMapper.writeValueAsString(listOrderBeans);

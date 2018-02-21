@@ -7,13 +7,11 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,8 +25,10 @@ public class DashBoardDao {
 	
 	@PersistenceContext
 	private EntityManager em;
+	
 	@Autowired
-	HttpSession session;
+	UserDao userDao;
+	
 	
 	
 	
@@ -204,10 +204,11 @@ public class DashBoardDao {
 	}
 
 
-	public Map<String,Integer> getSeverityCount() {
+	public Map<String,Integer> getSeverityCount(String id) {
 		
-		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		/*User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
+		*/
 		
 
 		Map<String,Integer> statusCounts =new LinkedHashMap<String,Integer>();
@@ -233,8 +234,6 @@ public class DashBoardDao {
 		}
 		
 		
-		for(Entry<String,Integer> entry :statusCounts.entrySet())
-			System.out.println(entry.getKey()+" ......"+entry.getValue());
 		return statusCounts;
 	}
 
@@ -288,6 +287,163 @@ public class DashBoardDao {
 		}
 		return listissue;
 	}
+	
+	
+public Map<String,Integer> getSeverityCountsByassignedBy(String id) {
+		
+		/*User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());*/
+		
+
+		Map<String,Integer> statusCounts =new LinkedHashMap<String,Integer>();
+
+		Integer opentotal=0;
+
+		try {
+			@SuppressWarnings("unchecked")
+			List<Object[]> rows = em
+			.createNativeQuery(" select ks.severity,count(*)as count from report_issue r,kpseverity ks" + 
+					" where  r.severity=ks.id  and r.assignby =:id  and r.kstatus in(2,3) group by severity").setParameter("id", id).getResultList();
+			for (Object[] row : rows) {
+				
+				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
+				statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
+				
+			}
+
+			statusCounts.put("Open",opentotal);
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		
+		return statusCounts;
+	}
+
+
+
+
+public List<ReportIssue> getTasksBySeverityOnAssignedBy(String sev) {
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String uid=String.valueOf(objuserBean.getId());
+	List<ReportIssue> listissue=new LinkedList<ReportIssue>();
+	
+	try {
+		@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery("select r.id,r.taskno,r.subject,c.category as cname ,r.category,p.priority as pname,r.priority,ks.severity ksname,r.severity,r.assignto,u.username  as asto,r.assignby,u1.username as asby, r.created_time,r.taskdeadline ,r.description,r.status,r.kstatus  from report_issue r,kpseverity ks,kpcategory  c, kppriority p, kpusers u, kpusers u1  where  r.assignby=u1.id and p.id=r.priority  and c.id=r.category and  r.severity=ks.id  and r.assignto =u.id and  r.assignby =:uid and r.kstatus in(2,3)  and ks.severity=:sev").setParameter("uid",uid).setParameter("sev",sev ).getResultList();
+		for (Object[] row : rows) {
+			ReportIssue issue = new ReportIssue();
+			issue.setId(Integer.parseInt(String.valueOf(row[0])));
+			issue.setTaskno((String) row[1]);
+			issue.setSubject((String) row[2]);
+			issue.setCategory((String) row[3]);
+			issue.setCategoryid((String) row[4]);
+			issue.setPriority((String) row[5]);
+			issue.setPriorityid((String) row[6]);
+			
+			issue.setSeverity((String) row[7]);
+			issue.setSeverityid((String) row[8]);
+			
+			issue.setAssignto((String) row[10]);
+			issue.setAssigntoid((String) row[9]);
+			issue.setAssignbyid((String) row[11]);
+			issue.setAssignby((String) row[12]);
+			
+			issue.setCreatedTime((Date) row[13]);
+			
+			issue.setTaskdeadline((String) row[14]);
+			issue.setDescription((String) row[15]);
+			
+			
+			issue.setStatus((String) row[16]);
+			//issue.setKstatus((String) row[17]);
+			
+			listissue.add(issue);
+
+		}
+	} catch (Exception e) {
+		System.out.println("error here");
+		e.printStackTrace();
+	}
+	return listissue;
+}
+
+
+
+
+
+
+
+
+
+
+public Map<String, Integer> getSeverityCountsUnderReportTo()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getId());
+	
+	List<String> monitorList=userDao.getUsersUnderReportTo(id);
+	
+	Map<String,Integer> severityList=new LinkedHashMap<String,Integer>();
+	
+	
+	String hql ="select severity,count(*) as scount from report_issue where assignto=:id group by severity";
+	
+	Integer minor=0;
+	Integer major=0;
+	Integer critical=0;
+	
+	for(String id2:monitorList)
+	{
+		List<Object[]> rows= em.createNativeQuery(hql).setParameter("id", id2).getResultList();
+		
+         for (Object[] row : rows) {
+        	 if(row[0].equals("1"))
+        	 minor=minor+Integer.parseInt(String.valueOf(row[1]));
+        	 else if(row[0].equals("2"))
+        	 major=major+Integer.parseInt(String.valueOf(row[1]));
+        	 else if(row[0].equals("3"))
+        	 critical=critical+Integer.parseInt(String.valueOf(row[1]));
+		}
+	
+	}
+	
+	severityList.put("Critical",critical);
+	severityList.put("Major",major);
+	severityList.put("Minor",minor);
+	
+	
+	return severityList;
+	
+	
+	
+	
+
+	
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	
 
