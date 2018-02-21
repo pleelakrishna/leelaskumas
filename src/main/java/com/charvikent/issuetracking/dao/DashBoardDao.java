@@ -251,7 +251,7 @@ public class DashBoardDao {
 				    " r.assignto =:uid  and r.kstatus in(2,3)  and ks.severity=:sev";*/
 		try {
 			@SuppressWarnings("unchecked")
-			List<Object[]> rows = em.createNativeQuery("select r.id,r.taskno,r.subject,c.category as cname ,r.category,p.priority as pname,r.priority,ks.severity ksname,r.severity,r.assignto,u.username  as asto,r.assignby,u1.username as asby, r.created_time,r.taskdeadline ,r.description  from report_issue r,kpseverity ks,kpcategory  c, kppriority p, kpusers u, kpusers u1  where  r.assignby=u1.id and p.id=r.priority  and c.id=r.category and  r.severity=ks.id  and r.assignto =u.id and  r.assignto =:uid and r.kstatus in(2,3)  and ks.severity=:sev").setParameter("uid",uid).setParameter("sev",sev ).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select r.id,r.taskno,r.subject,c.category as cname ,r.category,p.priority as pname,r.priority,ks.severity ksname,r.severity,r.assignto,u.username  as asto,r.assignby,u1.username as asby, r.created_time,r.taskdeadline ,r.description,r.status,r.kstatus  from report_issue r,kpseverity ks,kpcategory  c, kppriority p, kpusers u, kpusers u1  where  r.assignby=u1.id and p.id=r.priority  and c.id=r.category and  r.severity=ks.id  and r.assignto =u.id and  r.assignto =:uid and r.kstatus in(2,3)  and ks.severity=:sev").setParameter("uid",uid).setParameter("sev",sev ).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -274,6 +274,10 @@ public class DashBoardDao {
 				
 				issue.setTaskdeadline((String) row[14]);
 				issue.setDescription((String) row[15]);
+				
+				
+				issue.setStatus((String) row[16]);
+				//issue.setKstatus((String) row[17]);
 				
 				listissue.add(issue);
 

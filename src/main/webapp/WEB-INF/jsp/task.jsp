@@ -229,6 +229,7 @@
                     				
 									<label for="focusedinput" class="col-md-6 control-label">Status  <span class="impColor">*</span></label>
 										<select  name="kpstatus" id="kpstatus" class="col-xs-10 col-sm-5  validate2 " >
+											<option value="">--select-- </option>
 											<c:forEach var="list" items="${kpstatuses}">
 											<option value=${list.key}>${list.value} </option>
 											</c:forEach>
@@ -709,16 +710,19 @@ $('#kpstatus').on('change',function() {
 		{
 		
 		alert("you are not authorized to close ticket");
-		$('#kstatus').css('border-color', 'red');
-		$('#kstatus').val("");
-		$('modelSubmit').prop('disabled',true)
+		$('#kpstatus').css('border-color', 'red');
+		$('#kpstatus').val("");
+		$('#modelSubmit').prop('disabled',true)
 		}
 	else
 		{
 		
-		$('modelSubmit').prop('disabled',false)
+		$('#modelSubmit').prop('disabled',false);
 		}
 	
+		}else{
+			$('#modelSubmit').prop('disabled',false);
+			$('#kpstatus').css('border-color', 'black');
 		}
 });
 
