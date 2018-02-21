@@ -169,6 +169,11 @@ public  Map<String, Integer> getSeverityCountsUnderReportTo() {
 	
 }
 
+public void GetTaskBySeverityUnderReportTo() {
+	// TODO Auto-generated method stub
+	dashBoardDao.GetTaskBySeverityUnderReportTo();
+}
+
 
 
 

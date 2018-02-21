@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
+import com.charvikent.issuetracking.service.ReportIssueService;
 
 @Repository
 public class DashBoardDao {
@@ -32,6 +34,9 @@ public class DashBoardDao {
 	
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	ReportIssueService taskService;
 	
 	
 	
@@ -453,7 +458,40 @@ public Map<String, Integer> getSeverityCountsUnderReportTo()
 
 
 
-
+     public void GetTaskBySeverityUnderReportTo()
+     {
+    	 
+    	 User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+ 		String id=String.valueOf(objuserBean.getId());
+    	 
+    	 
+ 		Set<ReportIssue> listissue= taskService.getIssuesByAssignToUnderMonitor(id);
+ 		
+ 		Set<ReportIssue> SeverityReportToList= new LinkedHashSet();
+ 		
+ 		
+ 		for(ReportIssue entry:listissue)
+ 		{
+ 			System.out.println(entry.getSeverity());
+ 			
+ 			if(entry.getSeverity().equals("Critical"))
+ 			{
+ 				SeverityReportToList.add(entry);
+ 			}
+ 				
+ 				
+ 			
+ 		}
+ 		
+ 		for(ReportIssue entry:SeverityReportToList)
+ 		{
+ 			System.out.println(entry.getSeverity());
+ 		}
+    	 
+    	 
+    	 
+    	 
+     }
 
 
 
