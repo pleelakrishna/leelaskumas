@@ -12,7 +12,7 @@
 	<div class="clearfix"></div>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12" style="background-color:  white !important; padding-top: 15PX;">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h4>Employee List</h4>
@@ -145,20 +145,23 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Employee Id</th><th>User Name</th><th>First Name</th><th>Last Name</th><th>Department</th><th>Designation</th><th>Mobile Number</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>User Name</th><th>Report To</th><th>First Name</th><th>Last Name</th><th>Department</th><th>Designation</th><th>Mobile Number</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	$.each(listOrders,function(i, orderObj) {
 		if(orderObj.status == "1"){
-			var deleterow = "<a class='deactivate' onclick='deleteEmployee("+ orderObj.id+ ",0)'><i class='fa fa-eye'></i></a>"
+			var deleterow = "<a class='deactivate' onclick='deleteEmployee("+ orderObj.id+ ",0)'><i class='fa fa-eye'></i></a>";
+			var cls="activecss";
 		}else{  
-			var deleterow = "<a class='activate' onclick='deleteEmployee("+ orderObj.id+ ",1)'><i class='fa fa-eye-slash'></i></a>"
+			var deleterow = "<a class='activate' onclick='deleteEmployee("+ orderObj.id+ ",1)'><i class='fa fa-eye-slash'></i></a>";
+			var cls="inactivecss";
 		}
 		var edit = "<a class='edit editIt' onclick='editEmployee("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
 		serviceUnitArray[orderObj.id] = orderObj;
-		var tblRow = "<tr>"
-			+ "<td title='"+orderObj.id+"'>"+ orderObj.id + "</td>"
+		var tblRow = "<tr class='"+ cls +"'>"
+			/* + "<td title='"+orderObj.id+"'>"+ orderObj.id + "</td>" */
 			+ "<td title='"+orderObj.username+"'>"+ orderObj.username + "</td>"
+			+ "<td title='"+orderObj.reportto+"'>"+ orderObj.reportName + "</td>"
 			+ "<td title='"+orderObj.firstname+"'>"+ orderObj.firstname + "</td>"
 			+ "<td title='"+orderObj.lastname+"'>"+ orderObj.lastname + "</td>"
 			+ "<td title='"+orderObj.departmentName+"'>"+ orderObj.departmentName + "</td>"
@@ -174,7 +177,7 @@ function displayTable(listOrders) {
 
 
 function editEmployee(id) {
-	
+	console.log(id);
 	$("#id").val(serviceUnitArray[id].id);
 	$("#username").val(serviceUnitArray[id].username);
 	$("#password").val(serviceUnitArray[id].password);
@@ -183,7 +186,7 @@ function editEmployee(id) {
 	$("#mobilenumber").val(serviceUnitArray[id].mobilenumber);
 	$("#designation").val(serviceUnitArray[id].designation);
 	$("#department").val(serviceUnitArray[id].department);
-	$("#reportto").val(serviceUnitArray[id].reportId);
+	$("#reportto").val(serviceUnitArray[id].reportto);
 	$("#email").val(serviceUnitArray[id].email);
 	$("#submit1").val("Update");
 	$(window).scrollTop($('#moveTo').offset().top);
@@ -272,7 +275,7 @@ $('#username').blur(function() {
 	}
 	
 }
-
+ */
 function inactiveData() {
 	var status="0";
 	if($('#inActive').is(":checked") == true){
@@ -283,7 +286,7 @@ function inactiveData() {
 		var formData = new FormData();
 		formData.append('status', status);
 		
-		$.fn.makeMultipartRequest('POST', 'inActiveFillingStation', false,
+		$.fn.makeMultipartRequest('POST', 'inActiveEmp', false,
 				formData, false, 'text', function(data) {
 			var jsonobj = $.parseJSON(data);
 			var alldata = jsonobj.allOrders1;
@@ -292,7 +295,7 @@ function inactiveData() {
 				});
 		
 }
- */
+
  $("#pageName").text("Employee Master");
 $(".employee").addClass("active"); 
 </script>

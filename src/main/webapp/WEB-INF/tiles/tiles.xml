@@ -98,9 +98,16 @@
      <definition name="employee" extends="base.definition">
 		<put-attribute name="body" value="/WEB-INF/jsp/employee.jsp" />
 	</definition>
+	
+	<definition name="editProfile" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/editProfile.jsp" />
+	</definition>
+	
 	<definition name="403" extends="base.definition">
 		<put-attribute name="body" value="/WEB-INF/jsp/403.jsp" />
 	</definition>
+	
+	
 		
 
 </tiles-definitions>

@@ -131,7 +131,7 @@ public class UserService {
 	public Map<Integer, String> getUserName()
 	{
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
+
 		Map<Integer, String> rolesMap = new LinkedHashMap<Integer, String>();
 		try
 		{
@@ -173,6 +173,11 @@ public class UserService {
 	public User getUserByObject(User user) {
 		// TODO Auto-generated method stub
 		return userDao.getUserByObject(user);
+	}
+
+	public List<User> getInActiveList() {
+
+		return userDao.getInActiveList();
 	}
 
 

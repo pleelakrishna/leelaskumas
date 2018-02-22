@@ -9,11 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name = "kpusers")
@@ -58,10 +56,24 @@ public class User {
 	private String designationName;
 	@Transient
 	private String reportId;
-
-
+	@Transient
+	private String reportName;
+	@Column
+	private String firstname;
+	@Column
+	private String lastname;
 	@Transient
 	private String status;
+
+	public String getReportName() {
+		return reportName;
+	}
+
+	public void setReportName(String reportName) {
+		this.reportName = reportName;
+	}
+
+
 
 	public String getDesignation() {
 		return designation;
@@ -95,10 +107,6 @@ public class User {
 		this.npassword = npassword;
 	}
 
-	@Column
-	private String firstname;
-	@Column
-	private String lastname;
 
 	public String getLastname() {
 		return lastname;
@@ -135,7 +143,7 @@ public class User {
 	public User() {
 	}
 
-	
+
 
 	public User(User user) {
 		this.id = user.id;
@@ -157,6 +165,8 @@ public class User {
 		this.status = user.status;
 		this.firstname = user.firstname;
 		this.lastname = user.lastname;
+		this.reportName=user.reportName;
+
 	}
 
 	public String getPassword() {
@@ -247,18 +257,18 @@ public class User {
 		this.reportto = reportto;
 	}
 
-	
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", mobilenumber="
 				+ mobilenumber + ", email=" + email + ", department=" + department + ", reportto=" + reportto
 				+ ", enabled=" + enabled + ", designation=" + designation + ", username=" + username + ", password="
 				+ password + ", npassword=" + npassword + ", cpassword=" + cpassword + ", departmentName="
-				+ departmentName + ", designationName=" + designationName + ", reportId=" + reportId + ", status="
-				+ status + ", firstname=" + firstname + ", lastname=" + lastname + "]";
+				+ departmentName + ", designationName=" + designationName + ", reportId=" + reportId + ", reportName="
+				+ reportName + ", firstname=" + firstname + ", lastname=" + lastname + ", status=" + status + "]";
 	}
-	
-	
-	
+
+
+
 
 }

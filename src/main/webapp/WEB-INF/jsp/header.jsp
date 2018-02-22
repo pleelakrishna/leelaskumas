@@ -221,7 +221,7 @@ function toolTips(){
 	                    </li>
 	                    <li class="userlinks">
 	                        <ul class="dropdown-menu">
-	                            <li><a href="#">Edit Profile <i class="pull-right fa fa-pencil"></i></a></li>
+	                            <li><a href="editProfile">Edit Profile <i class="pull-right fa fa-pencil"></i></a></li>
 	                            <li><a href="changePassword">Change Password <i class="pull-right fa fa-cog"></i></a></li>
 	                            <li class="divider"></li>
 	                         <%--    <c:url value="${peContext.request.contextPath}/logout" var="logoutUrl" /> --%>

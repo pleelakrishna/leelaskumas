@@ -38,8 +38,8 @@ public class UserDao {
 
 
 		try {
-			List<Object[]> rows = em.createQuery("select  u.id,u.username,u.mobilenumber,u.email,CASE WHEN u.enabled IN ('0') THEN 'Deactive' WHEN u.enabled IN ('1') THEN 'Active' ELSE '-----' END AS enabled,dep.name,d.name,"
-					+ "u.firstname,u.lastname,u.reportto,u.designation ,u.department , u.enabled as status from User u,Designation d,Department dep where u.department=dep.id and u.designation= d.id").getResultList();
+			List<Object[]> rows = em.createQuery("select  u.id,u.username,u.mobilenumber,u.email,u.reportto,u2.username,CASE WHEN u.enabled IN ('0') THEN 'Deactive' WHEN u.enabled IN ('1') THEN 'Active' ELSE '-----' END AS enabled,dep.name,d.name,"
+					+ "u.firstname,u.lastname,u.reportto,u.designation ,u.department , u.enabled as status from User u,User u2,Designation d,Department dep where u.department=dep.id and u.designation= d.id and  u.reportto=u2.id").getResultList();
 			for (Object[] row : rows) {
 				User users =new User();
 
@@ -48,15 +48,17 @@ public class UserDao {
 				users.setUsername((String) row[1]);
 				users.setMobilenumber((String) row[2]);
 				users.setEmail((String) row[3]);
-				users.setEnabled((String) row[4]);
-				users.setDepartmentName((String) row[5]);
-				users.setDesignationName((String) row[6]);
-				users.setFirstname((String) row[7]);
-				users.setLastname((String) row[8]);
-				users.setReportId((String) row[9]);
-				users.setDesignation((String) row[10]);
-				users.setDepartment((String) row[11]);
-				users.setStatus((String) row[12]);
+				users.setReportto((String) row[4]);
+				users.setReportName((String) row[5]);
+				users.setEnabled((String) row[6]);
+				users.setDepartmentName((String) row[7]);
+				users.setDesignationName((String) row[8]);
+				users.setFirstname((String) row[9]);
+				users.setLastname((String) row[10]);
+				users.setReportId((String) row[11]);
+				users.setDesignation((String) row[12]);
+				users.setDepartment((String) row[13]);
+				users.setStatus((String) row[14]);
 				listusers.add(users);
 
 			}
@@ -179,7 +181,8 @@ public class UserDao {
 */
 	public void updateUser(User user) {
 		User users=getUserById(user.getId());
-		users.setPassword(user.getCpassword());
+		//users.setPassword(user.getCpassword());
+		users.setPassword(user.getPassword());
 		users.setDepartment(user.getDepartment());
 		users.setDesignation(user.getDesignation());
 		users.setEmail(user.getEmail());
@@ -284,21 +287,21 @@ public class UserDao {
 		//List<String> list= em.createNativeQuery("SELECT d.name FROM  kpusers u,kpdesignation d,kpmultiroles m  where u.designation=d.id  and k.username=:Custname").setParameter("Custname", Username).getResultList();
 		//List<String> list= em.createNativeQuery("select m.desigrole from kpusers u,kpdesignation d,kpmultiroles m  where u.designation=d.id and m.designationid=u.designation and u.username =:Custname").setParameter("Custname", Username).getResultList();
 		List<String> list= em.createNativeQuery("select m.desigrole from kpusers u,kpmultiroles m  where  m.designationid=u.designation and u.username =:Custname").setParameter("Custname", Username).getResultList();
-		
-		
+
+
 		System.out.println(list);
 		return list;
-		
+
 
 	}
 
 	public User getUserByObject(User user) {
-		
+
 		String hql ="from User where username =:n";
-				
-		Query query =em.createQuery(hql);	
+
+		Query query =em.createQuery(hql);
 		query.setParameter("n", user.getUsername());
-		
+
 		List<User>usersList =query.getResultList();
 		if(usersList.isEmpty())
                return null;
@@ -306,7 +309,50 @@ public class UserDao {
 		return usersList.get(0);
 	}
 
-	
+
+	@SuppressWarnings("unchecked")
+	public List<User> getInActiveList() {
+		// TODO Auto-generated method stub
+		//return em.createQuery(" from User where enabled='0'").getResultList();
+
+		List<User> listusers =new ArrayList<User>();
+
+
+		try {
+			List<Object[]> rows = em.createQuery("select  u.id,u.username,u.mobilenumber,u.email,u.reportto,u2.username,dep.name,d.name,"
+					+ "u.firstname,u.lastname,u.reportto,u.designation ,u.department , u.enabled as status from User u,User u2,Designation d,Department dep where u.enabled='0' and u.department=dep.id and u.designation= d.id and  u.reportto=u2.id").getResultList();
+			for (Object[] row : rows) {
+				User users =new User();
+
+				users.setId(Integer.parseInt(String.valueOf(row[0])));
+
+				users.setUsername((String) row[1]);
+				users.setMobilenumber((String) row[2]);
+				users.setEmail((String) row[3]);
+				users.setReportto((String) row[4]);
+				users.setReportName((String) row[5]);
+				//users.setEnabled((String) row[6]);
+				users.setDepartmentName((String) row[6]);
+				users.setDesignationName((String) row[7]);
+				users.setFirstname((String) row[8]);
+				users.setLastname((String) row[9]);
+				users.setReportId((String) row[10]);
+				users.setDesignation((String) row[11]);
+				users.setDepartment((String) row[12]);
+				users.setStatus((String) row[13]);
+				listusers.add(users);
+
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return  listusers;
+		 	}
+
+
+
 
 
 
