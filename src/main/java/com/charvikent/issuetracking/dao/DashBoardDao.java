@@ -86,7 +86,7 @@ public class DashBoardDao {
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createNativeQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.created_time,c.category,ks.name,ks.scolour,r.taskno from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s ,kpstatus ks  where r.assignto=u.id and r.kstatus=ks.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus in(2,6) and r.assignto =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createNativeQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.created_time,c.category,ks.name,ks.scolour,r.taskno from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s ,kpstatus ks  where r.assignto=u.id and r.kstatus=ks.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus in(2,6,9) and r.assignto =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();
@@ -241,7 +241,7 @@ public class DashBoardDao {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
 			.createNativeQuery(" select ks.severity,count(*)as count from report_issue r,kpseverity ks" + 
-					" where  r.severity=ks.id  and r.assignto =:id  and r.kstatus in(2,3) group by severity").setParameter("id", id).getResultList();
+					" where  r.severity=ks.id  and r.assignto =:id  and r.kstatus in(2,3,6,9) group by severity").setParameter("id", id).getResultList();
 			for (Object[] row : rows) {
 				
 				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
@@ -279,7 +279,7 @@ public Map<String,Integer> getSeverityCountsByassignedBy(String id) {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
 			.createNativeQuery(" select ks.severity,count(*)as count from report_issue r,kpseverity ks" + 
-					" where  r.severity=ks.id  and r.assignby =:id  and r.kstatus in(2,3) group by severity").setParameter("id", id).getResultList();
+					" where  r.severity=ks.id  and r.assignby =:id  and r.kstatus in(2,3,9) group by severity").setParameter("id", id).getResultList();
 			for (Object[] row : rows) {
 				
 				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
