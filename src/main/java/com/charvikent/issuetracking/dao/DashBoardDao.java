@@ -260,56 +260,7 @@ public class DashBoardDao {
 	}
 
 
-	public List<ReportIssue> getTasksBySeverity(String sev) {
-		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String uid=String.valueOf(objuserBean.getId());
-		List<ReportIssue> listissue=new LinkedList<ReportIssue>();
 		
-		LOGGER.debug("In getSeverityCount calling createQuery with AssignTo {}", sev);
-
-		/*String hql ="select r.id,r.taskno,r.subject,c.category as cname ,r.category,p.priority as pname,r.priority,ks.severity ksname,r.severity,r.assignto,u.username  as asto,r.assignby,u1.username as asby, r.created_time"+
-				    "from report_issue r,kpseverity ks,kpcategory  c, kppriority p, kpusers u, kpusers u1"+
-				    "where  r.assignby=u1.id and p.id=r.priority  and c.id=r.category and  r.severity=ks.id  and r.assignto =u.id and"+
-				    " r.assignto =:uid  and r.kstatus in(2,3)  and ks.severity=:sev";*/
-		try {
-			@SuppressWarnings("unchecked")
-			List<Object[]> rows = em.createNativeQuery("select r.id,r.taskno,r.subject,c.category as cname ,r.category,p.priority as pname,r.priority,ks.severity ksname,r.severity,r.assignto,u.username  as asto,r.assignby,u1.username as asby, r.created_time,r.taskdeadline ,r.description,r.status,r.kstatus  from report_issue r,kpseverity ks,kpcategory  c, kppriority p, kpusers u, kpusers u1  where  r.assignby=u1.id and p.id=r.priority  and c.id=r.category and  r.severity=ks.id  and r.assignto =u.id and  r.assignto =:uid and r.kstatus in(2,3)  and ks.severity=:sev").setParameter("uid",uid).setParameter("sev",sev ).getResultList();
-			for (Object[] row : rows) {
-				ReportIssue issue = new ReportIssue();
-				issue.setId(Integer.parseInt(String.valueOf(row[0])));
-				issue.setTaskno((String) row[1]);
-				issue.setSubject((String) row[2]);
-				issue.setCategory((String) row[3]);
-				issue.setCategoryid((String) row[4]);
-				issue.setPriority((String) row[5]);
-				issue.setPriorityid((String) row[6]);
-				
-				issue.setSeverity((String) row[7]);
-				issue.setSeverityid((String) row[8]);
-				
-				issue.setAssignto((String) row[10]);
-				issue.setAssigntoid((String) row[9]);
-				issue.setAssignbyid((String) row[11]);
-				issue.setAssignby((String) row[12]);
-				
-				issue.setCreatedTime((Date) row[13]);
-				
-				issue.setTaskdeadline((String) row[14]);
-				issue.setDescription((String) row[15]);
-				
-				
-				issue.setStatus((String) row[16]);
-				//issue.setKstatus((String) row[17]);
-				
-				listissue.add(issue);
-
-			}
-		} catch (Exception e) {
-			System.out.println("error here");
-			e.printStackTrace();
-		}
-		return listissue;
-	}
 	
 	
 public Map<String,Integer> getSeverityCountsByassignedBy(String id) {
@@ -345,57 +296,6 @@ public Map<String,Integer> getSeverityCountsByassignedBy(String id) {
 		
 		return statusCounts;
 	}
-
-
-
-
-public List<ReportIssue> getTasksBySeverityOnAssignedBy(String sev) {
-	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	String uid=String.valueOf(objuserBean.getId());
-	List<ReportIssue> listissue=new LinkedList<ReportIssue>();
-	
-	LOGGER.debug("In getTasksBySeverityOnAssignedBy calling createQuery with AssignBy {}", sev);
-
-	
-	try {
-		@SuppressWarnings("unchecked")
-		List<Object[]> rows = em.createNativeQuery("select r.id,r.taskno,r.subject,c.category as cname ,r.category,p.priority as pname,r.priority,ks.severity ksname,r.severity,r.assignto,u.username  as asto,r.assignby,u1.username as asby, r.created_time,r.taskdeadline ,r.description,r.status,r.kstatus  from report_issue r,kpseverity ks,kpcategory  c, kppriority p, kpusers u, kpusers u1  where  r.assignby=u1.id and p.id=r.priority  and c.id=r.category and  r.severity=ks.id  and r.assignto =u.id and  r.assignby =:uid and r.kstatus in(2,3)  and ks.severity=:sev").setParameter("uid",uid).setParameter("sev",sev ).getResultList();
-		for (Object[] row : rows) {
-			ReportIssue issue = new ReportIssue();
-			issue.setId(Integer.parseInt(String.valueOf(row[0])));
-			issue.setTaskno((String) row[1]);
-			issue.setSubject((String) row[2]);
-			issue.setCategory((String) row[3]);
-			issue.setCategoryid((String) row[4]);
-			issue.setPriority((String) row[5]);
-			issue.setPriorityid((String) row[6]);
-			
-			issue.setSeverity((String) row[7]);
-			issue.setSeverityid((String) row[8]);
-			
-			issue.setAssignto((String) row[10]);
-			issue.setAssigntoid((String) row[9]);
-			issue.setAssignbyid((String) row[11]);
-			issue.setAssignby((String) row[12]);
-			
-			issue.setCreatedTime((Date) row[13]);
-			
-			issue.setTaskdeadline((String) row[14]);
-			issue.setDescription((String) row[15]);
-			
-			
-			issue.setStatus((String) row[16]);
-			//issue.setKstatus((String) row[17]);
-			
-			listissue.add(issue);
-
-		}
-	} catch (Exception e) {
-		System.out.println("error here");
-		e.printStackTrace();
-	}
-	return listissue;
-}
 
 
 
@@ -444,9 +344,9 @@ public Map<String, Integer> getSeverityCountsUnderReportTo()
 
 
 
-     public void GetTaskBySeverityUnderReportTo()
+     public Set<ReportIssue> GetTaskBySeverityUnderReportTo(String sev)
      {
-    	 
+    	 LOGGER.debug("In GetTaskBySeverityUnderReportTo calling  with reporto {}", sev);
     	 User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
  		String id=String.valueOf(objuserBean.getId());
     	 
@@ -458,41 +358,75 @@ public Map<String, Integer> getSeverityCountsUnderReportTo()
  		
  		for(ReportIssue entry:listissue)
  		{
- 			System.out.println(entry.getSeverity());
- 			
- 			if(entry.getSeverity().equals("Critical"))
+ 			if(entry.getSeverity().equals(sev))
  			{
  				SeverityReportToList.add(entry);
  			}
  				
+ 			
+ 		}
+		return SeverityReportToList;
+ 		
+    	 
+     }
+     
+     
+     public Set<ReportIssue> getTasksBySeverityOnAssignedBy(String sev) {
+    	 
+    	 LOGGER.debug("In getTasksBySeverityOnAssignedBy calling  with AssignBy {}", sev);
+    	 User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+  		String id=String.valueOf(objuserBean.getId());
+  		
+  		 
+ 		Set<ReportIssue> listissue= taskService.getissuesByselectionAssignBy(id);
+ 		
+ 		Set<ReportIssue> SeverityReportToList= new LinkedHashSet();
+ 		
+ 		
+ 		for(ReportIssue entry:listissue)
+ 		{
+ 			if(entry.getSeverity().equals(sev))
+ 			{
+ 				SeverityReportToList.add(entry);
+ 			}
  				
  			
  		}
- 		
- 		for(ReportIssue entry:SeverityReportToList)
- 		{
- 			System.out.println(entry.getSeverity());
- 		}
-    	 
+		return SeverityReportToList;
     	 
     	 
     	 
      }
+     
+     
+     
+     public Set<ReportIssue> getTasksBySeverity(String sev) {
+    	 
+    	 LOGGER.debug("In getTasksBySeverity calling  AssignTo {}", sev);
+    	 
+    	 User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+   		String id=String.valueOf(objuserBean.getId());
+   		
+   		 
+  		Set<ReportIssue> listissue= taskService.getissuesByselectionAssignTo(id);
+  		
+  		Set<ReportIssue> SeverityReportToList= new LinkedHashSet();
+  		
+  		
+  		for(ReportIssue entry:listissue)
+  		{
+  			if(entry.getSeverity().equals(sev))
+  			{
+  				SeverityReportToList.add(entry);
+  			}
+  				
+  			
+  		}
+ 		return SeverityReportToList;
+     }
+     
+     
+     }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-}

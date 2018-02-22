@@ -81,17 +81,17 @@
 			<c:set var="String" value="${issue.key}"/>  
 			<c:if test="${fn:contains(String, 'Critical')}"> 
 			<div class="btn-toolbar pull-left" style=margin-left:5px !important"><span style="font-size:18px; lettee-spacinf:1px; color:#006699;">Monitored BY Me</span>
-		                    <a href="severityby?id=${issue.key}" class="btn btn-danger " style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		                    <a href="severityReportTo?id=${issue.key}" class="btn btn-danger " style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
 		   </div>
 		   </c:if>
 		   <c:if test="${fn:contains(String, 'Major')}"> 
 			<div class="btn-toolbar pull-left">
-		                    <a href="severityby?id=${issue.key}" class="btn btn-warning "  style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		                    <a href="severityReportTo?id=${issue.key}" class="btn btn-warning "  style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
 		   </div>
 		   </c:if>
 		   <c:if test="${fn:contains(String, 'Minor')}"> 
 			<div class="btn-toolbar pull-left">
-		                    <a href="severityby?id=${issue.key}" class="btn btn-primary "  style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		                    <a href="severityReportTo?id=${issue.key}" class="btn btn-primary "  style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
 		   </div>
 		   </c:if>
 		      </c:forEach>

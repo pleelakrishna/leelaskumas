@@ -116,7 +116,7 @@ public Map<String,Integer> getSeverityWiseCount() {
 
 
 
-public List<ReportIssue> getTasksBySeverity(String id) {
+public Set<ReportIssue> getTasksBySeverity(String id) {
 	// TODO Auto-generated method stub
 	return dashBoardDao.getTasksBySeverity(id);
 }
@@ -157,7 +157,7 @@ public Map<String,Integer> getSeverityWiseCountsByAssignedBy() {
 }
 
 
-public List<ReportIssue> getTasksBySeverityOnAssignedBy(String sev) {
+public Set<ReportIssue> getTasksBySeverityOnAssignedBy(String sev) {
 	// TODO Auto-generated method stub
 	return dashBoardDao.getTasksBySeverityOnAssignedBy(sev);
 }
@@ -169,9 +169,10 @@ public  Map<String, Integer> getSeverityCountsUnderReportTo() {
 	
 }
 
-public void GetTaskBySeverityUnderReportTo() {
+public Set<ReportIssue> GetTaskBySeverityUnderReportTo(String sev) {
 	// TODO Auto-generated method stub
-	dashBoardDao.GetTaskBySeverityUnderReportTo();
+	
+	return dashBoardDao.GetTaskBySeverityUnderReportTo(sev);
 }
 
 
