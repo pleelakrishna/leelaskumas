@@ -4,47 +4,35 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
-import com.charvikent.issuetracking.service.ReportIssueService;
 
 @Repository
 public class DashBoardDao {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(DashBoardDao.class);
-	
 	@PersistenceContext
 	private EntityManager em;
-	
 	@Autowired
-	UserDao userDao;
-	
-	@Autowired
-	ReportIssueService taskService;
-	
+	HttpSession session;
 	
 	
 	
 	public Set<ReportIssue> getIssuesAssignBy(String id) {
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
-		
-		LOGGER.debug("In getIssuesAssignBy calling createQuery with id {}", id);
 
 		try {
 			@SuppressWarnings("unchecked")
@@ -79,9 +67,6 @@ public class DashBoardDao {
 	
 	 public static Integer assigntocount =null;
 	public Set getIssuesAssignTo(String id) {
-		
-		
-		LOGGER.debug("In getIssuesAssignTo calling createNativeQuery with AssignTo {}", id);
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
 		try {
@@ -122,8 +107,6 @@ public class DashBoardDao {
 	public Set getIssuesAssignToResolved(String id) {
 		//List<ReportIssue> listissue=new ArrayList<>();
 		
-		LOGGER.debug("In getIssuesAssignToResolved calling createQuery with AssignTo {}", id);
-		
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
 		try {
@@ -162,9 +145,6 @@ public class DashBoardDao {
 	
 	@SuppressWarnings("unchecked")
 	public Map<Integer, Integer>  getGapAndCountForClosed() {
-		
-		
-		LOGGER.debug("In getGapAndCountForClosed calling createNativeQuery ");
 
 		List<ReportIssue> listissuegap=new ArrayList<>();
 		ReportIssue issuegap =null;
@@ -189,9 +169,6 @@ public class DashBoardDao {
 
 	@SuppressWarnings("unchecked")
 	public  Set<ReportIssue> getRecentlyModified(String id) {
-		
-		
-		LOGGER.debug("In getRecentlyModified calling createNativeQuery with assignTo{} ",id);
 
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
@@ -226,12 +203,11 @@ public class DashBoardDao {
 	}
 
 
-	public Map<String,Integer> getSeverityCount(String id) {
+	public Object getSeverityCount() {
 		
-		/*User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
-		*/
-		LOGGER.debug("In getSeverityCount calling createQuery with AssignTo {}", id);
+		
 
 		Map<String,Integer> statusCounts =new LinkedHashMap<String,Integer>();
 
@@ -240,13 +216,24 @@ public class DashBoardDao {
 		try {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
-			.createNativeQuery(" select ks.severity,count(*)as count from report_issue r,kpseverity ks" + 
-					" where  r.severity=ks.id  and r.assignto =:id  and r.kstatus in(2,3) group by severity").setParameter("id", id).getResultList();
+			.createNativeQuery(" select ks.severity,count(*)as count from report_issue r,kpseverity ks  where  r.severity=ks.id  and r.assignto =:id  and r.kstatus in(2,3) group by severity").setParameter("id", id).getResultList();
 			for (Object[] row : rows) {
 				
 				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
+				if(row[0].equals("Minor"))
 				statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
+				else
+				statusCounts.put("Minor", 0);	
 				
+				if(row[0].equals("Major"))
+					statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
+					else
+					statusCounts.put("Major", 0);	
+				
+				if(row[0].equals("Critical"))
+					statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
+					else
+					statusCounts.put("Critical", 0);
 			}
 
 			statusCounts.put("Open",opentotal);
@@ -256,177 +243,11 @@ public class DashBoardDao {
 		}
 		
 		
-		return statusCounts;
+		for(Entry<String,Integer> entry :statusCounts.entrySet())
+			System.out.println(entry.getKey()+" ......"+entry.getValue());
+		return opentotal;
 	}
 
+	
 
-		
-	
-	
-public Map<String,Integer> getSeverityCountsByassignedBy(String id) {
-		
-		/*User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String id=String.valueOf(objuserBean.getId());*/
-		
-	LOGGER.debug("In getSeverityCountsByassignedBy calling createQuery with AssignBy {}", id);
-
-
-		Map<String,Integer> statusCounts =new LinkedHashMap<String,Integer>();
-
-		Integer opentotal=0;
-
-		try {
-			@SuppressWarnings("unchecked")
-			List<Object[]> rows = em
-			.createNativeQuery(" select ks.severity,count(*)as count from report_issue r,kpseverity ks" + 
-					" where  r.severity=ks.id  and r.assignby =:id  and r.kstatus in(2,3) group by severity").setParameter("id", id).getResultList();
-			for (Object[] row : rows) {
-				
-				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
-				statusCounts.put((String)row[0], Integer.parseInt(String.valueOf(row[1])));
-				
-			}
-
-			statusCounts.put("Open",opentotal);
-		} catch (Exception e) {
-			System.out.println("error here");
-			e.printStackTrace();
-		}
-		
-		
-		return statusCounts;
-	}
-
-
-
-public Map<String, Integer> getSeverityCountsUnderReportTo()
-{
-	LOGGER.debug("In getSeverityCountsUnderReportTo calling createnativeQuery");
-
-	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	String id=String.valueOf(objuserBean.getId());
-	
-	List<String> monitorList=userDao.getUsersUnderReportTo(id);
-	
-	Map<String,Integer> severityList=new LinkedHashMap<String,Integer>();
-	
-	
-	String hql ="select severity,count(*) as scount from report_issue where assignto=:id group by severity";
-	
-	Integer minor=0;
-	Integer major=0;
-	Integer critical=0;
-	
-	for(String id2:monitorList)
-	{
-		List<Object[]> rows= em.createNativeQuery(hql).setParameter("id", id2).getResultList();
-		
-         for (Object[] row : rows) {
-        	 if(row[0].equals("1"))
-        	 minor=minor+Integer.parseInt(String.valueOf(row[1]));
-        	 else if(row[0].equals("2"))
-        	 major=major+Integer.parseInt(String.valueOf(row[1]));
-        	 else if(row[0].equals("3"))
-        	 critical=critical+Integer.parseInt(String.valueOf(row[1]));
-		}
-	
-	}
-	
-	severityList.put("Critical",critical);
-	severityList.put("Major",major);
-	severityList.put("Minor",minor);
-	
-	
-	return severityList;
-	
 }
-
-
-
-
-     public Set<ReportIssue> GetTaskBySeverityUnderReportTo(String sev)
-     {
-    	 LOGGER.debug("In GetTaskBySeverityUnderReportTo calling  with reporto {}", sev);
-    	 User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
- 		String id=String.valueOf(objuserBean.getId());
-    	 
-    	 
- 		Set<ReportIssue> listissue= taskService.getIssuesByAssignToUnderMonitor(id);
- 		
- 		Set<ReportIssue> SeverityReportToList= new LinkedHashSet();
- 		
- 		
- 		for(ReportIssue entry:listissue)
- 		{
- 			if(entry.getSeverity().equals(sev))
- 			{
- 				SeverityReportToList.add(entry);
- 			}
- 				
- 			
- 		}
-		return SeverityReportToList;
- 		
-    	 
-     }
-     
-     
-     public Set<ReportIssue> getTasksBySeverityOnAssignedBy(String sev) {
-    	 
-    	 LOGGER.debug("In getTasksBySeverityOnAssignedBy calling  with AssignBy {}", sev);
-    	 User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-  		String id=String.valueOf(objuserBean.getId());
-  		
-  		 
- 		Set<ReportIssue> listissue= taskService.getissuesByselectionAssignBy(id);
- 		
- 		Set<ReportIssue> SeverityReportToList= new LinkedHashSet();
- 		
- 		
- 		for(ReportIssue entry:listissue)
- 		{
- 			if(entry.getSeverity().equals(sev))
- 			{
- 				SeverityReportToList.add(entry);
- 			}
- 				
- 			
- 		}
-		return SeverityReportToList;
-    	 
-    	 
-    	 
-     }
-     
-     
-     
-     public Set<ReportIssue> getTasksBySeverity(String sev) {
-    	 
-    	 LOGGER.debug("In getTasksBySeverity calling  AssignTo {}", sev);
-    	 
-    	 User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-   		String id=String.valueOf(objuserBean.getId());
-   		
-   		 
-  		Set<ReportIssue> listissue= taskService.getissuesByselectionAssignTo(id);
-  		
-  		Set<ReportIssue> SeverityReportToList= new LinkedHashSet();
-  		
-  		
-  		for(ReportIssue entry:listissue)
-  		{
-  			if(entry.getSeverity().equals(sev))
-  			{
-  				SeverityReportToList.add(entry);
-  			}
-  				
-  			
-  		}
- 		return SeverityReportToList;
-     }
-     
-     
-     }
-
-
-

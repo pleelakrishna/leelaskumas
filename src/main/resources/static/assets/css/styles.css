@@ -9063,7 +9063,7 @@ header a.hasnotifications {
 header .toolbar .dropdown,
 header #headerbardropdown,
 header #rightmenu-trigger {
-  border-left: 1px solid #27292d;
+  border-left: 1px solid #fff;
 }
 header #leftmenu-trigger {
   border-right: 1px solid #27292d;

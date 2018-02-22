@@ -142,9 +142,11 @@ color: inherit !important;
 		    });
 		}, 5000);
 		 $(document).ready(function(){
-			 toolTips()
+			 toolTips();
+			 
+			 getHeadersCounts();
 			
-			  var formData = new FormData();
+			  /* var formData = new FormData();
 		    
 			$.fn.makeMultipartRequest('POST', 'getCount', false,
 					formData, false, 'text', function(data){
@@ -156,7 +158,7 @@ color: inherit !important;
 //		 		var alldata = jsonobj.allOrders1;
 //		 		console.log(jsonobj.allOrders1);
 //		 		displayTable(alldata);
-			});  
+			});   */
 		}); 
 		
 </script>
@@ -179,6 +181,28 @@ function toolTips(){
 		$('.time').attr('data-toggle', 'tooltip');
 		$('.time').attr('data-original-title', 'view Deadline');
 		$('[data-toggle="tooltip"]').tooltip(); 
+}
+
+
+function getHeadersCounts(){
+	
+	 var formData = new FormData();
+	    
+		$.fn.makeMultipartRequest('POST', 'getCount', false,
+				formData, false, 'text', function(data){
+			var jsonobj = $.parseJSON(data);
+			$("#unseentasks").text(jsonobj.unseentasks);
+			
+			$("#reopentaskscount").text(jsonobj.reopentaskscount);
+			
+//	 		var alldata = jsonobj.allOrders1;
+//	 		console.log(jsonobj.allOrders1);
+//	 		displayTable(alldata);
+		});  
+	
+	
+	
+
 }
 
 </script>

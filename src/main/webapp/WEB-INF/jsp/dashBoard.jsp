@@ -1,8 +1,24 @@
+<style>
+.btn-toolbar {
+    margin-left: 5px;
+}
+
+
+   
+
+
+
+</style>
+
+
+
 <!-- Body starts here -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+
 <!-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script> -->
 <!-- Body starts here -->
 	<div class="main-content">
@@ -12,18 +28,82 @@
 					<li class="">Dashboard</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
-			
-			<div class="page-content">
+			<br>
+			<div class="page-content container" style="background-color: #fff;">
+			 <div class="row" style="margin-bottom:10px"; >
 			
 			<c:forEach var="issue" items="${severityCount}">
+			<c:set var="String" value="${issue.key}"/>  
+			<c:if test="${fn:contains(String, 'Critical')}"> 
+			<div class="btn-toolbar pull-left" style=margin-left:5px !important"><span style="font-size:18px; lettee-spacinf:1px; color:#006699;">Assigned to Me</span>
+		                    <a href="severity?id=${issue.key}" class="btn btn-danger " style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		   </div>
+		   </c:if>
+		   <c:if test="${fn:contains(String, 'Major')}"> 
 			<div class="btn-toolbar pull-left">
-		                    <a href="severity?id=${issue.key}" class="btn btn-danger "><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
-		                    		                </div>
-		                </c:forEach>
+		                    <a href="severity?id=${issue.key}" class="btn btn-warning "  style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		   </div>
+		   </c:if>
+		   <c:if test="${fn:contains(String, 'Minor')}"> 
+			<div class="btn-toolbar pull-left">
+		                    <a href="severity?id=${issue.key}" class="btn btn-primary "  style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		   </div>
+		   </c:if>
+		      </c:forEach>
+		      
+		      </div>
+		     <div class="row" style="margin-bottom:10px"; >
+		      
+		      <c:forEach var="issue" items="${severityCountsBY}">
+			<c:set var="String" value="${issue.key}"/>  
+			<c:if test="${fn:contains(String, 'Critical')}"> 
+			<div class="btn-toolbar pull-left" style=margin-left:5px !important"><span style="font-size:18px; lettee-spacinf:1px; color:#006699;">Assigned BY Me</span>
+		                    <a href="severityby?id=${issue.key}" class="btn btn-danger " style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		   </div>
+		   </c:if>
+		   <c:if test="${fn:contains(String, 'Major')}"> 
+			<div class="btn-toolbar pull-left">
+		                    <a href="severityby?id=${issue.key}" class="btn btn-warning "  style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		   </div>
+		   </c:if>
+		   <c:if test="${fn:contains(String, 'Minor')}"> 
+			<div class="btn-toolbar pull-left">
+		                    <a href="severityby?id=${issue.key}" class="btn btn-primary "  style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		   </div>
+		   </c:if>
+		      </c:forEach>
+		      </div>
+		      <br>
+		      
+		      <div class="row">
+		      
+		        <c:forEach var="issue" items="${SevMonitoredCounts}">
+			<c:set var="String" value="${issue.key}"/>  
+			<c:if test="${fn:contains(String, 'Critical')}"> 
+			<div class="btn-toolbar pull-left" style=margin-left:5px !important"><span style="font-size:18px; lettee-spacinf:1px; color:#006699;">Monitored BY Me</span>
+		                    <a href="severityReportTo?id=${issue.key}" class="btn btn-danger " style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		   </div>
+		   </c:if>
+		   <c:if test="${fn:contains(String, 'Major')}"> 
+			<div class="btn-toolbar pull-left">
+		                    <a href="severityReportTo?id=${issue.key}" class="btn btn-warning "  style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		   </div>
+		   </c:if>
+		   <c:if test="${fn:contains(String, 'Minor')}"> 
+			<div class="btn-toolbar pull-left">
+		                    <a href="severityReportTo?id=${issue.key}" class="btn btn-primary "  style=" border-radius: 15px;"><span id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
+		   </div>
+		   </c:if>
+		      </c:forEach>
+		      
+		      </div>
+		      
 		                
 			
+			<!-- History table starts Here -->
+			
 				<div class="row" style="background: white;">
-							<div class="col-md-12">
+							<div class="col-md-12" style=" margin-top:550px;">
 
 <div class="col-md-8">
 							<div id="assigned" class="widget-box widget-color-blue2">
@@ -82,43 +162,7 @@
 					</div>
 					<div class="col-sm-4">
 				<div class="space-10"></div>
-							<%-- <div id="assigned" class="widget-box widget-color-blue2">
-	<div class="widget-header widget-header-small">
-		<h4 class="widget-title lighter">
-			<i class="ace-icon fa fa-clock-o"></i>
-<a class="white" href="#"> Status Wise Summary</a></h4>
-		<div class="widget-toolbar">
-			<a data-action="collapse" href="#">
-				<!-- <i class="1 ace-icon fa bigger-125 fa-chevron-up"></i> -->
-			</a>
-		</div>
-		<div class="widget-toolbar no-border hidden-xs">
-			
-		</div>
-	</div>
 
-	<div style="display: block;" class="widget-body">
-		<div class="widget-main no-padding">
-			<div class="table-responsive" style="overflow-x: inherit;">
-				<table class="table table-bordered table-condensed table-striped table-hover">
-<tbody>
-
-<tr class="my-buglist-bug ">
-			<tr>
-                    		<th>By Status(days)</th>
-                    		<th>Total</th>
-                    	</tr>
-<c:forEach var="issue" items="${statusCount}">
-<tr class="my-buglist-bug ">
-		<td class="nowrap width-13">${issue.key} 
-		</td>
-		<td class="nowrap width-13">${issue.value} 
-		</td>
-</tr>
-</c:forEach>
-</table>
-</div>
-</div> --%>
 						</div><!-- /.row -->
 					</div><!-- /.page-content -->
 					</div>
@@ -160,7 +204,7 @@ $(window).load(function(){
 $.fn.makeMultipartRequest('POST', 'setNotifyData', false, formData, false, 'text', function(data){
 	var jsonobj = $.parseJSON(data);
 	var alldata = jsonobj.allOrders1;
-	console.log(alldata)
+	//console.log(alldata)
 	if (alldata != "") {
 		displayTable(alldata)
 		$('#notifyModal').modal('show');
@@ -240,9 +284,14 @@ function displayTable(listOrders) {
     			var alldata = jsonobj.allOrders1;
     			var result=$.parseJSON(alldata);
     			if(result.length>0)
+    				{
     			displayTable(result)
+    			getHeadersCounts()
+    			
+    				}
     			else
-    				location.reload()
+    				getHeadersCounts()
+    				//location.reload()
     				
     		});
     	

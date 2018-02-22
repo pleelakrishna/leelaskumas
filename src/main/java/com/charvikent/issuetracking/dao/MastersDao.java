@@ -122,6 +122,9 @@ public class MastersDao {
 	@SuppressWarnings("unchecked")
 	public List<KpStatus> getKpStatues() {
 		return entityManager.createQuery("SELECT kpstatus FROM KpStatus kpstatus").getResultList();
+		//return entityManager.createQuery("from KpStatus where id in (1,4,5,6,7,8").getResultList();
+	
+	
 	}
 	
 }
