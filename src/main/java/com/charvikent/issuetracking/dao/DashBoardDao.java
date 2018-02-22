@@ -371,13 +371,6 @@ public List<ReportIssue> getTasksBySeverityOnAssignedBy(String sev) {
 
 
 
-
-
-
-
-
-
-
 public Map<String, Integer> getSeverityCountsUnderReportTo()
 {
 	
@@ -416,13 +409,6 @@ public Map<String, Integer> getSeverityCountsUnderReportTo()
 	
 	
 	return severityList;
-	
-	
-	
-	
-
-	
-	
 	
 }
 
