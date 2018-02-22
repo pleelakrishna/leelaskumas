@@ -164,7 +164,7 @@ public class DashBoardController {
 		 model.addAttribute("severityCountsBY",dashBoardService.getSeverityWiseCountsByAssignedBy() );
 		 
 		 model.addAttribute("SevMonitoredCounts", dashBoardService.getSeverityCountsUnderReportTo());
-		 	
+		 dashBoardService.GetTaskBySeverityUnderReportTo();	
 		 
 		 return "dashBoard";
 		
