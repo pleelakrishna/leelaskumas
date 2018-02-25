@@ -133,7 +133,7 @@
 <!-- 										<button class="btn btn-info" type="button"> -->
 <!-- 											<i class="ace-icon fa fa-check bigger-110"></i> Submit -->
 <!-- 										</button> -->
-							<input type="submit" id="submit1" class="btn btn-danger" value="Submit"/>
+							<input type="submit" id="submit1" class="btn btn-info" value="Submit"/>
 										&nbsp; &nbsp; &nbsp;
 										<button class="btn" type="reset">
 											<i class="ace-icon fa fa-undo bigger-110"></i> Reset
