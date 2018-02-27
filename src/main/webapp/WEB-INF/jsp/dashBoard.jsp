@@ -160,7 +160,7 @@
 					</div>
 				</div>
 			</div>
-	<%-- <div class="row" style="margin-bottom: 10px"; >
+			<%-- <div class="row" style="margin-bottom: 10px"; >
 
 				<c:forEach var="issue" items="${severityCount}">
 					<c:set var="String" value="${issue.key}" />
