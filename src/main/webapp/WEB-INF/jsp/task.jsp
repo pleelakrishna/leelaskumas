@@ -227,8 +227,8 @@
                     				
                     				<input type=hidden name="issueid" id="issueid" value="">
                     				
-									<label for="focusedinput" class="col-md-6 control-label">Status  <span class="impColor">*</span></label>
-										<select  name="kpstatus" id="kpstatus" class="col-xs-10 col-sm-6  validate2 " style="margin-top:6px">
+									<label for="focusedinput" class="col-md-4 control-label">Status  <span class="impColor">*</span></label>
+										<select  name="kpstatus" id="kpstatus" class="col-xs-10 col-sm-7  validate2 " style="margin-top:6px">
 											<option value="">--select-- </option>
 											<c:forEach var="list" items="${kpstatuses}">
 											<option value=${list.key}>${list.value} </option>

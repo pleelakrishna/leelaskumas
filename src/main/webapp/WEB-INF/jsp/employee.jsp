@@ -207,7 +207,8 @@ function deleteEmployee(id,status){
 			var jsonobj = $.parseJSON(data);
 			var alldata = jsonobj.allOrders1;
 			displayTable(alldata);
-			toolTips() //calling tool tips defined at header
+			toolTips(); //calling tool tips defined at header
+			$('#inActive').prop('checked', false);
 		});
 	}
 }

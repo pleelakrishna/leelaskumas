@@ -155,7 +155,8 @@ function deletecate(id,status){
 			var jsonobj = $.parseJSON(data);
 			var alldata = jsonobj.allOrders1;
 			displayTable(alldata);
-			toolTips()
+			toolTips();
+			$('#inActive').prop('checked', false);
 		});
 	}
 }

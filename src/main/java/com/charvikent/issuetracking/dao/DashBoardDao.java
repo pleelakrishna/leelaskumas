@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -112,7 +111,6 @@ public class DashBoardDao {
 			e.printStackTrace();
 		}
 		
-		assigntocount =listissue.size();
 
 		return  listissue;
 
@@ -279,7 +277,7 @@ public Map<String,Integer> getSeverityCountsByassignedBy(String id) {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
 			.createNativeQuery(" select ks.severity,count(*)as count from report_issue r,kpseverity ks" + 
-					" where  r.severity=ks.id  and r.assignby =:id  and r.kstatus in(2,3,9) group by severity").setParameter("id", id).getResultList();
+					" where  r.severity=ks.id  and r.assignby =:id  and r.kstatus in(2,3,6,9) group by severity").setParameter("id", id).getResultList();
 			for (Object[] row : rows) {
 				
 				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));

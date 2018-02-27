@@ -13,11 +13,11 @@
 
 <div class="container" style="padding:40px;">
 	<ul class="nav nav-tabs navtabs" style=" border:1px solid #ccc; border-bottom:1px solid #ccc;">
-		<li class="active"><a data-toggle="tab" href="#dept">Org-Department</a></li>
+		<li class="active"><a data-toggle="tab" href="#dept1">Org-Department</a></li>
 		<li><a data-toggle="tab" href="#hier">Hierarchical</a></li><br>
 	</ul>
 	<div class="tab-content">
-		<div id="dept" class="tab-pane fade in active" >
+		<div id="dept1" class="tab-pane fade in active" >
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-primary" >
@@ -73,7 +73,7 @@
 											<div class="col-md-5">
 												<form:select path="org" class="form-control validate"
 													onfocus="removeBorder(this.id)">
-													<form:option value="0">-- Select Designation --</form:option>
+													<form:option value="">-- Select Organization --</form:option>
 													<form:options items="${orgs}" />
 												</form:select>
 												<span class="hasError" id="stationnameError"></span>
@@ -86,8 +86,7 @@
 												<span class="impColor">*</span>
 											</label>
 											<div class="col-md-5">
-												<form:select path="dept" class="form-control validate"
-													onfocus="removeBorder(this.id)">
+												<form:select path="dept" class="form-control validate"	onfocus="removeBorder(this.id)" onchange="deptValidation(this.value)">
 													<form:option value="">-- Select Department --</form:option>
 													<form:options items="${depts}" />
 												</form:select>
@@ -234,26 +233,15 @@
 		}
 	}
 
-	$('#dept')
-			.on(
-					'change',
-					function() {
-
-						var deptval = $(this).val();
+	
+	 function deptValidation(value) {
+						var deptval = value;
 						var orgval = $('#org').val();
-						if (orgval > 0) {
+						if (orgval !="") {
 							var formData = new FormData();
 							formData.append('dept', deptval);
 							formData.append('org', orgval);
-							$.fn
-									.makeMultipartRequest(
-											'POST',
-											'existOrNot',
-											false,
-											formData,
-											false,
-											'text',
-											function(data) {
+							$.fn.makeMultipartRequest('POST','existOrNot',false,formData,false,'text',function(data) {
 												alert(data);
 												if (data === 'true') {
 													alert("selected department is already exists");
@@ -267,10 +255,11 @@
 
 						else {
 							alert("please select orgnization");
-							$('#dept').val("");
+							$("#dept").val("");
+// 							$('#dept').val("");
 
 						}
-					})
+					}
 
 	$('#parentDept').blur(function() {
 		if ($('#parentDept').val() != 0) {
@@ -327,7 +316,7 @@
 	}
 
 	var testData = ${hierarchical};
-		$(function() {
+	$(function() {
 		org_chart = $('#orgChart').orgChart({
 			data : testData
 		});
