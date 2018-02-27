@@ -476,9 +476,9 @@ public Set<ReportIssue> getissuesByselectionAssignBy(String id) {
 	return reportIssueDao.getissuesByselectionAssignBy(id);
 }
 
-public boolean openTask(Integer id, String status) {
+public void openTask(Integer id) {
 	// TODO Auto-generated method stub
-	return reportIssueDao.openTask(id,status);
+   reportIssueDao.openTask(id);
 }
 
 public Set<ReportIssue> getOpenTasks(String id) {

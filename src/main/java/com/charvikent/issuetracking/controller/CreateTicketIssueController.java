@@ -36,7 +36,7 @@ import com.charvikent.issuetracking.service.ReportIssueService;
 import com.charvikent.issuetracking.service.SeverityService;
 import com.charvikent.issuetracking.service.UserService;
 
-@Controller
+//@Controller
 public class CreateTicketIssueController {
 	
 	@Autowired

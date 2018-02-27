@@ -173,7 +173,7 @@
 		<!-- /.main-content-inner -->
 	</div>
 	
-	<div id="notifyModal" class="modal fade" role="dialog">
+	<div id="notifyModal" class="modal fade" role="dialog"  data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
     <!-- Modal content-->
 <div class="col-md-12">
@@ -208,9 +208,11 @@ $.fn.makeMultipartRequest('POST', 'setNotifyData', false, formData, false, 'text
 	if (alldata != "") {
 		displayTable(alldata)
 		$('#notifyModal').modal('show');
+		
 	}
 	 
  });
+$('#notifyModal').focus(); 
 });
 
 $(".dashBoard").addClass("active");
@@ -238,22 +240,25 @@ function displayTable(listOrders) {
 	serviceUnitArray = {};
 	
 	$.each(listOrders,function(i, orderObj) {
-		if(orderObj.additionalinfo == "0"){
+		/* if(orderObj.additionalinfo == "0"){
 			var deleterow = "<a class='deactivate' onclick='opentasks("+ orderObj.id+ ",0)'><i class='fa fa-folder-open-o'></i></a>"
 		}else{  
 			var deleterow = "<a class='activate' onclick='opentasks("+ orderObj.id+ ",1)'><i class='fa fa-eye-slash'></i></a>"
-		}
+		} */
+		
+		var deleterow = "<a class='activate' href='viewTicket?id="+ orderObj.id+ "><i class='fa fa-eye-slash'></i></a>"
 		
 		var edit = "<a class='edit editIt' onclick='editTask("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
 		
 		
 		
 		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
+		var view2 = "<a class='view viewIt' href='viewTicket?id="	+ orderObj.id+ "'>"+ orderObj.taskno+ "</a>"
 		var comment = "<a class='comment commentIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
 		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
 		serviceUnitArray[orderObj.id] = orderObj;
 		var tblRow = "<tr>"
-			+ "<td title='"+orderObj.taskno+"'>"+ view + "</td>"
+			+ "<td title='"+orderObj.taskno+"'>"+ view2 + "</td>"
 			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
 			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
 			+ "<td title='"+orderObj.priority+"'>"+ orderObj.priority + "</td>"

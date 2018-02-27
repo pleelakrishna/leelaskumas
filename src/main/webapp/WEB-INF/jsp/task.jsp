@@ -356,7 +356,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned By</th><th>Assigned To</th><th>Created Time</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned By</th><th>Assigned To</th><th>Task Status</th><th>Created Time</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -385,16 +385,18 @@ function displayTable(listOrders) {
 		var edit = "<a class='edit editIt' onclick='editTask("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
 			}
 		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
+		var view2 = "<a class='view viewIt' href='viewTicket?id="	+ orderObj.id+ "'>"+ orderObj.taskno+ "</a>"
 		var comment = "<a class='comment commentIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
 		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
 		serviceUnitArray[orderObj.id] = orderObj;
 		var tblRow = "<tr>"
-			+ "<td title='"+orderObj.taskno+"'>"+ view + "</td>"
+			+ "<td title='"+orderObj.taskno+"'>"+ view2 + "</td>"
 			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
 			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
 			+ "<td title='"+orderObj.priority+"'>"+ orderObj.priority + "</td>"
 			+ "<td title='"+orderObj.assignby+"'>"+ orderObj.assignby + "</td>"
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
+			+ "<td title='"+orderObj.kstatus+"'>"+ orderObj.kstatus + "</td>"
 			+ "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time + "</td>" 
 			+ "</tr>";
