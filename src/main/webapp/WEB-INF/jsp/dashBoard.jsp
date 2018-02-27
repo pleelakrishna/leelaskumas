@@ -297,13 +297,6 @@ function displayTable(listOrders) {
     	
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
+ 
     
     </script>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.charvikent.issuetracking.model.OrgDept;
+import com.charvikent.issuetracking.model.OrgDeptHierarchical;
 import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.OrgDeptService;
 import com.charvikent.issuetracking.service.OrgService;
@@ -34,18 +35,20 @@ public class OrgDeptController {
 	OrgDeptService orgDeptService;
 	@Autowired
 	MastersService masterService;
-	
-	
-	
+
+
+
 	@RequestMapping("/orgDept")
 	public String  department( @ModelAttribute("orgDeptf")  OrgDept orgDeptf,Model model ,HttpServletRequest request) {
 		List<OrgDept> listOrderBeans = null;
+		List<OrgDeptHierarchical> listOrderBeans1 = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
 		model.addAttribute("orgDeptf", new OrgDept());
 		model.addAttribute("orgs",orgService.getOrgNames());
 		model.addAttribute("depts",masterService.getDepartmentNames());
 		try {
+
 			listOrderBeans = orgDeptService.orgDeptList();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				objectMapper = new ObjectMapper();
@@ -58,37 +61,51 @@ public class OrgDeptController {
 				request.setAttribute("allOrders1", "''");
 			}
 
+
+			listOrderBeans1 = orgDeptService.orgDeptListHierarchical();
+			if (listOrderBeans1 != null && listOrderBeans1.size() > 0) {
+				objectMapper = new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(listOrderBeans1);
+				request.setAttribute("hierarchical", sJson);
+				// System.out.println(sJson);
+			} else {
+				objectMapper = new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(listOrderBeans1);
+				request.setAttribute("hierarchical", "''");
+			}
+
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 
 		}
-		
-		
+
+
 		return "orgDept";
-	
+
 	}
-	
-	
+
+
 	@RequestMapping(value = "/orgDept", method = RequestMethod.POST)
 	public String saveAdmin(@Valid @ModelAttribute  OrgDept orgDept, BindingResult bindingresults,
 			RedirectAttributes redir) throws IOException {
-		
+
 		if (bindingresults.hasErrors()) {
 			System.out.println("has some errors");
 			return "redirect:/";
 		}
-		
+
 		int id = 0;
 		try
 		{
 			OrgDept  orgDeptBean= orgDeptService.getorgDeptById(orgDept);
 			int dummyId =0;
-			
+
 			if(orgDeptBean != null){
 				dummyId = orgDeptBean.getId();
 			}
-			
+
 			if(orgDept.getId()==null)
 			{
 				if(dummyId ==0)
@@ -98,17 +115,17 @@ public class OrgDeptController {
 
 					redir.addFlashAttribute("msg", "Record Inserted Successfully");
 					redir.addFlashAttribute("cssMsg", "success");
-					
+
 				} else
 				{
 					redir.addFlashAttribute("msg", "Already Record Exist");
 					redir.addFlashAttribute("cssMsg", "danger");
-					
+
 				}
-				
-			
+
+
 			}
-			
+
 			else
 			{
 				id=orgDept.getId();
@@ -117,26 +134,26 @@ public class OrgDeptController {
 					orgDeptService.updateorgDept(orgDept);
 					redir.addFlashAttribute("msg", "Record Updated Successfully");
 					redir.addFlashAttribute("cssMsg", "warning");
-					
+
 				} else
 				{
 					redir.addFlashAttribute("msg", "Already Record Exist");
 					redir.addFlashAttribute("cssMsg", "danger");
 				}
-				
+
 			}
-			
+
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 
 		}
-		
-		
+
+
 		return "redirect:orgDept";
 	}
-	
-	
+
+
 	@RequestMapping(value = "/deleteorgDept")
 	public @ResponseBody String deleteDept(OrgDept  objorgDept,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
 		System.out.println("deleteEducation page...");
@@ -154,11 +171,11 @@ public class OrgDeptController {
  					jsonObj.put("message", "delete fail");
  				}
  			}
- 				
+
 			listOrderBeans = orgDeptService.orgDeptList();
 			 objectMapper = new ObjectMapper();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
-				
+
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
 				request.setAttribute("allOrders1", sJson);
@@ -174,20 +191,20 @@ public class OrgDeptController {
 			e.printStackTrace();
 	System.out.println(e);
 			return String.valueOf(jsonObj);
-			
+
 		}
 		return String.valueOf(jsonObj);
 	}
-	
-	
-	
+
+
+
 	@RequestMapping(value = "/existOrNot")
 	public @ResponseBody Boolean deptExistOrnot(
 			@RequestParam(value = "dept", required = true) String dept,
 			@RequestParam(value = "org", required = true) String org,
 			Model model,HttpServletRequest request, HttpSession session) {
-		
+
 		Boolean result =orgDeptService.checkDeptExistsOrnot(dept,org);
 		return result;
-	}	
+	}
 }
