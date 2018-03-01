@@ -510,6 +510,7 @@
 
 			var view = "<a class='view viewIt' onclick='viewTask("
 					+ orderObj.id + ")'>" + orderObj.taskno + "</a>"
+			var view2 = "<a class='view viewIt' href='viewTicket?id="	+ orderObj.id+ "&pgn=1'>"+ orderObj.taskno+ "</a>"
 			var comment = "<a class='comment commentIt' onclick='addComment("
 					+ orderObj.id + ")'>   <i class='fa fa-comments'></i></a>"
 			var time = "<a class='time timeIt' onclick='showdeadline("
