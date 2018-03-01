@@ -732,6 +732,20 @@ public List<ReportIssue> getAllReportIssues()
 
 	}
 	
+	
+	
+	public Set<ReportIssue> getAllTasks() {
+		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+		
+		String hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,r.kstatus" 
+                     +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks "  
+                      +" where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category ";
+		
+		
+		return listissue;
+		
+		
+	}
 
 
 

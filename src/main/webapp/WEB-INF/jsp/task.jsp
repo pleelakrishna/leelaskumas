@@ -356,7 +356,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned By</th><th>Assigned To</th><th>Task Status</th><th>Created Time</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th><<th>Assigned By</th><th>Assigned To</th><th>Task Status</th><th>Created Time</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -394,6 +394,7 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
 			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
 			+ "<td title='"+orderObj.priority+"'>"+ orderObj.priority + "</td>"
+			+ "<td title='"+orderObj.severity+"'>"+ orderObj.severity + "</td>"
 			+ "<td title='"+orderObj.assignby+"'>"+ orderObj.assignby + "</td>"
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
 			+ "<td title='"+orderObj.kstatus+"'>"+ orderObj.kstatus + "</td>"
