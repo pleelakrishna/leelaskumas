@@ -127,12 +127,14 @@ View Issue Details</h4>
 												<div class="table-responsive">
 							<table class="table table-bordered table-condensed  table-striped table-hover" style=" ">
 								<tr style="background:#006699;color: #fff;">
-<th>Date Modified</th><th>User Name</th><th>Attachment</th><th>Change</th>
+<th>Date Modified</th><th>User Name</th><th>Status </th><th>Attachment</th><th>Change</th>
 								</tr>
 								
 <c:forEach var="logs" items="${repeatLogs}">								
 								<tr>
-<td> ${logs.statustime}</td><td>${logs.issueid}</td><td>
+<td> ${logs.statustime}</td><td>${logs.issueid}</td>
+<td>${logs.kpstatus}</td>
+<td>
 
 
 <c:forTokens items="${logs.uploadfiles}" delims="*" var="mySplit">
