@@ -502,19 +502,20 @@ public class TaskController {
 	
 	
 	@RequestMapping(value = "/viewTicket")
-	public String viewIssue(@RequestParam(value = "id", required = true) String taskId, Model model) {
-            Integer id =Integer.parseInt(taskId);
+	public String viewIssue(@RequestParam(value = "id", required = true) String taskId,
+			@RequestParam(value = "pgn", required = true) String pgn,Model model) {
+		 Integer id =Integer.parseInt(taskId);
+		 
+		if(pgn.equals("1"))
+		{
+			taskService.openTask(id);
+		}
+		
 		ReportIssue issue = taskService.getReportIssueById(id);
-		List<ReportIssue> list =new ArrayList<ReportIssue>();
-		
-		list.add(issue);
-		model.addAttribute("cissue", list);
-		
-		//model.addAttribute("repeatLogs",taskService.getrepeatLogsById(Integer.parseInt(id)));
-		//System.out.println(taskService.getrepeatLogsById(Integer.parseInt(id)));
+		model.addAttribute("cissue", issue);
+		model.addAttribute("clist",taskService.getTaksByid(id));
+		model.addAttribute("repeatLogs",taskService.getrepeatLogsById(id));
 
-		
-		taskService.openTask(id);
 		return "ViewTicket";
 
 	}

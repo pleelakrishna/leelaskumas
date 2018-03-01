@@ -1,6 +1,0 @@
-created
-open
-in progress
-completed
-closed
-reopen

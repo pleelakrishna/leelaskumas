@@ -527,8 +527,10 @@ public Integer getReopenTaskCount() {
 	
 }
 
+public Set<ReportIssue> getTaksByid(Integer id) {
+	return  reportIssueDao.getTaksByid(id);
+}
 
-	
 	
 	
 	}

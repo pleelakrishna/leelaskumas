@@ -1475,7 +1475,7 @@ th {
   padding: 5px;
 }
 .table-bordered {
-  border: 1px solid #e6e7e8;
+  border: 1px solid #ccc;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
@@ -1483,7 +1483,7 @@ th {
 .table-bordered > thead > tr > td,
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
-  border: 1px solid #e6e7e8;
+  border: 1px solid #ccc;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td {
@@ -3302,7 +3302,7 @@ button.close {
   padding: 7px 15px;
   margin-bottom: 20px;
   list-style: none;
-  background-color: #ececec;
+  background-color: #ccc;
   border-radius: 1px;
   border-bottom:1px solid #d6d4d4;
     border-top:1px solid #d6d4d4;
@@ -11231,9 +11231,9 @@ body.collapse-leftbar #search.keep-open form button[type="submit"] {
 }
 [class*="panel-"].panel .panel-body {
   padding: 20px;
-  border-left: 1px solid #dddddd;
-  border-right: 1px solid #dddddd;
-  border-bottom: 1px solid #dddddd;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   background-color: #fff;
 }
 [class*="panel-"].panel .panel-footer {
