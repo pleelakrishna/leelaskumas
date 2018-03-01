@@ -42,17 +42,17 @@
 		</div>
 		<br>
 		<div class="page-content container" style="background-color: #fff;">
-
-			<div class="col-md-12">
+	<div class="col-md-12" style="background-color:  white !important; padding-top: 15PX;">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>Dashboard</h4>
-						<!--<div class="options">
-							<a href="" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
-						</div>-->
+						<h4>Dashbord</h4>
+						<div class="options">
+							<a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
+						</div>
 					</div>
 					<div class="panel-body collapse in">
-						<div class="col-md-2"></div>
+					
+					<div class="col-md-2"></div>
 						<div class="col-md-8">
 							<div class="table-responsive">
 								<table class="table table-bordered priority"
@@ -61,7 +61,7 @@
 										style="background-color: #006699; color: #fff; text-align: center;">
 
 										<center>
-											<th>Priority</th>
+											<th>Severity </th>
 											<th>Critical</th>
 											<th>Major</th>
 											<th>Minor</th>
@@ -72,95 +72,188 @@
 									<tr class="prioritybg">
 										<td>
 											<div class="col-md-12" style="margin-left: 5px"!important">
-												<span
-													style="font-size: 18px; lettee-spacin: 1px; color: #006699;">Assigned
-													To Me</span>
+
+
+												
+														<span style="font-size: 18px; lettee-spacin: 1px; color: #006699;">Assigned To Me</span>
 											</div>
 										</td>
 										<td>
-										
+										<c:forEach var="issue" items="${severityCount}">
+													<c:set var="String" value="${issue.key}" />
+													
+													<c:if test="${fn:contains(String, 'Critical')}">
 											<div class="col-md-12">
-												<a href="severity?id=Critical"
+
+												<a href="severity?id=${issue.key}"	class="btn btn-danger assigned ">
+												<span id="unseentasks">${issue.value} </span> <%-- <br>${issue.key}  --%></a>
+												<!-- <a href="severity?id=Critical"
 													class="btn btn-danger assigned " style=""><span
-													id="unseentasks"> 0 </span> </a>
-											</div>
+													id="unseentasks"> 0 </span> </a> -->
+											</div> 
+											</c:if>
+											</c:forEach>
+											
 										</td>
 										<td>
-											<div class="col-md-12">
-												<a href="severity?id=Major" class="btn btn-warning assigned"><span
-													id="unseentasks"> 0 </span> </a>
-											</div>
-										</td>
+											<c:forEach var="issue" items="${severityCount}">
+													<c:set var="String" value="${issue.key}" />
+											<c:if test="${fn:contains(String, 'Major')}">
+												<div class="col-md-12">
+													<!-- <a href="severity?id=Major" class="btn btn-warning assigned"><span
+													id="unseentasks"> 0 </span> </a> -->
+													<a href="severity?id=${issue.key}" class="btn btn-warning assigned ">
+													<span id="unseentasks">${issue.value} </span><%-- <br>${issue.key} --%> </a>
+												</div>
+											</c:if>
+											</c:forEach>
+											</td>
 										<td>
-											<div class="col-md-12">
-												<a href="severity?id=Minor" class="btn btn-primary assigned"><span
-													id="unseentasks"> 1 </span></a>
-											</div>
-										</td>
+										<c:forEach var="issue" items="${severityCount}">
+													<c:set var="String" value="${issue.key}" />
+										<c:if test="${fn:contains(String, 'Minor')}">
+												<div class="col-md-12">
+													<!-- <a href="severity?id=Minor" class="btn btn-primary assigned"><span
+													id="unseentasks"> 1 </span></a> -->
+
+													<a href="severity?id=${issue.key}" class="btn btn-primary assigned">
+													<span id="unseentasks">${issue.value} </span><%-- <br>${issue.key}  --%></a>
+												</div>
+											</c:if> 
+											</c:forEach>
+											</td>
 									</tr>
 									<tr>
 										<td>
-											<div class="col-md-12" style="margin-left: 5px"!important">
-												<span
-													style="font-size: 18px; lettee-spacin: 1px; color: #006699;">Assigned
-													By Me</span>
-											</div>
+												<div class="col-md-12" style="margin-left: 5px"!important">
+
+													
+														<span	style="font-size: 18px; lettee-spacin: 1px; color: #006699;">Assigned	By Me</span>
+												</div> 
 										</td>
 										<td>
-											<div class="col-md-12">
-												<a href="severityby?id=Critical"
+											
+											<c:forEach var="issue" items="${severityCountsBY}">
+													<c:set var="String" value="${issue.key}" />
+													<c:if test="${fn:contains(String, 'Critical')}">
+												<div class="col-md-12">
+				
+
+													<a href="severityby?id=${issue.key}"	class="btn btn-danger assigned " >
+													<span	id="unseentasks"> ${issue.value} </span ><%--<br>${issue.key} --%> </a>
+													<!-- <a href="severity?id=Critical"
 													class="btn btn-danger assigned"><span id="unseentasks">
-														0 </span> </a>
+														0 </span> </a> -->
+												</div>
+												</c:if>
+												</c:forEach>
+												
+											</td>
+										<td>
+										<c:forEach var="issue" items="${severityCountsBY}">
+													<c:set var="String" value="${issue.key}" />
+										<c:if test="${fn:contains(String, 'Major')}">
+											<div class="col-md-12">
+												<!-- <a href="severity?id=Major" class="btn btn-warning assigned"><span
+													id="unseentasks"> 0 </span> </a> -->
+													
+													<a href="severityby?id=${issue.key}" class="btn btn-warning assigned ">
+													<span id="unseentasks">${issue.value} </span><%-- <br>${issue.key}  --%></a>
 											</div>
+										</c:if>
+										</c:forEach>
 										</td>
 										<td>
+										<c:forEach var="issue" items="${severityCountsBY}">
+													<c:set var="String" value="${issue.key}" />
+										<c:if test="${fn:contains(String, 'Minor')}">
 											<div class="col-md-12">
-												<a href="severityby?id=Major" class="btn btn-warning assigned"><span
-													id="unseentasks"> 0 </span> </a>
-											</div>
-										</td>
-										<td>
-											<div class="col-md-12">
-												<a href="severityby?id=Minor" class="btn btn-primary assigned"><span
-													id="unseentasks"> 1 </span> </a>
-											</div>
+												<!-- <a href="severity?id=Minor" class="btn btn-primary assigned"><span
+													id="unseentasks"> 1 </span> </a> -->
+													
+													<a href="severityby?id=${issue.key}" class="btn btn-primary assigned"	style="border-radius: 15px;">
+													<span id="unseentasks">${issue.value} </span><%-- <br>${issue.key} --%> </a>
+												</div>
+											</c:if>
+										</c:forEach>
 										</td>
 									</tr>
 									<tr class="prioritybg">
 										<td>
+										
+										
 											<div class="col-md-12" style="margin-left: 5px"!important">
-												<span
-													style="font-size: 18px; lettee-spacin: 1px; color: #006699;">Assigned
-													to Me</span>
+												<span	style="font-size: 18px; lettee-spacin: 1px; color: #006699;">Monitored	BY Me</span>
 											</div>
+											
+										</td>
+										
+										<td>
+										<c:forEach var="issue" items="${SevMonitoredCounts}">
+										<c:set var="String" value="${issue.key}" />
+											<c:if test="${fn:contains(String, 'Critical')}">
+											<div class="col-md-12">
+												<a href="severityReportTo?id=${issue.key}"	class="btn btn-danger assigned">
+												<span	id="unseentasks"> ${issue.value} </span><%-- <br>${issue.key} --%> </a>
+											</div>
+										</c:if>
+										</c:forEach>
 										</td>
 										<td>
+										<c:forEach var="issue" items="${SevMonitoredCounts}">
+										<c:set var="String" value="${issue.key}" />
+										
+											<c:if test="${fn:contains(String, 'Major')}">
 											<div class="col-md-12">
-												<a href="severityReportTo?id=Critical"
+												<!-- <a href="severity?id=Critical"
 													class="btn btn-danger assigned"><span id="unseentasks">
-														0 </span></a>
+														0 </span></a> -->
+														
+														<a href="severityReportTo?id=${issue.key}"
+													class="btn btn-warning assigned"><span
+													id="unseentasks"> ${issue.value} </span><%-- <br>${issue.key}  --%></a>
 											</div>
+											</c:if>
+											</c:forEach>
 										</td>
+										
 										<td>
+										<c:forEach var="issue" items="${SevMonitoredCounts}">
+										<c:set var="String" value="${issue.key}" />
+										<c:if test="${fn:contains(String, 'Minor')}">
 											<div class="col-md-12">
-												<a href="severityReportTo?id=Major" class="btn btn-warning assigned"><span
-													id="unseentasks"> 0 </span></a>
+												<!-- <a href="severity?id=Minor" class="btn btn-primary assigned"><span
+													id="unseentasks"> 1 </span></a> -->
+													
+											<a href="severityReportTo?id=${issue.key}"	class="btn btn-primary assigned">
+											<span	id="unseentasks"> ${issue.value} </span><%-- <br>${issue.key}  --%></a>
 											</div>
-										</td>
-										<td>
-											<div class="col-md-12">
-												<a href="severityReportTo?id=Minor" class="btn btn-primary assigned"><span
-													id="unseentasks"> 1 </span></a>
-											</div>
+											</c:if>
+									</c:forEach>		
 										</td>
 									</tr>
 								</table>
 							</div>
 						</div>
-						<div class="col-md-2"></div>
+					
 					</div>
 				</div>
 			</div>
+			<!-- <div class="col-md-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h4>Dashboard</h4>
+						<div class="options">
+							<a href="" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
+						</div>
+					</div>
+					<div class="panel-body collapse in">
+						
+						<div class="col-md-2"></div>
+					</div>
+				</div>
+			</div> -->
+
 			<%-- <div class="row" style="margin-bottom: 10px"; >
 
 				<c:forEach var="issue" items="${severityCount}">
@@ -197,9 +290,9 @@
 					<c:set var="String" value="${issue.key}" />
 					<c:if test="${fn:contains(String, 'Critical')}">
 						<div class="btn-toolbar pull-left" style="margin-left: 5px"!important">
-							<span
-								style="font-size: 18px; lettee-spacinf: 1px; color: #006699;">Assigned
-								BY Me</span> <a href="severityby?id=${issue.key}"
+							<span style="font-size: 18px; lettee-spacinf: 1px; color: #006699;">Assigned	BY Me</span> 
+							
+							<a href="severityby?id=${issue.key}"
 								class="btn btn-danger " style="border-radius: 15px;"><span
 								id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
 						</div>
@@ -230,7 +323,8 @@
 						<div class="btn-toolbar pull-left" style="margin-left: 5px"!important">
 							<span
 								style="font-size: 18px; lettee-spacinf: 1px; color: #006699;">Monitored
-								BY Me</span> <a href="severityReportTo?id=${issue.key}"
+								BY Me</span> 
+								<a href="severityReportTo?id=${issue.key}"
 								class="btn btn-danger " style="border-radius: 15px;"><span
 								id="unseentasks"> ${issue.value} </span><br>${issue.key} </a>
 						</div>
@@ -252,13 +346,13 @@
 				</c:forEach>
 
 			</div>
-
+ --%>
 
 
 			<!-- History table starts Here -->
 
 			<div class="row" style="background: white;">
-				<div class="col-md-12" style="margin-top: 550px;">
+				<div class="col-md-12">
 
 					<div class="col-md-8">
 						<div id="assigned" class="widget-box widget-color-blue2">
@@ -320,29 +414,15 @@
 					<!-- /.row -->
 				</div>
 				<!-- /.page-content -->
-			</div> --%>
+			</div>
 		</div>
 	</div>
-<!-- <<<<<<< HEAD
-	
-	<div id="notifyModal" class="modal fade" role="dialog"  data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog">
-    Modal content
-<div class="col-md-12">
-				<div class="panel panel-primary">
-				
-					<div class="panel-heading">
-						<h4>Unread Tasks List</h4>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-					<div class="panel-body collapse in">
-======= -->
 	<!-- /.page-content -->
 </div>
 <!-- /.main-content-inner -->
 </div>
 
-<div id="notifyModal" class="modal fade" role="dialog"  data-backdrop="static" data-keyboard="false">
+<div id="notifyModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="col-md-12">
@@ -376,96 +456,110 @@
 
 	</div>
 </div>
-
 <script type="text/javascript">
-$(window).load(function(){
-	var formData = new FormData();
-    formData.append('ttypeid', "1");
-$.fn.makeMultipartRequest('POST', 'setNotifyData', false, formData, false, 'text', function(data){
-	var jsonobj = $.parseJSON(data);
-	var alldata = jsonobj.allOrders1;
-	//console.log(alldata)
-	if (alldata != "") {
-		displayTable(alldata)
-		$('#notifyModal').modal('show');
-		
-	}
-	 
- });
-});
+	$(window).load(
+			function() {
+				var formData = new FormData();
+				formData.append('ttypeid', "1");
+				$.fn.makeMultipartRequest('POST', 'setNotifyData', false,
+						formData, false, 'text', function(data) {
+							var jsonobj = $.parseJSON(data);
+							var alldata = jsonobj.allOrders1;
+							//console.log(alldata)
+							if (alldata != "") {
+								displayTable(alldata)
+								$('#notifyModal').modal('show');
+							}
 
+						});
+			});
 
-$(".dashBoard").addClass("active");
-    
-    var loginUserId ="1"
-    
-function displayTable(listOrders) {
-	$('#tableId').html('');
-	var tableHead = '<table id="notification" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned By</th><th>Created Time</th><th>Description</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
-	$('#tableId').html(tableHead);
-	serviceUnitArray = {};
-	
-	$.each(listOrders,function(i, orderObj) {
-		/* if(orderObj.additionalinfo == "0"){
-			var deleterow = "<a class='deactivate' onclick='opentasks("+ orderObj.id+ ",0)'><i class='fa fa-folder-open-o'></i></a>"
-		}else{  
-			var deleterow = "<a class='activate' onclick='opentasks("+ orderObj.id+ ",1)'><i class='fa fa-eye-slash'></i></a>"
-		} */
-		
-		var deleterow = "<a class='activate' href='viewTicket?id="+ orderObj.id+ "><i class='fa fa-eye-slash'></i></a>"
-		
-		var edit = "<a class='edit editIt' onclick='editTask("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
-		
-		
-		
-		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
-		var view2 = "<a class='view viewIt' href='viewTicket?id="+ orderObj.id+ "&pgn=1'>"+ orderObj.taskno+ "</a>"
-		var comment = "<a class='comment commentIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
-		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
-		serviceUnitArray[orderObj.id] = orderObj;
-		var tblRow = "<tr>"
-			+ "<td title='"+orderObj.taskno+"'>"+ view2 + "</td>"
-			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
-			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
-			+ "<td title='"+orderObj.priority+"'>"+ orderObj.priority + "</td>"
-			+ "<td title='"+orderObj.assignby+"'>"+ orderObj.assignby + "</td>"
-			+ "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>"
-			+ "<td title='"+orderObj.description+"'>"+ orderObj.description + "</td>"
-		 	+ "<td style='text-align: center;white-space: nowrap;'>" + deleterow +  "</td>" 
-			+ "</tr>";
-		$(tblRow).appendTo("#tableId table tbody");
+	$(".dashBoard").addClass("active");
+	$(document).ready(function() {
+		$('.dashBoard').on('click', function() {
+		});
 	});
-	if(isClick=='Yes') $('#notification').dataTable();
-	
-}
-    
-    
-    
-   /*  function opentasks(id,status){
-    	var checkstr=null;
-    	if(status == 0	){
-    		status=1;
-    	 alert('Task Marked as Read');
-    	}
-    		var formData = new FormData();
-    	    formData.append('id', id);
-    	    formData.append('additionalinfo', status);
-    		$.fn.makeMultipartRequest('POST', 'openTask', false, formData, false, 'text', function(data){
-    			var jsonobj = $.parseJSON(data);
-    			var alldata = jsonobj.allOrders1;
-    			var result=$.parseJSON(alldata);
-    			if(result.length>0)
-    				{
-    			displayTable(result)
-    			getHeadersCounts()
-    			
-    				}
-    			else
-    				getHeadersCounts()
-    				//location.reload()
-    				
-    		});
-    	
-    } */
- </script>
+</script>
+<script>
+	/* $(window).load(function(){        
+	 $('#notifyModal').modal('show');
+	 });  */
+
+	var loginUserId = "1"
+
+	function displayTable(listOrders) {
+		$('#tableId').html('');
+		var tableHead = '<table id="notification" class="table table-striped table-bordered datatables">'
+				+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Assigned By</th><th>Created Time</th><th>Description</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+		$('#tableId').html(tableHead);
+		serviceUnitArray = {};
+
+		$.each(listOrders, function(i, orderObj) {
+			if (orderObj.additionalinfo == "0") {
+				var deleterow = "<a class='deactivate' onclick='opentasks("
+						+ orderObj.id
+						+ ",0)'><i class='fa fa-folder-open-o'></i></a>"
+			} else {
+				var deleterow = "<a class='activate' onclick='opentasks("
+						+ orderObj.id
+						+ ",1)'><i class='fa fa-eye-slash'></i></a>"
+			}
+
+			var edit = "<a class='edit editIt' onclick='editTask("
+					+ orderObj.id + ")'><i class='fa fa-edit'></i></a>"
+
+			var view = "<a class='view viewIt' onclick='viewTask("
+					+ orderObj.id + ")'>" + orderObj.taskno + "</a>"
+			var view2 = "<a class='view viewIt' href='viewTicket?id="	+ orderObj.id+ "&pgn=1'>"+ orderObj.taskno+ "</a>"		
+			var comment = "<a class='comment commentIt' onclick='addComment("
+					+ orderObj.id + ")'>   <i class='fa fa-comments'></i></a>"
+			var time = "<a class='time timeIt' onclick='showdeadline("
+					+ orderObj.id
+					+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
+			serviceUnitArray[orderObj.id] = orderObj;
+			var tblRow = "<tr>" + "<td title='"+orderObj.taskno+"'>" + view
+					+ "</td>" + "<td title='"+orderObj.subject+"'>"
+					+ orderObj.subject + "</td>"
+					+ "<td title='"+orderObj.category+"'>" + orderObj.category
+					+ "</td>" + "<td title='"+orderObj.priority+"'>"
+					+ orderObj.priority + "</td>"
+					+ "<td title='"+orderObj.assignby+"'>" + orderObj.assignby
+					+ "</td>" + "<td title='"+orderObj.createdTime+"'>"
+					+ new Date(orderObj.createdTime).toDateString() + "</td>"
+					+ "<td title='"+orderObj.description+"'>"
+					+ orderObj.description + "</td>"
+					+ "<td style='text-align: center;white-space: nowrap;'>"
+					+ deleterow + "</td>" + "</tr>";
+			$(tblRow).appendTo("#tableId table tbody");
+		});
+		if (isClick == 'Yes')
+			$('#notification').dataTable();
+
+	}
+
+	function opentasks(id, status) {
+		var checkstr = null;
+		if (status == 0) {
+			status = 1;
+			alert('Task Marked as Read');
+		}
+		var formData = new FormData();
+		formData.append('id', id);
+		formData.append('additionalinfo', status);
+		$.fn.makeMultipartRequest('POST', 'openTask', false, formData, false,
+				'text', function(data) {
+					var jsonobj = $.parseJSON(data);
+					var alldata = jsonobj.allOrders1;
+					var result = $.parseJSON(alldata);
+					if (result.length > 0) {
+						displayTable(result)
+						getHeadersCounts()
+
+					} else
+						getHeadersCounts()
+						//location.reload()
+
+				});
+
+	}
+</script>
