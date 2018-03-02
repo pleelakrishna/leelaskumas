@@ -245,12 +245,29 @@ public List<ReportIssue> getAllReportIssues()
 
 	@SuppressWarnings("unchecked")
 	public Map<Integer, Integer>  getGapAndCount() {
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
 
 		List<ReportIssue> listissuegap=new ArrayList<>();
 		ReportIssue issuegap =null;
-
-		List<Object[]> rows = 	em.createNativeQuery("SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue group by gap ").getResultList();
-
+		
+		List<Object[]> rows =null;
+		
+		String hql ="SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue  r where r.assignto=:cuid  group by gap";
+         
+		if(id.equals("1"))
+		{
+		
+		 rows = 	em.createNativeQuery("SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue group by gap ").getResultList();
+		}
+		else
+		{
+		
+	      rows = 	em.createNativeQuery(hql).setParameter("cuid", id).getResultList();
+		}
+		
+		
 		Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
 
 		for (Object[] row : rows) {
@@ -272,11 +289,26 @@ public List<ReportIssue> getAllReportIssues()
 
 		List<ReportIssue> listissuegap=new ArrayList<>();
 		ReportIssue issuegap =null;
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
 
 		//String custName=null;
+		
+		List<Object[]> rows =null;
+		
+		String hql ="SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue  r where r.assignto=:cuid and r.kstatus =:kstatus  group by gap";
+          
+		if(id.equals("1"))
+		{
 
-		List<Object[]> rows = 	em.createNativeQuery(" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue where kstatus =:custName  group by gap  ").setParameter("custName", "1").getResultList();
-
+		 rows = 	em.createNativeQuery(" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue where kstatus =:custName  group by gap  ").setParameter("custName", "1").getResultList();
+		}
+		else
+		{
+		 rows = 	em.createNativeQuery(hql).setParameter("cuid",id).setParameter("kstatus", "1").getResultList();
+		}
+		
 		Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
 
 		for (Object[] row : rows) {
