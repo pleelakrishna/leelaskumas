@@ -504,7 +504,14 @@ public List<ReportIssue> getAllReportIssues()
 		subtask.setUploadfiles(fileTemplate.concurrentFileNames());
 		fileTemplate.clearFiles();
 	     }
+		
+		
 		em.persist(subtask);
+		
+		ReportIssue issue =getReportIssueById(Integer.parseInt(subtask.getIssueid()));
+		issue.setKstatus(subtask.getKpstatus());
+		em.merge(issue);  //status updated
+		
 		
 		
 		
@@ -766,7 +773,7 @@ public List<ReportIssue> getAllReportIssues()
 	
 	
 	
-	public Set<ReportIssue> getAllTasks() {
+	/*public Set<ReportIssue> getAllTasks() {
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		
 		String hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,r.kstatus" 
@@ -774,11 +781,57 @@ public List<ReportIssue> getAllReportIssues()
                       +" where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category ";
 		
 		
+		
+		try {
+			List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+			for (Object[] row : rows) {
+				ReportIssue issue = new ReportIssue();
+				issue.setId(Integer.parseInt(String.valueOf(row[0])));
+				issue.setAssignto((String) row[1]);
+				issue.setSeverity((String) row[2]);
+				issue.setPriority((String) row[3]);
+				issue.setUploadfile((String) row[4]);
+				issue.setSubject((String) row[5]);
+				issue.setCreatedTime((Date) row[6]);
+				issue.setCategory((String) row[7]);
+				issue.setKstatus((String) row[8]);
+				issue.setStatus((String) row[9]);
+				issue.setTaskno((String) row[10]);
+				
+				issue.setSeverityid((String) row[11]);
+				issue.setPriorityid((String) row[12]);
+				issue.setAssigntoid((String) row[13]);
+			    issue.setCategoryid((String) row[14]);
+			    issue.setDescription((String) row[15]);
+				issue.setTaskdeadline((String) row[16]);
+				issue.setAssignbyid((String) row[17]);
+				issue.setAssignby((String) row[18]);
+				
+				//issue.setKstatus((String) row[19]);
+			    
+			    
+				
+				listissue.add(issue);
+
+			}
+			
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 		return listissue;
 		
 		
 	}
-
+*/
 
 
 

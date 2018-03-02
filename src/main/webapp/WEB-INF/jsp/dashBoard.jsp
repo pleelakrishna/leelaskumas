@@ -386,9 +386,9 @@
 												<c:forEach var="issue" items="${gapAndCount}">
 
 													<tr class="my-buglist-bug ">
-														<td class="nowrap width-13">${issue.key}</td>
-														<c:forEach items="${issue.value}" var="entry">
-															<td>${entry}</td>
+														<td class="nowrap width-13">${issue.key}</a></td>
+														<c:forEach items="${issue.value}" var="entry" varStatus="loop">
+															<td><a href="timeline${loop.index}?range=${issue.key}">${entry}</a></td>
 														</c:forEach>
 
 													</tr>

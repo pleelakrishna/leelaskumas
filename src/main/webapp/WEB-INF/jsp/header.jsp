@@ -180,6 +180,8 @@ function toolTips(){
 		$('.comment').attr('data-original-title', 'Add Comment');
 		$('.time').attr('data-toggle', 'tooltip');
 		$('.time').attr('data-original-title', 'view Deadline');
+		$('.history').attr('data-toggle','tooltip');
+		$('.history').attr('data-original-title','history');
 		$('[data-toggle="tooltip"]').tooltip(); 
 }
 

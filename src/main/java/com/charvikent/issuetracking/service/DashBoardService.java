@@ -1,6 +1,7 @@
 package com.charvikent.issuetracking.service;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -175,6 +176,149 @@ public Set<ReportIssue> GetTaskBySeverityUnderReportTo(String sev) {
 	return dashBoardDao.GetTaskBySeverityUnderReportTo(sev);
 }
 
+public Set<ReportIssue> getAllTasks(String qvalue) {
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getId());
+	
+	Set<ReportIssue> listissue=dashBoardDao.getAllTasks();
+	
+	Set<ReportIssue> sortedtaskslist =new LinkedHashSet<ReportIssue>();
+	
+            String qstring [] =qvalue.split("-");
+            int fvalue =Integer.parseInt(qstring[0]);
+            int svalue =Integer.parseInt(qstring[1]);
+            
+            
+            if(id.equals("1"))
+            {
+            	
+            	for(ReportIssue entry :listissue )
+           	 {
+           			
+           		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
+           		{
+           			sortedtaskslist.add(entry);
+           		}
+           	 }
+            	
+            }
+            else
+            {
+	for(ReportIssue entry :listissue )
+	 {
+		if(entry.getAssigntoid().equals(id))
+		{
+			
+		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
+		{
+			sortedtaskslist.add(entry);
+		}
+		}
+	 }
+	 }
+	return sortedtaskslist;
+	 
+	
+}
+
+public Set<ReportIssue> getAllTasksByclosed(String qvalue) {
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getId());
+	
+	Set<ReportIssue> listissue=dashBoardDao.getAllTasks();
+	
+	Set<ReportIssue> sortedtaskslist =new LinkedHashSet<ReportIssue>();
+	
+            String qstring [] =qvalue.split("-");
+            int fvalue =Integer.parseInt(qstring[0]);
+            int svalue =Integer.parseInt(qstring[1]);
+            
+            
+            if(id.equals("1"))
+            {
+            	
+            	for(ReportIssue entry :listissue )
+           	 {
+            		if(entry.getKstatus().equals("Closed"))
+            		{
+           		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
+           		{
+           			sortedtaskslist.add(entry);
+           		}
+            		}
+           	 }
+            	
+            }
+            else
+            {
+	for(ReportIssue entry :listissue )
+	 {
+		if(entry.getAssigntoid().equals(id) && entry.getKstatus().equals("Closed"))
+		{
+			
+		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
+		{
+			sortedtaskslist.add(entry);
+		}
+		}
+	 }
+	 }
+	return sortedtaskslist;
+	 
+	
+}
+
+
+
+public Set<ReportIssue> getAllTasksByBalenced(String qvalue) {
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getId());
+	
+	Set<ReportIssue> listissue=dashBoardDao.getAllTasks();
+	
+	Set<ReportIssue> sortedtaskslist =new LinkedHashSet<ReportIssue>();
+	
+            String qstring [] =qvalue.split("-");
+            int fvalue =Integer.parseInt(qstring[0]);
+            int svalue =Integer.parseInt(qstring[1]);
+            
+            
+            if(id.equals("1"))
+            {
+            	
+            	for(ReportIssue entry :listissue )
+           	 {
+            		if(!entry.getKstatus().equals("Closed"))
+            		{
+           		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
+           		{
+           			sortedtaskslist.add(entry);
+           		}
+            		}
+           	 }
+            	
+            }
+            else
+            {
+	for(ReportIssue entry :listissue )
+	 {
+		if(entry.getAssigntoid().equals(id) && (!entry.getKstatus().equals("Closed")))
+		{
+			
+		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
+		{
+			sortedtaskslist.add(entry);
+		}
+		}
+	 }
+	 }
+	return sortedtaskslist;
+	 
+	
+}
 
 
 

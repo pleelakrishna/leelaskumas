@@ -388,6 +388,9 @@ function displayTable(listOrders) {
 		var view2 = "<a class='view viewIt' href='viewTicket?id="	+ orderObj.id+ "&pgn=0'>"+ orderObj.taskno+ "</a>"
 		var comment = "<a class='comment commentIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
 		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
+		var history = "<a class='history historyit' onclick='viewTask("	+ orderObj.id+ ")'> <i class='fas fa-history'></i></a>"
+		
+		
 		serviceUnitArray[orderObj.id] = orderObj;
 		var tblRow = "<tr>"
 			+ "<td title='"+orderObj.taskno+"'>"+ view2 + "</td>"
@@ -399,7 +402,7 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
 			+ "<td title='"+orderObj.kstatus+"'>"+ orderObj.kstatus + "</td>"
 			+ "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>"
-			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time + "</td>" 
+			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time + "&nbsp;&nbsp;"+history+ "</td>" 
 			+ "</tr>";
 		$(tblRow).appendTo("#tableId table tbody");
 	});
