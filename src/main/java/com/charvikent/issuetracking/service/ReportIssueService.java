@@ -230,32 +230,32 @@ public class ReportIssueService {
 		
 		for(Map.Entry<Integer, Integer> entry : issueTimelines.entrySet()){
 			
-			if(entry.getKey() <= 1){
+			if(entry.getKey() >=0 && entry.getKey() < 1  ){
 				day1Issues = day1Issues+entry.getValue();
 			}
-			if(entry.getKey() == 2  ){
+			if(entry.getKey() >=1 && entry.getKey() < 2  ){
 				day2Issues = day2Issues+entry.getValue();
 			}
-			if(entry.getKey() == 3  ){
+			if(entry.getKey() >=2 && entry.getKey() <3  ){
 				day3Issues = day3Issues+entry.getValue();
 			}
-			if(entry.getKey() <=7 && entry.getKey() > 3  ){
+			if(entry.getKey() <7 && entry.getKey() >= 3  ){
 				day7Issues = day7Issues+entry.getValue();
 			}
-			if(entry.getKey() <=30 && entry.getKey() > 7  ){
+			if(entry.getKey() <30 && entry.getKey() >= 7  ){
 				day30Issues = day30Issues+entry.getValue();
 			}
 			
-			if(entry.getKey() <=60 && entry.getKey() > 30  ){
+			if(entry.getKey() <60 && entry.getKey() >= 30  ){
 				day60Issues = day60Issues+entry.getValue();
 			}
-			if(entry.getKey() <=90 && entry.getKey() > 60  ){
+			if(entry.getKey() <90 && entry.getKey() >= 60  ){
 				day90Issues = day90Issues+entry.getValue();
 			}
-			if(entry.getKey() <=180 && entry.getKey() > 90  ){
+			if(entry.getKey() <180 && entry.getKey() >= 90  ){
 				day180Issues = day180Issues+entry.getValue();
 			}
-			if(entry.getKey() <=365 && entry.getKey() > 180  ){
+			if(entry.getKey() <365 && entry.getKey() >= 180  ){
 				day365Issues = day365Issues+entry.getValue();
 			}
 			
@@ -291,32 +291,32 @@ public class ReportIssueService {
 		
 for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 			
-			if(entry.getKey() <= 1){
+	        if(entry.getKey() >=0 && entry.getKey() < 1  ){
 				day1Issuesclosed = day1Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() == 2  ){
+	        if(entry.getKey() >=1 && entry.getKey() < 2  ){
 				day2Issuesclosed = day2Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() == 3  ){
+	        if(entry.getKey() >=2 && entry.getKey() < 3  ){
 				day3Issuesclosed = day3Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() <=7 && entry.getKey() > 3  ){
+			if(entry.getKey() <7 && entry.getKey() >= 3  ){
 				day7Issuesclosed = day7Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() <=30 && entry.getKey() > 7  ){
+			if(entry.getKey() <30 && entry.getKey() >= 7  ){
 				day30Issuesclosed = day30Issuesclosed+entry.getValue();
 			}
 			
-			if(entry.getKey() <=60 && entry.getKey() > 30  ){
+			if(entry.getKey() <60 && entry.getKey() >= 30  ){
 				day60Issuesclosed = day60Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() <=90 && entry.getKey() > 60  ){
+			if(entry.getKey() <90 && entry.getKey() >= 60  ){
 				day90Issuesclosed = day90Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() <=180 && entry.getKey() > 90  ){
+			if(entry.getKey() <180 && entry.getKey() >= 90  ){
 				day180Issuesclosed = day180Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() <=365 && entry.getKey() > 180  ){
+			if(entry.getKey() <365 && entry.getKey() >= 180  ){
 				day365Issuesclosed = day365Issuesclosed+entry.getValue();
 			}
 			
