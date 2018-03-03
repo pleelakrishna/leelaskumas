@@ -329,7 +329,7 @@ public Set<KpStatusLogs> getAllTasksForAck() {
 	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	String id=String.valueOf(objuserBean.getId());
 	
-	List<KpStatusLogs> listissue=kpStatusLogsDao.getKpStatusLogsDao();
+	TreeSet<KpStatusLogs> listissue=kpStatusLogsDao.getKpStatusLogsDao();
 	
 	Set<KpStatusLogs> sortedtaskslist =new TreeSet<KpStatusLogs>();
             

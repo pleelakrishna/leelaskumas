@@ -22,9 +22,9 @@ public class KpHistory {
 	
 	private String issueid;
 	
-	private String field;
+	private String kpfield;
 	
-	private String change;
+	private String kpchange;
 	
 	private String taskno;
 	
@@ -50,21 +50,7 @@ public class KpHistory {
 		this.issueid = issueid;
 	}
 
-	public String getField() {
-		return field;
-	}
-
-	public void setField(String field) {
-		this.field = field;
-	}
-
-	public String getChange() {
-		return change;
-	}
-
-	public void setChange(String change) {
-		this.change = change;
-	}
+	
 
 	public String getTaskno() {
 		return taskno;
@@ -90,10 +76,26 @@ public class KpHistory {
 		this.updatedTime = updatedTime;
 	}
 
+	public String getKpfield() {
+		return kpfield;
+	}
+
+	public void setKpfield(String kpfield) {
+		this.kpfield = kpfield;
+	}
+
+	public String getKpchange() {
+		return kpchange;
+	}
+
+	public void setKpchange(String kpchange) {
+		this.kpchange = kpchange;
+	}
+
 	@Override
 	public String toString() {
-		return "KpHistory [id=" + id + ", issueid=" + issueid + ", field=" + field + ", change=" + change + ", taskno="
-				+ taskno + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + "]";
+		return "KpHistory [id=" + id + ", issueid=" + issueid + ", kpfield=" + kpfield + ", kpchange=" + kpchange
+				+ ", taskno=" + taskno + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + "]";
 	}
 
 	

@@ -1,6 +1,7 @@
 package com.charvikent.issuetracking.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -25,6 +26,11 @@ import com.charvikent.issuetracking.model.KpStatus;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
+import com.charvikent.issuetracking.service.CategoryService;
+import com.charvikent.issuetracking.service.MastersService;
+import com.charvikent.issuetracking.service.PriorityService;
+import com.charvikent.issuetracking.service.SeverityService;
+import com.charvikent.issuetracking.service.UserService;
 
 @Repository
 public class ReportIssueDao {
@@ -40,6 +46,20 @@ public class ReportIssueDao {
 	KptsUtil utilities;
 	@Autowired
 	KpStatusLogsDao kpStatusLogsDao;
+	
+	@Autowired
+	MastersService  mastersService;
+	
+	@Autowired
+	private PriorityService priorityService;
+
+	@Autowired
+	private SeverityService severityService;
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private CategoryService categoryService;
 
 	public void saveReportIssue(ReportIssue reportIssue) {
 		String randomNum = utilities.randNum();
@@ -381,54 +401,24 @@ public List<ReportIssue> getAllReportIssues()
 		String fieldname ="";
 		String change  ="";
 		
-		
+		//Before  inserting getting data
+		Set<ReportIssue> set= getTaksByid(issue.getId());
+    
+     List<ReportIssue> list = new ArrayList<ReportIssue>(set);
+     ReportIssue editissue1= list.get(0);
+     
      ReportIssue editissue=getReportIssueById(issue.getId());
      
-     if(!editissue.getCategory().equals(issue.getCategory()) )
-     {
-    	 fieldname = fieldname+" category field changed  ";
-    	 change =change+editissue.getCategory() +"-->"+ issue.getCategory();
-     }
-     if(!editissue.getSeverity().equals(issue.getSeverity()) )
-     {
-    	 fieldname = fieldname+" severity field changed  ";
-    	 change =change+ editissue.getSeverity() +"-->"+issue.getSeverity();
-     }
-     if(!editissue.getPriority().equals(issue.getPriority()) )
-     {
-    	 fieldname = fieldname+" priority field changed  ";
-    	 change =change+ editissue.getPriority() +"-->"+issue.getPriority();
-     }
-     if(!editissue.getAssignto().equals(issue.getAssignto() ))
-     {
-    	 fieldname = fieldname+" Assignto field changed  ";
-    	 change =change+ editissue.getAssignto()+"-->"+issue.getAssignto();
-     }
-     if(!editissue.getAssignto().equals(issue.getAssignto() ))
-     {
-    	 fieldname = fieldname+" Assignto field changed  ";
-    	 change =change+ editissue.getAssignto()+"-->"+issue.getAssignto();
-     }
-     if(!editissue.getSubject().equals(issue.getSubject() ))
-     {
-    	 fieldname = fieldname+" subject field changed  ";
-    	 change =change+ editissue.getSubject()+"-->"+issue.getSubject();
-     }
-     if(!editissue.getDescription().equals(issue.getDescription() ))
-     {
-    	 fieldname = fieldname+" description field changed  ";
-    	 change =change+ editissue.getDescription()+"-->"+issue.getDescription();
-     }
-     if(!editissue.getTaskdeadline().equals(issue.getTaskdeadline() ))
-     {
-    	 fieldname = fieldname+" TaskDeadline field changed  ";
-    	 change =change+ editissue.getTaskdeadline()+"-->"+issue.getTaskdeadline();
-     }
-     if(!editissue.getKstatus().equals(issue.getKstatus() ))
-     {
-    	 fieldname = fieldname+" TaskDeadline field changed  ";
-    	 change =change+ editissue.getKstatus()+"-->"+issue.getKstatus();
-     }
+     
+     
+     Map<Integer,String> semap= severityService.getSeverityNames();
+		 Map<Integer,String> pmap=priorityService.getPriorityNames();
+	   Map<Integer,String> umap=userService.getUserName();
+	   Map<Integer,String> cmap= categoryService.getCategoryNames();
+		 Map<Integer,String> smap = mastersService.getKpStatues();
+		
+		
+     
      
      
      editissue.setAssignto(issue.getAssignto());
@@ -448,15 +438,66 @@ public List<ReportIssue> getAllReportIssues()
      fieldname = fieldname+" new file added ";
 	 change =change+issue.getUploadfile();
      }
-		em.flush();
+		em.merge(editissue);
 		
 		
+		//after inserting getting values
+		
+		
+		System.out.println(editissue1.getSeverity());
+		System.out.println(semap.get(Integer.parseInt(issue.getSeverity())));
+		
+		
+		
+		if(!editissue1.getCategory().equals(cmap.get(Integer.parseInt(issue.getCategory()))))
+	     {
+	    	 fieldname = fieldname+" category field changed  &";
+	    	 change =change+editissue1.getCategory() +"-->"+ cmap.get(Integer.parseInt(issue.getCategory()))+"&";
+	     }
+	     if(!editissue1.getSeverity().equals(semap.get(Integer.parseInt(issue.getSeverity()))))
+	     {
+	    	 fieldname = fieldname+" severity field changed &";
+	    	 change =change+ editissue1.getSeverity() +"-->"+semap.get(Integer.parseInt(issue.getSeverity()))+"&";
+	     }
+	     if(!editissue1.getPriority().equals(pmap.get(Integer.parseInt(issue.getPriority()))) )
+	     {
+	    	 fieldname = fieldname+" priority field changed  &";
+	    	 change =change+ editissue1.getPriority() +"-->"+pmap.get(Integer.parseInt(issue.getPriority()))+"&";
+	     }
+	     if(!editissue1.getAssignto().equals(umap.get(Integer.parseInt(issue.getAssignto())) ))
+	     {
+	    	 fieldname = fieldname+" Assignto field changed  &";
+	    	 change =change+ editissue1.getAssignto()+"-->"+umap.get(Integer.parseInt(issue.getAssignto())) +"&";
+	     }
+	     
+	     if(!editissue1.getSubject().equals(issue.getSubject() ))
+	     {
+	    	 fieldname = fieldname+" subject field changed &";
+	    	 change =change+ editissue1.getSubject()+"-->"+issue.getSubject()+"&";
+	     }
+	     if(!editissue1.getDescription().equals(issue.getDescription() ))
+	     {
+	    	 fieldname = fieldname+" description field changed  &";
+	    	 change =change+ editissue1.getDescription()+"-->"+issue.getDescription()+"&";
+	     }
+	     if(!editissue1.getTaskdeadline().equals(issue.getTaskdeadline() ))
+	     {
+	    	 fieldname = fieldname+" TaskDeadline field changed &";
+	    	 change =change+ editissue1.getTaskdeadline()+"-->"+issue.getTaskdeadline()+"&";
+	     }
+	     
+		
+	     if(fieldname.length()>0)
+	     {
+		System.out.println(fieldname.substring(0,fieldname.length()-1));
 		KpHistory history =new KpHistory();
 		
 		history.setIssueid(String.valueOf(issue.getId()));
-		history.setField(fieldname);
-		history.setChange(change);
+		history.setKpfield((fieldname.substring(0,fieldname.length()-1)));
+		history.setKpchange((change.substring(0,change.length()-1)));
 		em.persist(history);
+		
+	     }
 
 		KpStatusLogs slogs=new KpStatusLogs();
 
@@ -565,33 +606,44 @@ public List<ReportIssue> getAllReportIssues()
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
+		TreeSet<KpStatusLogs>  list =kpStatusLogsDao.getKpStatusLogsDao();
+		Map<Integer,String> listmap =mastersService.getKpStatues();
+		
+		
+		
+			KpStatusLogs editlog   = list.last();
+		
 		subtask.setIassignto(id);
 		String fieldname ="";
 		String change ="";
-		KpStatusLogs editlog = kpStatusLogsDao.getKpStatusLogById(subtask.getId());
+		//KpStatusLogs editlog = kpStatusLogsDao.getKpStatusLogById(clog.getId());
 		
 		if(!editlog.getComment().equals(subtask.getComment()) )
 	     {
-	    	 fieldname = fieldname+" New comment addeded  ";
-	    	 change =change+editlog.getComment() +"-->"+ subtask.getComment();
+	    	 fieldname = fieldname+" New comment addeded & ";
+	    	 change =change+editlog.getComment() +"-->"+ subtask.getComment()+"&";
 	     }
 		if(!editlog.getKpstatus().equals(subtask.getKpstatus()) )
 	     {
-	    	 fieldname = fieldname+" status changed  ";
-	    	 change =change+editlog.getKpstatus() +"-->"+ subtask.getKpstatus();
+			
+			
+	    	 fieldname = fieldname+" status changed  &";
+	    	 change =change+editlog.getKpstatus() +"-->"+ listmap.get(Integer.parseInt(subtask.getKpstatus()))+"&";
 	     }
 		
 		
 		if(subtask.getUploadfiles()!=null)
 	     {
-			 fieldname = fieldname+" new file addeded  ";
+			 fieldname = fieldname+" new file addeded & ";
 		subtask.setUploadfiles(fileTemplate.concurrentFileNames());
-		change =change+subtask.getUploadfiles();
+		change =change+subtask.getUploadfiles()+"&";
 		fileTemplate.clearFiles();
 	     }
 		
 		
 		em.persist(subtask);
+		
+		
 		
 		ReportIssue issue =getReportIssueById(Integer.parseInt(subtask.getIssueid()));
 		issue.setKstatus(subtask.getKpstatus());
@@ -601,8 +653,8 @@ public List<ReportIssue> getAllReportIssues()
          KpHistory history =new KpHistory();
 		
 		history.setIssueid(String.valueOf(issue.getId()));
-		history.setField(fieldname);
-		history.setChange(change);
+		history.setKpfield((fieldname.substring(0,fieldname.length()-1)));
+		history.setKpchange(change.substring(0,change.length()-1));
 		em.persist(history);
 		
 		

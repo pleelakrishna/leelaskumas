@@ -638,6 +638,7 @@ $('#ttype').on('change', function() {
 			   formData.append('commet', commet);
 			   formData.append('kpstatus', kpstatus);
 			   formData.append('issueid', issueid);
+			   formData.append('id',id);
 			   
 			   
 			   

@@ -278,13 +278,14 @@ public class TaskController {
 	
 
 	@RequestMapping(value = "/subTask", method = RequestMethod.POST)
-	public @ResponseBody String saveSubtask(@RequestParam(value = "commet", required = true) String comment, @RequestParam(value = "kpstatus", required = true) String kpstatus, @RequestParam(value = "issueid", required = true) String issueid,  @RequestParam("file[]") MultipartFile[] uploadedFiles,
+	public @ResponseBody String saveSubtask(@RequestParam(value = "commet", required = true) String comment, @RequestParam(value = "kpstatus", required = true) String kpstatus, @RequestParam(value = "issueid", required = true) String issueid, @RequestParam(value = "id", required = true) String id,  @RequestParam("file[]") MultipartFile[] uploadedFiles,
 			RedirectAttributes redir) throws IOException {
 		
 		KpStatusLogs subtask =new KpStatusLogs();
 		subtask.setComment(comment);
 		subtask.setIssueid(issueid);
 		subtask.setKpstatus(kpstatus);
+		//subtask.setId(Integer.parseInt(id));
 		String str =null;
 		try{
 		
