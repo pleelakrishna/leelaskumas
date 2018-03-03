@@ -1,7 +1,6 @@
 package com.charvikent.issuetracking.service;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -15,7 +14,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.charvikent.issuetracking.dao.DashBoardDao;
+import com.charvikent.issuetracking.dao.KpStatusLogsDao;
 import com.charvikent.issuetracking.dao.UserDao;
+import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 
@@ -27,7 +28,8 @@ public class DashBoardService {
 	
 	@Autowired
 	UserDao userDao;
-	
+	@Autowired
+	KpStatusLogsDao kpStatusLogsDao;
 	
 	/*public Set<ReportIssue> getIssuesByAssignBy(String id) {
 		Set<ReportIssue> list=(dashBoardDao.getIssuesAssignBy(id));
@@ -291,7 +293,7 @@ public Set<ReportIssue> getAllTasksByBalenced(String qvalue) {
             	
             	for(ReportIssue entry :listissue )
            	 {
-            		if(!entry.getKstatus().equals("Closed"))
+            		if(!entry.getKstatusid().equals("1"))
             		{
            		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
            		{
@@ -305,7 +307,7 @@ public Set<ReportIssue> getAllTasksByBalenced(String qvalue) {
             {
 	for(ReportIssue entry :listissue )
 	 {
-		if(entry.getAssigntoid().equals(id) && (!entry.getKstatus().equals("Closed")))
+		if(entry.getAssigntoid().equals(id) && (!entry.getKstatus().equals("1")))
 		{
 			
 		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
@@ -320,6 +322,50 @@ public Set<ReportIssue> getAllTasksByBalenced(String qvalue) {
 	
 }
 
+
+
+public Set<KpStatusLogs> getAllTasksForAck() {
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getId());
+	
+	List<KpStatusLogs> listissue=kpStatusLogsDao.getKpStatusLogsDao();
+	
+	Set<KpStatusLogs> sortedtaskslist =new TreeSet<KpStatusLogs>();
+            
+            if(id.equals("1"))
+            {
+            	
+            	for(KpStatusLogs entry :listissue )
+           	 {
+           			
+           		
+           		
+           			sortedtaskslist.add(entry);
+           			
+           		
+           	 }
+            	
+            }
+            else
+            {
+            	for(KpStatusLogs entry :listissue )
+	 {
+		if(entry.getIassignto().equals(id))
+		{
+			
+			if(entry.getKpstatus().equals("3") )
+       		{
+       			sortedtaskslist.add(entry);
+       			
+       		}
+		}
+	 }
+	 }
+	return sortedtaskslist;
+	 
+	
+}
 
 
 	

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.config.FilesStuff;
 import com.charvikent.issuetracking.config.KptsUtil;
+import com.charvikent.issuetracking.model.KpHistory;
 import com.charvikent.issuetracking.model.KpStatus;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
@@ -37,6 +38,8 @@ public class ReportIssueDao {
 	
 	@Autowired
 	KptsUtil utilities;
+	@Autowired
+	KpStatusLogsDao kpStatusLogsDao;
 
 	public void saveReportIssue(ReportIssue reportIssue) {
 		String randomNum = utilities.randNum();
@@ -373,7 +376,61 @@ public List<ReportIssue> getAllReportIssues()
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
+		
+		
+		String fieldname ="";
+		String change  ="";
+		
+		
      ReportIssue editissue=getReportIssueById(issue.getId());
+     
+     if(!editissue.getCategory().equals(issue.getCategory()) )
+     {
+    	 fieldname = fieldname+" category field changed  ";
+    	 change =change+editissue.getCategory() +"-->"+ issue.getCategory();
+     }
+     if(!editissue.getSeverity().equals(issue.getSeverity()) )
+     {
+    	 fieldname = fieldname+" severity field changed  ";
+    	 change =change+ editissue.getSeverity() +"-->"+issue.getSeverity();
+     }
+     if(!editissue.getPriority().equals(issue.getPriority()) )
+     {
+    	 fieldname = fieldname+" priority field changed  ";
+    	 change =change+ editissue.getPriority() +"-->"+issue.getPriority();
+     }
+     if(!editissue.getAssignto().equals(issue.getAssignto() ))
+     {
+    	 fieldname = fieldname+" Assignto field changed  ";
+    	 change =change+ editissue.getAssignto()+"-->"+issue.getAssignto();
+     }
+     if(!editissue.getAssignto().equals(issue.getAssignto() ))
+     {
+    	 fieldname = fieldname+" Assignto field changed  ";
+    	 change =change+ editissue.getAssignto()+"-->"+issue.getAssignto();
+     }
+     if(!editissue.getSubject().equals(issue.getSubject() ))
+     {
+    	 fieldname = fieldname+" subject field changed  ";
+    	 change =change+ editissue.getSubject()+"-->"+issue.getSubject();
+     }
+     if(!editissue.getDescription().equals(issue.getDescription() ))
+     {
+    	 fieldname = fieldname+" description field changed  ";
+    	 change =change+ editissue.getDescription()+"-->"+issue.getDescription();
+     }
+     if(!editissue.getTaskdeadline().equals(issue.getTaskdeadline() ))
+     {
+    	 fieldname = fieldname+" TaskDeadline field changed  ";
+    	 change =change+ editissue.getTaskdeadline()+"-->"+issue.getTaskdeadline();
+     }
+     if(!editissue.getKstatus().equals(issue.getKstatus() ))
+     {
+    	 fieldname = fieldname+" TaskDeadline field changed  ";
+    	 change =change+ editissue.getKstatus()+"-->"+issue.getKstatus();
+     }
+     
+     
      editissue.setAssignto(issue.getAssignto());
      //editissue.setAssignby(issue.getAssignby());
      editissue.setCategory(issue.getCategory());
@@ -387,8 +444,19 @@ public List<ReportIssue> getAllReportIssues()
      if(issue.getUploadfile()!=null)
      {
      editissue.setUploadfile(fileTemplate.concurrentFileNames());
+     
+     fieldname = fieldname+" new file added ";
+	 change =change+issue.getUploadfile();
      }
 		em.flush();
+		
+		
+		KpHistory history =new KpHistory();
+		
+		history.setIssueid(String.valueOf(issue.getId()));
+		history.setField(fieldname);
+		history.setChange(change);
+		em.persist(history);
 
 		KpStatusLogs slogs=new KpStatusLogs();
 
@@ -498,10 +566,27 @@ public List<ReportIssue> getAllReportIssues()
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
 		subtask.setIassignto(id);
+		String fieldname ="";
+		String change ="";
+		KpStatusLogs editlog = kpStatusLogsDao.getKpStatusLogById(subtask.getId());
+		
+		if(!editlog.getComment().equals(subtask.getComment()) )
+	     {
+	    	 fieldname = fieldname+" New comment addeded  ";
+	    	 change =change+editlog.getComment() +"-->"+ subtask.getComment();
+	     }
+		if(!editlog.getKpstatus().equals(subtask.getKpstatus()) )
+	     {
+	    	 fieldname = fieldname+" status changed  ";
+	    	 change =change+editlog.getKpstatus() +"-->"+ subtask.getKpstatus();
+	     }
+		
 		
 		if(subtask.getUploadfiles()!=null)
 	     {
+			 fieldname = fieldname+" new file addeded  ";
 		subtask.setUploadfiles(fileTemplate.concurrentFileNames());
+		change =change+subtask.getUploadfiles();
 		fileTemplate.clearFiles();
 	     }
 		
@@ -511,6 +596,14 @@ public List<ReportIssue> getAllReportIssues()
 		ReportIssue issue =getReportIssueById(Integer.parseInt(subtask.getIssueid()));
 		issue.setKstatus(subtask.getKpstatus());
 		em.merge(issue);  //status updated
+		
+		
+         KpHistory history =new KpHistory();
+		
+		history.setIssueid(String.valueOf(issue.getId()));
+		history.setField(fieldname);
+		history.setChange(change);
+		em.persist(history);
 		
 		
 		

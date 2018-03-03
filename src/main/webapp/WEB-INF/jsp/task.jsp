@@ -226,6 +226,7 @@
                     				<!-- <input type=hidden path="id"/> -->
                     				
                     				<input type=hidden name="issueid" id="issueid" value="">
+                    				<input type=hidden name="id" id="id" value="">
                     				
 									<label for="focusedinput" class="col-md-4 control-label">Status  <span class="impColor">*</span></label>
 										<select  name="kpstatus" id="kpstatus" class="col-xs-10 col-sm-7  validate2 " style="margin-top:6px">
@@ -388,7 +389,7 @@ function displayTable(listOrders) {
 		var view2 = "<a class='view viewIt' href='viewTicket?id="	+ orderObj.id+ "&pgn=0'>"+ orderObj.taskno+ "</a>"
 		var comment = "<a class='comment commentIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
 		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
-		var history = "<a class='history historyit' onclick='viewTask("	+ orderObj.id+ ")'> <i class='fas fa-history'></i></a>"
+		var history = "<a class='history historyit' onclick='viewTask("	+ orderObj.id+ ")'> <i class='fa fa-history'></i></a>"
 		
 		
 		serviceUnitArray[orderObj.id] = orderObj;
@@ -630,6 +631,7 @@ $('#ttype').on('change', function() {
 			var kpstatus=$('#kpstatus').val();
 		    var commet=$('#commet').val();
 		    var issueid=$('#issueid').val();
+		    var id=$('#id').val();
 			   
 			   var formData = new FormData();
 			   
@@ -661,6 +663,7 @@ $('#ttype').on('change', function() {
 			  			
 			  		alert(result)
 			  		}
+			  	    location.reload();
 			  		$('#kpstatus').val("");
 			  		$('#commet').val("");
 			  		$('#fileupload').val("");

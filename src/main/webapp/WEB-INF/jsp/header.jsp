@@ -228,7 +228,9 @@ function getHeadersCounts(){
         </div>
 		<div class="masters">
 	        <ul class="nav navbar-nav pull-right toolbar">
-	             <li style="float:left;margin-right:35px"><a href="${baseurl}/task" style="color:white;">Create Task</a></li>
+	             <%-- <li style="float:left;margin-right:35px"><a href="${baseurl}/task" style="color:white;">Create Task</a></li> --%>
+	            <li style="float:left;margin-right:35px"><a href="${baseurl}/severity?id=Critical" style="color:white;">Create Task</a></li>
+	   
 	            <li class="dropdown">
 	                <a href="#" class="dropdown-toggle username" data-toggle="dropdown" style="color: white;"><span class="hidden-xs">Master Admin <i class="fa fa-caret-down"></i></span><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt="Dangerfield" /></a>
 	                <ul class="dropdown-menu userinfo arrow">

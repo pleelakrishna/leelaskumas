@@ -72,6 +72,10 @@ public class DashBoardController {
 		 model.addAttribute("severityCount",dashBoardService.getSeverityWiseCount() );
 		 model.addAttribute("severityCountsBY",dashBoardService.getSeverityWiseCountsByAssignedBy() );
 		 
+		 model.addAttribute("ackdetails", dashBoardService.getAllTasksForAck());
+		
+		 System.out.println(dashBoardService.getAllTasksForAck());
+		 
 		 model.addAttribute("SevMonitoredCounts", dashBoardService.getSeverityCountsUnderReportTo());
 		 
 		 return "dashBoard";

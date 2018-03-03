@@ -21,7 +21,6 @@ public class DesignDao {
 		entityManager.persist(desig);
 		
 		
-		
 	}
 	
 	@SuppressWarnings("unchecked")
