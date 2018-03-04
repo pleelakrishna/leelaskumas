@@ -1,8 +1,6 @@
 package com.charvikent.issuetracking.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.charvikent.issuetracking.config.FilesStuff;
+import com.charvikent.issuetracking.dao.KpHistoryDao;
+import com.charvikent.issuetracking.model.KpHistory;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.CategoryService;
+import com.charvikent.issuetracking.service.KpHistoryService;
 import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.PriorityService;
 import com.charvikent.issuetracking.service.ReportIssueService;
@@ -63,6 +64,12 @@ public class TaskController {
 	
 	@Autowired
 	TasksSelectionService tasksSelectionService;
+	
+	@Autowired
+	KpHistoryDao kpHistoryDao;
+	
+	@Autowired
+	KpHistoryService kpHistoryService;
 	
 	/*@Autowired
 	DashBoardService dashBoardService;*/
@@ -268,6 +275,21 @@ public class TaskController {
 
 		
 		Set<KpStatusLogs> taskHistory =taskService.getrepeatLogsById(Integer.parseInt(id));
+		
+		System.out.println(taskHistory);
+		
+		
+		JSONObject obj = new JSONObject();
+		obj.put("list", taskHistory);
+		return String.valueOf(obj);
+
+	}
+	
+	@RequestMapping(value = "/viewTask2",method = RequestMethod.POST)
+	public @ResponseBody Object viewIssue2(@RequestParam(value = "id", required = true) String id, Model model,HttpServletRequest request, HttpSession session) throws JSONException {
+
+		
+		Set<KpHistory> taskHistory =kpHistoryService.getTaskHistory(id);
 		
 		JSONObject obj = new JSONObject();
 		obj.put("list", taskHistory);

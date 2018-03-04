@@ -1,7 +1,6 @@
 package com.charvikent.issuetracking.dao;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -84,11 +83,25 @@ public class ReportIssueDao {
 		if(reportIssue.getUploadfile()!=null)
 	     {
 		slogs.setUploadfiles(fileTemplate.concurrentFileNames());
-		fileTemplate.clearFiles();
+		
 	     }
 
 		em.persist(slogs);
 		
+		
+		KpHistory history =new KpHistory();
+		
+		history.setIssueid(String.valueOf(reportIssue.getId()));
+		history.setKpfield("New Task created");
+		history.setKpchange("");
+		history.setChangedby(id);
+		
+		if(reportIssue.getUploadfile()!=null)
+	     {
+			history.setUploadfiles(fileTemplate.concurrentFileNames());
+			fileTemplate.clearFiles();
+	     }
+		em.persist(history);
 		
 		
 
@@ -495,6 +508,12 @@ public List<ReportIssue> getAllReportIssues()
 		history.setIssueid(String.valueOf(issue.getId()));
 		history.setKpfield((fieldname.substring(0,fieldname.length()-1)));
 		history.setKpchange((change.substring(0,change.length()-1)));
+		history.setChangedby(id);
+		
+		if(issue.getUploadfile()!=null)
+	     {
+			history.setUploadfiles(fileTemplate.concurrentFileNames());
+	     }
 		em.persist(history);
 		
 	     }
@@ -582,6 +601,11 @@ public List<ReportIssue> getAllReportIssues()
 		}
 		
 		
+		for(KpStatusLogs entry:listRepeatlogs)
+		{
+			System.out.println(entry.getComment());
+		}
+		
 		
 		return listRepeatlogs;
 	}
@@ -631,12 +655,16 @@ public List<ReportIssue> getAllReportIssues()
 	    	 change =change+editlog.getKpstatus() +"-->"+ listmap.get(Integer.parseInt(subtask.getKpstatus()))+"&";
 	     }
 		
-		
+		 KpHistory history =new KpHistory();
+		 
+		 
 		if(subtask.getUploadfiles()!=null)
 	     {
 			 fieldname = fieldname+" new file addeded & ";
 		subtask.setUploadfiles(fileTemplate.concurrentFileNames());
 		change =change+subtask.getUploadfiles()+"&";
+		
+		history.setUploadfiles(fileTemplate.concurrentFileNames());
 		fileTemplate.clearFiles();
 	     }
 		
@@ -650,12 +678,16 @@ public List<ReportIssue> getAllReportIssues()
 		em.merge(issue);  //status updated
 		
 		
-         KpHistory history =new KpHistory();
+        
 		
 		history.setIssueid(String.valueOf(issue.getId()));
 		history.setKpfield((fieldname.substring(0,fieldname.length()-1)));
 		history.setKpchange(change.substring(0,change.length()-1));
+		history.setChangedby(id);
 		em.persist(history);
+		
+		
+		
 		
 		
 		
@@ -804,6 +836,10 @@ public List<ReportIssue> getAllReportIssues()
 
 	public void  openTask(Integer id) {
 		
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id2=String.valueOf(objuserBean.getId());
+		
 		try{
 			
 			ReportIssue task= (ReportIssue)em.find(ReportIssue.class ,id);
@@ -818,6 +854,19 @@ public List<ReportIssue> getAllReportIssues()
 			slogs.setComment("Task Mark As Read");
 			slogs.setKpstatus(task.getKstatus());
 			em.persist(slogs);
+			
+
+			KpHistory history =new KpHistory();
+			
+			history.setIssueid(String.valueOf(id));
+			history.setKpfield("Task Mark As Read");
+			history.setKpchange("");
+			history.setChangedby(id2);
+			
+			
+			em.persist(history);
+			
+			
 			}
 		}catch(Exception e){
 			e.printStackTrace();

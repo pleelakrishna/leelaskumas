@@ -79,6 +79,10 @@ public class KpStatusLogsDao {
 
 		return entityManager.find(KpStatusLogs.class, id);
 	}
+	
+	
+	
+	
 
 
 }

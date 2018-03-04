@@ -11,7 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-public class KpHistory {
+public class KpHistory implements Comparable<KpHistory>{ 
 	
 	
 	
@@ -31,8 +31,12 @@ public class KpHistory {
 	@CreationTimestamp
 	private Date createdTime;
 
-	@UpdateTimestamp
-	private Date updatedTime;
+	
+	
+	private String changedby;
+	
+	private String uploadfiles;
+	
 
 	public Integer getId() {
 		return id;
@@ -68,14 +72,7 @@ public class KpHistory {
 		this.createdTime = createdTime;
 	}
 
-	public Date getUpdatedTime() {
-		return updatedTime;
-	}
-
-	public void setUpdatedTime(Date updatedTime) {
-		this.updatedTime = updatedTime;
-	}
-
+	
 	public String getKpfield() {
 		return kpfield;
 	}
@@ -91,14 +88,44 @@ public class KpHistory {
 	public void setKpchange(String kpchange) {
 		this.kpchange = kpchange;
 	}
+	
+	
 
+	public String getChangedby() {
+		return changedby;
+	}
+
+	public void setChangedby(String changedby) {
+		this.changedby = changedby;
+	}
+	
+	
+
+	public String getUploadfiles() {
+		return uploadfiles;
+	}
+
+	public void setUploadfiles(String uploadfiles) {
+		this.uploadfiles = uploadfiles;
+	}
+
+
+
+
+	
 	@Override
 	public String toString() {
 		return "KpHistory [id=" + id + ", issueid=" + issueid + ", kpfield=" + kpfield + ", kpchange=" + kpchange
-				+ ", taskno=" + taskno + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + "]";
+				+ ", taskno=" + taskno + ", createdTime=" + createdTime + ", changedby=" + changedby + ", uploadfiles="
+				+ uploadfiles + "]";
 	}
 
-	
+	@Override
+	public int compareTo(KpHistory o) {
+		return -createdTime.compareTo(o.createdTime);
+		
+	}
+
 	
 	
 	

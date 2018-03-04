@@ -203,6 +203,32 @@
     </div>
 </div>
 <!-- Modal Ends here-->
+
+
+
+<!-- Task History 2 Modal Starts here-->
+<div class="modal fade" id="myModal2" data-backdrop="static" data-keyboard="false" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header"  style="background: #4f8edc;">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"> Task History 2 </h4>
+        	</div>
+        	<div class="modal-body">
+				<div class="row">
+				<div class="table-responsive" id="HtableId2">
+							<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered datatables" id="example2">
+								<thead><tr class="info"><th>Date Modified</th><th>User Name</th><th>Attachment</th><th>Field</th><th>Change</th></tr></thead>
+								<tbody></tbody>
+							</table>
+						</div>
+				</div>
+			</div>
+      	</div>
+    </div>
+</div>
+<!-- Modal Ends here-->
 			
 			
 			
@@ -386,6 +412,7 @@ function displayTable(listOrders) {
 		var edit = "<a class='edit editIt' onclick='editTask("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
 			}
 		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
+		var history2 = "<a class='history historyit' onclick='viewTask2("	+ orderObj.id+ ")'> <i class='fa fa-history'></i></a>"
 		var view2 = "<a class='view viewIt' href='viewTicket?id="	+ orderObj.id+ "&pgn=0'>"+ orderObj.taskno+ "</a>"
 		var comment = "<a class='comment commentIt' onclick='addComment("	+ orderObj.id+ ")'>   <i class='fa fa-comments'></i></a>"
 		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
@@ -403,7 +430,7 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
 			+ "<td title='"+orderObj.kstatus+"'>"+ orderObj.kstatus + "</td>"
 			+ "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>"
-			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time + "&nbsp;&nbsp;"+history+ "</td>" 
+			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time + "&nbsp;&nbsp;"+history+ "&nbsp;&nbsp;"+history2+"</td>" 
 			+ "</tr>";
 		$(tblRow).appendTo("#tableId table tbody");
 	});
@@ -463,6 +490,46 @@ function viewTask(id){
 		});
 			$("#myModal").modal();
 		});
+
+
+}
+
+
+
+function viewTask2(id){
+	var formData = new FormData();
+    formData.append('id', id);
+	$.fn.makeMultipartRequest('POST', 'viewTask2', false, formData, false, 'text', function(data){
+		var jsonobj = $.parseJSON(data);
+		var alldata = jsonobj.list;
+		$('#HtableId2').html('');
+		var tableHead = '<table id="example2" class="table table-striped table-bordered datatables">'
+			+ '<thead><tr><th>Date Modified</th><th>User Name</th><th>Attachment</th><th>field</th><th>Change</th></tr></thead><tbody></tbody></table>';
+	$('#HtableId2').html(tableHead);
+	$.each(alldata,function(i, orderObj) {
+		if(orderObj.uploadfiles==undefined) orderObj.uploadfiles='';
+		else
+			{
+				var list=orderObj.uploadfiles.split('*');
+				var uploadfiles='';
+				for(var i=0;i<list.length;i++)
+				{
+					uploadfiles=uploadfiles+'<a href="reportDocuments/'+list[i]+'" target="_blank" title="'+list[i]+'"><i class="fa fa-paperclip fa-lg grey"></i></a>';
+				}
+				orderObj.uploadfiles=uploadfiles;
+			}
+		var tblRow = "<tr>"
+			+ "<td title='"+orderObj.createdTime+"'>"+ orderObj.createdTime + "</td>"
+			+ "<td title='"+orderObj.changedby+"'>"+ orderObj.changedby + "</td>"
+			+ "<td title='"+orderObj.uploadfiles+"'>"+ orderObj.uploadfiles + "</td>"
+			+ "<td title='"+orderObj.kpfield+"'>"+ orderObj.kpfield + "</td>"
+			+ "<td title='"+orderObj.kpchange+"'>"+ orderObj.kpchange + "</td>"
+			+ "</tr>";
+		$(tblRow).appendTo("#HtableId2 table tbody");
+		
+	});
+		$("#myModal2").modal();
+	});
 
 
 }
