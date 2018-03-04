@@ -339,10 +339,7 @@ public Set<KpStatusLogs> getAllTasksForAck() {
             	for(KpStatusLogs entry :listissue )
            	 {
            			
-           		
-           		
            			sortedtaskslist.add(entry);
-           			
            		
            	 }
             	

@@ -458,9 +458,9 @@ public Map<String, Integer> getSeverityCountsUnderReportTo()
  				issue.setAssignbyid((String) row[17]);
  				issue.setAssignby((String) row[18]);
  				
+ 				issue.setKstatusid((String) row[19]);
  				issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
  				
- 				issue.setKstatusid((String) row[19]);
  			    
  			    
  				

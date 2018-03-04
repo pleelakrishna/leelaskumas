@@ -399,12 +399,6 @@
 
 									</div>
 								</div>
-edwwe
-                                                     <c:forEach items="${ackdetails}" var="entry">
-                                                     ewdwewwe
-															<td>${ackdetails.comment}</td>
-														</c:forEach>
-
 							</div>
 							<!-- /.row -->
 						</div>

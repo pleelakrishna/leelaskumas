@@ -18,6 +18,7 @@ import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.CategoryService;
 import com.charvikent.issuetracking.service.DashBoardService;
+import com.charvikent.issuetracking.service.KpHistoryService;
 import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.PriorityService;
 import com.charvikent.issuetracking.service.ReportIssueService;
@@ -61,6 +62,9 @@ public class DashBoardController {
 	@Autowired
 	TasksSelectionService tasksSelectionService;
 	
+	@Autowired
+	KpHistoryService kpHistoryService;
+	
 	
    
 	@RequestMapping("/dashBoard")
@@ -76,7 +80,12 @@ public class DashBoardController {
 		
 		 System.out.println(dashBoardService.getAllTasksForAck());
 		 
+		 
 		 model.addAttribute("SevMonitoredCounts", dashBoardService.getSeverityCountsUnderReportTo());
+		 
+		 model.addAttribute("notifications", kpHistoryService.getHeaderNotifications());
+		 
+		 System.out.println( kpHistoryService.getHeaderNotificationsforack());
 		 
 		 return "dashBoard";
 		

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -36,6 +37,13 @@ public class KpHistory implements Comparable<KpHistory>{
 	private String changedby;
 	
 	private String uploadfiles;
+	
+	
+	@Transient
+	private String iassignto;
+	
+	@Transient
+	private String iassignby;
 	
 
 	public Integer getId() {
@@ -113,11 +121,30 @@ public class KpHistory implements Comparable<KpHistory>{
 
 
 	
+	public String getIassignto() {
+		return iassignto;
+	}
+
+	public void setIassignto(String iassignto) {
+		this.iassignto = iassignto;
+	}
+
+	public String getIassignby() {
+		return iassignby;
+	}
+
+	public void setIassignby(String iassignby) {
+		this.iassignby = iassignby;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "KpHistory [id=" + id + ", issueid=" + issueid + ", kpfield=" + kpfield + ", kpchange=" + kpchange
 				+ ", taskno=" + taskno + ", createdTime=" + createdTime + ", changedby=" + changedby + ", uploadfiles="
-				+ uploadfiles + "]";
+				+ uploadfiles + ", iassignto=" + iassignto + ", iassignby=" + iassignby + "]";
 	}
 
 	@Override
