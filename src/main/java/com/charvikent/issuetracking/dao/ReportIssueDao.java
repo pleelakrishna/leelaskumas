@@ -26,6 +26,7 @@ import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.CategoryService;
+import com.charvikent.issuetracking.service.KpStatusLogsService;
 import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.PriorityService;
 import com.charvikent.issuetracking.service.SeverityService;
@@ -59,6 +60,9 @@ public class ReportIssueDao {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	KpStatusLogsService kpStatusLogsService;
 
 	public void saveReportIssue(ReportIssue reportIssue) {
 		String randomNum = utilities.randNum();
@@ -630,12 +634,12 @@ public List<ReportIssue> getAllReportIssues()
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
-		TreeSet<KpStatusLogs>  list =kpStatusLogsDao.getKpStatusLogsDao();
+		//TreeSet<KpStatusLogs>  list =kpStatusLogsDao.getKpStatusLogsDao();
 		Map<Integer,String> listmap =mastersService.getKpStatues();
 		
+		KpStatusLogs  editlog =  kpStatusLogsService.getLastRecord(subtask.getIssueid());
 		
-		
-			KpStatusLogs editlog   = list.last();
+			//KpStatusLogs editlog1   = list.last();
 		
 		subtask.setIassignto(id);
 		String fieldname ="";
@@ -644,10 +648,10 @@ public List<ReportIssue> getAllReportIssues()
 		
 		if(!editlog.getComment().equals(subtask.getComment()) )
 	     {
-	    	 fieldname = fieldname+" New comment addeded & ";
+	    	 fieldname = fieldname+" New comment addeded &";
 	    	 change =change+editlog.getComment() +"-->"+ subtask.getComment()+"&";
 	     }
-		if(!editlog.getKpstatus().equals(subtask.getKpstatus()) )
+		if(!editlog.getKpstatus().equals(listmap.get(Integer.parseInt(subtask.getKpstatus()))) )
 	     {
 			
 			
@@ -660,7 +664,7 @@ public List<ReportIssue> getAllReportIssues()
 		 
 		if(subtask.getUploadfiles()!=null)
 	     {
-			 fieldname = fieldname+" new file addeded & ";
+			 fieldname = fieldname+" new file addeded &";
 		subtask.setUploadfiles(fileTemplate.concurrentFileNames());
 		change =change+subtask.getUploadfiles()+"&";
 		
