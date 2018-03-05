@@ -55,6 +55,7 @@ th {
 </style>
 
 <!-- Body starts here -->
+
 	<div class="main-content">
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
@@ -67,10 +68,10 @@ th {
 				<div class="row">
 				
 				<!-- view-->
-
+			<div class="container">
 				<div class="col-md-12">
 				<div class="panel panel-primary">
-					<div class="panel-heading">
+					<div style="margin:0 auto;" class="panel-heading">
 						<h4><i class="ace-icon fa fa-bars"></i></i>
 View Issue Details</h4>
 						<div class="options">
@@ -158,6 +159,7 @@ View Issue Details</h4>
 		</div>
 		<!-- /.main-content-inner -->
 	</div>
+	</div>
     
 		       <!--view end-->
 					<%-- <div class="col-md-12 col-xs-12">
@@ -208,7 +210,7 @@ View Issue Details</h4>
 						</div>
 					</div>
 				</div>
-			<!-- /.page-content -->
+			<!-- /page-content -->
 		</div>
 		<!-- /.main-content-inner -->
 	
