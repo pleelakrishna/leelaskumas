@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.charvikent.issuetracking.dao.DashBoardDao;
 import com.charvikent.issuetracking.dao.UserDao;
+import com.charvikent.issuetracking.model.DashBordByCategory;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 
@@ -175,11 +176,18 @@ public Set<ReportIssue> GetTaskBySeverityUnderReportTo(String sev) {
 	return dashBoardDao.GetTaskBySeverityUnderReportTo(sev);
 }
 
-
-
-
+public Set<ReportIssue> getTasksByCategoryListDashBord(String statusId,String categoryId) {
+	// TODO Auto-generated method stub
 	
+	return dashBoardDao.getTasksByCategoryList(statusId,categoryId);
+}
+
+public List<DashBordByCategory> getCategory() {
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getId());
 	
-	
+	List<DashBordByCategory> categoryList=dashBoardDao.getCategory(id);
+	return categoryList;
+}
 
 }

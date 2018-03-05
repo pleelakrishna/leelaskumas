@@ -476,9 +476,14 @@ public Set<ReportIssue> getissuesByselectionAssignBy(String id) {
 	return reportIssueDao.getissuesByselectionAssignBy(id);
 }
 
-public boolean openTask(Integer id, String status) {
+public Set<ReportIssue> getTaskByCategory(String statusId,String categoryId) {
 	// TODO Auto-generated method stub
-	return reportIssueDao.openTask(id,status);
+	return reportIssueDao.getTaskByCategory(statusId,categoryId);
+}
+
+public void openTask(Integer id) {
+	// TODO Auto-generated method stub
+   reportIssueDao.openTask(id);
 }
 
 public Set<ReportIssue> getOpenTasks(String id) {
@@ -527,8 +532,10 @@ public Integer getReopenTaskCount() {
 	
 }
 
+public Set<ReportIssue> getTaksByid(Integer id) {
+	return  reportIssueDao.getTaksByid(id);
+}
 
-	
 	
 	
 	}

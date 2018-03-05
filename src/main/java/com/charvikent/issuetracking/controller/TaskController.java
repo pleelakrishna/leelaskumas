@@ -1,11 +1,12 @@
 package com.charvikent.issuetracking.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
 import org.json.JSONException;
@@ -416,7 +417,7 @@ public class TaskController {
 		return String.valueOf(jsonObj);
 	}
 	
-	@RequestMapping(value = "/openTask")
+	/*@RequestMapping(value = "/openTask")
 	public @ResponseBody String opentask(ReportIssue  objorg,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
 		System.out.println("deleteEducation page...");
 		Set<ReportIssue> listOrderBeans  = null;
@@ -460,7 +461,7 @@ public class TaskController {
 			
 		}
 		return String.valueOf(jsonObj);
-	}
+	}*/
 	
 	
 	
@@ -498,6 +499,27 @@ public class TaskController {
 		return String.valueOf(jsonObj);
 
 	}
+	
+	
+	@RequestMapping(value = "/viewTicket")
+	public String viewIssue(@RequestParam(value = "id", required = true) String taskId,
+			@RequestParam(value = "pgn", required = true) String pgn,Model model) {
+		 Integer id =Integer.parseInt(taskId);
+		 
+		if(pgn.equals("1"))
+		{
+			taskService.openTask(id);
+		}
+		
+		ReportIssue issue = taskService.getReportIssueById(id);
+		model.addAttribute("cissue", issue);
+		model.addAttribute("clist",taskService.getTaksByid(id));
+		model.addAttribute("repeatLogs",taskService.getrepeatLogsById(id));
+
+		return "ViewTicket";
+
+	}
+
 	
 	
 	
