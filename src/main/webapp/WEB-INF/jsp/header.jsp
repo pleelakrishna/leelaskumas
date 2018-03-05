@@ -192,16 +192,9 @@ function getHeadersCounts(){
 				formData, false, 'text', function(data){
 			var jsonobj = $.parseJSON(data);
 			$("#unseentasks").text(jsonobj.unseentasks);
-			
 			$("#reopentaskscount").text(jsonobj.reopentaskscount);
 			
-//	 		var alldata = jsonobj.allOrders1;
-//	 		console.log(jsonobj.allOrders1);
-//	 		displayTable(alldata);
 		});  
-	
-	
-	
 
 }
 
