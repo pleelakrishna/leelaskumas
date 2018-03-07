@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.charvikent.issuetracking.config.FilesStuff;
 import com.charvikent.issuetracking.model.DashBordByCategory;
+import com.charvikent.issuetracking.model.DashBordByStatus;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
@@ -29,7 +30,6 @@ import com.charvikent.issuetracking.service.TasksSelectionService;
 import com.charvikent.issuetracking.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import scala.annotation.meta.setter;
 
 @Controller
 public class DashBoardController {
@@ -78,15 +78,22 @@ public class DashBoardController {
 		 model.addAttribute("severityCountsBY",dashBoardService.getSeverityWiseCountsByAssignedBy() );
 		 
 		 model.addAttribute("SevMonitoredCounts", dashBoardService.getSeverityCountsUnderReportTo());
-		model.addAttribute("byCategory",dashBoardService.getCategory() );	
+		//model.addAttribute("byCategory",dashBoardService.getCategory() );	
 		List<DashBordByCategory> list=null;
+		List<DashBordByStatus> byStatusList=null;
 		try {
 			String json = null;
 			list = dashBoardService.getCategory();
+			byStatusList=dashBoardService.getStatusList();
 			ObjectMapper objmapper = new ObjectMapper();
-			if(list !=null) {
+			if(list !=null ) {
 				json = objmapper.writeValueAsString(list);
+				
 				request.setAttribute("list", json);
+				}
+			if(byStatusList !=null) {
+			json =objmapper.writeValueAsString(byStatusList);
+			request.setAttribute("byStatusList", json);
 			}
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -299,6 +306,57 @@ public class DashBoardController {
 
 	}
 	
+	
+	@RequestMapping(value = "/statusDashBord")
+	public String tasksByStatus(	Model model,HttpServletRequest request,HttpSession session){
+		Set<ReportIssue> listOrderBeans = null;
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		
+		String status=null;
+		model.addAttribute("taskf", new ReportIssue());
+		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		//model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		model.addAttribute("kpstatuses", mastersService.getKpStatues());
+		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
+		
+		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+		model.addAttribute("objuserBean", objuserBean);
+		
+			
+		
+			try {
+				status = request.getParameter("status");
+				listOrderBeans =  dashBoardService.getTasksByStatusListDashBord(status);
+				if (listOrderBeans != null && listOrderBeans.size() > 0) {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", sJson);
+				 //System.out.println("##############3"+sJson);
+				} else {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", "''");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e);
+
+			}
+			
+			
+			return "task";
+
+	}
 	
 	}
 	

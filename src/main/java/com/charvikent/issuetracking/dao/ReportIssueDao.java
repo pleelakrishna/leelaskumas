@@ -771,6 +771,94 @@ public List<ReportIssue> getAllReportIssues()
 		return  listissue;
 
 	}
+
+	public List<ReportIssue> getStatusList(String id) {
+		List<ReportIssue> listissue=null;
+		try {
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.kstatus=:status and r.kstatus=:id").setParameter("id",id).getResultList();
+			for (Object[] row : rows) {
+				ReportIssue issue = new ReportIssue();
+				issue.setId(Integer.parseInt(String.valueOf(row[0])));
+				issue.setTaskno((String) row[1]);
+				issue.setSubject((String) row[2]);
+				issue.setCategory((String) row[3]);
+				issue.setCategoryid((String) row[4]);
+				issue.setPriority((String) row[5]);
+				issue.setPriorityid((String) row[6]);
+				issue.setAssignto((String) row[7]);
+				issue.setAssigntoid((String) row[8]);
+				issue.setCreatedTime((Date) row[9]);
+				issue.setSeverity((String) row[10]);
+				issue.setSeverityid((String) row[11]);
+				issue.setStatus((String) row[12]);
+				issue.setDescription((String) row[13]);
+				issue.setTaskdeadline((String) row[14]);
+				issue.setAssignbyid((String) row[15]);
+				issue.setAssignby((String) row[16]);
+				issue.setKstatus((String) row[17]);
+
+
+				
+				listissue.add(issue);
+
+			}
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		
+		return listissue;	}
+
+	public Set<ReportIssue> getTaskByStatusDashBord(String status) {
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+		String hqlAdmin = "select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.kstatus=:status";
+		String hqlUser= hqlAdmin + " and r.assignto=:assignto";
+		List<Object[]> rows =null;
+		try {
+			
+			if(id.equals("1")) {
+		          rows = em.createNativeQuery(hqlAdmin).setParameter("status",status).getResultList();
+			}else {
+				  rows = em.createNativeQuery(hqlUser).setParameter("status",status).setParameter("assignto",id).getResultList();
+			}
+			for (Object[] row : rows) {
+				ReportIssue issue = new ReportIssue();
+				issue.setId(Integer.parseInt(String.valueOf(row[0])));
+				issue.setTaskno((String) row[1]);
+				issue.setSubject((String) row[2]);
+				issue.setCategory((String) row[3]);
+				issue.setCategoryid((String) row[4]);
+				issue.setPriority((String) row[5]);
+				issue.setPriorityid((String) row[6]);
+				issue.setAssignto((String) row[7]);
+				issue.setAssigntoid((String) row[8]);
+				issue.setCreatedTime((Date) row[9]);
+				issue.setSeverity((String) row[10]);
+				issue.setSeverityid((String) row[11]);
+				issue.setStatus((String) row[12]);
+				issue.setDescription((String) row[13]);
+				issue.setTaskdeadline((String) row[14]);
+				issue.setAssignbyid((String) row[15]);
+				issue.setAssignby((String) row[16]);
+				issue.setKstatus((String) row[17]);
+
+
+				
+				listissue.add(issue);
+
+			}
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		
+		return listissue;
+	}
 	
 
 

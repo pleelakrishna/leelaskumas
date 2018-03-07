@@ -186,7 +186,7 @@ public class UserDao {
 		users.setDepartment(user.getDepartment());
 		users.setDesignation(user.getDesignation());
 		users.setEmail(user.getEmail());
-		users.setEnabled(user.getEnabled());
+		//users.setEnabled(user.getEnabled());
 		users.setFirstname(user.getFirstname());
 		users.setLastname(user.getLastname());
 		users.setMobilenumber(user.getMobilenumber());

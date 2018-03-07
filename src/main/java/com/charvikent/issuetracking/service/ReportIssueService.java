@@ -536,6 +536,16 @@ public Set<ReportIssue> getTaksByid(Integer id) {
 	return  reportIssueDao.getTaksByid(id);
 }
 
+public List<ReportIssue> getStatusList(String id) {
+	// TODO Auto-generated method stub
+	return reportIssueDao.getStatusList(id);
+}
+
+public Set<ReportIssue> getTaskByStatusDashBord(String status) {
+	// TODO Auto-generated method stub
+	return reportIssueDao.getTaskByStatusDashBord(status);
+}
+
 	
 	
 	}
