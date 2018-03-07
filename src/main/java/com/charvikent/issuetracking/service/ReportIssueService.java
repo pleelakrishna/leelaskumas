@@ -83,7 +83,7 @@ public class ReportIssueService {
 		String msg =" A Ticket is assigned to you with id: "+reportIssue.getId();
 		System.out.println("....Sending SMS ....");
 		String  mnum=touser.getMobilenumber();
-		//smsTemplate.sendSMSFromClass(msg,mnum);
+		smsTemplate.sendSMS(msg,mnum);
 	}
 	
 	public Set<ReportIssue> getAllReportIssues()
@@ -200,9 +200,9 @@ public class ReportIssueService {
 	} 
 	
 	
-	public Map<Integer,List< Integer>> getGapAndCount()
+	public Map<String,List< Integer>> getGapAndCount()
 	{
-		Map<Integer,List< Integer>> listmap= new  LinkedHashMap<Integer,List< Integer>>();
+		Map<String,List< Integer>> listmap= new  LinkedHashMap<String,List< Integer>>();
 		
 	//	List<Integer> timelineDays = Arrays.asList(1,2,3,7,30,60,90,120,180,365);
 		Map<Integer, Integer> issueTimelines = reportIssueDao.getGapAndCount();
@@ -230,32 +230,32 @@ public class ReportIssueService {
 		
 		for(Map.Entry<Integer, Integer> entry : issueTimelines.entrySet()){
 			
-			if(entry.getKey() <= 1){
+			if(entry.getKey() >=0 && entry.getKey() < 1  ){
 				day1Issues = day1Issues+entry.getValue();
 			}
-			if(entry.getKey() == 2  ){
+			if(entry.getKey() >=1 && entry.getKey() < 2  ){
 				day2Issues = day2Issues+entry.getValue();
 			}
-			if(entry.getKey() == 3  ){
+			if(entry.getKey() >=2 && entry.getKey() <3  ){
 				day3Issues = day3Issues+entry.getValue();
 			}
-			if(entry.getKey() <=7 && entry.getKey() > 3  ){
+			if(entry.getKey() <7 && entry.getKey() >= 3  ){
 				day7Issues = day7Issues+entry.getValue();
 			}
-			if(entry.getKey() <=30 && entry.getKey() > 7  ){
+			if(entry.getKey() <30 && entry.getKey() >= 7  ){
 				day30Issues = day30Issues+entry.getValue();
 			}
 			
-			if(entry.getKey() <=60 && entry.getKey() > 30  ){
+			if(entry.getKey() <60 && entry.getKey() >= 30  ){
 				day60Issues = day60Issues+entry.getValue();
 			}
-			if(entry.getKey() <=90 && entry.getKey() > 60  ){
+			if(entry.getKey() <90 && entry.getKey() >= 60  ){
 				day90Issues = day90Issues+entry.getValue();
 			}
-			if(entry.getKey() <=180 && entry.getKey() > 90  ){
+			if(entry.getKey() <180 && entry.getKey() >= 90  ){
 				day180Issues = day180Issues+entry.getValue();
 			}
-			if(entry.getKey() <=365 && entry.getKey() > 180  ){
+			if(entry.getKey() <365 && entry.getKey() >= 180  ){
 				day365Issues = day365Issues+entry.getValue();
 			}
 			
@@ -291,32 +291,32 @@ public class ReportIssueService {
 		
 for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 			
-			if(entry.getKey() <= 1){
+	        if(entry.getKey() >=0 && entry.getKey() < 1  ){
 				day1Issuesclosed = day1Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() == 2  ){
+	        if(entry.getKey() >=1 && entry.getKey() < 2  ){
 				day2Issuesclosed = day2Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() == 3  ){
+	        if(entry.getKey() >=2 && entry.getKey() < 3  ){
 				day3Issuesclosed = day3Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() <=7 && entry.getKey() > 3  ){
+			if(entry.getKey() <7 && entry.getKey() >= 3  ){
 				day7Issuesclosed = day7Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() <=30 && entry.getKey() > 7  ){
+			if(entry.getKey() <30 && entry.getKey() >= 7  ){
 				day30Issuesclosed = day30Issuesclosed+entry.getValue();
 			}
 			
-			if(entry.getKey() <=60 && entry.getKey() > 30  ){
+			if(entry.getKey() <60 && entry.getKey() >= 30  ){
 				day60Issuesclosed = day60Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() <=90 && entry.getKey() > 60  ){
+			if(entry.getKey() <90 && entry.getKey() >= 60  ){
 				day90Issuesclosed = day90Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() <=180 && entry.getKey() > 90  ){
+			if(entry.getKey() <180 && entry.getKey() >= 90  ){
 				day180Issuesclosed = day180Issuesclosed+entry.getValue();
 			}
-			if(entry.getKey() <=365 && entry.getKey() > 180  ){
+			if(entry.getKey() <365 && entry.getKey() >= 180  ){
 				day365Issuesclosed = day365Issuesclosed+entry.getValue();
 			}
 			
@@ -362,15 +362,15 @@ for(Map.Entry<Integer, Integer> entry : issueTimelinesClosed.entrySet()){
 		list365.add(day365Issuesclosed);
 		list365.add(day365Issues-day365Issuesclosed);
 		
-		listmap.put(1, list1);
-		listmap.put(2,  list2);
-		listmap.put(3,  list3);
-		listmap.put(7,  list7);
-		listmap.put(30,  list30);
-		listmap.put(60,  list60);
-		listmap.put(90,  list90);
-		listmap.put(180,  list180);
-		listmap.put(365,  list365);
+		listmap.put("0-1", list1);
+		listmap.put("1-2",  list2);
+		listmap.put("2-3",  list3);
+		listmap.put("3-7",  list7);
+		listmap.put("7-30",  list30);
+		listmap.put("30-60",  list60);
+		listmap.put("60-90",  list90);
+		listmap.put("90-180",  list180);
+		listmap.put("180-365",  list365);
 		
 		
 		//return gapAndCount;
@@ -476,16 +476,15 @@ public Set<ReportIssue> getissuesByselectionAssignBy(String id) {
 	return reportIssueDao.getissuesByselectionAssignBy(id);
 }
 
-public Set<ReportIssue> getTaskByCategory(String statusId,String categoryId) {
-	// TODO Auto-generated method stub
-	return reportIssueDao.getTaskByCategory(statusId,categoryId);
-}
-
 public void openTask(Integer id) {
 	// TODO Auto-generated method stub
    reportIssueDao.openTask(id);
 }
 
+public Set<ReportIssue> getTaskByCategory(String statusId,String categoryId) {
+	// TODO Auto-generated method stub
+	return reportIssueDao.getTaskByCategory(statusId,categoryId);
+}
 public Set<ReportIssue> getOpenTasks(String id) {
 	// TODO Auto-generated method stub
 	return reportIssueDao.getOpenTasks(id);

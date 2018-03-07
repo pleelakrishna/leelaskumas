@@ -20,10 +20,17 @@ import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.config.FilesStuff;
 import com.charvikent.issuetracking.config.KptsUtil;
+import com.charvikent.issuetracking.model.KpHistory;
 import com.charvikent.issuetracking.model.KpStatus;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
+import com.charvikent.issuetracking.service.CategoryService;
+import com.charvikent.issuetracking.service.KpStatusLogsService;
+import com.charvikent.issuetracking.service.MastersService;
+import com.charvikent.issuetracking.service.PriorityService;
+import com.charvikent.issuetracking.service.SeverityService;
+import com.charvikent.issuetracking.service.UserService;
 
 @Repository
 public class ReportIssueDao {
@@ -37,6 +44,25 @@ public class ReportIssueDao {
 	
 	@Autowired
 	KptsUtil utilities;
+	@Autowired
+	KpStatusLogsDao kpStatusLogsDao;
+	
+	@Autowired
+	MastersService  mastersService;
+	
+	@Autowired
+	private PriorityService priorityService;
+
+	@Autowired
+	private SeverityService severityService;
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private CategoryService categoryService;
+	
+	@Autowired
+	KpStatusLogsService kpStatusLogsService;
 
 	public void saveReportIssue(ReportIssue reportIssue) {
 		String randomNum = utilities.randNum();
@@ -61,11 +87,25 @@ public class ReportIssueDao {
 		if(reportIssue.getUploadfile()!=null)
 	     {
 		slogs.setUploadfiles(fileTemplate.concurrentFileNames());
-		fileTemplate.clearFiles();
+		
 	     }
 
 		em.persist(slogs);
 		
+		
+		KpHistory history =new KpHistory();
+		
+		history.setIssueid(String.valueOf(reportIssue.getId()));
+		history.setKpfield("New Task created");
+		history.setKpchange("");
+		history.setChangedby(id);
+		
+		if(reportIssue.getUploadfile()!=null)
+	     {
+			history.setUploadfiles(fileTemplate.concurrentFileNames());
+			fileTemplate.clearFiles();
+	     }
+		em.persist(history);
 		
 		
 
@@ -245,12 +285,29 @@ public List<ReportIssue> getAllReportIssues()
 
 	@SuppressWarnings("unchecked")
 	public Map<Integer, Integer>  getGapAndCount() {
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
 
 		List<ReportIssue> listissuegap=new ArrayList<>();
 		ReportIssue issuegap =null;
-
-		List<Object[]> rows = 	em.createNativeQuery("SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue group by gap ").getResultList();
-
+		
+		List<Object[]> rows =null;
+		
+		String hql ="SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue  r where r.assignto=:cuid  group by gap";
+         
+		if(id.equals("1"))
+		{
+		
+		 rows = 	em.createNativeQuery("SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue group by gap ").getResultList();
+		}
+		else
+		{
+		
+	      rows = 	em.createNativeQuery(hql).setParameter("cuid", id).getResultList();
+		}
+		
+		
 		Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
 
 		for (Object[] row : rows) {
@@ -272,11 +329,26 @@ public List<ReportIssue> getAllReportIssues()
 
 		List<ReportIssue> listissuegap=new ArrayList<>();
 		ReportIssue issuegap =null;
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
 
 		//String custName=null;
+		
+		List<Object[]> rows =null;
+		
+		String hql ="SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue  r where r.assignto=:cuid and r.kstatus =:kstatus  group by gap";
+          
+		if(id.equals("1"))
+		{
 
-		List<Object[]> rows = 	em.createNativeQuery(" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue where kstatus =:custName  group by gap  ").setParameter("custName", "1").getResultList();
-
+		 rows = 	em.createNativeQuery(" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue where kstatus =:custName  group by gap  ").setParameter("custName", "1").getResultList();
+		}
+		else
+		{
+		 rows = 	em.createNativeQuery(hql).setParameter("cuid",id).setParameter("kstatus", "1").getResultList();
+		}
+		
 		Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
 
 		for (Object[] row : rows) {
@@ -341,7 +413,31 @@ public List<ReportIssue> getAllReportIssues()
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
+		
+		
+		String fieldname ="";
+		String change  ="";
+		
+		//Before  inserting getting data
+		Set<ReportIssue> set= getTaksByid(issue.getId());
+    
+     List<ReportIssue> list = new ArrayList<ReportIssue>(set);
+     ReportIssue editissue1= list.get(0);
+     
      ReportIssue editissue=getReportIssueById(issue.getId());
+     
+     
+     
+     Map<Integer,String> semap= severityService.getSeverityNames();
+		 Map<Integer,String> pmap=priorityService.getPriorityNames();
+	   Map<Integer,String> umap=userService.getUserName();
+	   Map<Integer,String> cmap= categoryService.getCategoryNames();
+		 Map<Integer,String> smap = mastersService.getKpStatues();
+		
+		
+     
+     
+     
      editissue.setAssignto(issue.getAssignto());
      //editissue.setAssignby(issue.getAssignby());
      editissue.setCategory(issue.getCategory());
@@ -355,8 +451,76 @@ public List<ReportIssue> getAllReportIssues()
      if(issue.getUploadfile()!=null)
      {
      editissue.setUploadfile(fileTemplate.concurrentFileNames());
+     
+     fieldname = fieldname+" new file added ";
+	 change =change+issue.getUploadfile();
      }
-		em.flush();
+		em.merge(editissue);
+		
+		
+		//after inserting getting values
+		
+		
+		System.out.println(editissue1.getSeverity());
+		System.out.println(semap.get(Integer.parseInt(issue.getSeverity())));
+		
+		
+		
+		if(!editissue1.getCategory().equals(cmap.get(Integer.parseInt(issue.getCategory()))))
+	     {
+	    	 fieldname = fieldname+" category field changed  &";
+	    	 change =change+editissue1.getCategory() +"-->"+ cmap.get(Integer.parseInt(issue.getCategory()))+"&";
+	     }
+	     if(!editissue1.getSeverity().equals(semap.get(Integer.parseInt(issue.getSeverity()))))
+	     {
+	    	 fieldname = fieldname+" severity field changed &";
+	    	 change =change+ editissue1.getSeverity() +"-->"+semap.get(Integer.parseInt(issue.getSeverity()))+"&";
+	     }
+	     if(!editissue1.getPriority().equals(pmap.get(Integer.parseInt(issue.getPriority()))) )
+	     {
+	    	 fieldname = fieldname+" priority field changed  &";
+	    	 change =change+ editissue1.getPriority() +"-->"+pmap.get(Integer.parseInt(issue.getPriority()))+"&";
+	     }
+	     if(!editissue1.getAssignto().equals(umap.get(Integer.parseInt(issue.getAssignto())) ))
+	     {
+	    	 fieldname = fieldname+" Assignto field changed  &";
+	    	 change =change+ editissue1.getAssignto()+"-->"+umap.get(Integer.parseInt(issue.getAssignto())) +"&";
+	     }
+	     
+	     if(!editissue1.getSubject().equals(issue.getSubject() ))
+	     {
+	    	 fieldname = fieldname+" subject field changed &";
+	    	 change =change+ editissue1.getSubject()+"-->"+issue.getSubject()+"&";
+	     }
+	     if(!editissue1.getDescription().equals(issue.getDescription() ))
+	     {
+	    	 fieldname = fieldname+" description field changed  &";
+	    	 change =change+ editissue1.getDescription()+"-->"+issue.getDescription()+"&";
+	     }
+	     if(!editissue1.getTaskdeadline().equals(issue.getTaskdeadline() ))
+	     {
+	    	 fieldname = fieldname+" TaskDeadline field changed &";
+	    	 change =change+ editissue1.getTaskdeadline()+"-->"+issue.getTaskdeadline()+"&";
+	     }
+	     
+		
+	     if(fieldname.length()>0)
+	     {
+		System.out.println(fieldname.substring(0,fieldname.length()-1));
+		KpHistory history =new KpHistory();
+		
+		history.setIssueid(String.valueOf(issue.getId()));
+		history.setKpfield((fieldname.substring(0,fieldname.length()-1)));
+		history.setKpchange((change.substring(0,change.length()-1)));
+		history.setChangedby(id);
+		
+		if(issue.getUploadfile()!=null)
+	     {
+			history.setUploadfiles(fileTemplate.concurrentFileNames());
+	     }
+		em.persist(history);
+		
+	     }
 
 		KpStatusLogs slogs=new KpStatusLogs();
 
@@ -441,6 +605,11 @@ public List<ReportIssue> getAllReportIssues()
 		}
 		
 		
+		for(KpStatusLogs entry:listRepeatlogs)
+		{
+			System.out.println(entry.getComment());
+		}
+		
 		
 		return listRepeatlogs;
 	}
@@ -465,14 +634,65 @@ public List<ReportIssue> getAllReportIssues()
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
-		subtask.setIassignto(id);
+		//TreeSet<KpStatusLogs>  list =kpStatusLogsDao.getKpStatusLogsDao();
+		Map<Integer,String> listmap =mastersService.getKpStatues();
 		
+		KpStatusLogs  editlog =  kpStatusLogsService.getLastRecord(subtask.getIssueid());
+		
+			//KpStatusLogs editlog1   = list.last();
+		
+		subtask.setIassignto(id);
+		String fieldname ="";
+		String change ="";
+		//KpStatusLogs editlog = kpStatusLogsDao.getKpStatusLogById(clog.getId());
+		
+		if(!editlog.getComment().equals(subtask.getComment()) )
+	     {
+	    	 fieldname = fieldname+" New comment addeded &";
+	    	 change =change+editlog.getComment() +"-->"+ subtask.getComment()+"&";
+	     }
+		if(!editlog.getKpstatus().equals(listmap.get(Integer.parseInt(subtask.getKpstatus()))) )
+	     {
+			
+			
+	    	 fieldname = fieldname+" status changed  &";
+	    	 change =change+editlog.getKpstatus() +"-->"+ listmap.get(Integer.parseInt(subtask.getKpstatus()))+"&";
+	     }
+		
+		 KpHistory history =new KpHistory();
+		 
+		 
 		if(subtask.getUploadfiles()!=null)
 	     {
+			 fieldname = fieldname+" new file addeded &";
 		subtask.setUploadfiles(fileTemplate.concurrentFileNames());
+		change =change+subtask.getUploadfiles()+"&";
+		
+		history.setUploadfiles(fileTemplate.concurrentFileNames());
 		fileTemplate.clearFiles();
 	     }
+		
+		
 		em.persist(subtask);
+		
+		
+		
+		ReportIssue issue =getReportIssueById(Integer.parseInt(subtask.getIssueid()));
+		issue.setKstatus(subtask.getKpstatus());
+		em.merge(issue);  //status updated
+		
+		
+        
+		
+		history.setIssueid(String.valueOf(issue.getId()));
+		history.setKpfield((fieldname.substring(0,fieldname.length()-1)));
+		history.setKpchange(change.substring(0,change.length()-1));
+		history.setChangedby(id);
+		em.persist(history);
+		
+		
+		
+		
 		
 		
 		
@@ -484,7 +704,7 @@ public List<ReportIssue> getAllReportIssues()
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,u1.username as asby,r.assignby,ks.name from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks , kpstatuslogs kpl  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id  order by kpl.statustime desc").setParameter("id",id).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,u1.username as asby,r.assignby,ks.name, r.kstatus from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks , kpstatuslogs kpl  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id and r.kstatus<>'1'  order by kpl.statustime desc").setParameter("id",id).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -506,6 +726,8 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setAssignbyid((String) row[16]);
 				
 				issue.setKstatus((String) row[17]);
+				
+				issue.setKstatusid((String) row[18]);
 
 				
 				listissue.add(issue);
@@ -525,7 +747,7 @@ public List<ReportIssue> getAllReportIssues()
 	public Set<ReportIssue> getissuesByselectionAssignBy(String id) {
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		try {
-			List<Object[]> rows = em.createNativeQuery(" select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,kpstatuslogs kpl   where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby=:id  order by kpl.statustime desc").setParameter("id",id).getResultList();
+			List<Object[]> rows = em.createNativeQuery(" select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name ,r.kstatus from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,kpstatuslogs kpl   where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby=:id  and r.kstatus<>'1' order by kpl.statustime desc").setParameter("id",id).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -546,46 +768,7 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setAssignbyid((String) row[15]);
 				issue.setAssignby((String) row[16]);
 				issue.setKstatus((String) row[17]);
-
-
-				
-				listissue.add(issue);
-
-			}
-		} catch (Exception e) {
-			System.out.println("error here");
-			e.printStackTrace();
-		}
-		
-		
-		return listissue;
-	}
-	
-	
-	public Set<ReportIssue> getTaskByCategory(String statusId,String categoryId) {
-		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
-		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.kstatus=:status and r.category=:categoryId").setParameter("status",statusId).setParameter("categoryId",categoryId).getResultList();
-			for (Object[] row : rows) {
-				ReportIssue issue = new ReportIssue();
-				issue.setId(Integer.parseInt(String.valueOf(row[0])));
-				issue.setTaskno((String) row[1]);
-				issue.setSubject((String) row[2]);
-				issue.setCategory((String) row[3]);
-				issue.setCategoryid((String) row[4]);
-				issue.setPriority((String) row[5]);
-				issue.setPriorityid((String) row[6]);
-				issue.setAssignto((String) row[7]);
-				issue.setAssigntoid((String) row[8]);
-				issue.setCreatedTime((Date) row[9]);
-				issue.setSeverity((String) row[10]);
-				issue.setSeverityid((String) row[11]);
-				issue.setStatus((String) row[12]);
-				issue.setDescription((String) row[13]);
-				issue.setTaskdeadline((String) row[14]);
-				issue.setAssignbyid((String) row[15]);
-				issue.setAssignby((String) row[16]);
-				issue.setKstatus((String) row[17]);
+				issue.setKstatusid((String) row[18]);
 
 
 				
@@ -657,8 +840,54 @@ public List<ReportIssue> getAllReportIssues()
 		
 		return listissue;
 	}
+	
+	public Set<ReportIssue> getTaskByCategory(String statusId,String categoryId) {
+		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+		try {
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.kstatus=:status and r.category=:categoryId").setParameter("status",statusId).setParameter("categoryId",categoryId).getResultList();
+			for (Object[] row : rows) {
+				ReportIssue issue = new ReportIssue();
+				issue.setId(Integer.parseInt(String.valueOf(row[0])));
+				issue.setTaskno((String) row[1]);
+				issue.setSubject((String) row[2]);
+				issue.setCategory((String) row[3]);
+				issue.setCategoryid((String) row[4]);
+				issue.setPriority((String) row[5]);
+				issue.setPriorityid((String) row[6]);
+				issue.setAssignto((String) row[7]);
+				issue.setAssigntoid((String) row[8]);
+				issue.setCreatedTime((Date) row[9]);
+				issue.setSeverity((String) row[10]);
+				issue.setSeverityid((String) row[11]);
+				issue.setStatus((String) row[12]);
+				issue.setDescription((String) row[13]);
+				issue.setTaskdeadline((String) row[14]);
+				issue.setAssignbyid((String) row[15]);
+				issue.setAssignby((String) row[16]);
+				issue.setKstatus((String) row[17]);
+
+
+				
+				listissue.add(issue);
+
+			}
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		
+		return listissue;
+	}
+	
+	
+	
 
 	public void  openTask(Integer id) {
+		
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id2=String.valueOf(objuserBean.getId());
 		
 		try{
 			
@@ -674,6 +903,19 @@ public List<ReportIssue> getAllReportIssues()
 			slogs.setComment("Task Mark As Read");
 			slogs.setKpstatus(task.getKstatus());
 			em.persist(slogs);
+			
+
+			KpHistory history =new KpHistory();
+			
+			history.setIssueid(String.valueOf(id));
+			history.setKpfield("Task Mark As Read");
+			history.setKpchange("");
+			history.setChangedby(id2);
+			
+			
+			em.persist(history);
+			
+			
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -860,7 +1102,67 @@ public List<ReportIssue> getAllReportIssues()
 		return listissue;
 	}
 	
+	
+	
+	/*public Set<ReportIssue> getAllTasks() {
+		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+		
+		String hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,r.kstatus" 
+                     +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks "  
+                      +" where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category ";
+		
+		
+		
+		try {
+			List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+			for (Object[] row : rows) {
+				ReportIssue issue = new ReportIssue();
+				issue.setId(Integer.parseInt(String.valueOf(row[0])));
+				issue.setAssignto((String) row[1]);
+				issue.setSeverity((String) row[2]);
+				issue.setPriority((String) row[3]);
+				issue.setUploadfile((String) row[4]);
+				issue.setSubject((String) row[5]);
+				issue.setCreatedTime((Date) row[6]);
+				issue.setCategory((String) row[7]);
+				issue.setKstatus((String) row[8]);
+				issue.setStatus((String) row[9]);
+				issue.setTaskno((String) row[10]);
+				
+				issue.setSeverityid((String) row[11]);
+				issue.setPriorityid((String) row[12]);
+				issue.setAssigntoid((String) row[13]);
+			    issue.setCategoryid((String) row[14]);
+			    issue.setDescription((String) row[15]);
+				issue.setTaskdeadline((String) row[16]);
+				issue.setAssignbyid((String) row[17]);
+				issue.setAssignby((String) row[18]);
+				
+				//issue.setKstatus((String) row[19]);
+			    
+			    
+				
+				listissue.add(issue);
 
+			}
+			
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		return listissue;
+		
+		
+	}
+*/
 
 
 

@@ -14,9 +14,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.charvikent.issuetracking.dao.DashBoardDao;
+import com.charvikent.issuetracking.dao.KpStatusLogsDao;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.DashBordByCategory;
 import com.charvikent.issuetracking.model.DashBordByStatus;
+import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 
@@ -28,7 +30,8 @@ public class DashBoardService {
 	
 	@Autowired
 	UserDao userDao;
-	
+	@Autowired
+	KpStatusLogsDao kpStatusLogsDao;
 	
 	/*public Set<ReportIssue> getIssuesByAssignBy(String id) {
 		Set<ReportIssue> list=(dashBoardDao.getIssuesAssignBy(id));
@@ -93,6 +96,7 @@ public Map<String,Integer> getSeverityWiseCount() {
 	
 	 for(Entry<String,Integer> entry:obj.entrySet())
 	 {
+		 
 	         if(entry.getKey().equals("Critical"))
 	        	 criticalCount=entry.getValue();
 	         else if(entry.getKey().equals("Major"))
@@ -109,6 +113,8 @@ public Map<String,Integer> getSeverityWiseCount() {
 	 Severitymap.put("Major",MajorCount);
 	 
 	 Severitymap.put("Minor",MinorCount);
+	 
+	 Severitymap.put("Total",criticalCount+MajorCount+MinorCount);
 	 
 	 
 	  
@@ -153,6 +159,7 @@ public Map<String,Integer> getSeverityWiseCountsByAssignedBy() {
 	 
 	 Severitymap.put("Minor",MinorCount);
 	 
+	 Severitymap.put("Total",criticalCount+MajorCount+MinorCount);
 	 
 	  
 	return Severitymap;
@@ -177,12 +184,51 @@ public Set<ReportIssue> GetTaskBySeverityUnderReportTo(String sev) {
 	return dashBoardDao.GetTaskBySeverityUnderReportTo(sev);
 }
 
-public Set<ReportIssue> getTasksByCategoryListDashBord(String statusId,String categoryId) {
-	// TODO Auto-generated method stub
+public Set<ReportIssue> getAllTasks(String qvalue) {
 	
-	return dashBoardDao.getTasksByCategoryList(statusId,categoryId);
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getId());
+	
+	Set<ReportIssue> listissue=dashBoardDao.getAllTasks();
+	
+	Set<ReportIssue> sortedtaskslist =new LinkedHashSet<ReportIssue>();
+	
+            String qstring [] =qvalue.split("-");
+            int fvalue =Integer.parseInt(qstring[0]);
+            int svalue =Integer.parseInt(qstring[1]);
+            
+            
+            if(id.equals("1"))
+            {
+            	
+            	for(ReportIssue entry :listissue )
+           	 {
+           			
+           		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
+           		{
+           			sortedtaskslist.add(entry);
+           		}
+           	 }
+            	
+            }
+            else
+            {
+	for(ReportIssue entry :listissue )
+	 {
+		if(entry.getAssigntoid().equals(id))
+		{
+			
+		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
+		{
+			sortedtaskslist.add(entry);
+		}
+		}
+	 }
+	 }
+	return sortedtaskslist;
+	 
+	
 }
-
 public List<DashBordByCategory> getCategory() {
 	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	String id=String.valueOf(objuserBean.getId());
@@ -204,5 +250,149 @@ public Set<ReportIssue> getTasksByStatusListDashBord(String status) {
 	// TODO Auto-generated method stub
 	return dashBoardDao.getTasksByStatusList(status);
 }
+public Set<ReportIssue> getAllTasksByclosed(String qvalue) {
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getId());
+	
+	Set<ReportIssue> listissue=dashBoardDao.getAllTasks();
+	
+	Set<ReportIssue> sortedtaskslist =new LinkedHashSet<ReportIssue>();
+	
+            String qstring [] =qvalue.split("-");
+            int fvalue =Integer.parseInt(qstring[0]);
+            int svalue =Integer.parseInt(qstring[1]);
+            
+            
+            if(id.equals("1"))
+            {
+            	
+            	for(ReportIssue entry :listissue )
+           	 {
+            		if(entry.getKstatus().equals("Closed"))
+            		{
+           		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
+           		{
+           			sortedtaskslist.add(entry);
+           		}
+            		}
+           	 }
+            	
+            }
+            else
+            {
+	for(ReportIssue entry :listissue )
+	 {
+		if(entry.getAssigntoid().equals(id) && entry.getKstatus().equals("Closed"))
+		{
+			
+		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
+		{
+			sortedtaskslist.add(entry);
+		}
+		}
+	 }
+	 }
+	return sortedtaskslist;
+	 
+	
+}
+
+
+
+public Set<ReportIssue> getAllTasksByBalenced(String qvalue) {
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getId());
+	
+	Set<ReportIssue> listissue=dashBoardDao.getAllTasks();
+	
+	Set<ReportIssue> sortedtaskslist =new LinkedHashSet<ReportIssue>();
+	
+            String qstring [] =qvalue.split("-");
+            int fvalue =Integer.parseInt(qstring[0]);
+            int svalue =Integer.parseInt(qstring[1]);
+            
+            
+            if(id.equals("1"))
+            {
+            	
+            	for(ReportIssue entry :listissue )
+           	 {
+            		if(!entry.getKstatusid().equals("1"))
+            		{
+           		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
+           		{
+           			sortedtaskslist.add(entry);
+           		}
+            		}
+           	 }
+            	
+            }
+            else
+            {
+	for(ReportIssue entry :listissue )
+	 {
+		if(entry.getAssigntoid().equals(id) && (!entry.getKstatus().equals("1")))
+		{
+			
+		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
+		{
+			sortedtaskslist.add(entry);
+		}
+		}
+	 }
+	 }
+	return sortedtaskslist;
+	 
+	
+}
+
+
+
+public Set<KpStatusLogs> getAllTasksForAck() {
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getId());
+	
+	TreeSet<KpStatusLogs> listissue=kpStatusLogsDao.getKpStatusLogsDao();
+	
+	Set<KpStatusLogs> sortedtaskslist =new TreeSet<KpStatusLogs>();
+            
+            if(id.equals("1"))
+            {
+            	
+            	for(KpStatusLogs entry :listissue )
+           	 {
+           			
+           			sortedtaskslist.add(entry);
+           		
+           	 }
+            	
+            }
+            else
+            {
+            	for(KpStatusLogs entry :listissue )
+	 {
+		if(entry.getIassignto().equals(id))
+		{
+			
+			if(entry.getKpstatus().equals("3") )
+       		{
+       			sortedtaskslist.add(entry);
+       			
+       		}
+		}
+	 }
+	 }
+	return sortedtaskslist;
+	 
+	
+}
+
+
+	
+	
+	
 
 }

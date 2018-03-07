@@ -61,6 +61,8 @@ public class ReportIssue  {
 	private String  severityid;
 	@Transient
 	private String assignbyid;
+	@Transient
+	private String kstatusid;
 	
 	
 	
@@ -239,6 +241,14 @@ public class ReportIssue  {
 	
 	
 	
+	
+	
+	public String getKstatusid() {
+		return kstatusid;
+	}
+	public void setKstatusid(String kstatusid) {
+		this.kstatusid = kstatusid;
+	}
 	@Override
 	public String toString() {
 		return "ReportIssue [id=" + id + ", taskno=" + taskno + ", createdTime=" + createdTime + ", updatedTime="
@@ -275,6 +285,7 @@ public class ReportIssue  {
 		result = prime * result + ((taskno == null) ? 0 : taskno.hashCode());
 		result = prime * result + ((updatedTime == null) ? 0 : updatedTime.hashCode());
 		result = prime * result + ((uploadfile == null) ? 0 : uploadfile.hashCode());
+		result = prime * result + ((kstatusid == null) ? 0 : kstatusid.hashCode());
 		return result;
 	}
 	@Override
@@ -390,6 +401,11 @@ public class ReportIssue  {
 			if (other.uploadfile != null)
 				return false;
 		} else if (!uploadfile.equals(other.uploadfile))
+			return false;
+		if (kstatusid == null) {
+			if (other.kstatusid != null)
+				return false;
+		} else if (!kstatusid.equals(other.kstatusid))
 			return false;
 		return true;
 	}

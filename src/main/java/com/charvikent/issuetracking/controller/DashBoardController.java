@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +21,7 @@ import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.CategoryService;
 import com.charvikent.issuetracking.service.DashBoardService;
+import com.charvikent.issuetracking.service.KpHistoryService;
 import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.PriorityService;
 import com.charvikent.issuetracking.service.ReportIssueService;
@@ -66,6 +66,10 @@ public class DashBoardController {
 	@Autowired
 	TasksSelectionService tasksSelectionService;
 	
+	@Autowired
+	KpHistoryService kpHistoryService;
+	
+	
 	
    
 	@RequestMapping("/dashBoard")
@@ -76,6 +80,11 @@ public class DashBoardController {
 		 model.addAttribute("gapAndCount", reportIssueService.getGapAndCount());
 		 model.addAttribute("severityCount",dashBoardService.getSeverityWiseCount() );
 		 model.addAttribute("severityCountsBY",dashBoardService.getSeverityWiseCountsByAssignedBy() );
+		 
+		 model.addAttribute("ackdetails", dashBoardService.getAllTasksForAck());
+		
+		 //System.out.println(dashBoardService.getAllTasksForAck());
+		 
 		 
 		 model.addAttribute("SevMonitoredCounts", dashBoardService.getSeverityCountsUnderReportTo());
 		//model.addAttribute("byCategory",dashBoardService.getCategory() );	
@@ -99,13 +108,23 @@ public class DashBoardController {
 			// TODO: handle exception
 		}
 		 
+		 //model.addAttribute("notifications", kpHistoryService.getHeaderNotifications());
+		// model.addAttribute("acknotification", kpHistoryService.getHeaderNotificationsforack());
+		 
+		// session.setAttribute("acknotification", kpHistoryService.getHeaderNotificationsforack());
+		 
+		 //session.setAttribute("notifications", kpHistoryService.getHeaderNotifications());
+		 
+		 
+		// System.out.println( kpHistoryService.getHeaderNotificationsforack());
+		 
 		 return "dashBoard";
 		
 	}
 	
 	
 	@RequestMapping(value = "/severity")
-	public String  tasksFilterByseverityOnAssignedTo(	@RequestParam(value="id", required=true) String sev,Model model,HttpServletRequest request,HttpSession session){
+	public String  tasksFilterByseverityOnAssignedTo(@RequestParam(value="id", required=true) String sev,Model model,HttpServletRequest request,HttpSession session){
 		Set<ReportIssue> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
@@ -253,14 +272,21 @@ public class DashBoardController {
 			return "task";
 
 	}
-
-	@RequestMapping(value = "/categoryDashBord")
-	public String taskscategoryOnReportTo(	Model model,HttpServletRequest request,HttpSession session){
+	
+	
+	
+	/**
+	 * timeline is string and 0 is loop iterate value in ddashboard,sjp page
+	 * 
+	 *  loop interate using jstl tag with varstatus property
+	 *
+	 */
+	@RequestMapping(value = "/timeline0")
+	public String timelineTasksByOpen(	@RequestParam(value="range", required=true) String range,Model model,HttpServletRequest request,HttpSession session){
 		Set<ReportIssue> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
 		
-		String status=null;
 		model.addAttribute("taskf", new ReportIssue());
 		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
 		model.addAttribute("severity", severityService.getSeverityNames());
@@ -281,14 +307,12 @@ public class DashBoardController {
 			
 		
 			try {
-				status = request.getParameter("status");
-				String categoryId =request.getParameter("categoryId");
-				listOrderBeans =  dashBoardService.getTasksByCategoryListDashBord(status,categoryId);
+				listOrderBeans = dashBoardService.getAllTasks(range);
 				if (listOrderBeans != null && listOrderBeans.size() > 0) {
 					objectMapper = new ObjectMapper();
 					sJson = objectMapper.writeValueAsString(listOrderBeans);
 					request.setAttribute("allOrders1", sJson);
-				 //System.out.println("##############3"+sJson);
+					// System.out.println(sJson);
 				} else {
 					objectMapper = new ObjectMapper();
 					sJson = objectMapper.writeValueAsString(listOrderBeans);
@@ -357,6 +381,120 @@ public class DashBoardController {
 			return "task";
 
 	}
+	/**
+	 * timeline is string and 1 is loop iterate value in ddashboard,sjp page
+	 * 
+	 *  loop interate using jstl tag with varstatus property
+	 *
+	 */
+	
+	@RequestMapping(value = "/timeline1")
+	public String timelineTasksByclose(	@RequestParam(value="range", required=true) String range,Model model,HttpServletRequest request,HttpSession session){
+		Set<ReportIssue> listOrderBeans = null;
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		
+		model.addAttribute("taskf", new ReportIssue());
+		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		//model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		model.addAttribute("kpstatuses", mastersService.getKpStatues());
+		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
+		
+		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+		model.addAttribute("objuserBean", objuserBean);
+		
+			
+		
+			try {
+				listOrderBeans = dashBoardService.getAllTasksByclosed(range);
+				if (listOrderBeans != null && listOrderBeans.size() > 0) {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", sJson);
+					// System.out.println(sJson);
+				} else {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", "''");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e);
+
+			}
+			
+			
+			return "task";
+
+	}
+	
+
+	
+	/**
+	 * timeline is string and 2 is loop iterate value in ddashboard,sjp page
+	 * 
+	 *  loop interate using jstl tag with varstatus property
+	 *
+	 */
+	@RequestMapping(value = "/timeline2")
+	public String timelineTasksByBalaenced(	@RequestParam(value="range", required=true) String range,Model model,HttpServletRequest request,HttpSession session){
+		Set<ReportIssue> listOrderBeans = null;
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		
+		model.addAttribute("taskf", new ReportIssue());
+		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		//model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		model.addAttribute("kpstatuses", mastersService.getKpStatues());
+		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
+		
+		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+		model.addAttribute("objuserBean", objuserBean);
+		
+			
+		
+			try {
+				listOrderBeans = dashBoardService.getAllTasksByBalenced(range);
+				if (listOrderBeans != null && listOrderBeans.size() > 0) {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", sJson);
+					// System.out.println(sJson);
+				} else {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", "''");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e);
+
+			}
+			
+			
+			return "task";
+
+	}
+	
+	
 	
 	}
 	

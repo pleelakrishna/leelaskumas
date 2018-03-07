@@ -1,8 +1,6 @@
 package com.charvikent.issuetracking.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.charvikent.issuetracking.config.FilesStuff;
+import com.charvikent.issuetracking.dao.KpHistoryDao;
+import com.charvikent.issuetracking.model.KpHistory;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.CategoryService;
+import com.charvikent.issuetracking.service.KpHistoryService;
 import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.PriorityService;
 import com.charvikent.issuetracking.service.ReportIssueService;
@@ -64,6 +65,12 @@ public class TaskController {
 	@Autowired
 	TasksSelectionService tasksSelectionService;
 	
+	@Autowired
+	KpHistoryDao kpHistoryDao;
+	
+	@Autowired
+	KpHistoryService kpHistoryService;
+	
 	/*@Autowired
 	DashBoardService dashBoardService;*/
 	
@@ -93,7 +100,7 @@ public class TaskController {
 		model.addAttribute("objuserBean", objuserBean);
 		
 		try {
-			listOrderBeans = taskService.getissuesByselectionAssignTo(id);
+			listOrderBeans = taskService.getissuesByselectionAssignBy(id);
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
@@ -269,6 +276,21 @@ public class TaskController {
 		
 		Set<KpStatusLogs> taskHistory =taskService.getrepeatLogsById(Integer.parseInt(id));
 		
+		System.out.println(taskHistory);
+		
+		
+		JSONObject obj = new JSONObject();
+		obj.put("list", taskHistory);
+		return String.valueOf(obj);
+
+	}
+	
+	@RequestMapping(value = "/viewTask2",method = RequestMethod.POST)
+	public @ResponseBody Object viewIssue2(@RequestParam(value = "id", required = true) String id, Model model,HttpServletRequest request, HttpSession session) throws JSONException {
+
+		
+		Set<KpHistory> taskHistory =kpHistoryService.getTaskHistory(id);
+		
 		JSONObject obj = new JSONObject();
 		obj.put("list", taskHistory);
 		return String.valueOf(obj);
@@ -278,13 +300,14 @@ public class TaskController {
 	
 
 	@RequestMapping(value = "/subTask", method = RequestMethod.POST)
-	public @ResponseBody String saveSubtask(@RequestParam(value = "commet", required = true) String comment, @RequestParam(value = "kpstatus", required = true) String kpstatus, @RequestParam(value = "issueid", required = true) String issueid,  @RequestParam("file[]") MultipartFile[] uploadedFiles,
+	public @ResponseBody String saveSubtask(@RequestParam(value = "commet", required = true) String comment, @RequestParam(value = "kpstatus", required = true) String kpstatus, @RequestParam(value = "issueid", required = true) String issueid, @RequestParam(value = "id", required = true) String id,  @RequestParam("file[]") MultipartFile[] uploadedFiles,
 			RedirectAttributes redir) throws IOException {
 		
 		KpStatusLogs subtask =new KpStatusLogs();
 		subtask.setComment(comment);
 		subtask.setIssueid(issueid);
 		subtask.setKpstatus(kpstatus);
+		//subtask.setId(Integer.parseInt(id));
 		String str =null;
 		try{
 		
@@ -402,6 +425,11 @@ public class TaskController {
 		Integer unseentasks =0;
 		try{
 			
+			 session.setAttribute("acknotification", kpHistoryService.getHeaderNotificationsforack());
+			 
+			 session.setAttribute("notifications", kpHistoryService.getHeaderNotifications());
+			 
+			
  				
 			unseentasks = taskService.getUnseenTaskCount();
 			jsonObj.put("unseentasks",unseentasks);
@@ -515,7 +543,7 @@ public class TaskController {
 		model.addAttribute("cissue", issue);
 		model.addAttribute("clist",taskService.getTaksByid(id));
 		model.addAttribute("repeatLogs",taskService.getrepeatLogsById(id));
-
+		model.addAttribute("repeatLogs1",kpHistoryService.getTaskHistory(taskId));
 		return "ViewTicket";
 
 	}
