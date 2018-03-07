@@ -1,3 +1,4 @@
+
 package com.charvikent.issuetracking.dao;
 
 import java.util.List;
@@ -5,17 +6,24 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.Category;
 @Repository
 public class CategoryDao {
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@PersistenceContext
     private EntityManager entityManager;
+	
+	
 
 
 	public void saveCategory(Category category ) {
+		logger.info("saving category");
 		entityManager.persist(category);
 
 	}
@@ -23,11 +31,14 @@ public class CategoryDao {
 	@SuppressWarnings("unchecked")
 	public List<Category> getCategoryNames()
 	 {
+		logger.debug("calling category Names list");
 
 		return entityManager.createQuery("  from Category where status='1'").getResultList();
 
 	 }
 	public Category getCategoryNameById(Category cate) {
+		
+		logger.debug("calling getCategoryNameById method");
 		
 		@SuppressWarnings("unchecked")
 		List<Category> cateList =(List<Category>) entityManager.createQuery("SELECT cate FROM Category cate where category =:custName ").setParameter("custName",cate.getCategory()).getResultList();
@@ -40,6 +51,7 @@ public class CategoryDao {
 	
 	public void UpdateCategory(Category cate)
 	{
+		logger.debug("calling update category");
 		Category uc= (Category)entityManager.find(Category.class ,cate.getId());
 		uc.setCategory(cate.getCategory());
 		entityManager.flush();
@@ -48,6 +60,8 @@ public class CategoryDao {
 	
 	
 	public boolean deleteCategory(Integer id, String status) {
+		
+		logger.debug("calling deactive category");
 		Boolean delete=false;
 		try{
 			
@@ -65,7 +79,8 @@ public class CategoryDao {
 	}
 
 	public List<Category> getAllInActiveList() {
-		// TODO Auto-generated method stub
+		
+		logger.debug("calling Inactive categorylist");
 		return entityManager.createQuery("  from Category where status='0'").getResultList();
 	}
 }

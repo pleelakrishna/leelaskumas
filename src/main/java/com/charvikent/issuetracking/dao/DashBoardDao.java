@@ -195,7 +195,7 @@ public class DashBoardDao {
 
 		try {
 			List<Object[]> rows = em
-			.createNativeQuery(" select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour,r.taskno from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignby =:custName union (select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignto =:custName )").setParameter("custName", id)
+			.createNativeQuery(" select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour,r.taskno from vreport_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignby =:custName union (select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignto =:custName )").setParameter("custName", id)
 			.getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
@@ -239,7 +239,7 @@ public class DashBoardDao {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
 			.createNativeQuery(" select ks.severity,count(*)as count from report_issue r,kpseverity ks" + 
-					" where  r.severity=ks.id  and r.assignto =:id  and r.kstatus in(2,3,6,9) group by severity").setParameter("id", id).getResultList();
+					" where  r.severity=ks.id  and r.assignto =:id  and r.kstatus<>'1'  group by severity").setParameter("id", id).getResultList();
 			for (Object[] row : rows) {
 				
 				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
@@ -277,7 +277,7 @@ public Map<String,Integer> getSeverityCountsByassignedBy(String id) {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em
 			.createNativeQuery(" select ks.severity,count(*)as count from report_issue r,kpseverity ks" + 
-					" where  r.severity=ks.id  and r.assignby =:id  and r.kstatus in(2,3,6,9) group by severity").setParameter("id", id).getResultList();
+					" where  r.severity=ks.id  and r.assignby =:id  and r.kstatus<>'1'  group by severity").setParameter("id", id).getResultList();
 			for (Object[] row : rows) {
 				
 				opentotal=opentotal+Integer.parseInt(String.valueOf(row[1]));
@@ -309,7 +309,7 @@ public Map<String, Integer> getSeverityCountsUnderReportTo()
 	Map<String,Integer> severityList=new LinkedHashMap<String,Integer>();
 	
 	
-	String hql ="select severity,count(*) as scount from report_issue where assignto=:id group by severity";
+	String hql ="select severity,count(*) as scount from report_issue r where r.assignto=:id and r.kstatus<>'1'  group by severity";
 	
 	Integer minor=0;
 	Integer major=0;
@@ -333,6 +333,7 @@ public Map<String, Integer> getSeverityCountsUnderReportTo()
 	severityList.put("Critical",critical);
 	severityList.put("Major",major);
 	severityList.put("Minor",minor);
+	severityList.put("Total",critical+major+minor);
 	
 	
 	return severityList;
@@ -353,12 +354,29 @@ public Map<String, Integer> getSeverityCountsUnderReportTo()
  		
  		Set<ReportIssue> SeverityReportToList= new LinkedHashSet();
  		
+ 		if(sev.equals("Total"))
+  		{
+ 			for(ReportIssue entry:listissue)
+ 	 		{
+ 	 			if(!entry.getKstatusid().equals("1"))
+ 	 			{
+ 	 				SeverityReportToList.add(entry);
+  			
+  		}
+ 	 		}
+ 			return SeverityReportToList;
+  		}
+ 			
  		
  		for(ReportIssue entry:listissue)
  		{
+ 			if(!entry.getKstatusid().equals("1"))
+ 			{
  			if(entry.getSeverity().equals(sev))
  			{
  				SeverityReportToList.add(entry);
+ 			}
+ 			
  			}
  				
  			
@@ -380,12 +398,18 @@ public Map<String, Integer> getSeverityCountsUnderReportTo()
  		
  		Set<ReportIssue> SeverityReportToList= new LinkedHashSet();
  		
- 		
+ 		if(sev.equals("Total"))
+  		{
+  			return listissue;
+  		}
  		for(ReportIssue entry:listissue)
  		{
+ 			if(!entry.getKstatusid().equals("1"))
+ 			{
  			if(entry.getSeverity().equals(sev))
  			{
  				SeverityReportToList.add(entry);
+ 			}
  			}
  				
  			
@@ -410,12 +434,20 @@ public Map<String, Integer> getSeverityCountsUnderReportTo()
   		
   		Set<ReportIssue> SeverityReportToList= new LinkedHashSet();
   		
+  		if(sev.equals("Total"))
+  		{
+  			return listissue;
+  		}
   		
   		for(ReportIssue entry:listissue)
   		{
+  			if(!entry.getKstatusid().equals("1"))
+  			{
   			if(entry.getSeverity().equals(sev))
   			{
   				SeverityReportToList.add(entry);
+  			}
+  			
   			}
   				
   			

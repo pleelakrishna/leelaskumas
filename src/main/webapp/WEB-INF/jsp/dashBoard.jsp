@@ -52,10 +52,10 @@
 								class="fa fa-chevron-down"></i></a>
 						</div>
 					</div>
+					
 					<div class="panel-body collapse in">
-
-						<div class="col-md-2"></div>
-						<div class="col-md-8">
+<div class="col-md-8">
+						 
 							<div class="table-responsive">
 								<table class="table table-bordered priority"
 									style="border: 1px solid #006699; width:;">
@@ -63,7 +63,7 @@
 										style="background-color: #006699; color: #fff; text-align: center;">
 
 										<center>
-											<th>Severity</th>
+											<th>Unclosed Tasks /Severity</th>
 											<th>Critical</th>
 											<th>Major</th>
 											<th>Minor</th>
@@ -77,9 +77,17 @@
 
 
 
-												<span
+												<span  
 													style="font-size: 18px; lettee-spacin: 1px; color: #006699;">Assigned
-													To Me</span>
+													To Me <c:forEach var="issue" items="${severityCount}">
+													         <c:set var="String" value="${issue.key}" />
+													         <c:if test="${fn:contains(String, 'Total')}">
+													          <a href="severity?id=${issue.key}">( ${issue.value} )</a>
+													         </c:if>
+													
+													
+													  </c:forEach> 
+													  </span>
 											</div>
 										</td>
 										<td><c:forEach var="issue" items="${severityCount}">
@@ -131,7 +139,15 @@
 
 												<span
 													style="font-size: 18px; lettee-spacin: 1px; color: #006699;">Assigned
-													By Me</span>
+													By Me
+													
+													<c:forEach var="issue" items="${severityCountsBY}">
+													         <c:set var="String" value="${issue.key}" />
+													         <c:if test="${fn:contains(String, 'Total')}">
+													          <a href="severityby?id=${issue.key}">( ${issue.value} )</a>
+													         </c:if>
+													  </c:forEach> 
+													</span>
 											</div>
 										</td>
 										<td><c:forEach var="issue" items="${severityCountsBY}">
@@ -186,7 +202,21 @@
 											<div class="col-md-12" style="margin-left: 5px"!important">
 												<span
 													style="font-size: 18px; lettee-spacin: 1px; color: #006699;">Monitored
-													BY Me</span>
+													By Me
+													
+													<c:forEach var="issue" items="${SevMonitoredCounts}">
+													         <c:set var="String" value="${issue.key}" />
+													        
+													         <c:if test="${fn:contains(String, 'Total')}">
+													          <a href="severityReportTo?id=${issue.key}">( ${issue.value} )</a>
+													         </c:if>
+													
+													
+													  </c:forEach> 
+													
+													
+													
+													</span>
 											</div>
 
 										</td>
@@ -234,8 +264,58 @@
 									</tr>
 								</table>
 							</div>
-						</div>
 
+					</div>
+					
+					<div class="col-md-4" style="border:1px solid #ccc;">
+						<div id="assigned" class="widget-box widget-color-blue2">
+							<div class="widget-header widget-header-small">
+								<h4 class="widget-title lighter">
+									<i class="ace-icon fa fa-clock-o"></i> <a class="white"
+										href="#">Timeline</a>
+								</h4>
+								<div class="widget-toolbar">
+									<a data-action="collapse" href="#"> <!-- <i class="1 ace-icon fa bigger-125 fa-chevron-up"></i> -->
+									</a>
+								</div>
+								<div class="widget-toolbar no-border hidden-xs"></div>
+							</div>
+
+							<div style="display: block;" class="widget-body">
+								<div class="widget-main no-padding">
+									<div class="table-responsive" style="overflow-x: inherit;">
+										<table
+											class="table table-bordered table-condensed table-striped table-hover">
+											<tbody>
+
+												<tr class="my-buglist-bug ">
+												<tr>
+													<th>By Date(days)</th>
+													<th>Open</th>
+													<th>Closed</th>
+													<th>Balanced</th>
+
+												</tr>
+												<c:forEach var="issue" items="${gapAndCount}">
+
+													<tr class="my-buglist-bug ">
+														<td class="nowrap width-13">${issue.key}</a></td>
+														<c:forEach items="${issue.value}" var="entry" varStatus="loop">
+															<td><a href="timeline${loop.index}?range=${issue.key}">${entry}</a></td>
+														</c:forEach>
+
+													</tr>
+
+												</c:forEach>
+										</table>
+
+
+									</div>
+								</div>
+							</div>
+							<!-- /.row -->
+						</div>
+						<!-- /.page-content -->
 					</div>
 				</div>
 			</div>
@@ -352,64 +432,13 @@
 			<!-- History table starts Here -->
 
 			<div class="row" style="background: white;">
-				<div class="col-md-12">
 
-					<div class="col-md-8">
-						<div id="assigned" class="widget-box widget-color-blue2">
-							<div class="widget-header widget-header-small">
-								<h4 class="widget-title lighter">
-									<i class="ace-icon fa fa-clock-o"></i> <a class="white"
-										href="#">Performance Timeline</a>
-								</h4>
-								<div class="widget-toolbar">
-									<a data-action="collapse" href="#"> <!-- <i class="1 ace-icon fa bigger-125 fa-chevron-up"></i> -->
-									</a>
-								</div>
-								<div class="widget-toolbar no-border hidden-xs"></div>
-							</div>
-
-							<div style="display: block;" class="widget-body">
-								<div class="widget-main no-padding">
-									<div class="table-responsive" style="overflow-x: inherit;">
-										<table
-											class="table table-bordered table-condensed table-striped table-hover">
-											<tbody>
-
-												<tr class="my-buglist-bug ">
-												<tr>
-													<th>By Date(days)</th>
-													<th>Open</th>
-													<th>Closed</th>
-													<th>Balanced</th>
-
-												</tr>
-												<c:forEach var="issue" items="${gapAndCount}">
-
-													<tr class="my-buglist-bug ">
-														<td class="nowrap width-13">${issue.key}</a></td>
-														<c:forEach items="${issue.value}" var="entry" varStatus="loop">
-															<td><a href="timeline${loop.index}?range=${issue.key}">${entry}</a></td>
-														</c:forEach>
-
-													</tr>
-
-												</c:forEach>
-										</table>
-
-
-									</div>
-								</div>
-							</div>
-							<!-- /.row -->
-						</div>
-						<!-- /.page-content -->
-					</div>
+					
 					<div class="col-sm-4">
 						<div class="space-10"></div>
 
 					</div>
 					<!-- /.row -->
-				</div>
 				<!-- /.page-content -->
 			</div>
 		</div>
@@ -419,19 +448,22 @@
 <!-- /.main-content-inner -->
 </div>
 
-<div id="notifyModal" class="modal fade" role="dialog">
+<div id="notifyModal" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
-		<div class="col-md-12">
+		<div class="col-md-12"  style="
+    width: 800px;
+    margin-left: -55px;
+">
 			<div class="panel panel-primary">
 
 				<div class="panel-heading">
 					<h4>Unread Tasks List</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
 				</div>
 				<div class="panel-body collapse in">
 					<!-- <input type="checkbox" class="form-check-input" onclick="inactiveData();" id="inActive"> <label class="form-check-label">Show Inactive List</label> -->
-					<div class="table-responsive" id="tableId">
+					<div class="table" id="tableId">
 						<table cellpadding="0" cellspacing="0" border="0"
 							class="table table-striped table-bordered datatables"
 							id="notification">
@@ -441,7 +473,6 @@
 									<th>Name</th>
 									<th>Description</th>
 									<th>Status</th>
-									<th></th>
 								</tr>
 							</thead>
 							<tbody></tbody>
@@ -487,7 +518,7 @@
 	function displayTable(listOrders) {
 		$('#tableId').html('');
 		var tableHead = '<table id="notification" class="table table-striped table-bordered datatables">'
-				+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Severity</th><th>Assigned By</th><th>Created Time</th><th>Description</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
+				+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Severity</th><th>Assigned By</th><th>Created Time</th><th>Description</th></tr></thead><tbody></tbody></table>';
 		$('#tableId').html(tableHead);
 		serviceUnitArray = {};
 
@@ -528,8 +559,8 @@
 					+ new Date(orderObj.createdTime).toDateString() + "</td>"
 					+ "<td title='"+orderObj.description+"'>"
 					+ orderObj.description + "</td>"
-					+ "<td style='text-align: center;white-space: nowrap;'>"
-					+ deleterow + "</td>" + "</tr>";
+					/* + "<td style='text-align: center;white-space: nowrap;'>"
+					 "</td>" */ + "</tr>";
 			$(tblRow).appendTo("#tableId table tbody");
 		});
 		if (isClick == 'Yes')
@@ -562,4 +593,34 @@
 				});
 
 	}
+	
+	
+	
+	function goToTaskListBySelection(selection)
+	{
+	
+		alert("hi");
+		alert(selection);
+		  var ttype=selection;
+		  var formData = new FormData();
+		    formData.append('ttypeid', ttype);
+		$.fn.makeMultipartRequest('POST', 'setdata', false, formData, false, 'text', function(data){
+			var jsonobj = $.parseJSON(data);
+			var alldata = jsonobj.list;
+				displayTable(alldata);
+				toolTips()
+				makeEmpty()
+					
+		 });
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </script>

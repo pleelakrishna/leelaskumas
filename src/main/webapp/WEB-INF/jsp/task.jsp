@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css">
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
-		<li><a href="#">Home</a></li>
+		<li><a href="${baseurl }/dashBoard">Home</a></li>
 		<li>Task Master</li>
 	</ol>
 	                       <div class="clearfix"></div><br>
@@ -213,7 +213,7 @@
 		<div class="modal-content">
 			<div class="modal-header"  style="background: #4f8edc;">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title"> Task History 2 </h4>
+				<h4 class="modal-title"> Task History  </h4>
         	</div>
         	<div class="modal-body">
 				<div class="row">
@@ -292,7 +292,7 @@
 				      		<div class="col-sm-12">
 				      			<div class="btn-toolbar text-center">
 					      			<input type="button" id="modelSubmit" value="Submit"  onclick="submitCommet()" class="btn-primary btn"/>
-					      			<input type="reset" value="Reset" class="btn-danger btn cancel"/>
+					      			<input type="reset" value="Reset" class="btn-danger btn cancel1"/>
 				      			</div>
 				      		</div>
 				      	</div>
@@ -374,7 +374,8 @@ $(document).ready(function () {
 // $("#taskdeadline").prop("readonly", true);
 
 
-var loginUserId =${objuserBean.designation};
+var loginUserDId =${objuserBean.designation};
+var cuserid =${objuserBean.id};
 var listOrders1 = ${allOrders1};
 if (listOrders1 != "") {
 	displayTable(listOrders1)
@@ -388,7 +389,7 @@ function displayTable(listOrders) {
 	serviceUnitArray = {};
 	
 	$.each(listOrders,function(i, orderObj) {
-		if(loginUserId == "1")
+		if(loginUserDId == "1")
 			{
 		if(orderObj.status == "1"){
 			var deleterow = "<a class='deactivate' onclick='deletetask("+ orderObj.id+ ",0)'><i class='fa fa-eye'></i></a>"
@@ -400,16 +401,16 @@ function displayTable(listOrders) {
 			}
 		else
 		{
-			deleterow ="";
+			deleterow =" ";
 		}
 		
-		if($('#ttype').val() =='1')
+		if(orderObj.assignbyid == cuserid)
 		{
-		var	edit ="";
+		var edit = "<a class='edit editIt' onclick='editTask("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
 		}
 		else
 			{
-		var edit = "<a class='edit editIt' onclick='editTask("	+ orderObj.id+ ")'><i class='fa fa-edit'></i></a>"
+		var	edit =" ";
 			}
 		var view = "<a class='view viewIt' onclick='viewTask("	+ orderObj.id+ ")'>"+ orderObj.taskno+ "</a>"
 		var history2 = "<a class='history historyit' onclick='viewTask2("	+ orderObj.id+ ")'> <i class='fa fa-history'></i></a>"
@@ -430,7 +431,7 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
 			+ "<td title='"+orderObj.kstatus+"'>"+ orderObj.kstatus + "</td>"
 			+ "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>"
-			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time + "&nbsp;&nbsp;"+history+ "&nbsp;&nbsp;"+history2+"</td>" 
+			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time +  "&nbsp;&nbsp;"+history2+"</td>" 
 			+ "</tr>";
 		$(tblRow).appendTo("#tableId table tbody");
 	});
@@ -538,8 +539,10 @@ function viewTask2(id){
 
 
 
-
+var cissueid =0;
 function addComment(id){
+	
+	cissueid=id;
 	$("#issueid").val(id);
 	$("#formModal").modal();
 	
@@ -664,11 +667,11 @@ $('#ttype').on('change', function() {
 	})
 	
 	
-	
+	var idArrayCmt11 = null;
 	
 	function submitCommet()
 	{
-	var idArrayCmt11 = $.makeArray($('.validate2').map(function() {
+	 idArrayCmt11 = $.makeArray($('.validate2').map(function() {
 		return this.id;
 		}));
 	validation = true;
@@ -777,13 +780,13 @@ function deletetask(id,status){
 
 
 $('#kpstatus').on('change',function() {
-	var issueCreatedBY =$('#ttype').val();
+	var issueCreatedBY =(serviceUnitArray[cissueid].assignbyid);
 	var loginid=${objuserBean.id}
 	
 	if($('#kpstatus').val()=='1')
-		{
-		
-	if( issueCreatedBY!= "2")
+	{
+	
+	if( issueCreatedBY!= loginid)
 		{
 		
 		alert("you are not authorized to close ticket");
@@ -796,11 +799,13 @@ $('#kpstatus').on('change',function() {
 		
 		$('#modelSubmit').prop('disabled',false);
 		}
+	}
+	else {
+		$('#modelSubmit').prop('disabled',false);
+		$('#kpstatus').css('border-color', 'black');
+	}
 	
-		}else{
-			$('#modelSubmit').prop('disabled',false);
-			$('#kpstatus').css('border-color', 'black');
-		}
+		
 });
 
 
@@ -865,7 +870,29 @@ $('#submitMainForm').click(function(event) {
 });
 
 
-
+$(".cancel1").click(function()
+		{
+			$("#id").val(0);
+			$.each( idArrayCmt11, function(i, val)
+			{
+				var value = $("#" +  idArrayCmt11[i]).val();
+				if ($("#" + idArrayCmt11[i]+"_chosen").length)
+				{
+					$("#" + idArrayCmt11[i]).val("");
+					$("#" + idArrayCmt11[i]).trigger("chosen:updated");
+				}
+//				$("form")[0].reset();
+				$("#"+ idArrayCmt11[i]).val('');
+				$("#"+ idArrayCmt11[i]).prop('readonly',false);
+				$("#"+ idArrayCmt11[i]).css('border-color','');
+				$("#"+ idArrayCmt11[i]).css('color','black');
+				$("#"+ idArrayCmt11[i]).removeClass('placeholder-style your-class default-class');
+				if ($("#" +  idArrayCmt11[i]+"_chosen").length)
+				{
+					$("#" +  idArrayCmt11[i]+"_chosen").children('a').css('border-color','black');
+				}
+			});
+		});
 
 
 $("#pageName").text("Task Master");

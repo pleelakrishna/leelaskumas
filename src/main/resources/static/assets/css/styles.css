@@ -10705,7 +10705,7 @@ body.collapse-leftbar #search.keep-open form button[type="submit"] {
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
 .navbar-inverse .navbar-nav > .open > a:focus {
-  background-color: #27292d;
+  background-color: ;
   color: #ffffff;
 }
 .navbar-inverse .navbar-nav > .dropdown > a:hover .caret {

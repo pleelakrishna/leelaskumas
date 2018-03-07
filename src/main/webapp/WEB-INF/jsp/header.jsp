@@ -171,7 +171,8 @@ color: inherit !important;
     background-color: #f9f9f9;
    	width: 300px;
     z-index: 1;
-	padding:15px 15px;;
+	padding:15px 15px;
+	margin-left:-35px;
 }
 
 .dropdown-content a {
@@ -193,12 +194,12 @@ color: inherit !important;
 }
 
 
-  	table{
+  	.table1{
 		border:solid 1px;
 		border-color:#CCCCCC;
 		width:260px;
 	}
-	tr, td, th{
+	.tr1, .td1, .th1{
 		border:solid 1px;
 		border-color:#CCCCCC;
 	}
@@ -210,7 +211,9 @@ color: inherit !important;
 		        $(this).remove(); 
 		    });
 		}, 5000);
+		
 		 $(document).ready(function(){
+			
 			 toolTips();
 			 
 			 getHeadersCounts();
@@ -304,25 +307,26 @@ function getHeadersCounts(){
     </div>
     <div class="dropdown-content">
       <a style="padding: 10px 16px;" href="#">
-      	<table>
+      	<table class="table1">
         	<thead>
-            	<tr>
-                	<th>ID</th>
-                	<th>Field</th>
-                	<th>Change</th>
+            	<tr class="tr1" style="
+    background: #006699;
+    color: #FFF;
+">
+                	<th class="th1">Task No.</th>
+                	<th class="th1">Field</th>
+                	<!-- <th>Change</th> -->
                 </tr>
             </thead>
             <tbody>
-            	<tr>
-                	<td>123456</td>
-                    <td>Priority</td>
-                    <td>Urgent -> Immediate</td>
+             <c:forEach var="issue" items="${acknotification}">
+            	<tr class="tr1">
+                	<td class="td1">${issue.taskno}</td>
+                    <td class="td1">${issue.kpfield}</td>
+                   <%--  <td>${issue.kpchange}</td> --%>
                 </tr>
-            	<tr>
-                	<td>123456</td>
-                    <td>Priority</td>
-                    <td>Required -> Mandatory</td>
-                </tr>
+               </c:forEach>
+            	
             </tbody>
         </table>
       </a>
@@ -338,25 +342,28 @@ function getHeadersCounts(){
     </div>
     <div class="dropdown-content">
       <a style="padding: 10px 16px;" href="#">
-      	<table>
+      	<table class="table1">
         	<thead>
-            	<tr>
-                	<th>ID</th>
-                	<th>Field</th>
-                	<th>Change</th>
+            	<tr class="tr1" style="
+    background: #006699;
+    color: #FFF;
+">
+                	<th class="th1">Task No.</th>
+                	<th class="th1">Field</th>
+                	<th class="th1">Change</th>
                 </tr>
             </thead>
             <tbody>
-            	<tr>
-                	<td>123456</td>
-                    <td>Priority</td>
-                    <td>Urgent -> Immediate</td>
+            <c:forEach var="issue" items="${notifications}">
+            	<tr class="tr1">
+                	<td class="td1">${issue.taskno}</td>
+                    <td class="td1">${issue.kpfield}</td>
+                    <td class="td1">${issue.kpchange}</td>
                 </tr>
-            	<tr>
-                	<td>123456</td>
-                    <td>Priority</td>
-                    <td>Required -> Mandatory</td>
-                </tr>
+                </c:forEach>
+                
+                
+            	
             </tbody>
         </table>
       </a>
@@ -378,12 +385,13 @@ function getHeadersCounts(){
 	                    </li>
 	                    <li class="userlinks">
 	                        <ul class="dropdown-menu">
-	                            <li><a href="editProfile">Edit Profile <i class="pull-right fa fa-pencil"></i></a></li>
-	                            <li><a href="changePassword">Change Password <i class="pull-right fa fa-cog"></i></a></li>
-	                            <li class="divider"></li>
+	                            <li><a href="editProfile">Edit Profile <i class="pull-right fa fa-pencil" style="margin-left:85px;"></i></a></li>
+	                            <li><a href="changePassword">Change Password <i class="pull-right fa fa-cog"  style="margin-left:45px;"></i></a></li>
 	                         <%--    <c:url value="${peContext.request.contextPath}/logout" var="logoutUrl" /> --%>
 	
-	                           <li><a href="<c:url value="${baseurl}/logOutKptms" />"> Sign Out</a></li>
+	                          <%--  <li><a href="<c:url value="${baseurl}/logOutKptms" />"> Sign Out</a></li> --%>
+	                            <li><a href="<c:url value="${baseurl}/logout" />"> Sign Out</a></li>
+	                         <%--   <li><a href="<c:url value="j_spring_security_logout" />" > Sign Out</a></li> --%>
 	                        </ul>
 	                    </li>
 	                </ul>

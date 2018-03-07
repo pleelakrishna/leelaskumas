@@ -100,7 +100,7 @@ public class TaskController {
 		model.addAttribute("objuserBean", objuserBean);
 		
 		try {
-			listOrderBeans = taskService.getissuesByselectionAssignTo(id);
+			listOrderBeans = taskService.getissuesByselectionAssignBy(id);
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);
@@ -425,6 +425,11 @@ public class TaskController {
 		Integer unseentasks =0;
 		try{
 			
+			 session.setAttribute("acknotification", kpHistoryService.getHeaderNotificationsforack());
+			 
+			 session.setAttribute("notifications", kpHistoryService.getHeaderNotifications());
+			 
+			
  				
 			unseentasks = taskService.getUnseenTaskCount();
 			jsonObj.put("unseentasks",unseentasks);
@@ -538,7 +543,7 @@ public class TaskController {
 		model.addAttribute("cissue", issue);
 		model.addAttribute("clist",taskService.getTaksByid(id));
 		model.addAttribute("repeatLogs",taskService.getrepeatLogsById(id));
-
+		model.addAttribute("repeatLogs1",kpHistoryService.getTaskHistory(taskId));
 		return "ViewTicket";
 
 	}

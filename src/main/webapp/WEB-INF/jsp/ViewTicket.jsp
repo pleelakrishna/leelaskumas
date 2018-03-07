@@ -128,13 +128,13 @@ View Issue Details</h4>
 												<div class="table-responsive">
 							<table class="table table-bordered table-condensed  table-striped table-hover" style=" ">
 								<tr style="background:#006699;color: #fff;">
-<th>Date Modified</th><th>User Name</th><th>Status </th><th>Attachment</th><th>Comment</th>
+<th>Last Updated</th><th>User Name</th><th>Attachment</th><th>field</th><th>Change</th>
 								</tr>
 								
-<c:forEach var="logs" items="${repeatLogs}">								
+<c:forEach var="logs" items="${repeatLogs1}">								
 								<tr>
-<td> ${logs.statustime}</td><td>${logs.issueid}</td>
-<td>${logs.kpstatus}</td>
+<td> ${logs.createdTime}</td><td>${logs.changedby}</td>
+<%-- <td>${logs.kpstatus}</td> --%>
 <td>
 
 
@@ -143,7 +143,8 @@ View Issue Details</h4>
      	</c:forTokens>
   
 
-</td><td>${logs.comment}</td>
+</td><td>${logs.kpfield}</td>
+</td><td>${logs.kpchange}</td>
 
 
 </tr>

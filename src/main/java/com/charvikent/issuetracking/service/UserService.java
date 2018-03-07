@@ -1,5 +1,7 @@
 package com.charvikent.issuetracking.service;
 
+
+
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -39,7 +41,7 @@ public class UserService {
 		String mbnum=user.getMobilenumber();
 		userDao.saveuser(user);
 		logger.info("Sending message.......");
-		smsTemplate.sendSMSFromClass(msg,mbnum);
+		smsTemplate.sendSMS(msg,mbnum);
 	}
 
 	public List<User> getAllUsers()

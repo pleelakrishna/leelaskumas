@@ -94,6 +94,7 @@ public Map<String,Integer> getSeverityWiseCount() {
 	
 	 for(Entry<String,Integer> entry:obj.entrySet())
 	 {
+		 
 	         if(entry.getKey().equals("Critical"))
 	        	 criticalCount=entry.getValue();
 	         else if(entry.getKey().equals("Major"))
@@ -110,6 +111,8 @@ public Map<String,Integer> getSeverityWiseCount() {
 	 Severitymap.put("Major",MajorCount);
 	 
 	 Severitymap.put("Minor",MinorCount);
+	 
+	 Severitymap.put("Total",criticalCount+MajorCount+MinorCount);
 	 
 	 
 	  
@@ -154,6 +157,7 @@ public Map<String,Integer> getSeverityWiseCountsByAssignedBy() {
 	 
 	 Severitymap.put("Minor",MinorCount);
 	 
+	 Severitymap.put("Total",criticalCount+MajorCount+MinorCount);
 	 
 	  
 	return Severitymap;

@@ -66,6 +66,7 @@ public class DashBoardController {
 	KpHistoryService kpHistoryService;
 	
 	
+	
    
 	@RequestMapping("/dashBoard")
 	public String showDashBoard(Model model)
@@ -78,14 +79,20 @@ public class DashBoardController {
 		 
 		 model.addAttribute("ackdetails", dashBoardService.getAllTasksForAck());
 		
-		 System.out.println(dashBoardService.getAllTasksForAck());
+		 //System.out.println(dashBoardService.getAllTasksForAck());
 		 
 		 
 		 model.addAttribute("SevMonitoredCounts", dashBoardService.getSeverityCountsUnderReportTo());
 		 
-		 model.addAttribute("notifications", kpHistoryService.getHeaderNotifications());
+		 //model.addAttribute("notifications", kpHistoryService.getHeaderNotifications());
+		// model.addAttribute("acknotification", kpHistoryService.getHeaderNotificationsforack());
 		 
-		 System.out.println( kpHistoryService.getHeaderNotificationsforack());
+		// session.setAttribute("acknotification", kpHistoryService.getHeaderNotificationsforack());
+		 
+		 //session.setAttribute("notifications", kpHistoryService.getHeaderNotifications());
+		 
+		 
+		// System.out.println( kpHistoryService.getHeaderNotificationsforack());
 		 
 		 return "dashBoard";
 		
