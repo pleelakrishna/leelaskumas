@@ -26,7 +26,7 @@ public class UserDao {
 
 
 	public void saveuser(User user) {
-		//user.setEnabled("1");
+	  // user.setEnabled("1");
 		em.persist(user);
 
 	}

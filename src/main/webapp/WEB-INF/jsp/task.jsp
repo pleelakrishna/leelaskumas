@@ -168,7 +168,7 @@
 				      		<div class="col-sm-12">
 				      			<div class="btn-toolbar text-center">
 					      			<input type="submit" id="submitMainForm"  value="Submit" class="btn-primary btn"/>
-					      			<input type="reset" value="Reset" class="btn-danger btn cancel"/>
+					      			<input type="reset" value="Reset" class="btn-danger btn cancel2"/>
 				      			</div>
 				      		</div>
 				      	</div>
@@ -890,6 +890,30 @@ $(".cancel1").click(function()
 				if ($("#" +  idArrayCmt11[i]+"_chosen").length)
 				{
 					$("#" +  idArrayCmt11[i]+"_chosen").children('a').css('border-color','black');
+				}
+			});
+		});
+
+$(".cancel2").click(function()
+		{
+			$("#id").val(0);
+			$.each( idArrayCmt1, function(i, val)
+			{
+				var value = $("#" +  idArrayCmt1[i]).val();
+				if ($("#" + idArrayCmt1[i]+"_chosen").length)
+				{
+					$("#" + idArrayCmt1[i]).val("");
+					$("#" + idArrayCmt1[i]).trigger("chosen:updated");
+				}
+//				$("form")[0].reset();
+				$("#"+ idArrayCmt1[i]).val('');
+				$("#"+ idArrayCmt1[i]).prop('readonly',false);
+				$("#"+ idArrayCmt1[i]).css('border-color','');
+				$("#"+ idArrayCmt1[i]).css('color','black');
+				$("#"+ idArrayCmt1[i]).removeClass('placeholder-style your-class default-class');
+				if ($("#" +  idArrayCmt1[i]+"_chosen").length)
+				{
+					$("#" +  idArrayCmt1[i]+"_chosen").children('a').css('border-color','black');
 				}
 			});
 		});

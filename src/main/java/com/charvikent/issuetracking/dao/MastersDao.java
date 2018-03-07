@@ -1,16 +1,22 @@
 package com.charvikent.issuetracking.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.KpStatus;
-import com.charvikent.issuetracking.model.OrgDept;
+import com.charvikent.issuetracking.model.User;
 
 @Repository
 public class MastersDao {
@@ -25,13 +31,12 @@ public class MastersDao {
 	@SuppressWarnings("unchecked")
 	public List<Department> getDepartmentNames()
 	 {
+		
        List<Department> list=new ArrayList<Department>();
 		
-		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,kp.username,d.depthead,d.description,d.status from kpdepartment d,kpusers kp where d.depthead=kp.id and d.status='1'").getResultList();
+		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,kp.username,d.depthead,d.description,d.status ,d.kp_org_id from kpdepartment d,kpusers kp where d.depthead=kp.id and d.status='1'").getResultList();
 		for(Object[] row: rows)
 		{
-		 
-
 		Department dept =new Department();
 		dept.setId( Integer.parseInt(String.valueOf(row[0])));
 		dept.setName((String)row[1]);
@@ -39,6 +44,8 @@ public class MastersDao {
 		dept.setDeptheadid((String)row[3]);
 		dept.setDescription((String)row[4]);
 		dept.setStatus((String)row[5]);
+		dept.setKpOrgId((String)row[6]);
+		
 		list.add(dept);
 		}
 		return list;
