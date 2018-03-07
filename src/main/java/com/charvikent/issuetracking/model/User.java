@@ -37,6 +37,8 @@ public class User {
 	private String department;
 
 	private String reportto;
+	
+	private String kpOrgId;
 
 	@Column
 	private String enabled;
@@ -166,6 +168,7 @@ public class User {
 		this.firstname = user.firstname;
 		this.lastname = user.lastname;
 		this.reportName=user.reportName;
+		this.kpOrgId=user.kpOrgId;
 
 	}
 
@@ -257,17 +260,29 @@ public class User {
 		this.reportto = reportto;
 	}
 
+	
+	
+
+	public String getKpOrgId() {
+		return kpOrgId;
+	}
+
+	public void setKpOrgId(String kpOrgId) {
+		this.kpOrgId = kpOrgId;
+	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", mobilenumber="
 				+ mobilenumber + ", email=" + email + ", department=" + department + ", reportto=" + reportto
-				+ ", enabled=" + enabled + ", designation=" + designation + ", username=" + username + ", password="
-				+ password + ", npassword=" + npassword + ", cpassword=" + cpassword + ", departmentName="
-				+ departmentName + ", designationName=" + designationName + ", reportId=" + reportId + ", reportName="
-				+ reportName + ", firstname=" + firstname + ", lastname=" + lastname + ", status=" + status + "]";
+				+ ", kpOrgId=" + kpOrgId + ", enabled=" + enabled + ", designation=" + designation + ", username="
+				+ username + ", password=" + password + ", npassword=" + npassword + ", cpassword=" + cpassword
+				+ ", departmentName=" + departmentName + ", designationName=" + designationName + ", reportId="
+				+ reportId + ", reportName=" + reportName + ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", status=" + status + "]";
 	}
 
+	
 
 
 

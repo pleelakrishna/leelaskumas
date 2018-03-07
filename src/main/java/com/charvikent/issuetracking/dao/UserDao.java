@@ -26,7 +26,7 @@ public class UserDao {
 
 
 	public void saveuser(User user) {
-		//user.setEnabled("1");
+	  // user.setEnabled("1");
 		em.persist(user);
 
 	}
@@ -186,7 +186,7 @@ public class UserDao {
 		users.setDepartment(user.getDepartment());
 		users.setDesignation(user.getDesignation());
 		users.setEmail(user.getEmail());
-		users.setEnabled(user.getEnabled());
+		//users.setEnabled(user.getEnabled());
 		users.setFirstname(user.getFirstname());
 		users.setLastname(user.getLastname());
 		users.setMobilenumber(user.getMobilenumber());

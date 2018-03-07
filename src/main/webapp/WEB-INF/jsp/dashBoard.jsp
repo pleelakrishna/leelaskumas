@@ -46,7 +46,7 @@
 				style="background-color: white !important; padding-top: 15PX;">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>Dashbord</h4>
+						<h4>Dashboard</h4>
 						<div class="options">
 							<a href="javascript:;" class="panel-collapse"><i
 								class="fa fa-chevron-down"></i></a>

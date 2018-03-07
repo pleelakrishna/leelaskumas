@@ -46,6 +46,9 @@ public class Department {
 	@Column
 	private String status;
 	
+	@Column
+	private String kpOrgId;
+	
 	@CreationTimestamp
 	protected Date createdTime ;
 
@@ -126,12 +129,26 @@ public class Department {
 	}
 
 	
+   
+	
 
+	public String getKpOrgId() {
+		return kpOrgId;
+	}
+
+	public void setKpOrgId(String kpOrgId) {
+		this.kpOrgId = kpOrgId;
+	}
 
 	@Override
 	public String toString() {
 		return "Department [id=" + id + ", name=" + name + ", description=" + description + ", depthead=" + depthead
-				+ ", deptheadid=" + deptheadid + ", status=" + status + ", createdTime=" + createdTime
-				+ ", updatedTime=" + updatedTime + "]";
+				+ ", deptheadid=" + deptheadid + ", status=" + status + ", kpOrgId=" + kpOrgId + ", createdTime="
+				+ createdTime + ", updatedTime=" + updatedTime + "]";
 	}
+
+	
+	
+	
+	
 }

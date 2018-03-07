@@ -1,5 +1,7 @@
 package com.charvikent.issuetracking.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,6 +10,9 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,9 +35,26 @@ public class MastersService {
 	
 	public List<Department> deptList()
 	{
-		 List<Department> deptList= mastersDao.getDepartmentNames();
-		return deptList;
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+		
+		 List<Department> deptListForMaster= mastersDao.getDepartmentNames();
+		 List<Department> deptListForAdmin =new ArrayList<>();
+		 
+		 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+		   return deptListForMaster;
+		 else 
+		 {
+			 for(Department entry :deptListForMaster)
+			 {
+				 if(entry.getKpOrgId().equals(objuserBean.getKpOrgId()))
+				 deptListForAdmin.add(entry);
+			 }
+			 return deptListForAdmin;
+		 }
 	}
 	
 	
