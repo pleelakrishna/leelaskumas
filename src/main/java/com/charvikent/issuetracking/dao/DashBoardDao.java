@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
+import com.charvikent.issuetracking.model.DashBordByCategory;
+import com.charvikent.issuetracking.model.DashBordByStatus;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.ReportIssueService;
@@ -454,64 +456,189 @@ public Map<String, Integer> getSeverityCountsUnderReportTo()
   		}
  		return SeverityReportToList;
      }
-     
-     
-     public Set<ReportIssue> getAllTasks() {
- 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
- 		
- 		String hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap" 
-                      +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks "  
-                       +" where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category ";
- 		
- 		
- 		
- 		try {
- 			List<Object[]> rows = em.createNativeQuery(hql).getResultList();
- 			for (Object[] row : rows) {
- 				ReportIssue issue = new ReportIssue();
- 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
- 				issue.setAssignto((String) row[1]);
- 				issue.setSeverity((String) row[2]);
- 				issue.setPriority((String) row[3]);
- 				issue.setUploadfile((String) row[4]);
- 				issue.setSubject((String) row[5]);
- 				issue.setCreatedTime((Date) row[6]);
- 				issue.setCategory((String) row[7]);
- 				issue.setKstatus((String) row[8]);
- 				issue.setStatus((String) row[9]);
- 				issue.setTaskno((String) row[10]);
- 				
- 				issue.setSeverityid((String) row[11]);
- 				issue.setPriorityid((String) row[12]);
- 				issue.setAssigntoid((String) row[13]);
- 			    issue.setCategoryid((String) row[14]);
- 			    issue.setDescription((String) row[15]);
- 				issue.setTaskdeadline((String) row[16]);
- 				issue.setAssignbyid((String) row[17]);
- 				issue.setAssignby((String) row[18]);
- 				
- 				issue.setKstatusid((String) row[19]);
- 				issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
- 				
- 			    
- 			    
- 				
- 				listissue.add(issue);
 
+
+
+	public List<DashBordByCategory> getCategory(String id) {
+		
+		LOGGER.debug("In getSeverityCountsUnderReportTo calling createnativeQuery");
+
+		
+		
+		List<DashBordByCategory> dashBordCategoryList=new ArrayList<>();
+		try {
+		
+		String hql ="select ri.category,kc.category as categoryname,kstatus  ,GROUP_CONCAT(ks.name) from report_issue ri,kpcategory kc,kpstatus ks where ri.category=kc.id and ks.id=kstatus and assignto=:assignto and ri.kstatus in(1,2,4) group by ri.category ORDER BY ri.category";
+		
+		String hqladmin ="select ri.category,kc.category as categoryname,kstatus  ,GROUP_CONCAT(ks.name) from report_issue ri,kpcategory kc,kpstatus ks where ri.category=kc.id and ks.id=kstatus  and ri.kstatus in(1,2,4) group by ri.category ORDER BY ri.category";
+			
+		List<Object[]> rows =null;
+		
+		if(id.equals("1")){
+			rows= em.createNativeQuery(hqladmin).getResultList();
+		}else {
+		      rows= em.createNativeQuery(hql).setParameter("assignto", id).getResultList();
+		}
+			
+			
+				
+				for (Object[] row : rows) {
+					DashBordByCategory dashBordByCategory= new DashBordByCategory();
+					dashBordByCategory.setCategoryId((String)row[0]);
+					dashBordByCategory.setCategoryName((String) row[1]);
+					dashBordByCategory.setkStatus((String) row[2]);
+					dashBordByCategory.setkStatusNameWithId((String) row[3]);
+					dashBordCategoryList.add(dashBordByCategory);
+
+				}
+			} catch (Exception e) {
+				System.out.println("error here");
+				e.printStackTrace();
+			}
+
+		
+		
+		
+		
+		return dashBordCategoryList;
+		
+	}
+	
+ public Set<ReportIssue> getTasksByCategoryList(String statusId,String categoryId) {
+    	 
+    	 LOGGER.debug("In getTasksBySeverityOnAssignedBy calling  with AssignBy {}", statusId);
+    	 User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+  		String id=String.valueOf(objuserBean.getId());
+  		
+  		 
+//Set<ReportIssue> listissue=taskService.getTaskByCategory(statusId) ;
+ 		
+ 		//Set<ReportIssue> SeverityReportToList= new LinkedHashSet();
+ 		
+ 		
+ 		/*for(ReportIssue entry:listissue)
+ 		{
+ 			if(entry.getSeverity().equals(statusId))
+ 			{
+ 				SeverityReportToList.add(entry);
  			}
+ 				
  			
- 		} catch (Exception e) {
- 			System.out.println("error here");
- 			e.printStackTrace();
- 		}
- 		
- 		
- 		return listissue;
- 		
- 		
- 	}
+ 		}*/
 
+		return taskService.getTaskByCategory(statusId, categoryId);
+    	 
+    	 
+    	 
+     }
+
+
+public List<DashBordByStatus> getStatusList(String id) {
+	LOGGER.debug("In getSeverityCountsUnderReportTo calling createnativeQuery");
+
+	List<DashBordByStatus> dashBordStatusList=new ArrayList<>();
+	
+	try {
+	
+	String hql ="select kstatus, ks.name,GROUP_CONCAT(ks.name) from report_issue ri,kpcategory kc,kpstatus ks where ri.category=kc.id and ks.id=kstatus and assignto=:assignto and ri.kstatus in(1,2,4) group by ri.kstatus ORDER BY ri.kstatus";
+	
+	String hqladmin ="select  kstatus, ks.name,GROUP_CONCAT(ks.name) from report_issue ri,kpcategory kc,kpstatus ks where ri.category=kc.id and ks.id=kstatus  and ri.kstatus in(1,2,4) group by ri.kstatus ORDER BY ri.kstatus";
+		
+	List<Object[]> rows =null;
+	
+	
+	if(id.equals("1")){
+		rows= em.createNativeQuery(hqladmin).getResultList();
+	}else {
+	      rows= em.createNativeQuery(hql).setParameter("assignto", id).getResultList();
+	}
+		
+	
+			
+			for (Object[] row : rows) {
+				DashBordByStatus dashBordByStatus= new DashBordByStatus();
+				dashBordByStatus.setStatusId((String)row[0]);
+				dashBordByStatus.setStatusName((String) row[1]);
+				dashBordByStatus.setStatusConcatination((String) row[2]);
+				dashBordStatusList.add(dashBordByStatus);
+
+			}
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+
+	
+	
+	
+	
+	return dashBordStatusList;
+	}
+
+
+public Set<ReportIssue> getTasksByStatusList(String status) {
+	 	
+		 
+		
+	return taskService.getTaskByStatusDashBord(status);
+}
      
+
+public Set<ReportIssue> getAllTasks() {
+		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+		
+		String hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap" 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks "  
+                   +" where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category ";
+		
+		
+		
+		try {
+			List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+			for (Object[] row : rows) {
+				ReportIssue issue = new ReportIssue();
+				issue.setId(Integer.parseInt(String.valueOf(row[0])));
+				issue.setAssignto((String) row[1]);
+				issue.setSeverity((String) row[2]);
+				issue.setPriority((String) row[3]);
+				issue.setUploadfile((String) row[4]);
+				issue.setSubject((String) row[5]);
+				issue.setCreatedTime((Date) row[6]);
+				issue.setCategory((String) row[7]);
+				issue.setKstatus((String) row[8]);
+				issue.setStatus((String) row[9]);
+				issue.setTaskno((String) row[10]);
+				
+				issue.setSeverityid((String) row[11]);
+				issue.setPriorityid((String) row[12]);
+				issue.setAssigntoid((String) row[13]);
+			    issue.setCategoryid((String) row[14]);
+			    issue.setDescription((String) row[15]);
+				issue.setTaskdeadline((String) row[16]);
+				issue.setAssignbyid((String) row[17]);
+				issue.setAssignby((String) row[18]);
+				
+				issue.setKstatusid((String) row[19]);
+				issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
+				
+			    
+			    
+				
+				listissue.add(issue);
+
+			}
+			
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		
+		
+		return listissue;
+		
+		
+	}
+
      
      }
 

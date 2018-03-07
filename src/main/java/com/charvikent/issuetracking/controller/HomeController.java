@@ -38,20 +38,15 @@ public class HomeController {
 	}
 	@RequestMapping("/login")
 	public String loginView(Model model) {
-		System.out.println("login called at /login page");
-		//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		 //userService.setLoginRecord(objuserBean.getId(),"login");
-
+		//System.out.println("login called at /login page");
 		return "login";
 	}
 	
-	@RequestMapping("/logout")
+	@RequestMapping("/logOutKptms")
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    
-	    userService.setLoginRecord(objuserBean.getId(),"logout");
 	    
 	   // userService.setLoginRecord(objuserBean.getId(),"logout");
 	    if (null != auth){    
@@ -62,7 +57,7 @@ public class HomeController {
 	    	SecurityContextHolder.getContext().setAuthentication(null);
 	    }
 	    System.out.println("Called Logout");
-	    return "redirect:/login";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+	    return "redirect:/";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 	
 	@RequestMapping("/403")

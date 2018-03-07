@@ -3159,7 +3159,6 @@ button.close {
 }
 .btn-toolbar {
   margin-left: -5px;
-  margin-top:4px;
 }
 .btn-toolbar .btn-group,
 .btn-toolbar .input-group {
@@ -5350,7 +5349,6 @@ i.visible-print {
 }
 .fa-list-alt:before {
   content: "\f022";
-  color#FFFFFF;
 }
 .fa-lock:before {
   content: "\f023";
@@ -6850,9 +6848,6 @@ pre.prettyprint {
     font-weight: bold;
     content: attr(data-title);
   }
-}
-.navbar .navbar-default {
-	margin-top:100px;
 }
 legend {
   padding-bottom: 5px;
@@ -8717,10 +8712,7 @@ body.static-header {
     display: block;
     float: none !important;
     margin: 0;
-    
-  }
- .dropdown .list {
-  	border:none
+    background-color: #3d3f46;
   }
   .navbar-header {
     margin: 0 auto;
@@ -9542,12 +9534,8 @@ header .nav .badge {
     box-shadow: none;
     border: none;
   }
-  .navbar-nav.toolbar > li {
-  	margin-top:20px;
-  }
   nav.navbar .navbar-header {
     width: auto;
-    margin-top: 20px;
   }
 }
 nav.navbar {
@@ -10428,7 +10416,6 @@ body.collapse-leftbar #search.keep-open form button[type="submit"] {
   .navbar-nav > li > a {
     padding-top: 10px;
     padding-bottom: 10px;
-    padding:10px 20px;
   }
 }
 @media (min-width: 768px) {
@@ -10705,7 +10692,7 @@ body.collapse-leftbar #search.keep-open form button[type="submit"] {
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
 .navbar-inverse .navbar-nav > .open > a:focus {
-  background-color: ;
+  background-color: #27292d;
   color: #ffffff;
 }
 .navbar-inverse .navbar-nav > .dropdown > a:hover .caret {

@@ -481,6 +481,10 @@ public void openTask(Integer id) {
    reportIssueDao.openTask(id);
 }
 
+public Set<ReportIssue> getTaskByCategory(String statusId,String categoryId) {
+	// TODO Auto-generated method stub
+	return reportIssueDao.getTaskByCategory(statusId,categoryId);
+}
 public Set<ReportIssue> getOpenTasks(String id) {
 	// TODO Auto-generated method stub
 	return reportIssueDao.getOpenTasks(id);
@@ -529,6 +533,16 @@ public Integer getReopenTaskCount() {
 
 public Set<ReportIssue> getTaksByid(Integer id) {
 	return  reportIssueDao.getTaksByid(id);
+}
+
+public List<ReportIssue> getStatusList(String id) {
+	// TODO Auto-generated method stub
+	return reportIssueDao.getStatusList(id);
+}
+
+public Set<ReportIssue> getTaskByStatusDashBord(String status) {
+	// TODO Auto-generated method stub
+	return reportIssueDao.getTaskByStatusDashBord(status);
 }
 
 	

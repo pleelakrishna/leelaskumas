@@ -20,12 +20,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  @Autowired 
  private UserDetailsService userDetailsService;
  
- @Autowired
- CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
- 
- @Autowired
- CustomLogoutSuccessHandler customLogoutSuccessHandler;
- 
  @Override
  public void configure(AuthenticationManagerBuilder auth) throws Exception {    
 	 auth.userDetailsService(userDetailsService);
@@ -48,13 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   .and()
     .formLogin().loginPage("/login")
     .usernameParameter("username").passwordParameter("password")
-    .successHandler(customAuthenticationSuccessHandler)
+    .defaultSuccessUrl("/dashBoard")
     .and()
-    .logout()
-    //.logoutUrl("/logout1")
-   // .logoutSuccessUrl("/") 
-    .invalidateHttpSession(true)
-   .logoutSuccessHandler(customLogoutSuccessHandler)
+    .logout().logoutUrl("/logOutKptms")
+    .logoutSuccessUrl("/") 
    .and()
    .exceptionHandling().accessDeniedPage("/403")
   .and()
