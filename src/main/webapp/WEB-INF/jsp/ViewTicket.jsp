@@ -55,6 +55,7 @@ th {
 </style>
 
 <!-- Body starts here -->
+
 	<div class="main-content">
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
@@ -67,10 +68,10 @@ th {
 				<div class="row">
 				
 				<!-- view-->
-
+			<div class="container">
 				<div class="col-md-12">
 				<div class="panel panel-primary">
-					<div class="panel-heading">
+					<div style="margin:0 auto;" class="panel-heading">
 						<h4><i class="ace-icon fa fa-bars"></i></i>
 View Issue Details</h4>
 						<div class="options">
@@ -127,13 +128,13 @@ View Issue Details</h4>
 												<div class="table-responsive">
 							<table class="table table-bordered table-condensed  table-striped table-hover" style=" ">
 								<tr style="background:#006699;color: #fff;">
-<th>Date Modified</th><th>User Name</th><th>Status </th><th>Attachment</th><th>Change</th>
+<th>Last Updated</th><th>User Name</th><th>Attachment</th><th>field</th><th>Change</th>
 								</tr>
 								
-<c:forEach var="logs" items="${repeatLogs}">								
+<c:forEach var="logs" items="${repeatLogs1}">								
 								<tr>
-<td> ${logs.statustime}</td><td>${logs.issueid}</td>
-<td>${logs.kpstatus}</td>
+<td> ${logs.createdTime}</td><td>${logs.changedby}</td>
+<%-- <td>${logs.kpstatus}</td> --%>
 <td>
 
 
@@ -142,7 +143,8 @@ View Issue Details</h4>
      	</c:forTokens>
   
 
-</td><td>${logs.comment}</td>
+</td><td>${logs.kpfield}</td>
+</td><td>${logs.kpchange}</td>
 
 
 </tr>
@@ -157,6 +159,7 @@ View Issue Details</h4>
 			<!-- /.page-content -->
 		</div>
 		<!-- /.main-content-inner -->
+	</div>
 	</div>
     
 		       <!--view end-->
@@ -208,7 +211,7 @@ View Issue Details</h4>
 						</div>
 					</div>
 				</div>
-			<!-- /.page-content -->
+			<!-- /page-content -->
 		</div>
 		<!-- /.main-content-inner -->
 	

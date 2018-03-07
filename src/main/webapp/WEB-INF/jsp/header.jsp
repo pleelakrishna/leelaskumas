@@ -59,6 +59,7 @@
 
 
 
+
 <script type='text/javascript' src='${baseurl }/js/canvasjs.min.js'></script> 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
@@ -133,6 +134,75 @@ span.has-error,span.hasError
 .fa {
 color: inherit !important;
 }
+
+.navbar {
+}
+
+.navbar a {
+    float: left;
+    color:#FFFFFF;
+    text-align: center;
+    text-decoration: none;
+}
+
+.dropdown {
+    float: left;
+}
+
+.dropdown .dropbtn {
+    font-size: 16px;    
+    border: none;
+	border-radius:10px;
+    outline: none;
+    color: white;
+    background-color:#3366CC;
+    font-family: inherit;
+    margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color:#3366FF;
+    
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+   	width: 300px;
+    z-index: 1;
+	padding:15px 15px;
+	margin-left:-35px;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+	
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #f9f9f9;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+  	.table1{
+		border:solid 1px;
+		border-color:#CCCCCC;
+		width:260px;
+	}
+	.tr1, .td1, .th1{
+		border:solid 1px;
+		border-color:#CCCCCC;
+	}
 </style>
 <script type="text/javascript">
 	var isClick = 'No';
@@ -141,7 +211,9 @@ color: inherit !important;
 		        $(this).remove(); 
 		    });
 		}, 5000);
+		
 		 $(document).ready(function(){
+			
 			 toolTips();
 			 
 			 getHeadersCounts();
@@ -179,7 +251,9 @@ function toolTips(){
 		$('.comment').attr('data-toggle', 'tooltip');
 		$('.comment').attr('data-original-title', 'Add Comment');
 		$('.time').attr('data-toggle', 'tooltip');
-		$('.time').attr('data-original-title', 'view Deadline');
+		$('.time').attr('data-original-title', 'View Deadline');
+		$('.history').attr('data-toggle','tooltip');
+		$('.history').attr('data-original-title','History');
 		$('[data-toggle="tooltip"]').tooltip(); 
 }
 
@@ -221,13 +295,86 @@ function getHeadersCounts(){
 
     <header class="navbar navbar-inverse navbar-fixed-top" role="banner" style="background: #4f8edc;">
         <div class="navbar-header pull-left">
-            <a class="navbar-brand" href="javascript:void(0);"><img src="${baseurl }/assets/img/klogo.png"  style ="width:auto;height:50px;" class="img-responsive"></a>
+            <a class="navbar-brand" href="javascript:void(0);"><img src="${baseurl }/assets/img/klogo.png"  style ="width:auto;height:68px;" class="img-responsive"></a>
             <div class="clearfix"></div>
         </div>
 		<div class="masters">
-	        <ul class="nav navbar-nav pull-right toolbar">
-	             <li style="float:left;margin-right:35px"><a href="${baseurl}/task" style="color:white;">Create Task</a></li>
-	            <li class="dropdown">
+	        <ul class="nav navbar-nav pull-right toolbar"><li style="float:left;">
+            <div style="box-shadow:none;" class="navbar">
+  <div style="border-left:none; margin-right:10px;" class="dropdown">
+    <diV style="color:#FFFFFF; background:#4f8edc; font-size:25px; margin-top:10px; margin-right:10px;" class="dropbtn"">    
+    <i class="fa fa-list-alt"></i>
+    </div>
+    <div class="dropdown-content">
+      <a style="padding: 10px 16px;" href="#">
+      	<table class="table1">
+        	<thead>
+            	<tr class="tr1" style="
+    background: #006699;
+    color: #FFF;
+">
+                	<th class="th1">Task No.</th>
+                	<th class="th1">Field</th>
+                	<!-- <th>Change</th> -->
+                </tr>
+            </thead>
+            <tbody>
+             <c:forEach var="issue" items="${acknotification}">
+            	<tr class="tr1">
+                	<td class="td1">${issue.taskno}</td>
+                    <td class="td1">${issue.kpfield}</td>
+                   <%--  <td>${issue.kpchange}</td> --%>
+                </tr>
+               </c:forEach>
+            	
+            </tbody>
+        </table>
+      </a>
+    </div>
+  </div> 
+</div>
+                </li> 
+            <li style="float:left;">
+            <div style="box-shadow:none; margin-right:10px;" class="navbar">
+  <div style="border-left:none;" class="dropdown">
+    <diV style="color:#FFFFFF; background:#4f8edc; font-size:25px; margin-top:10px;" class="dropbtn"">
+      <i class="fa fa-bell-o"></i>
+    </div>
+    <div class="dropdown-content">
+      <a style="padding: 10px 16px;" href="#">
+      	<table class="table1">
+        	<thead>
+            	<tr class="tr1" style="
+    background: #006699;
+    color: #FFF;
+">
+                	<th class="th1">Task No.</th>
+                	<th class="th1">Field</th>
+                	<th class="th1">Change</th>
+                </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="issue" items="${notifications}">
+            	<tr class="tr1">
+                	<td class="td1">${issue.taskno}</td>
+                    <td class="td1">${issue.kpfield}</td>
+                    <td class="td1">${issue.kpchange}</td>
+                </tr>
+                </c:forEach>
+                
+                
+            	
+            </tbody>
+        </table>
+      </a>
+    </div>
+  </div> 
+</div>
+                </li>
+	             <%-- <li style="float:left;margin-right:35px"><a href="${baseurl}/task" style="color:white;">Create Task</a></li> --%>
+	            <li style="float:left; margin-right:5px; margin-top:5px;"><a href="${baseurl}/severity?id=Critical" style="color:white;">Create Task</a></li>
+	   
+	            <li style=" margin-top:5px;" class="dropdown">
 	                <a href="#" class="dropdown-toggle username" data-toggle="dropdown" style="color: white;"><span class="hidden-xs">Master Admin <i class="fa fa-caret-down"></i></span><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt="Dangerfield" /></a>
 	                <ul class="dropdown-menu userinfo arrow">
 	                    <li class="username">
@@ -238,12 +385,13 @@ function getHeadersCounts(){
 	                    </li>
 	                    <li class="userlinks">
 	                        <ul class="dropdown-menu">
-	                            <li><a href="editProfile">Edit Profile <i class="pull-right fa fa-pencil"></i></a></li>
-	                            <li><a href="changePassword">Change Password <i class="pull-right fa fa-cog"></i></a></li>
-	                            <li class="divider"></li>
+	                            <li><a href="editProfile">Edit Profile <i class="pull-right fa fa-pencil" style="margin-left:85px;"></i></a></li>
+	                            <li><a href="changePassword">Change Password <i class="pull-right fa fa-cog"  style="margin-left:45px;"></i></a></li>
 	                         <%--    <c:url value="${peContext.request.contextPath}/logout" var="logoutUrl" /> --%>
 	
-	                           <li><a href="<c:url value="${baseurl}/logOutKptms" />"> Sign Out</a></li>
+	                          <%--  <li><a href="<c:url value="${baseurl}/logOutKptms" />"> Sign Out</a></li> --%>
+	                            <li><a href="<c:url value="${baseurl}/logout" />"> Sign Out</a></li>
+	                         <%--   <li><a href="<c:url value="j_spring_security_logout" />" > Sign Out</a></li> --%>
 	                        </ul>
 	                    </li>
 	                </ul>
@@ -252,7 +400,7 @@ function getHeadersCounts(){
         </div>
     </header>
 
-    <nav class="navbar navbar-default yamm top20" role="navigation">
+    <nav style="margin-top:35px;" class="navbar navbar-default yamm top20" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                 <i class="fa fa-bars"></i>
@@ -281,7 +429,7 @@ function getHeadersCounts(){
     		<div id="wrap">
 	        <div id="page-heading" class="row">
 	        	<div class="col-md-6">
-					<h1 id="pageName"></h1>
+					<h1 id="pageName">Dashboard</h1>
 				</div>
 				<div class="btn-toolbar pull-right">
 		                    <a href="#" class="btn btn-danger "><span id="unseentasks"> </span><br>Unread Tasks</a>
