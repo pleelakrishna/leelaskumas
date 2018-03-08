@@ -229,6 +229,12 @@ public Set<ReportIssue> getAllTasks(String qvalue) {
 	 
 	
 }
+
+public Set<ReportIssue> getTasksByCategoryListDashBord(String statusId,String categoryId) {
+	// TODO Auto-generated method stub
+	
+	return dashBoardDao.getTasksByCategoryList(statusId,categoryId);
+}
 public List<DashBordByCategory> getCategory() {
 	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	String id=String.valueOf(objuserBean.getId());
