@@ -421,10 +421,10 @@ function getHeadersCounts(){
             <li class="dashBoard"><a href="${baseurl }/dashBoard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             
             <security:authorize access="hasRole('ROLE_ADMIN')">
-              <li class="org"><a href="${baseurl }/kporg"><i class="fa fa-sitemap"></i> <span>Organization</span></a></li>
-            <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-building"></i> <span>Department</span></a></li>
+              <li class="org"><a href="${baseurl }/kporg"><i class="fa fa-building"></i><span>Organization</span></a></li>
+            <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-american-sign-language-interpreting"></i> <span>Department</span></a></li>
               <%-- <li class="desig"><a href="${baseurl }/desig"><i class="fa fa-plane"></i> <span>Designation</span></a></li> --%>
-             <li class="orgDept"><a href="${baseurl }/orgDept"><i class="fa fa-american-sign-language-interpreting"></i> <span>Hierarchical</span></a></li>
+             <li class="orgDept"><a href="${baseurl }/orgDept"><i class="fa fa-sitemap"></i> <span>Hierarchical</span></a></li>
               <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-black-tie"></i> <span>Category</span></a></li>
              	<li class="employee"><a href="${baseurl }/employee"><i class="fa fa-users"></i> <span>Employees</span></a></li>
               </security:authorize>
