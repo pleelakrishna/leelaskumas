@@ -322,6 +322,6 @@
 		});
 	});
 
-	$("#pageName").text("Org-Dept Master");
+	$("#pageName").text(" Hierarchical Master");
 	$(".orgDept").addClass("active");
 </script>
