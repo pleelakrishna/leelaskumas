@@ -7,14 +7,14 @@
 <div class="clearfix"></div>
 <ol class="breadcrumb">
 	<li><a href="#">Home</a></li>
-	<li>Org-Dept Master</li>
+	<li>Hierarchical</li>
 </ol>
 <div class="clearfix"></div>
 
 <div class="container" style="padding:40px;">
 	<ul class="nav nav-tabs navtabs" style=" border:1px solid #ccc; border-bottom:1px solid #ccc;">
-		<li class="active"><a data-toggle="tab" href="#dept1">Org-Department</a></li>
-		<li><a data-toggle="tab" href="#hier">Hierarchical</a></li><br>
+		<li class="active"><a data-toggle="tab" href="#dept1">Hierarchical</a></li>
+		<li><a data-toggle="tab" href="#hier">Hierarchical Design</a></li><br>
 	</ul>
 	<div class="tab-content">
 		<div id="dept1" class="tab-pane fade in active" >
@@ -22,7 +22,7 @@
 				<div class="col-md-12">
 					<div class="panel panel-primary" >
 						<div class="panel-heading">
-							<h4>Org-Dept List</h4>
+							<h4>Hierarchical List</h4>
 							<div class="options">
 								<a href="javascript:;" class="panel-collapse"><i
 									class="fa fa-chevron-down"></i></a>
@@ -57,7 +57,7 @@
 				<div class="col-md-12 col-sm-12">
 					<div class="panel panel-primary" >
 						<div class="panel-heading">
-							<h4>Add Org-Dept</h4>
+							<h4>New Hierarchical</h4>
 						</div>
 						<form:form class="form-horizontal" commandName="orgDeptf"
 							role="form" id="fillingstation-form" action="orgDept"
