@@ -381,6 +381,59 @@ public class DashBoardController {
 			return "task";
 
 	}
+	
+	
+	@RequestMapping(value = "/categoryDashBord")
+	public String taskscategoryOnReportTo(	Model model,HttpServletRequest request,HttpSession session){
+		Set<ReportIssue> listOrderBeans = null;
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		
+		String status=null;
+		model.addAttribute("taskf", new ReportIssue());
+		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		//model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		model.addAttribute("kpstatuses", mastersService.getKpStatues());
+		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
+		
+		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+		model.addAttribute("objuserBean", objuserBean);
+		
+			
+		
+			try {
+				status = request.getParameter("status");
+				String categoryId =request.getParameter("categoryId");
+				listOrderBeans =  dashBoardService.getTasksByCategoryListDashBord(status,categoryId);
+				if (listOrderBeans != null && listOrderBeans.size() > 0) {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", sJson);
+				 //System.out.println("##############3"+sJson);
+				} else {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", "''");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e);
+
+			}
+			
+			
+			return "task";
+
+	}
 	/**
 	 * timeline is string and 1 is loop iterate value in ddashboard,sjp page
 	 * 
