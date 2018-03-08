@@ -39,7 +39,7 @@ public class UserDao {
 
 		try {
 			List<Object[]> rows = em.createQuery("select  u.id,u.username,u.mobilenumber,u.email,u.reportto,u2.username,CASE WHEN u.enabled IN ('0') THEN 'Deactive' WHEN u.enabled IN ('1') THEN 'Active' ELSE '-----' END AS enabled,dep.name,d.name,"
-					+ "u.firstname,u.lastname,u.reportto,u.designation ,u.department , u.enabled as status from User u,User u2,Designation d,Department dep where u.enabled='1' and u.department=dep.id and u.designation= d.id and  u.reportto=u2.id").getResultList();
+					+ "u.firstname,u.lastname,u.reportto,u.designation ,u.department , u.enabled as status from User u,User u2,Designation d,Department dep where u.enabled='1' and u.department=dep.id and u.designation= d.id and  u.reportto=u2.id order by u.username").getResultList();
 			for (Object[] row : rows) {
 				User users =new User();
 

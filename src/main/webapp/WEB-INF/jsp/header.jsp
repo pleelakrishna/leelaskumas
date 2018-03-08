@@ -65,6 +65,15 @@
 
 <style type="text/css">
 
+@media (max-width: 767px) {
+
+nav.navbar .navbar-header {
+    width: auto;
+    margin-top: 32px;
+}
+
+}
+
 .panel-heading {
     font-size: 18px;
     border-bottom: 1px solid #dddddd;
@@ -399,7 +408,7 @@ function getHeadersCounts(){
 	        </ul>
         </div>
     </header>
-
+<div class="clearfix"></div>
     <nav style="margin-top:35px;" class="navbar navbar-default yamm top20" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -423,7 +432,7 @@ function getHeadersCounts(){
 			</ul>
 		</div>
     </nav>
-
+<div class="clearfix" style="margin-bottom: 73px;"></div>
     <div id="page-container">
     	<div id="page-content" style="min-height: auto;">
     		<div id="wrap">
