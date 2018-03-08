@@ -190,6 +190,7 @@ function editEmployee(id) {
 	$("#email").val(serviceUnitArray[id].email);
 	$("#submit1").val("Update");
 	$(window).scrollTop($('#moveTo').offset().top);
+	document.getElementById("username").disabled = true;
 }
 
 function deleteEmployee(id,status){

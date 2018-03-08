@@ -2999,8 +2999,8 @@ button.close {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #4f5259;
-  background-color: #f7f8fa;
+  color: #fff;
+  background-color: #4f8edc;
   border: 1px solid #dddddd;
   border-bottom-color: transparent;
   cursor: default;
@@ -8348,6 +8348,7 @@ fieldset[disabled] .btn-alizarin-alt.active {
 }
 .nav-tabs > li > a {
   margin-right: 0px;
+  color:#000;
 }
 .nav-tabs > li > a:hover {
   border-color: #edeef0;

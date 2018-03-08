@@ -20,7 +20,7 @@
 		<div id="dept1" class="tab-pane fade in active" >
 			<div class="row">
 				<div class="col-md-12">
-					<div class="panel panel-primary" >
+					<div class="panel panel-primary" style="margin-top:5px;" >
 						<div class="panel-heading">
 							<h4>Hierarchical List</h4>
 							<div class="options">
