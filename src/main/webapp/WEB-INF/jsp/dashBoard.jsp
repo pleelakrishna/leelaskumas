@@ -673,10 +673,7 @@
 				});
 	}
 
-	var listOrders1 = $
-	{
-		list
-	};
+	var listOrders1 = ${list};
 	if (listOrders1 != "") {
 		$('#categoryTable body').html('');
 		/* var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
@@ -749,10 +746,7 @@
 						});
 	}
 
-	var byStatusList = $
-	{
-		byStatusList
-	};
+	var byStatusList = ${byStatusList};
 	if (byStatusList != "") {
 		$('#statusTable body').html('');
 		/* var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
