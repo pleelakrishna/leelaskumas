@@ -6,7 +6,7 @@
 
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
-		<li><a href="#">Home</a></li>
+		<li><a href="dashBoard">Home</a></li>
 		<li>Employee Master</li>
 	</ol>
 	<div class="clearfix"></div>
