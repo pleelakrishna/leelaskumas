@@ -401,7 +401,11 @@ function getHeadersCounts(){
 	                          <%--  <li><a href="<c:url value="${baseurl}/logOutKptms" />"> Sign Out</a></li> --%>
 	                            <li><a href="<c:url value="${baseurl}/logout" />"> Sign Out</a></li>
 	                         <%--   <li><a href="<c:url value="j_spring_security_logout" />" > Sign Out</a></li> --%>
+	                            
+	                         
 	                        </ul>
+	                        <li>Last LoginTime: </li>
+	                        <li>${lastLoginTime}</li>
 	                    </li>
 	                </ul>
 	            </li>

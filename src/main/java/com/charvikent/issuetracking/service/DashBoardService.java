@@ -396,6 +396,10 @@ public Set<KpStatusLogs> getAllTasksForAck() {
 	
 }
 
+public Object getLastLoginTime() {
+	return dashBoardDao.getLastloginTime();
+}
+
 
 	
 	
