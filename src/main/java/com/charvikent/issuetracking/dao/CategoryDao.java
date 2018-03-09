@@ -8,9 +8,11 @@ import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.Category;
+import com.charvikent.issuetracking.model.User;
 @Repository
 public class CategoryDao {
 	
@@ -24,6 +26,8 @@ public class CategoryDao {
 
 	public void saveCategory(Category category ) {
 		logger.info("saving category");
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		category.setKpOrgId(objuserBean.getKpOrgId());
 		entityManager.persist(category);
 
 	}

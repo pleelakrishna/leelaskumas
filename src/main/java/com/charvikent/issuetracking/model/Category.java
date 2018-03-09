@@ -34,6 +34,8 @@ public class Category {
 	@UpdateTimestamp
 	private Date updatedTime;
 	
+	private String kpOrgId;
+	
 	
 
 	public Integer getId() {
@@ -78,6 +80,16 @@ public class Category {
 
 	public void setUpdatedTime(Date updatedTime) {
 		this.updatedTime = updatedTime;
+	}
+	
+	
+
+	public String getKpOrgId() {
+		return kpOrgId;
+	}
+
+	public void setKpOrgId(String kpOrgId) {
+		this.kpOrgId = kpOrgId;
 	}
 
 	@Override

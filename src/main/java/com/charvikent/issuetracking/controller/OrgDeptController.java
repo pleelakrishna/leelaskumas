@@ -25,6 +25,7 @@ import com.charvikent.issuetracking.model.OrgDeptHierarchical;
 import com.charvikent.issuetracking.service.MastersService;
 import com.charvikent.issuetracking.service.OrgDeptService;
 import com.charvikent.issuetracking.service.OrgService;
+import com.charvikent.issuetracking.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
@@ -35,6 +36,9 @@ public class OrgDeptController {
 	OrgDeptService orgDeptService;
 	@Autowired
 	MastersService masterService;
+	
+	@Autowired
+	private UserService userService;
 
 
 
@@ -46,7 +50,7 @@ public class OrgDeptController {
 		String sJson = null;
 		model.addAttribute("orgDeptf", new OrgDept());
 		model.addAttribute("orgs",orgService.getOrgNames());
-		model.addAttribute("depts",masterService.getDepartmentNames());
+		model.addAttribute("depts",userService.getDepartments());
 		try {
 
 			listOrderBeans = orgDeptService.orgDeptList();

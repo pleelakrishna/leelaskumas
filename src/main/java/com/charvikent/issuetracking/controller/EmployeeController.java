@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.User;
+import com.charvikent.issuetracking.service.OrgService;
 import com.charvikent.issuetracking.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -39,6 +40,8 @@ public class EmployeeController {
 
 	@Autowired
 	HttpSession session;
+	@Autowired
+	OrgService OrgService;
 
 
 
@@ -53,6 +56,7 @@ public class EmployeeController {
 		model.addAttribute("userNames", userService.getUserName());
 		model.addAttribute("reportto",userService.getUserName());
 		model.addAttribute("allUsers", userService.getAllUsers());
+		model.addAttribute("orgNames", OrgService.getOrgNames());
 
 
 		try {
