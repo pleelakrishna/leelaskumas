@@ -44,18 +44,17 @@ public class MastersService {
 		 List<Department> deptListForMaster= mastersDao.getDepartmentNames();
 		 List<Department> deptListForAdmin =new ArrayList<>();
 		 
-		/* if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+		 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 		   return deptListForMaster;
 		 else 
 		 {
 			 for(Department entry :deptListForMaster)
-			 {
+			 {  
 				 if(entry.getKpOrgId().equals(objuserBean.getKpOrgId()))
 				 deptListForAdmin.add(entry);
 			 }
 			 return deptListForAdmin;
-		 }*/
-		 return deptListForMaster;
+		 }
 	}
 	
 	

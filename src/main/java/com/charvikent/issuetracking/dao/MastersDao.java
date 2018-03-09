@@ -80,6 +80,8 @@ public class MastersDao {
 
 	
 	public void saveDept(Department dept) {
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		dept.setKpOrgId(objuserBean.getKpOrgId());
 		entityManager.persist(dept);
 		
 	}
