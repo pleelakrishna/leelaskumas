@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
@@ -120,6 +121,18 @@
 										</form:select>
 									</div>
 								</div></div>
+								 <security:authorize access="hasRole('ROLE_MASTERADMIN')">
+								<div class="col-md-6">
+								<div class="form-group">
+									<label class="col-md-3 control-label no-padding-right">Organization</label>
+									<div class="col-md-6">
+										<form:select path ="kpOrgId" class="form-control" onfocus="removeBorder(this.id)">
+											<form:option value="">-- Select Organization --</form:option>
+								     		<form:options items="${orgNames}"/>
+										</form:select>
+									</div>
+								</div></div>
+								</security:authorize>
 						<div class="panel-footer">
 				      	<div class="row">
 				      		<div class="col-sm-12">

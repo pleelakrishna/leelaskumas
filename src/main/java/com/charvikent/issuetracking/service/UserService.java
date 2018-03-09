@@ -3,6 +3,8 @@ package com.charvikent.issuetracking.service;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +13,15 @@ import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.charvikent.issuetracking.config.SendSMS;
 import com.charvikent.issuetracking.dao.UserDao;
+import com.charvikent.issuetracking.model.Category;
 import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.Designation;
 import com.charvikent.issuetracking.model.User;
@@ -37,6 +43,12 @@ public class UserService {
 
 	public void saveUser(User user) throws IOException
 	{
+		if(user.getKpOrgId() ==null)
+		{
+			User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			user.setKpOrgId(objuserBean.getKpOrgId());
+			
+		}
 		String msg =user.getFirstname()+" "+user.getLastname()+",  Successfully registered with KPTMS. \n You can login using \n Username:  "+user.getUsername()+"\n password: "+user.getPassword();
 		String mbnum=user.getMobilenumber();
 		userDao.saveuser(user);
@@ -46,26 +58,63 @@ public class UserService {
 
 	public List<User> getAllUsers()
 	{
+    User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+		
+		List<User> usersListForAdmin =new ArrayList<>();
+		List<User> usersListForMaster= userDao.getAllUsers();
+		
+		if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+			   return usersListForMaster;
+		 else 
+		 {
+			 
+			 for(User entry :usersListForMaster)
+			 {  
+				 if(entry.getKpOrgId().equals(objuserBean.getKpOrgId()))
+					 usersListForAdmin.add(entry);
+			 }
+			 return usersListForAdmin;
+		 }
 
-		return userDao.getAllUsers();
 	}
 
 
 	public Map<Integer, String> getDepartments()
 	{
-		Map<Integer, String> statesMap = new LinkedHashMap<Integer, String>();
-		try
-		{
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+		
+		Map<Integer, String> deptsMap = new LinkedHashMap<Integer, String>();
+		
 		List<Department> departmentList= userDao.getDepartmentslist();
+		if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+		{
 		for(Department bean: departmentList){
-			statesMap.put(bean.getId(), bean.getName());
+			deptsMap.put(bean.getId(), bean.getName());
 		}
 
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-		return statesMap;
-
+	
+		return deptsMap;
+		}
+		else
+		{
+			for(Department bean: departmentList){
+				
+				if(bean.getKpOrgId().equals(objuserBean.getKpOrgId()))
+				{
+				deptsMap.put(bean.getId(), bean.getName());
+				}
+			}
+			
+			return deptsMap;
+			
+		}
+		
 
 	}
 
@@ -133,23 +182,39 @@ public class UserService {
 	public Map<Integer, String> getUserName()
 	{
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		Map<Integer, String> rolesMap = new LinkedHashMap<Integer, String>();
-		try
-		{
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+		
+		Map<Integer, String>userMapForMaster = new LinkedHashMap<Integer, String>();
+		
 		List<User> rolesList= userDao.getUserNames();
+			if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+			{
 		for(User bean: rolesList){
 			if(bean.getId()!=(objuserBean.getId()))
 			{
-			rolesMap.put(bean.getId(), bean.getUsername());
+				userMapForMaster.put(bean.getId(), bean.getUsername());
 			}
+		
+
+	} 
+		return userMapForMaster;
 		}
-
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-		return rolesMap;
-
+		else
+		{
+			for(User bean: rolesList){
+				if(bean.getKpOrgId().equals(objuserBean.getKpOrgId()))
+				{
+				if(bean.getId()!=(objuserBean.getId()))
+				{
+					userMapForMaster.put(bean.getId(), bean.getUsername());
+				}
+				}
+			}
+			
+		
+			return userMapForMaster;
+		}
 
 	}
 
