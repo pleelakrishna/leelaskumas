@@ -82,6 +82,8 @@ public class DashBoardController {
 		 model.addAttribute("severityCountsBY",dashBoardService.getSeverityWiseCountsByAssignedBy() );
 		 
 		 model.addAttribute("ackdetails", dashBoardService.getAllTasksForAck());
+		 
+		 model.addAttribute("lastLoginTime", dashBoardService.getLastLoginTime());
 		
 		 //System.out.println(dashBoardService.getAllTasksForAck());
 		 

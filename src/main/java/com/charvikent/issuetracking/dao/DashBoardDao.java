@@ -23,6 +23,7 @@ import com.charvikent.issuetracking.model.DashBordByCategory;
 import com.charvikent.issuetracking.model.DashBordByStatus;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
+import com.charvikent.issuetracking.model.UserLogs;
 import com.charvikent.issuetracking.service.ReportIssueService;
 
 @Repository
@@ -638,6 +639,25 @@ public Set<ReportIssue> getAllTasks() {
 		
 		
 	}
+
+
+public Object getLastloginTime() {
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+	
+	String hql ="select logintime from kpuserslogs where sessionname='login' and userid=:uid order by logintime desc limit 1,1 ";
+	@SuppressWarnings("unchecked")
+	List<UserLogs> rows = (List<UserLogs>) em.createNativeQuery(hql).setParameter("uid",id).getResultList();
+	 if(rows.size()>0)
+	 {
+		 return rows.get(0);
+	 }
+	
+	 else
+		 
+	return "";
+}
 
      
      }
