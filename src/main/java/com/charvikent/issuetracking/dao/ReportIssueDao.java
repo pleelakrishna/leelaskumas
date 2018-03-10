@@ -156,7 +156,7 @@ public List<ReportIssue> getAllReportIssues()
 	}
 
 
-	public Set getIssuesAssignTo(String id) {
+	public Set<ReportIssue> getIssuesAssignTo(String id) {
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
 
 		try {
@@ -195,7 +195,7 @@ public List<ReportIssue> getAllReportIssues()
 	}
 
 
-	public Set getIssuesAssignToResolved(String id) {
+	public Set<ReportIssue> getIssuesAssignToResolved(String id) {
 		//List<ReportIssue> listissue=new ArrayList<>();
 		
 		Set<ReportIssue> listissue=new TreeSet<ReportIssue>();
@@ -452,7 +452,7 @@ public List<ReportIssue> getAllReportIssues()
      {
      editissue.setUploadfile(fileTemplate.concurrentFileNames());
      
-     fieldname = fieldname+" new file added ";
+     fieldname = fieldname+" New file added ";
 	 change =change+issue.getUploadfile();
      }
 		em.merge(editissue);
@@ -468,17 +468,17 @@ public List<ReportIssue> getAllReportIssues()
 		
 		if(!editissue1.getCategory().equals(cmap.get(Integer.parseInt(issue.getCategory()))))
 	     {
-	    	 fieldname = fieldname+" category field changed  &";
+	    	 fieldname = fieldname+" Category field changed  &";
 	    	 change =change+editissue1.getCategory() +"-->"+ cmap.get(Integer.parseInt(issue.getCategory()))+"&";
 	     }
 	     if(!editissue1.getSeverity().equals(semap.get(Integer.parseInt(issue.getSeverity()))))
 	     {
-	    	 fieldname = fieldname+" severity field changed &";
+	    	 fieldname = fieldname+" Severity field changed &";
 	    	 change =change+ editissue1.getSeverity() +"-->"+semap.get(Integer.parseInt(issue.getSeverity()))+"&";
 	     }
 	     if(!editissue1.getPriority().equals(pmap.get(Integer.parseInt(issue.getPriority()))) )
 	     {
-	    	 fieldname = fieldname+" priority field changed  &";
+	    	 fieldname = fieldname+" Priority field changed  &";
 	    	 change =change+ editissue1.getPriority() +"-->"+pmap.get(Integer.parseInt(issue.getPriority()))+"&";
 	     }
 	     if(!editissue1.getAssignto().equals(umap.get(Integer.parseInt(issue.getAssignto())) ))
@@ -489,12 +489,12 @@ public List<ReportIssue> getAllReportIssues()
 	     
 	     if(!editissue1.getSubject().equals(issue.getSubject() ))
 	     {
-	    	 fieldname = fieldname+" subject field changed &";
+	    	 fieldname = fieldname+" Subject field changed &";
 	    	 change =change+ editissue1.getSubject()+"-->"+issue.getSubject()+"&";
 	     }
 	     if(!editissue1.getDescription().equals(issue.getDescription() ))
 	     {
-	    	 fieldname = fieldname+" description field changed  &";
+	    	 fieldname = fieldname+" Description field changed  &";
 	    	 change =change+ editissue1.getDescription()+"-->"+issue.getDescription()+"&";
 	     }
 	     if(!editissue1.getTaskdeadline().equals(issue.getTaskdeadline() ))
@@ -620,7 +620,7 @@ public List<ReportIssue> getAllReportIssues()
 		Boolean delete=false;
 		try{
 			
-			ReportIssue task= (ReportIssue)em.find(ReportIssue.class ,id);
+			ReportIssue task= em.find(ReportIssue.class ,id);
 			   task.setStatus(status);
 			   em.merge(task);
 
@@ -655,7 +655,7 @@ public List<ReportIssue> getAllReportIssues()
 	     {
 			
 			
-	    	 fieldname = fieldname+" status changed  &";
+	    	 fieldname = fieldname+" Status changed  &";
 	    	 change =change+editlog.getKpstatus() +"-->"+ listmap.get(Integer.parseInt(subtask.getKpstatus()))+"&";
 	     }
 		
@@ -664,7 +664,7 @@ public List<ReportIssue> getAllReportIssues()
 		 
 		if(subtask.getUploadfiles()!=null)
 	     {
-			 fieldname = fieldname+" new file addeded &";
+			 fieldname = fieldname+" New file addeded &";
 		subtask.setUploadfiles(fileTemplate.concurrentFileNames());
 		change =change+subtask.getUploadfiles()+"&";
 		
@@ -744,10 +744,17 @@ public List<ReportIssue> getAllReportIssues()
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	public Set<ReportIssue> getissuesByselectionAssignBy(String id) {
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+		String hql ="select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name ,r.kstatus "
+				+ "from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,kpstatuslogs kpl "
+				+ "  where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby="+id+"  and r.kstatus<>'1' order by kpl.statustime desc";
+		
 		try {
-			List<Object[]> rows = em.createNativeQuery(" select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name ,r.kstatus from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,kpstatuslogs kpl   where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby=:id  and r.kstatus<>'1' order by kpl.statustime desc").setParameter("id",id).getResultList();
+			//List<Object[]> rows = em.createNativeQuery(" select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name ,r.kstatus from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,kpstatuslogs kpl   where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby=:id  and r.kstatus<>'1' order by kpl.statustime desc").setParameter("id",id).getResultList();
+			List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+			
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -891,7 +898,7 @@ public List<ReportIssue> getAllReportIssues()
 		
 		try{
 			
-			ReportIssue task= (ReportIssue)em.find(ReportIssue.class ,id);
+			ReportIssue task= em.find(ReportIssue.class ,id);
 			if(!task.getAdditionalinfo().equals("1"))
 			{
 			   task.setAdditionalinfo("1");
@@ -1055,7 +1062,7 @@ public List<ReportIssue> getAllReportIssues()
 	public Set<ReportIssue> getTaskByStatusDashBord(String status) {
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String id=String.valueOf(objuserBean.getId());
+		String id=String.valueOf(objuserBean.getDesignation());
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		String hqlAdmin = "select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.kstatus=:status";
 		String hqlUser= hqlAdmin + " and r.assignto=:assignto";
