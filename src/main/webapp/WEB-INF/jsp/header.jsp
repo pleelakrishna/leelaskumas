@@ -257,7 +257,6 @@ color: inherit !important;
 //		 		displayTable(alldata);
 			});   */
 		}); 
-		 window.relocation();
 		
 </script>
 
