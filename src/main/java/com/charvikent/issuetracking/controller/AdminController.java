@@ -1,32 +1,20 @@
 package com.charvikent.issuetracking.controller;
 
 
-import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.method.annotation.RedirectAttributesMethodArgumentResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+@Controller
 public class AdminController {
 
 
@@ -41,7 +29,7 @@ public class AdminController {
 	@Autowired
 	HttpSession session;
 
-	@RequestMapping("/summary")
+	/*@RequestMapping("/summary")
 	public String summary(Model model) {
 		return "summary";
 	}
@@ -85,16 +73,16 @@ public class AdminController {
 		return "redirect:createUser";
 	}
 
-	/*@RequestMapping("/viewUsers")
+	@RequestMapping("/viewUsers")
 	public String pageView(Model model) {
 		System.out.println("view User Block");
 
 		model.addAttribute("allUsers", userService.getAllUsers());
 
 		return "viewUsers";
-	}*/
+	}
 
-	/*@RequestMapping(value = "/deleteUser")
+	@RequestMapping(value = "/deleteUser")
 	public @ResponseBody String deleteUser(@RequestParam("id") String id,@RequestParam("enabled") String enabled, RedirectAttributes redir) {
 
 		userService.deleteUser(Integer.parseInt(id),enabled);
@@ -108,7 +96,7 @@ public class AdminController {
 	}
 
 
-*/
+
 
 	@RequestMapping(value = "/deleteUser")
 	public @ResponseBody String deleteDept(User  objUser,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
@@ -261,7 +249,28 @@ public class AdminController {
 		username = username.replaceAll("\\s+","");
 		return userService.checkUserExist(username);
 	}
+	
+	*/
+	
+	@RequestMapping(value="/adminChangePassword", method= RequestMethod.POST )
+	public String adminChangePassword(User user,RedirectAttributes redir,HttpServletRequest request){
 
+		
+		User users = userService.getUserById(user.getId());
+		if(user.getNpassword()!=null) {
+
+			users.setPassword(user.getNpassword());
+			userService.updatePassword(users);
+			redir.addFlashAttribute("msg", "Password Updated Successfully");
+			redir.addFlashAttribute("cssMsg", "warning");
+			
+		}else {
+			request.setAttribute("msg", "You Entered Wrong Password");
+			request.setAttribute("cssMsg", "warning");
+			return "changePassword";
+		}
+		return "redirect:/employee";
+	}
 }
 
 
