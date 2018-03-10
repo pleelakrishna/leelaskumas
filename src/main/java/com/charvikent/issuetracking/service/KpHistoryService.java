@@ -50,6 +50,7 @@ public class KpHistoryService {
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getDesignation());
+		String uid=String.valueOf(objuserBean.getId());
 		
 		
 		
@@ -73,13 +74,17 @@ public class KpHistoryService {
 		
 		else
 		{
+			
 		
 		for(KpHistory entry :setlist)
 		{
+			if(entry.getIassignto().equals(uid)  || entry.getIassignby().equals(uid))
+			{
 			if(!entry.getKpfield().equals("New Task created") &&(!entry.getKpfield().equals("Task Mark As Read")))
 			{
 				klist.add(entry);
 				
+			}
 			}
 	}
 	
@@ -127,12 +132,14 @@ public Object getHeaderNotificationsforack() {
 			
 		for(KpHistory entry :setlist)
 		{
-			
+			if(entry.getIassignby().equals(uid))
+			{
 		
 			if(entry.getKpfield().equals("New Task created") ||(entry.getKpfield().equals("Task Mark As Read")))
 			{
 				klist.add(entry);
 				
+			}
 			}
 	}
 	

@@ -61,7 +61,8 @@ public class UserDao {
 				users.setDesignation((String) row[12]);
 				users.setDepartment((String) row[13]);
 				users.setStatus((String) row[14]);
-				users.setKpOrgId((String) row[15]);
+				users.setPassword((String) row[15]);
+				users.setKpOrgId((String) row[16]);
 				
 				
 				listusers.add(users);
