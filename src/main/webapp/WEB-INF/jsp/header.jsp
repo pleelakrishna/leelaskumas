@@ -180,16 +180,16 @@ color: inherit !important;
     background-color: #f9f9f9;
    	width: 300px;
     z-index: 1;
-	padding:15px 15px;
 	margin-left:-35px;
+	right:0;
+	height:200px;
+	overflow-y:auto;
 }
 
 .dropdown-content a {
     float: none;
     color: black;
-    padding: 12px 16px;
     text-decoration: none;
-	
     display: block;
     text-align: left;
 }
@@ -241,6 +241,7 @@ color: inherit !important;
 //		 		displayTable(alldata);
 			});   */
 		}); 
+		 window.relocation();
 		
 </script>
 
@@ -313,7 +314,7 @@ function getHeadersCounts(){
             <div style="box-shadow:none;" class="navbar">
   <div style="border-left:none; margin-right:10px;" class="dropdown">
     <diV style="color:#FFFFFF; background:#4f8edc; font-size:25px; margin-top:10px; margin-right:10px;" class="dropbtn"">    
-    <i class="fa fa-list-alt"></i>
+    <i class="fa fa-list-alt"></i><span class="badge">5</span>
     </div>
     <div class="dropdown-content">
       <a style="padding: 10px 16px;" href="#">
@@ -348,7 +349,7 @@ function getHeadersCounts(){
             <div style="box-shadow:none; margin-right:10px;" class="navbar">
   <div style="border-left:none;" class="dropdown">
     <diV style="color:#FFFFFF; background:#4f8edc; font-size:25px; margin-top:10px;" class="dropbtn"">
-      <i class="fa fa-bell-o"></i>
+      <i class="fa fa-bell-o"></i><span class="badge">5</span>
     </div>
     <div class="dropdown-content">
       <a style="padding: 10px 16px;" href="#">
@@ -424,9 +425,9 @@ function getHeadersCounts(){
             <ul class="nav navbar-nav">
             
             <li class="dashBoard"><a href="${baseurl }/dashBoard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-            <security:authorize access="hasRole('ROLE_MASTERADMIN')">
+             <security:authorize access="hasRole('ROLE_MASTERADMIN')">
               <li class="org"><a href="${baseurl }/kporg"><i class="fa fa-building"></i><span>Organization</span></a></li>
-          </security:authorize>
+            </security:authorize>
             <security:authorize access="hasRole('ROLE_ADMIN')">
             <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-american-sign-language-interpreting"></i> <span>Department</span></a></li>
               <%-- <li class="desig"><a href="${baseurl }/desig"><i class="fa fa-plane"></i> <span>Designation</span></a></li> --%>
@@ -453,5 +454,3 @@ function getHeadersCounts(){
 		                </div>
 	        </div>
 	        </div>
-	        
-<!-- Header ends Here -->

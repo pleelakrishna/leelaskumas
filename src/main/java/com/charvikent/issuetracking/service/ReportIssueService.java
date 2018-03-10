@@ -472,7 +472,6 @@ public Set<ReportIssue> getissuesByselectionAssignTo(String id) {
 }
 
 public Set<ReportIssue> getissuesByselectionAssignBy(String id) {
-	// TODO Auto-generated method stub
 	return reportIssueDao.getissuesByselectionAssignBy(id);
 }
 
