@@ -4,16 +4,19 @@ package com.charvikent.issuetracking.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.method.annotation.RedirectAttributesMethodArgumentResolver;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.UserService;
+
 @Controller
 public class AdminController {
 
@@ -253,23 +256,22 @@ public class AdminController {
 	*/
 	
 	@RequestMapping(value="/adminChangePassword", method= RequestMethod.POST )
-	public String adminChangePassword(User user,RedirectAttributes redir,HttpServletRequest request){
-
-		
+	public  @ResponseBody String adminChangePassword(User user,RedirectAttributes redir,HttpServletRequest request) throws JSONException{
+		boolean result=false;
+		JSONObject jsonObj = new JSONObject();
 		User users = userService.getUserById(user.getId());
 		if(user.getNpassword()!=null) {
 
 			users.setPassword(user.getNpassword());
 			userService.updatePassword(users);
-			redir.addFlashAttribute("msg", "Password Updated Successfully");
-			redir.addFlashAttribute("cssMsg", "warning");
+			jsonObj.put("message", "Password Updated Successfully");
+//				System.out.println("**************************************************"+result+"**************"+jsonObject);
+//				jsonObject.put("msg", "You Entered Wrong Password");
+//				System.out.println("**************************************************"+result+"**************"+jsonObject);
+
 			
-		}else {
-			request.setAttribute("msg", "You Entered Wrong Password");
-			request.setAttribute("cssMsg", "warning");
-			return "changePassword";
 		}
-		return "redirect:/employee";
+		return String.valueOf(jsonObj);
 	}
 }
 

@@ -1,5 +1,7 @@
 package com.charvikent.issuetracking.dao;
 
+import static org.mockito.Matchers.booleanThat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -204,7 +206,7 @@ public class UserDao {
 	}
 
 	public void updatePassword(User user) {
-
+		
 		em.merge(user);
 
 		em.flush();

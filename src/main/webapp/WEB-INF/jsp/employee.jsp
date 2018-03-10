@@ -22,6 +22,7 @@
 						</div>
 					</div>
 					<div class="panel-body collapse in">
+					<span id="PasswordSuccessmsg"></span>
 					<input type="checkbox" class="form-check-input" onclick="inactiveData();" id="inActive"> <label class="form-check-label">Show Inactive List</label>
 						<div class="table-responsive" id="tableId">
 							<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered datatables" id="example">
@@ -158,11 +159,7 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-      <!-- <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div> -->
-      <div class="panel panel-primary" style="margin-bottom:-20px;">
+        <div class="panel panel-primary" style="margin-bottom:-20px;">
       <div class="panel-heading">
 						<h4><i class="fa  fas fa-key "> Change Password</i>	</h4>
 						<div class="options">
@@ -175,7 +172,7 @@
 					<div class="form-group" id="passwordDiv">
 						<label class="col-md-4 control-label no-padding-left">New	Password<span class="impColor">*</span></label>
 						<div class="col-md-6">
-							<input type="password" id="npassword" class="form-control validate"	placeholder="Enter  New Password" />
+							<input type="password" id="npassword" class="form-control"	placeholder="Enter  New Password" />
 						</div>
 						<div class="col-md-2"></div>
 					</div>
@@ -185,14 +182,13 @@
 					<div class="form-group" id="passwordDiv">
 						<label class="col-md-4 control-label no-padding-left">Confirm Password<span class="impColor">*</span></label>
 						<div class="col-md-6">
-							<input type="password" id="cpassword" class="form-control validate"	placeholder="Re-Enter New Password" />
+							<input type="password" id="cpassword" class="form-control"	placeholder="Re-Enter New Password" />
 						</div>
 						<div class="col-md-2"></div>
 					</div>
 				</div><div class="clearfix"></div>
 <br>
 				<div class="modal-footer" style="border:none;">
-				<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
 				<span id="passwordErrormsg" style="color:red;"></span>
 				<input type="submit" id="passwordModelsubmit" onclick="changePasswordModal();" class="btn btn-success"	value="Submit" />
 				 <input class="btn-danger btn cancel"	data-dismiss="modal" type="reset" value="Close" />
@@ -200,6 +196,7 @@
 		</div>
 
   </div>
+</div>
 </div>
 </div>
 <p data-toggle='modal' id="password_modal" data-target='#passwordModal'></p>
@@ -248,6 +245,12 @@ function changePasswordModal(){
 	var id=$("#userid").val();
 	var npassword=$("#npassword").val();
 	var cpassword=$("#cpassword").val();
+	
+	if(npassword==null || npassword == "" || npassword == undefined){
+		
+		$("#passwordErrormsg").text("Please Enter New Password");
+		return false;
+	}
 	if(npassword == cpassword ){
 		var formData = new FormData();
 		formData.append('id', id);
@@ -256,11 +259,22 @@ function changePasswordModal(){
 		$.fn.makeMultipartRequest('POST', 'adminChangePassword', false,
 				formData, false, 'text', function(data) {
 			
-			var jsonobj = $.parseJSON(data);
+			$("#passwordModal").modal('toggle');
+			/* var jsonobj = $.parseJSON(data);
 			var alldata = jsonobj.allOrders1;
 			displayTable(alldata);
-			console.log(jsonobj.allOrders1);
+			console.log(jsonobj.allOrders1); */
+			
+			
+			$.each(JSON.parse(data),function(key,value) {
+				console.log(value);
+				alert(value);
+// 				$(".msgcss").show();
+// 				$("#errorMsg").text(value);
+			});
+			
 				});
+		
 	}else{
 		$("#passwordErrormsg").text("Password Doesn't match");
 	}
