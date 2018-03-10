@@ -20,7 +20,7 @@
 		<div id="dept1" class="tab-pane fade in active" >
 			<div class="row">
 				<div class="col-md-12">
-					<div class="panel panel-primary" style="margin-top:5px;" >
+					<div class="panel panel-primary" style="/* margin-top:5px; */" >
 						<div class="panel-heading">
 							<h4>Hierarchical List</h4>
 							<div class="options">
@@ -54,14 +54,13 @@
 			</div>
 			<!-- 		<a class="btn btn-info btn-lg"  onclick="PopupFillingStation();">Add Gas</a><br><br> -->
 			<div class="row" id="moveTo">
-				<div class="col-md-12 col-sm-12">
+				<div class="col-md-12 col-sm-12" style=" border:1px solid #ccc;" style="margin-top:10px;">
+				
 					<div class="panel panel-primary" >
 						<div class="panel-heading">
 							<h4>New Hierarchical</h4>
 						</div>
-						<form:form class="form-horizontal" commandName="orgDeptf"
-							role="form" id="fillingstation-form" action="orgDept"
-							method="post">
+						<form:form class="form-horizontal" commandName="orgDeptf"	role="form" id="fillingstation-form" action="orgDept"	method="post">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-md-6">
@@ -134,8 +133,8 @@
 			</div>
 		</div>
 		
-		<div id="hier" class="tab-pane fade" style=" border:1px solid #ccc;">
-		<div class="panel panel-primary" style="margin-top:10px;">
+		<div id="hier" class="tab-pane fade" style=" border:1px solid #ccc;" style="margin-top:10px;">
+		<div class="panel panel-primary" >
 						<div class="panel-heading">
 			<h4>Department Hierarchical</h3></div></div>
 			<div class="table-responsive" style=" background:#c3bbbb42; padding:20px; margin:15px; " >
