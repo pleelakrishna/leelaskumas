@@ -154,7 +154,7 @@
 			
 			
 			<!-- Modal -->
-<div id="passwordModal" class="modal fade" role="dialog">
+<div id="passwordModal" tabindex="-1" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -162,6 +162,9 @@
         <div class="panel panel-primary" style="margin-bottom:-20px;">
       <div class="panel-heading">
 						<h4><i class="fa  fas fa-key "> Change Password</i>	</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color:#FFFFFF;">&times;</span>
+        </button>
 						<div class="options">
 							
 						</div>
@@ -169,8 +172,9 @@
       <div class="modal-body">
         <input type="hidden" id="userid" />
 				<div class="col-md-12">
+				<p id="passwordErrormsg" style="color:red;"></p>
 					<div class="form-group" id="passwordDiv">
-						<label class="col-md-4 control-label no-padding-left">New	Password<span class="impColor">*</span></label>
+						<label class="col-md-4 control-label no-padding-left">New Password<span class="impColor">*</span></label>
 						<div class="col-md-6">
 							<input type="password" id="npassword" class="form-control"	placeholder="Enter  New Password" />
 						</div>
@@ -189,7 +193,6 @@
 				</div><div class="clearfix"></div>
 <br>
 				<div class="modal-footer" style="border:none;">
-				<span id="passwordErrormsg" style="color:red;"></span>
 				<input type="submit" id="passwordModelsubmit" onclick="changePasswordModal();" class="btn btn-success"	value="Submit" />
 				 <input class="btn-danger btn cancel"	data-dismiss="modal" type="reset" value="Close" />
 			</div>
@@ -268,9 +271,14 @@ function changePasswordModal(){
 			
 			$.each(JSON.parse(data),function(key,value) {
 				console.log(value);
-				alert(value);
-// 				$(".msgcss").show();
-// 				$("#errorMsg").text(value);
+				//alert(value);
+				$("#npassword").val('');
+	           $("#cpassword").val('');
+				$(".msgcss1").css('visibility', 'visible');
+				$(".msgcss1").show();
+				$("#msg1").text(value);
+				$("#msg1").fadeOut(5000);
+				
 			});
 			
 				});

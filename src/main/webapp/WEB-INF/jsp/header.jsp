@@ -135,6 +135,19 @@ span.has-error,span.hasError
 	font-size: 14px;
 	z-index:99999;
 }
+.msgcss1
+{
+/* 	width: 50% !important; */
+/* 	font-weight: bold; */
+	margin: auto;
+	text-align: center;
+	top: 3px !important;
+	left:0;
+	right:0;
+	position: fixed;
+	font-size: 14px;
+	z-index:99999;
+}
 .select2
 {
 /* 	max-width: 100% !important; */
@@ -211,6 +224,9 @@ color: inherit !important;
 	.tr1, .td1, .th1{
 		border:solid 1px;
 		border-color:#CCCCCC;
+	}
+	#passwordErrormsg {
+		text-align:center;
 	}
 </style>
 <script type="text/javascript">
@@ -294,14 +310,14 @@ function getHeadersCounts(){
 			</div>
 		</div>
 	</c:if>
-	<div class="msgcss row" style="visibility: hidden" >
+	<div class="msgcss1 row" style="visibility: hidden" >
 			<div class="col-sm-4 col-sm-offset-4">
 				<div class="form-group">
-					<div class="alert alert-success fadeIn animated" id="msg"></div>
-					<div><span id="errorMsg"></span></div>
+					<div class="alert alert-success fadeIn animated" id="msg1"></div>
 				</div>
 			</div>
 		</div>
+
 
     <header class="navbar navbar-inverse navbar-fixed-top" role="banner" style="background: #4f8edc;">
         <div class="navbar-header pull-left">
