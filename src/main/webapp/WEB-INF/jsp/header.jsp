@@ -298,6 +298,7 @@ function getHeadersCounts(){
 			<div class="col-sm-4 col-sm-offset-4">
 				<div class="form-group">
 					<div class="alert alert-success fadeIn animated" id="msg"></div>
+					<div><span id="errorMsg"></span></div>
 				</div>
 			</div>
 		</div>
