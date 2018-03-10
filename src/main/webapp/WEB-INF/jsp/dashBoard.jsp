@@ -560,6 +560,13 @@
 
 						});
 			});
+	
+	$(document).ready(function(){
+	    if(!window.location.hash) {
+	        window.location = window.location + '#loaded';
+	        window.location.reload();
+	    }
+	});
 
 	$(".dashBoard").addClass("active");
 	$(document).ready(function() {
@@ -567,6 +574,8 @@
 		});
 	});
 </script>
+
+
 <script>
 	/* $(window).load(function(){        
 	 $('#notifyModal').modal('show');
