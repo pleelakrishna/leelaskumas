@@ -121,7 +121,7 @@
 										<div class="col-md-6">
 											<div class="form-group" id="passwordDiv">
 												<label class="col-md-3 control-label no-padding-right">Current
-													Password</label>
+													Password<span class="impColor">*</span></label>
 												<div class="col-md-6">
 													<form:password path="password"
 														class="form-control validate" placeholder="Enter Password" />
@@ -132,7 +132,7 @@
 										<div class="col-md-6">
 											<div class="form-group" id="passwordDiv">
 												<label class="col-md-3 control-label no-padding-right">New
-													Password</label>
+													Password<span class="impColor">*</span></label>
 												<div class="col-md-6">
 													<form:password path="npassword"
 														class="form-control validate"
@@ -144,7 +144,7 @@
 										<div class="col-md-6">
 											<div class="form-group" id="passwordDiv">
 												<label class="col-md-3 control-label no-padding-right">Confirm
-													New Password</label>
+													New Password<span class="impColor">*</span></label>
 												<div class="col-md-6">
 													<form:password path="cpassword"
 														class="form-control validate"

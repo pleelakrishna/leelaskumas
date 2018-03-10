@@ -22,6 +22,7 @@
 						</div>
 					</div>
 					<div class="panel-body collapse in">
+					<span id="PasswordSuccessmsg"></span>
 					<input type="checkbox" class="form-check-input" onclick="inactiveData();" id="inActive"> <label class="form-check-label">Show Inactive List</label>
 						<div class="table-responsive" id="tableId">
 							<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered datatables" id="example">
@@ -45,7 +46,7 @@
 	                  <form:hidden path="id"/>
 					<div class="col-md-6"><br>
 								<div class="form-group">
-									<label class="col-md-3 control-label no-padding-right">Username</label>
+									<label class="col-md-3 control-label no-padding-right">Username<span class="impColor">*</span></label>
 									<div class="col-md-6">
 										<form:input path="username" class="form-control validate" placeholder="Enter Username"/>
 									</div>
@@ -54,7 +55,7 @@
 								</div>
 								<div class="col-md-6"><br>
 								<div class="form-group" id="passwordDiv">
-									<label class="col-md-3 control-label no-padding-right">Password</label>
+									<label class="col-md-3 control-label no-padding-right">Password<span class="impColor">*</span></label>
 									<div class="col-md-6">
 										<form:password path="password" class="form-control validate" placeholder="Enter Password"/>
 									</div>
@@ -63,14 +64,14 @@
 								</div>
 								<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label no-padding-right">First Name</label>
+									<label class="col-md-3 control-label no-padding-right">First Name<span class="impColor">*</span></label>
 									<div class="col-md-6">
 										<form:input path="firstname" class="form-control validate onlyCharacters" placeholder="Enter First Name"/>
 									</div>
 								</div></div>
 								<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label no-padding-right">Last Name</label>
+									<label class="col-md-3 control-label no-padding-right">Last Name<span class="impColor">*</span></label>
 						<div class="col-md-6">
 										<form:input path="lastname" class="form-control validate onlyCharacters" placeholder="Enter Last Name"/>
 									</div>
@@ -79,7 +80,7 @@
 								
 								<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label no-padding-right">Mobile</label>
+									<label class="col-md-3 control-label no-padding-right">Mobile<span class="impColor">*</span></label>
 									<div class="col-md-6">
 										<form:input path="mobilenumber" class="form-control validate numericOnly" placeholder="Enter Mobile Number"/>
 									</div>
@@ -103,7 +104,7 @@
 								</div></div>
 								<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label no-padding-right">Department</label>
+									<label class="col-md-3 control-label no-padding-right">Department<span class="impColor">*</span></label>
 									<div class="col-md-6">
 										<form:select path ="department" class="form-control validate" selected="selected" onfocus="removeBorder(this.id)">
 											<form:option value="">-- Select Department --</form:option>
@@ -149,6 +150,56 @@
 		</div>
 	</div>
 			<!-- container -->
+			
+			
+			
+			<!-- Modal -->
+<div id="passwordModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="panel panel-primary" style="margin-bottom:-20px;">
+      <div class="panel-heading">
+						<h4><i class="fa  fas fa-key "> Change Password</i>	</h4>
+						<div class="options">
+							
+						</div>
+					</div>
+      <div class="modal-body">
+        <input type="hidden" id="userid" />
+				<div class="col-md-12">
+					<div class="form-group" id="passwordDiv">
+						<label class="col-md-4 control-label no-padding-left">New	Password<span class="impColor">*</span></label>
+						<div class="col-md-6">
+							<input type="password" id="npassword" class="form-control"	placeholder="Enter  New Password" />
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+				</div><div class="clearfix"></div><br>
+				<div class="col-md-12">
+					<div class="form-group" id="passwordDiv">
+						<label class="col-md-4 control-label no-padding-left">Confirm Password<span class="impColor">*</span></label>
+						<div class="col-md-6">
+							<input type="password" id="cpassword" class="form-control"	placeholder="Re-Enter New Password" />
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+				</div><div class="clearfix"></div>
+<br>
+				<div class="modal-footer" style="border:none;">
+				<span id="passwordErrormsg" style="color:red;"></span>
+				<input type="submit" id="passwordModelsubmit" onclick="changePasswordModal();" class="btn btn-success"	value="Submit" />
+				 <input class="btn-danger btn cancel"	data-dismiss="modal" type="reset" value="Close" />
+			</div>
+		</div>
+
+  </div>
+</div>
+</div>
+</div>
+<p data-toggle='modal' id="password_modal" data-target='#passwordModal'></p>
 </body>
 <script type="text/javascript">
 var listOrders1 = ${allOrders1};
@@ -158,7 +209,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>User Name</th><th>Report To</th><th>First Name</th><th>Last Name</th><th>Department</th><th>Designation</th><th>Mobile Number</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>User Name</th><th>Report To</th><th>First Name</th><th>Last Name</th><th>Department</th><th>Designation</th><th>Mobile Number</th><th style="text-align: center;">Options</th><th></th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	$.each(listOrders,function(i, orderObj) {
@@ -181,16 +232,64 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.designationName+"'>"+ orderObj.designationName + "</td>"
 			+ "<td title='"+orderObj.mobilenumber+"'>"+ orderObj.mobilenumber + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "</td>" 
+			+ "<td ><a style='cursor:pointer' onclick='getPasswordModal("+ orderObj.id +")'>Change Password</a></td>" 
 			+ "</tr>";
 		$(tblRow).appendTo("#tableId table tbody");
 	});
 	if(isClick=='Yes') $('.datatables').dataTable();
 	
 }
+function changePasswordModal(){
+
+	
+	var id=$("#userid").val();
+	var npassword=$("#npassword").val();
+	var cpassword=$("#cpassword").val();
+	
+	if(npassword==null || npassword == "" || npassword == undefined){
+		
+		$("#passwordErrormsg").text("Please Enter New Password");
+		return false;
+	}
+	if(npassword == cpassword ){
+		var formData = new FormData();
+		formData.append('id', id);
+		formData.append('npassword', npassword);
+		
+		$.fn.makeMultipartRequest('POST', 'adminChangePassword', false,
+				formData, false, 'text', function(data) {
+			
+			$("#passwordModal").modal('toggle');
+			/* var jsonobj = $.parseJSON(data);
+			var alldata = jsonobj.allOrders1;
+			displayTable(alldata);
+			console.log(jsonobj.allOrders1); */
+			
+			
+			$.each(JSON.parse(data),function(key,value) {
+				console.log(value);
+				alert(value);
+// 				$(".msgcss").show();
+// 				$("#errorMsg").text(value);
+			});
+			
+				});
+		
+	}else{
+		$("#passwordErrormsg").text("Password Doesn't match");
+	}
+		
+}
+var userData="";
+function getPasswordModal(id)
+{
+	userData=$('#userid').val(id);
+	$('#password_modal').trigger('click');
+}
 
 
 function editEmployee(id) {
-	console.log(id);
+	
 	$("#id").val(serviceUnitArray[id].id);
 	$("#username").val(serviceUnitArray[id].username);
 	$("#password").val(serviceUnitArray[id].password);
@@ -204,6 +303,12 @@ function editEmployee(id) {
 	$("#submit1").val("Update");
 	$(window).scrollTop($('#moveTo').offset().top);
 	document.getElementById("username").readOnly  = true;
+	//document.querySelector("password").required = false;
+    $("#passwordDiv").hide();
+    var idArray = $.makeArray($('.validate').map(function() {
+    	return this.id;
+    }));
+    console.log(idArray);
 }
 
 function deleteEmployee(id,status){
