@@ -218,7 +218,8 @@ public class UserService {
 
 	}
 	
-	public Map<Integer, String> getReportTousers()
+	
+	public Map<Integer, String> getReportToUsers()
 	{
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -230,8 +231,10 @@ public class UserService {
 			if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 			{
 		for(User bean: rolesList){
-			
+			if(bean.getId()!=(objuserBean.getId()))
+			{
 				userMapForMaster.put(bean.getId(), bean.getUsername());
+			}
 		
 
 	} 
@@ -242,7 +245,7 @@ public class UserService {
 			for(User bean: rolesList){
 				if(bean.getKpOrgId().equals(objuserBean.getKpOrgId()))
 				{
-			
+				
 					userMapForMaster.put(bean.getId(), bean.getUsername());
 				}
 			}
@@ -252,6 +255,7 @@ public class UserService {
 		}
 
 	}
+
 
 	public void setLoginRecord(Integer id,String str) {
 
