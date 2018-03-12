@@ -332,19 +332,31 @@ function getHeadersCounts(){
   <div style="border-left:none; margin-right:10px;" class="dropdown">
     <diV style="color:#FFFFFF; background:#4f8edc; font-size:25px; margin-top:10px; margin-right:10px;" class="dropbtn"">    
 
+<<<<<<< HEAD
     <i class="fa fa-list-alt"></i><span class="badge">5</span>
+=======
+    <i class="fa fa-list-alt"></i><!-- <span class="badge">5</span> -->
+>>>>>>> branch 'master' of https://github.com/pleelakrishna/kumarpumps.git
     </div>
      <c:if test="${not empty acknotification}">
 
+<<<<<<< HEAD
     <div class="dropdown-content">
+=======
+    <div id="ack" class="dropdown-content">
+>>>>>>> branch 'master' of https://github.com/pleelakrishna/kumarpumps.git
       <a style="padding: 10px 16px;" href="#">
       
       	<table class="table1">
         	<thead>
+<<<<<<< HEAD
             	<tr class="tr1" style="
     background: #006699;
     color: #FFF;
 ">               
+=======
+            	<tr class="tr1" style="  background: #006699; color: #FFF;">               
+>>>>>>> branch 'master' of https://github.com/pleelakrishna/kumarpumps.git
                 	<th class="th1">Task No.</th>
                 	<th class="th1">Field</th>
                 	<!-- <th>Change</th> -->
@@ -373,7 +385,11 @@ function getHeadersCounts(){
   <div style="border-left:none;" class="dropdown">
     <diV style="color:#FFFFFF; background:#4f8edc; font-size:25px; margin-top:10px;" class="dropbtn"">
 
+<<<<<<< HEAD
       <i class="fa fa-bell-o"></i><span class="badge">5</span>
+=======
+      <i class="fa fa-bell-o"></i><!-- <span class="badge">5</span> -->
+>>>>>>> branch 'master' of https://github.com/pleelakrishna/kumarpumps.git
     </div>
     <c:if test="${not empty notifications}">
     <div class="dropdown-content">
