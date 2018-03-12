@@ -659,6 +659,18 @@ public Object getLastloginTime() {
 	return "";
 }
 
+
+
+
+public Object getNotifyAckCounts()
+{
+	String hql ="select count(*) from kp_history h, report_issue r"
+			+ " where r.id=h.issueid and  ( h.kpfield = ('New Task created') or h.kpfield =('Task Mark As Read') ) and h.status='1'  and assignby='1'";
+	
+	return em;
+	
+}
+
      
      }
 

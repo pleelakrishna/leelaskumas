@@ -37,6 +37,8 @@ public class KpHistory implements Comparable<KpHistory>{
 	
 	private String uploadfiles;
 	
+	private String status;
+	
 	
 	@Transient
 	private String iassignto;
@@ -139,12 +141,24 @@ public class KpHistory implements Comparable<KpHistory>{
 
 
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "KpHistory [id=" + id + ", issueid=" + issueid + ", kpfield=" + kpfield + ", kpchange=" + kpchange
 				+ ", taskno=" + taskno + ", createdTime=" + createdTime + ", changedby=" + changedby + ", uploadfiles="
 				+ uploadfiles + ", iassignto=" + iassignto + ", iassignby=" + iassignby + "]";
 	}
+	
+	
+	
+	
 
 	@Override
 	public int compareTo(KpHistory o) {

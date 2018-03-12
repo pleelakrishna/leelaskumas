@@ -65,6 +65,10 @@ public class ReportIssue  {
 	private String kstatusid;
 	
 	
+	private  String departmentid;
+	
+	
+	
 	
 	
 	
@@ -249,6 +253,14 @@ public class ReportIssue  {
 	public void setKstatusid(String kstatusid) {
 		this.kstatusid = kstatusid;
 	}
+	
+	
+	public String getDepartmentid() {
+		return departmentid;
+	}
+	public void setDepartmentid(String departmentid) {
+		this.departmentid = departmentid;
+	}
 	@Override
 	public String toString() {
 		return "ReportIssue [id=" + id + ", taskno=" + taskno + ", createdTime=" + createdTime + ", updatedTime="
@@ -286,6 +298,7 @@ public class ReportIssue  {
 		result = prime * result + ((updatedTime == null) ? 0 : updatedTime.hashCode());
 		result = prime * result + ((uploadfile == null) ? 0 : uploadfile.hashCode());
 		result = prime * result + ((kstatusid == null) ? 0 : kstatusid.hashCode());
+		result = prime * result + ((departmentid == null) ? 0 : departmentid.hashCode());
 		return result;
 	}
 	@Override
@@ -406,6 +419,11 @@ public class ReportIssue  {
 			if (other.kstatusid != null)
 				return false;
 		} else if (!kstatusid.equals(other.kstatusid))
+			return false;
+		if (departmentid == null) {
+			if (other.departmentid != null)
+				return false;
+		} else if (!departmentid.equals(other.departmentid))
 			return false;
 		return true;
 	}

@@ -231,10 +231,7 @@ public class UserService {
 			if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 			{
 		for(User bean: rolesList){
-			if(bean.getId()!=(objuserBean.getId()))
-			{
 				userMapForMaster.put(bean.getId(), bean.getUsername());
-			}
 		
 
 	} 
