@@ -105,11 +105,11 @@ public class OrgDeptDao {
 
 
 
-	public List<OrgDeptHierarchical>  getorgDeptNamesHierarchical() {
+	public List<OrgDeptHierarchical>  getorgDeptNamesHierarchical(String orgID) {
 
 		List<OrgDeptHierarchical>  list=new ArrayList<>();
 
-		List<Object[]> rows=entityManager.createNativeQuery("select od.dept,d.name,od.parent_dept from kporgdept od,kpdepartment d where od.dept=d.id").getResultList();
+		List<Object[]> rows=entityManager.createNativeQuery("select od.dept,d.name,od.parent_dept from kporgdept od,kpdepartment d where od.dept=d.id and od.org=:orgID").setParameter("orgID",orgID ).getResultList();
 
 		for(Object[] row: rows)
 		{

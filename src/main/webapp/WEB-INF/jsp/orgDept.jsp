@@ -99,7 +99,7 @@
 												Department <span class="impColor">*</span>
 											</label>
 											<div class="col-md-5">
-												<form:select path="parentDept" class="form-control validate"
+												<form:select path="parentDept" class="form-control"
 													onfocus="removeBorder(this.id)">
 													<form:option value="">-- Select Parent Department --</form:option>
 													<form:options items="${depts}" />
