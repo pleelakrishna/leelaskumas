@@ -257,6 +257,7 @@ color: inherit !important;
 //		 		displayTable(alldata);
 			});   */
 		}); 
+		 window.relocation();
 		
 </script>
 
@@ -331,7 +332,11 @@ function getHeadersCounts(){
             <div style="box-shadow:none;" class="navbar">
   <div style="border-left:none; margin-right:10px;" class="dropdown">
     <diV style="color:#FFFFFF; background:#4f8edc; font-size:25px; margin-top:10px; margin-right:10px;" class="dropbtn"">    
+<<<<<<< Upstream, based on 72ef07ea89074b4297d4288b7fd4ec60526cde35
     <i class="fa fa-list-alt"></i><!-- <span class="badge">5</span> -->
+=======
+    <i class="fa fa-list-alt"></i><span class="badge">5</span>
+>>>>>>> e43833c commit static badge addeded
     </div>
      <c:if test="${not empty acknotification}">
     <div id="ack" class="dropdown-content">
@@ -370,7 +375,11 @@ function getHeadersCounts(){
             <div style="box-shadow:none; margin-right:10px;" class="navbar">
   <div style="border-left:none;" class="dropdown">
     <diV style="color:#FFFFFF; background:#4f8edc; font-size:25px; margin-top:10px;" class="dropbtn"">
+<<<<<<< Upstream, based on 72ef07ea89074b4297d4288b7fd4ec60526cde35
       <i class="fa fa-bell-o"></i><!-- <span class="badge">5</span> -->
+=======
+      <i class="fa fa-bell-o"></i><span class="badge">5</span>
+>>>>>>> e43833c commit static badge addeded
     </div>
     <c:if test="${not empty notifications}">
     <div class="dropdown-content">
