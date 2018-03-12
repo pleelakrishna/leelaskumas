@@ -68,10 +68,12 @@ public class ReportIssueDao {
 		String randomNum = utilities.randNum();
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
+		String deptid=String.valueOf(objuserBean.getDepartment());
 		
 		reportIssue.setAssignby(id);
 		reportIssue.setTaskno(randomNum);
 		reportIssue.setKstatus("2");
+		reportIssue.setDepartmentid(deptid);
 		if(reportIssue.getUploadfile()!=null)
 	     {
 			reportIssue.setUploadfile(fileTemplate.concurrentFileNames());

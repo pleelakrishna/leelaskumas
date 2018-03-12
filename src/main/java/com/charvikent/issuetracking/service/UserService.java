@@ -217,6 +217,41 @@ public class UserService {
 		}
 
 	}
+	
+
+	public Map<Integer, String> getReportToUsers()
+	{
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+		
+		Map<Integer, String>userMapForMaster = new LinkedHashMap<Integer, String>();
+		
+		List<User> rolesList= userDao.getUserNames();
+			if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+			{
+		for(User bean: rolesList){
+				userMapForMaster.put(bean.getId(), bean.getUsername());
+		
+
+	} 
+		return userMapForMaster;
+		}
+		else
+		{
+			for(User bean: rolesList){
+				if(bean.getKpOrgId().equals(objuserBean.getKpOrgId()))
+				{
+				
+					userMapForMaster.put(bean.getId(), bean.getUsername());
+				}
+			}
+			
+		
+			return userMapForMaster;
+		}
+
+	}
 
 	public void setLoginRecord(Integer id,String str) {
 

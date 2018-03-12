@@ -420,7 +420,8 @@ public class TaskController {
 	
 	
 	@RequestMapping(value = "/getCount")
-	public @ResponseBody String getCount(ReportIssue  objorg,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult) {
+	public @ResponseBody String getCount(ReportIssue  objorg,ModelMap model,HttpServletRequest request,HttpSession session,BindingResult objBindingResult)
+	{
 		JSONObject jsonObj = new JSONObject();
 		Integer unseentasks =0;
 		try{
@@ -428,8 +429,6 @@ public class TaskController {
 			 session.setAttribute("acknotification", kpHistoryService.getHeaderNotificationsforack());
 			 
 			 session.setAttribute("notifications", kpHistoryService.getHeaderNotifications());
-			 
-			
  				
 			unseentasks = taskService.getUnseenTaskCount();
 			jsonObj.put("unseentasks",unseentasks);

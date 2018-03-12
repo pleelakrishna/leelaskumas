@@ -118,7 +118,7 @@
 									<div class="col-md-6">
 										<form:select path ="reportto" class="form-control" onfocus="removeBorder(this.id)">
 											<form:option value="">-- Select Report to --</form:option>
-								     		<form:options items="${userNames}"/>
+								     		<form:options items="${reportto}"/>
 										</form:select>
 									</div>
 								</div></div>

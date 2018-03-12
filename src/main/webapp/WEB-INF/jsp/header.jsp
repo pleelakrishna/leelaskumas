@@ -297,6 +297,8 @@ function getHeadersCounts(){
 
 }
 
+
+
 </script>
 </head>
 
@@ -329,18 +331,17 @@ function getHeadersCounts(){
             <div style="box-shadow:none;" class="navbar">
   <div style="border-left:none; margin-right:10px;" class="dropdown">
     <diV style="color:#FFFFFF; background:#4f8edc; font-size:25px; margin-top:10px; margin-right:10px;" class="dropbtn"">    
-    <i class="fa fa-list-alt"></i><span class="badge">5</span>
+
+    <i class="fa fa-list-alt"></i><!-- <span class="badge">5</span> -->
     </div>
      <c:if test="${not empty acknotification}">
-    <div class="dropdown-content">
+
+    <div id="ack" class="dropdown-content">
       <a style="padding: 10px 16px;" href="#">
       
       	<table class="table1">
         	<thead>
-            	<tr class="tr1" style="
-    background: #006699;
-    color: #FFF;
-">               
+            	<tr class="tr1" style="  background: #006699; color: #FFF;">               
                 	<th class="th1">Task No.</th>
                 	<th class="th1">Field</th>
                 	<!-- <th>Change</th> -->
@@ -368,7 +369,8 @@ function getHeadersCounts(){
             <div style="box-shadow:none; margin-right:10px;" class="navbar">
   <div style="border-left:none;" class="dropdown">
     <diV style="color:#FFFFFF; background:#4f8edc; font-size:25px; margin-top:10px;" class="dropbtn"">
-      <i class="fa fa-bell-o"></i><span class="badge">5</span>
+
+      <i class="fa fa-bell-o"></i><!-- <span class="badge">5</span> -->
     </div>
     <c:if test="${not empty notifications}">
     <div class="dropdown-content">
