@@ -222,6 +222,7 @@ View Issue Details</h4>
 	<link rel="stylesheet" type="text/css" href="http://charvikent.com/mantis/css/dropzone-4.3.0.min.css" />
 <script type="text/javascript">
 $(".createTicketIssues").addClass("active");
+$(".task").hide();
 /* $(function(){
 	 Dropzone.autoDiscover = false;
 }); */
