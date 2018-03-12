@@ -54,9 +54,9 @@
                     		</div>
                     		<div class="col-md-4">
                     			<div class="form-group">
-									<label class="col-md-5 control-label no-padding-right">Department Head</label>
+									<label class="col-md-5 control-label no-padding-right">Department Head <span class="impColor">*</span></label>
 									<div class="col-md-6">
-										<form:select path="depthead" class="form-control " >
+										<form:select path="depthead" class="form-control validate" >
 											<form:option value="">-- Select Department Head --</form:option>
 											<form:options items="${users}"/>
 										</form:select>

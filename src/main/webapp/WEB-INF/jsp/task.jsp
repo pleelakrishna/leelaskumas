@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
@@ -12,18 +13,19 @@
 		<li><a href="dashBoard">Home</a></li>
 		<li>Task Master</li>
 	</ol>
+	<security:authorize access="hasRole('ROLE_MASTERADMIN')">
 	                       <div class="clearfix"></div><br>
 	                       <form>
 	                        <div class="row">
                     		<div class="col-md-4">
-                    			<div class="form-horizontal">
+                    			<%-- <div class="form-horizontal">
 									<label for="focusedinput" class="col-md-6 control-label" style="padding-top:2px;">Tasks Types <span class="impColor">*</span></label>
 									<select id="ttype"  class="col-xs-10 col-sm-5 " >
 											<c:forEach var="list" items="${tasksSelection}">
 											<option value=${list.key}>${list.value} </option>
 											</c:forEach>
 										</select>
-                    			</div>
+                    			</div> --%>
                     		</div>
                     		<div class="col-md-4">
                     			<div class="form-horizontal">
@@ -37,6 +39,7 @@
                     		</div>
                     		</div>
                     		</form>
+                    		</security:authorize>
                     		<br>
 	<div class="clearfix"></div>
 	<div class="container">

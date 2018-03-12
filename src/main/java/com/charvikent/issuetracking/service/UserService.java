@@ -75,7 +75,10 @@ public class UserService {
 			 for(User entry :usersListForMaster)
 			 {  
 				 if(entry.getKpOrgId().equals(objuserBean.getKpOrgId()))
+				 {
+					 if(entry.getId()!=(objuserBean.getId()))
 					 usersListForAdmin.add(entry);
+				 }
 			 }
 			 return usersListForAdmin;
 		 }
