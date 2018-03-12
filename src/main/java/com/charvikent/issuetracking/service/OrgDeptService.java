@@ -100,9 +100,27 @@ public class OrgDeptService {
 
 
 	public List<OrgDeptHierarchical> orgDeptListHierarchical() {
-		List<OrgDeptHierarchical> orgDeptList= orgDeptDao.getorgDeptNamesHierarchical();
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+		
+		 List<OrgDept> orgdeptListForMaster= orgDeptDao.getorgDeptNames();
+		// List<OrgDept> deptListForAdmin =new ArrayList<>();
+		 //if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {}
+		 for(OrgDept entry :orgdeptListForMaster)
+		 {  
+			 if(entry.getOrgid().equals(objuserBean.getKpOrgId())) {
+				 List<OrgDeptHierarchical> orgDeptList= orgDeptDao.getorgDeptNamesHierarchical(objuserBean.getKpOrgId());
+				 
+				 return orgDeptList;
+			 }
+		 }
+		return null;
+		
 
-			return orgDeptList;
+			
 	}
 
 }
