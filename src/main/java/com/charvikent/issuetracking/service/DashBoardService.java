@@ -3,6 +3,7 @@ package com.charvikent.issuetracking.service;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -398,6 +399,48 @@ public Set<KpStatusLogs> getAllTasksForAck() {
 
 public Object getLastLoginTime() {
 	return dashBoardDao.getLastloginTime();
+}
+
+public Map<String,String> getDepartmentCounts() {
+	// TODO Auto-generated method stub
+	return dashBoardDao.getDepartmentCounts();
+}
+
+public Set<ReportIssue> getTasksByDepartmentWise(String dept) {
+	// TODO Auto-generated method stub
+	return dashBoardDao.getTasksByDepartmentWise(dept);
+}
+
+public Map<String,String> getDepartmentCounts2() {
+	
+	Map<String,List<String>> maplist =new LinkedHashMap<String,List<String>>();
+	
+	Map<String,String> mapAllDeptCounts =dashBoardDao.getDepartmentCounts();
+	
+	List<String> listDeptCounts =new LinkedList<String>();
+	
+	for(Entry<String,String> entry:mapAllDeptCounts.entrySet())
+	{
+		
+		listDeptCounts.add(entry.getValue());
+		
+	}
+	
+	
+	return dashBoardDao.getDepartmentCounts();
+}
+
+public Object getDepartmentCountsForClosed() {
+	return dashBoardDao.getDepartmentCountsForClosed();
+}
+
+public Set<ReportIssue> getTasksBydepartmentClosed(String deptname) {
+	
+	return dashBoardDao.getTasksBydepartmentClosed(deptname);
+}
+
+public Set<ReportIssue> getTasksBydepartmentBalanced(String deptname) {
+	return dashBoardDao.getTasksBydepartmentBalanced(deptname);
 }
 
 

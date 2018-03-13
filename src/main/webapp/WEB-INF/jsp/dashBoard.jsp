@@ -30,6 +30,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <!-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script> -->
 <!-- Body starts here -->
@@ -310,12 +311,47 @@
 									</thead>
 
 									<tbody>
+									
 
 									</tbody>
 								</table>
 							</div>
 
 							<!--  ************************** By Category End  ******************************-->
+							
+							
+							<br>
+							
+							
+						
+
+							
+							<!-- *********************************** By Department Start *****************-->
+							 <security:authorize access="hasRole('ROLE_ADMIN')">
+							<div class="table-responsive">
+								<table class="table table-bordered priority prioritybg"
+									style="border: 1px solid #006699; width:;" id="deptTable">
+									<thead>
+										<tr
+											style="background-color: #006699; color: #fff; text-align: center;">
+
+											<th>Department Name</th>
+											<th>Open</th>
+											<th>Closed</th>
+											<th>Balanced</th>
+
+										</tr>
+									</thead>
+
+									<tbody>
+									
+
+									</tbody>
+								</table>
+							</div>
+								</security:authorize>
+								
+								<!--  ************************** By Department  End  ******************************-->
 
 						</div>
 
@@ -339,7 +375,7 @@
 									<div class="widget-main no-padding">
 										<div class="table-responsive" style="overflow-x: inherit;">
 											<table
-												class="table table-bordered table-condensed table-striped table-hover">
+												class="table table-bordered table-condensed table-striped table-hover ">
 												<tbody>
 
 													<tr class="my-buglist-bug ">
@@ -827,9 +863,52 @@
 						});
 	}
 	
+	
+	
 /* 	$("#ack").mouseover(function(){
 		
 		alert("hello mousehour");
 	}); */
+	var deptcountjson = ${deptcountjson};
+	var deptcountclosedjson = ${deptcountclosedjson};
+	
+	
+	
+	
+	if (deptcountjson != "") {
+		$('#deptTable body').html('');
+		displayDeptTask(deptcountjson,deptcountclosedjson);
+		
+	}
+	
+	function displayDeptTask(deptcountjson,deptcountclosedjson){
+		
+		$.each(deptcountjson, function(i,item) {
+			
+			console.log(deptcountjson[i]+"------"+deptcountclosedjson[i]);
+			
+			var diff=parseInt(item)-parseInt(deptcountclosedjson[i])
+			console.log(item);
+			 var tblRow = "<tr'>"
+					+ "<td> "
+					+ i
+					+ "</a></td>"
+					+ "<td ><a href='deptAll?id="+i+"'>"
+					+ item
+					+ "</a></td>"
+					+ "<td ><a href='deptClosed?id="+i+"'>"
+					+ deptcountclosedjson[i]
+					+ "</a></td>"
+					+ "<td ><a href='deptBalanced?id="+i+"'>"
+					+ diff
+					+ "</a></td>"
+					+ "</tr >";
+			$(tblRow).appendTo("#deptTable tbody"); 
+		});
+		
+	}
+
+		
+	
 
 </script>

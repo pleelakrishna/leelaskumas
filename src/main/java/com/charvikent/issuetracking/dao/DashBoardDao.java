@@ -671,6 +671,295 @@ public Object getNotifyAckCounts()
 	
 }
 
+
+
+
+public Map<String, String> getDepartmentCounts()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(id.equals("1"))
+	{
+	
+     hql ="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment "
+                    +" ON (kpdepartment.id=report_issue.departmentid)  GROUP BY kpdepartment.id ";
+	}
+	
+	else
+	{
+	
+	 hql="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment" 
+                   +" ON (kpdepartment.id=report_issue.departmentid) and kp_org_id='"+orgid+" ' GROUP BY kpdepartment.id ";
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+
+public Set<ReportIssue> getTasksByDepartmentWise(String dept) {
+	
+
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+	
+String hql ="";
+	
+	if(id.equals("1"))
+	{
+	
+	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap"
+                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd "
+               +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid"
+               +" and kpd.name='"+dept +"'";
+	}
+	
+	else
+		if(id.equals("2"))
+		{
+			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap" 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd "  
+                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
+
+		}
+
+	try {
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			ReportIssue issue = new ReportIssue();
+			issue.setId(Integer.parseInt(String.valueOf(row[0])));
+			issue.setAssignto((String) row[1]);
+			issue.setSeverity((String) row[2]);
+			issue.setPriority((String) row[3]);
+			issue.setUploadfile((String) row[4]);
+			issue.setSubject((String) row[5]);
+			issue.setCreatedTime((Date) row[6]);
+			issue.setCategory((String) row[7]);
+			issue.setKstatus((String) row[8]);
+			issue.setStatus((String) row[9]);
+			issue.setTaskno((String) row[10]);
+			
+			issue.setSeverityid((String) row[11]);
+			issue.setPriorityid((String) row[12]);
+			issue.setAssigntoid((String) row[13]);
+		    issue.setCategoryid((String) row[14]);
+		    issue.setDescription((String) row[15]);
+			issue.setTaskdeadline((String) row[16]);
+			issue.setAssignbyid((String) row[17]);
+			issue.setAssignby((String) row[18]);
+			
+			issue.setKstatusid((String) row[19]);
+			issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
+			
+			listissue.add(issue);
+
+		}
+		
+	} catch (Exception e) {
+		System.out.println("error here");
+		e.printStackTrace();
+	}
+	
+	return listissue;
+	
+}
+
+
+public Map<String, String> getDepartmentCountsForClosed()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(id.equals("1"))
+	{
+	
+     hql ="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment "
+                    +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='1'  GROUP BY kpdepartment.id ";
+	}
+	
+	else
+	{
+	
+	 hql="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment" 
+                   +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='1'and kp_org_id='"+orgid+" ' GROUP BY kpdepartment.id ";
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+
+
+public Set<ReportIssue> getTasksBydepartmentClosed(String dept) {
+	
+
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+	
+String hql ="";
+	
+	if(id.equals("1"))
+	{
+	
+	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap"
+                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd "
+               +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='1'"
+               +" and kpd.name='"+dept +"'";
+	}
+	
+	else
+		if(id.equals("2"))
+		{
+			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap" 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd "  
+                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='1' and kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
+
+		}
+
+	try {
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			ReportIssue issue = new ReportIssue();
+			issue.setId(Integer.parseInt(String.valueOf(row[0])));
+			issue.setAssignto((String) row[1]);
+			issue.setSeverity((String) row[2]);
+			issue.setPriority((String) row[3]);
+			issue.setUploadfile((String) row[4]);
+			issue.setSubject((String) row[5]);
+			issue.setCreatedTime((Date) row[6]);
+			issue.setCategory((String) row[7]);
+			issue.setKstatus((String) row[8]);
+			issue.setStatus((String) row[9]);
+			issue.setTaskno((String) row[10]);
+			
+			issue.setSeverityid((String) row[11]);
+			issue.setPriorityid((String) row[12]);
+			issue.setAssigntoid((String) row[13]);
+		    issue.setCategoryid((String) row[14]);
+		    issue.setDescription((String) row[15]);
+			issue.setTaskdeadline((String) row[16]);
+			issue.setAssignbyid((String) row[17]);
+			issue.setAssignby((String) row[18]);
+			
+			issue.setKstatusid((String) row[19]);
+			issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
+			
+			listissue.add(issue);
+
+		}
+		
+	} catch (Exception e) {
+		System.out.println("error here");
+		e.printStackTrace();
+	}
+	
+	return listissue;
+	
+}
+
+public Set<ReportIssue> getTasksBydepartmentBalanced(String dept) {
+	
+
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+	
+String hql ="";
+	
+	if(id.equals("1"))
+	{
+	
+	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap"
+                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd "
+               +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus <>'1'"
+               +" and kpd.name='"+dept +"'";
+	}
+	
+	else
+		if(id.equals("2"))
+		{
+			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap" 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd "  
+                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus<>'1' and kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
+
+		}
+
+	try {
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			ReportIssue issue = new ReportIssue();
+			issue.setId(Integer.parseInt(String.valueOf(row[0])));
+			issue.setAssignto((String) row[1]);
+			issue.setSeverity((String) row[2]);
+			issue.setPriority((String) row[3]);
+			issue.setUploadfile((String) row[4]);
+			issue.setSubject((String) row[5]);
+			issue.setCreatedTime((Date) row[6]);
+			issue.setCategory((String) row[7]);
+			issue.setKstatus((String) row[8]);
+			issue.setStatus((String) row[9]);
+			issue.setTaskno((String) row[10]);
+			
+			issue.setSeverityid((String) row[11]);
+			issue.setPriorityid((String) row[12]);
+			issue.setAssigntoid((String) row[13]);
+		    issue.setCategoryid((String) row[14]);
+		    issue.setDescription((String) row[15]);
+			issue.setTaskdeadline((String) row[16]);
+			issue.setAssignbyid((String) row[17]);
+			issue.setAssignby((String) row[18]);
+			
+			issue.setKstatusid((String) row[19]);
+			issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
+			
+			listissue.add(issue);
+
+		}
+		
+	} catch (Exception e) {
+		System.out.println("error here");
+		e.printStackTrace();
+	}
+	
+	return listissue;
+	
+}
+
+
      
      }
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.charvikent.issuetracking.config.FilesStuff;
+import com.charvikent.issuetracking.dao.DashBoardDao;
 import com.charvikent.issuetracking.model.DashBordByCategory;
 import com.charvikent.issuetracking.model.DashBordByStatus;
 import com.charvikent.issuetracking.model.KpStatusLogs;
@@ -28,6 +29,7 @@ import com.charvikent.issuetracking.service.ReportIssueService;
 import com.charvikent.issuetracking.service.SeverityService;
 import com.charvikent.issuetracking.service.TasksSelectionService;
 import com.charvikent.issuetracking.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -69,11 +71,14 @@ public class DashBoardController {
 	@Autowired
 	KpHistoryService kpHistoryService;
 	
+	@Autowired
+	DashBoardDao dashBoardDao;
+	
 	
 	
    
 	@RequestMapping("/dashBoard")
-	public String showDashBoard(Model model,HttpServletRequest request)
+	public String showDashBoard(Model model,HttpServletRequest request) throws JsonProcessingException
 	{
 		
 		 model.addAttribute("statusCount" ,reportIssueService.getCountByStatusWise());
@@ -84,6 +89,21 @@ public class DashBoardController {
 		 model.addAttribute("ackdetails", dashBoardService.getAllTasksForAck());
 		 
 		 model.addAttribute("lastLoginTime", dashBoardService.getLastLoginTime());
+		 
+		 model.addAttribute("deptCounts", dashBoardService.getDepartmentCounts());
+		 
+		 model.addAttribute("deptCountsForClosed", dashBoardService.getDepartmentCountsForClosed());
+		
+		 
+		 ObjectMapper deptmapper =new ObjectMapper();
+		String deptcountjson = deptmapper.writeValueAsString(dashBoardService.getDepartmentCounts());
+		String deptcountclosedjson = deptmapper.writeValueAsString(dashBoardService.getDepartmentCountsForClosed());
+		request.setAttribute("deptcountjson", deptcountjson);
+		request.setAttribute("deptcountclosedjson", deptcountclosedjson);
+		
+		System.out.println(deptcountjson);
+		 
+		 
 		
 		 //System.out.println(dashBoardService.getAllTasksForAck());
 		 
@@ -548,6 +568,205 @@ public class DashBoardController {
 			return "task";
 
 	}
+	
+	
+	@RequestMapping(value = "/departmentwise")
+	public String tasksFilterByDepartmentWise(	@RequestParam(value="id", required=true) String dept,Model model,HttpServletRequest request,HttpSession session){
+		Set<ReportIssue> listOrderBeans = null;
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		
+		model.addAttribute("taskf", new ReportIssue());
+		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		//model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		model.addAttribute("kpstatuses", mastersService.getKpStatues());
+		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
+		
+		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+		model.addAttribute("objuserBean", objuserBean);
+		
+			
+		
+			try {
+				listOrderBeans = dashBoardService.getTasksByDepartmentWise(dept);
+		if (listOrderBeans != null && listOrderBeans.size() > 0) {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", sJson);
+					// System.out.println(sJson);
+				} else {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", "''");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e);
+
+			}
+			
+			
+			return "task";
+
+	}
+	
+	
+	@RequestMapping(value = "/deptAll")
+	public String DepartmentwisedataByAll(	@RequestParam(value="id", required=true) String deptname,Model model,HttpServletRequest request,HttpSession session){
+		Set<ReportIssue> listOrderBeans = null;
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		
+		model.addAttribute("taskf", new ReportIssue());
+		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		//model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		model.addAttribute("kpstatuses", mastersService.getKpStatues());
+		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
+		
+		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+		model.addAttribute("objuserBean", objuserBean);
+		
+			
+		
+			try {
+				listOrderBeans = dashBoardService.getTasksByDepartmentWise(deptname);
+				if (listOrderBeans != null && listOrderBeans.size() > 0) {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", sJson);
+					// System.out.println(sJson);
+				} else {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", "''");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e);
+
+			}
+			
+			
+			return "task";
+
+	}
+	
+	@RequestMapping(value = "/deptClosed")
+	public String DepartmentwisedataByClosed(	@RequestParam(value="id", required=true) String deptname,Model model,HttpServletRequest request,HttpSession session){
+		Set<ReportIssue> listOrderBeans = null;
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		
+		model.addAttribute("taskf", new ReportIssue());
+		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		//model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		model.addAttribute("kpstatuses", mastersService.getKpStatues());
+		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
+		
+		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+		model.addAttribute("objuserBean", objuserBean);
+		
+			
+		
+			try {
+				listOrderBeans = dashBoardService.getTasksBydepartmentClosed(deptname);
+				if (listOrderBeans != null && listOrderBeans.size() > 0) {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", sJson);
+					// System.out.println(sJson);
+				} else {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", "''");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e);
+
+			}
+			
+			
+			return "task";
+
+	}
+	
+	@RequestMapping(value = "/deptBalanced")
+	public String DepartmentwisedataByBalanced(	@RequestParam(value="id", required=true) String deptname,Model model,HttpServletRequest request,HttpSession session){
+		Set<ReportIssue> listOrderBeans = null;
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		
+		model.addAttribute("taskf", new ReportIssue());
+		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		//model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		model.addAttribute("kpstatuses", mastersService.getKpStatues());
+		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
+		
+		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+		model.addAttribute("objuserBean", objuserBean);
+		
+			
+		
+			try {
+				listOrderBeans = dashBoardService.getTasksBydepartmentBalanced(deptname);
+				if (listOrderBeans != null && listOrderBeans.size() > 0) {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", sJson);
+					// System.out.println(sJson);
+				} else {
+					objectMapper = new ObjectMapper();
+					sJson = objectMapper.writeValueAsString(listOrderBeans);
+					request.setAttribute("allOrders1", "''");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e);
+
+			}
+			
+			
+			return "task";
+
+	}
+	
 	
 	
 	

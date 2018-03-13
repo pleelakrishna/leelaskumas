@@ -289,7 +289,7 @@ public List<ReportIssue> getAllReportIssues()
 	public Map<Integer, Integer>  getGapAndCount() {
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String id=String.valueOf(objuserBean.getId());
+		String id=String.valueOf(objuserBean.getDesignation());
 
 		List<ReportIssue> listissuegap=new ArrayList<>();
 		ReportIssue issuegap =null;
