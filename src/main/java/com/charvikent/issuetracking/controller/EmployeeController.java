@@ -54,6 +54,7 @@ public class EmployeeController {
 		model.addAttribute("departments", userService.getDepartments());
 		model.addAttribute("roles", userService.getRoles());
 		model.addAttribute("userNames", userService.getUserName());
+
 		model.addAttribute("reportto",userService.getReportToUsers());
 		model.addAttribute("allUsers", userService.getAllUsers());
 		model.addAttribute("orgNames", OrgService.getOrgNames());

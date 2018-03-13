@@ -222,6 +222,7 @@ public class UserService {
 	}
 	
 
+
 	public Map<Integer, String> getReportToUsers()
 	{
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -255,6 +256,7 @@ public class UserService {
 		}
 
 	}
+
 
 	public void setLoginRecord(Integer id,String str) {
 
