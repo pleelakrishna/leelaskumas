@@ -4,16 +4,19 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%> 
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@page import="com.charvikent.issuetracking.model.User"%>
 <%
 	String baseurl =  request.getScheme() + "://" + request.getServerName() +      ":" +   request.getServerPort() +  request.getContextPath();
 	session.setAttribute("baseurl", baseurl);
 	
-	/* HttpSession sess = request.getSession(false);
-	 
-	if (sess.getAttribute("cacheUserBean") == null) {
+	HttpSession sess = request.getSession(false);
+	User userDesignation = (User)sess.getAttribute("userDesignationSession");
+	if (userDesignation == null) {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 		dispatcher.forward(request, response);
-	} */
+	}
+
+	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -295,7 +298,10 @@ function getHeadersCounts(){
 			
 		});  
 
+		
 }
+
+
 
 
 
@@ -415,12 +421,12 @@ function getHeadersCounts(){
 	            <li style="float:left; margin-right:5px; margin-top:5px;"><a href="${baseurl}/severity?id=Critical" style="color:white;">Create Task</a></li>
 	   
 	            <li style=" margin-top:5px;" class="dropdown">
-	                <a href="#" class="dropdown-toggle username" data-toggle="dropdown" style="color: white;"><span class="hidden-xs">Master Admin <i class="fa fa-caret-down"></i></span><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt="Dangerfield" /></a>
+	                <a href="#" class="dropdown-toggle username" data-toggle="dropdown" style="color: white;"><span class="hidden-xs" > <%= userDesignation.getDesignationName() %> <i class="fa fa-caret-down"></i></span><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt="Dangerfield" /></a>
 	                <ul class="dropdown-menu userinfo arrow">
 	                    <li class="username">
 	                        <a href="#">
 	                            <div class="pull-left"><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt=""/></div>
-	                            <div class="pull-right"><h5> hi ${pageContext.request.userPrincipal.name} !</h5><small>Logged in as <span>Master</span></small></div> 
+	                            <div class="pull-right"><h5> hi ${pageContext.request.userPrincipal.name} !</h5><small>Logged in as <span><%= userDesignation.getDesignationName() %></span></small></div> 
 	                        </a>
 	                    </li>
 	                    <li class="userlinks">

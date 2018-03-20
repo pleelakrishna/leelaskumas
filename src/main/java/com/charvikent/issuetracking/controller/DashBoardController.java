@@ -78,7 +78,7 @@ public class DashBoardController {
 	
    
 	@RequestMapping("/dashBoard")
-	public String showDashBoard(Model model,HttpServletRequest request) throws JsonProcessingException
+	public String showDashBoard(Model model,HttpServletRequest request,HttpSession session) throws JsonProcessingException
 	{
 		
 		 model.addAttribute("statusCount" ,reportIssueService.getCountByStatusWise());
@@ -93,7 +93,12 @@ public class DashBoardController {
 		 model.addAttribute("deptCounts", dashBoardService.getDepartmentCounts());
 		 
 		 model.addAttribute("deptCountsForClosed", dashBoardService.getDepartmentCountsForClosed());
+		 
+		 User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			
+	User userDesignation= userService.getUserDesignationById(objuserBean.getId());
 		
+		 session.setAttribute("userDesignationSession", userDesignation);
 		 
 		 ObjectMapper deptmapper =new ObjectMapper();
 		String deptcountjson = deptmapper.writeValueAsString(dashBoardService.getDepartmentCounts());

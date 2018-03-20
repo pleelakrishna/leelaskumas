@@ -357,6 +357,27 @@ public class UserDao {
 		return  listusers;
 		 	}
 
+	public User getUserDesignationById(Integer id) {
+		String hql ="select  ku.username, kd.name from kpdesignation kd,kpusers ku where ku.designation=kd.id and ku.id=:id ";
+		User users =new User();
+		try{
+			
+			List<Object[]> rows = em.createNativeQuery(hql).setParameter("id", id).getResultList();
+			
+		for (Object[] row : rows) {
+			
+			users.setUsername((String) row[0]);
+			users.setDesignationName((String) row[1]);
+					
+		}
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+	return  users;
+	}
+
 
 
 

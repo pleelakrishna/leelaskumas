@@ -287,5 +287,10 @@ public class UserService {
 		return userDao.getInActiveList();
 	}
 
+	public User getUserDesignationById(Integer id) {
+		User obj=userDao.getUserDesignationById(id);
+		return obj;
+	}
+
 
 }

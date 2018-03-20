@@ -718,6 +718,11 @@
 
 	var listOrders1 = ${list};
 	if (listOrders1 != "") {
+		showCategoryTable(listOrders1);
+	}else{
+		showCategoryTable(listOrders1);
+	}
+	function showCategoryTable(listOrders1){
 		$('#categoryTable body').html('');
 		/* var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
 			+ '<thead><tr><th>Company Code</th><th>Company Name</th><th>Contact Person Name</th><th>Contact Person Mobile</th><th>Email Id</th><th>Type of Comapany</th><th>Company Address</th><th>Remarks</th><th>Status</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
