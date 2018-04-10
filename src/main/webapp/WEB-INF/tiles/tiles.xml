@@ -107,6 +107,14 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/403.jsp" />
 	</definition>
 	
+	<definition name="category" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/kpcate.jsp" />
+	</definition>
+	
+	<definition name="product" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/kpproduct.jsp" />
+	</definition>
+	
 	
 		
 

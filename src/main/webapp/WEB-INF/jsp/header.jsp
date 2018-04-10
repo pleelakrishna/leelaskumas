@@ -467,7 +467,11 @@ function getHeadersCounts(){
             <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-american-sign-language-interpreting"></i> <span>Department</span></a></li>
               <%-- <li class="desig"><a href="${baseurl }/desig"><i class="fa fa-plane"></i> <span>Designation</span></a></li> --%>
              <li class="orgDept"><a href="${baseurl }/orgDept"><i class="fa fa-sitemap"></i> <span>Hierarchical</span></a></li>
-              <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-black-tie"></i> <span>Category</span></a></li>
+              <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-black-tie"></i> <span>Task Category</span></a></li>
+              <li class="category"><a href="${baseurl }/category"><i class="fa fa-black-tie"></i> <span>Product Category</span></a></li>
+             <li class="product"><a href="${baseurl }/product"><i class="fa fa-black-tie"></i> <span>Product Model</span></a></li>
+             	
+             	
              	<li class="employee"><a href="${baseurl }/employee"><i class="fa fa-users"></i> <span>Employees</span></a></li>
               </security:authorize>
               <li class="task"><a href="${baseurl }/task"><i class="fa fa-tasks"></i> <span>Task</span></a></li>
