@@ -19,6 +19,19 @@
 	line-height: 0.8;
 	border-radius: 10px;
 }
+
+
+table:nth-of-type(1) .th {
+  background-image: linear-gradient(
+    to top right,
+    green 50%,
+    red 50%
+  );
+}
+.head {
+	background: #e73c3c;
+}
+
 </style>
 
 
@@ -63,10 +76,10 @@
 									<tr
 										style="background-color: #006699; color: #fff; text-align: center;">
 
-										<th>Unclosed Tasks /Severity</th>
-										<th>Critical</th>
-										<th>Major</th>
-										<th>Minor</th>
+										<th class="th"><span style="float:right;">Priority</span><br><span style="float:left;">Unclosed Tasks</span></th>
+										<th>High</th>
+										<th>Medium</th>
+										<th>Low</th>
 
 									</tr>
 
@@ -275,7 +288,7 @@
 									<thead>
 										<tr
 											style="background-color: #006699; color: #fff; text-align: center;">
-											<th>By Status</th>
+											<th class="head">By Status</th>
 											<th>Open</th>
 											<th>Resolved</th>
 											<th>Closed</th>
@@ -301,7 +314,7 @@
 										<tr
 											style="background-color: #006699; color: #fff; text-align: center;">
 
-											<th>By Category</th>
+											<th class="head">By Category</th>
 											<th>Open</th>
 											<th>Resolved</th>
 											<th>Closed</th>
@@ -335,7 +348,7 @@
 										<tr
 											style="background-color: #006699; color: #fff; text-align: center;">
 
-											<th>Department Name</th>
+											<th class="head">Department Name</th>
 											<th>Open</th>
 											<th>Closed</th>
 											<th>Balanced</th>

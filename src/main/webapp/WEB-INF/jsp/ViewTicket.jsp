@@ -60,7 +60,9 @@ th {
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
 				<ul class="breadcrumb">
-					<li class="">View Ticket</li>
+					<li><a href="dashBoard">Home</a></li>
+					<li><a href="task">Task</a></li>
+					<li>View Ticket</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
 			
@@ -72,8 +74,7 @@ th {
 				<div class="col-md-12">
 				<div class="panel panel-primary">
 					<div style="margin:0 auto;" class="panel-heading">
-						<h4><i class="ace-icon fa fa-bars"></i></i>
-View Issue Details</h4>
+						<h4><i class="ace-icon fa fa-bars"></i></i> View Task Details</h4>
 						<div class="options">
 							<a href="" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
 						</div>
@@ -118,8 +119,7 @@ View Issue Details</h4>
                 <div class="col-md-12" id="history">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4><i class="ace-icon fa fa-history"></i>
- Issue History</h4>
+						<h4><i class="ace-icon fa fa-history"></i> Task History</h4>
 						<div class="options">
 							<a href="" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
 						</div>

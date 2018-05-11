@@ -85,13 +85,13 @@
                     		</div>
                     		<div class="col-md-6">
                     			<div class="form-group">
-									<label for="focusedinput" class="col-md-6 control-label">Severity <span class="impColor">*</span></label>
+									<!--<label for="focusedinput" class="col-md-6 control-label">Severity <span class="impColor">*</span></label>
 									
 										<form:select path="severity" class="col-xs-10 col-sm-5 validate1" onfocus="removeBorder(this.id)">
 										<form:option value="" label="--- Select ---" />
 										 <form:options items="${severity}"/>
 										</form:select>	
-										<span class="hasError" id="stationnameError"></span>
+										<span class="hasError" id="stationnameError"></span>-->
 								    
                     			</div>
                     		</div>
