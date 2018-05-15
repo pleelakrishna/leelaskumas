@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 
 
 @Configuration
@@ -53,12 +55,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     .logout()
     //.logoutUrl("/logout1")
    // .logoutSuccessUrl("/") 
-    .invalidateHttpSession(true)
+   // .invalidateHttpSession(true)
    .logoutSuccessHandler(customLogoutSuccessHandler)
    .and()
    .exceptionHandling().accessDeniedPage("/403")
   .and()
     .csrf().disable();
+	 
+	 http.addFilterBefore(new CustomUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
  }
  
  @Bean(name="passwordEncoder")

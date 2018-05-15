@@ -29,11 +29,13 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user=userRepository.findByUserName(username);
 		if(null == user){
-			throw new UsernameNotFoundException("No user present with username: "+username);
+			//return null;
+		throw new UsernameNotFoundException("No user present with username: "+username);
 		}else{
 			List<String> userRoles=userRolesRepository.findRoleByUserName(username);
 			return new CustomUserDetails(user,userRoles);
 		}
+		
 	}
 		
 }

@@ -1,6 +1,5 @@
 package com.charvikent.issuetracking.dao;
 
-import static org.mockito.Matchers.booleanThat;
 
 import java.util.ArrayList;
 import java.util.List;

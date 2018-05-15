@@ -116,7 +116,7 @@
 					<div class="panel-body collapse in">
 					
 					<div class="page-body">
-							<form:form  modelAttribute="changePassword" action="/changePassword" class="form-horizontal" method="Post"  >
+							<form:form  modelAttribute="changePassword" action="changePassword" class="form-horizontal" method="Post"  >
 							
 										<div class="col-md-6">
 											<div class="form-group" id="passwordDiv">

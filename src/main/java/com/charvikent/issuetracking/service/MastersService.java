@@ -150,7 +150,7 @@ public class MastersService {
 		
 		for(KpStatus kp:listkpstatues)
 		{
-			if(!(kp.getName().equals("Assigned")) && (!(kp.getName().equals("Acknowledged"))))
+			//if(!(kp.getName().equals("Assigned")) && (!(kp.getName().equals("Acknowledged"))))
 			kpstatuesmap.put(kp.getId(), kp.getName());
 			
 		}

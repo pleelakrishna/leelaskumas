@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.charvikent.issuetracking.config.FilesStuff;
 import com.charvikent.issuetracking.dao.KpHistoryDao;
+import com.charvikent.issuetracking.dao.NotificationsFrequencyDao;
 import com.charvikent.issuetracking.model.KpHistory;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
@@ -70,6 +71,8 @@ public class TaskController {
 	
 	@Autowired
 	KpHistoryService kpHistoryService;
+	@Autowired
+	NotificationsFrequencyDao notificationsFrequencyDao;
 	
 	/*@Autowired
 	DashBoardService dashBoardService;*/
@@ -93,6 +96,8 @@ public class TaskController {
 		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
 		
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
@@ -167,6 +172,7 @@ public class TaskController {
 					
 					task.setStatus("1");
 					task.setAdditionalinfo("0");
+					task.setPriority("1");   //set default value
 					taskService.saveReportIssue(task);
 
 					redir.addFlashAttribute("msg", "Record Inserted Successfully");
@@ -494,8 +500,6 @@ public class TaskController {
 	
 	@RequestMapping(value = "/setNotifyData",method = RequestMethod.POST)
 	public @ResponseBody Object setNotificationData(@RequestParam(value = "ttypeid", required = true) String ttypeid,Model model,HttpServletRequest request, HttpSession session) throws JSONException, JsonProcessingException {
-		
-		
 		
 		Set<ReportIssue> listOrderBeans = null;
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -56,7 +56,7 @@
                     			<div class="form-group">
 									<label class="col-md-5 control-label no-padding-right">Department Head <span class="impColor">*</span></label>
 									<div class="col-md-6">
-										<form:select path="depthead" class="form-control validate" >
+										<form:select path="depthead"  class="form-control validate" onfocus="removeBorder(this.id)" >
 											<form:option value="">-- Select Department Head --</form:option>
 											<form:options items="${users}"/>
 										</form:select>
@@ -68,7 +68,7 @@
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Description <span class="impColor">*</span></label>
 									<div class="col-md-6">
-										<form:textarea path="description" class="form-control validate" placeholder="Enter Description"/>	
+										<form:textarea path="description" class="form-control validate"  placeholder="Enter Description"/>	
 										<span class="hasError" id="stationnameError"></span>
 										
 								    </div>

@@ -71,5 +71,11 @@ public class HomeController {
 	}
 	
 	
+	@RequestMapping("*")
+	public String pag04e(Model model) {
+		return "login";
+	}
+	
+	
 
 }

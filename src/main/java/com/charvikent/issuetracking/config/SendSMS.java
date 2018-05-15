@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 public class SendSMS {
 	
 	//public  String  mobileNumber =null;
-		static String username = "GNTCLUB";
-		static String password = "Kotaiah@123";
+	static String username = "ssjewellers";
+	static String password = "SSjewellers@123";
 		static String from = "GTCLUB";
+		
+		//static String from = "KPTMS";
 		//static String from = "AARNA-MATRIMONY";
 	    static String requestUrl = null;
 	    static String toAddress = null;
@@ -20,7 +22,7 @@ public class SendSMS {
 	     //public String message=null;
 	    
 	    
-	    public static String sendSMS(String message, String mobileNumber) throws IOException
+	    public String sendSMS(String message, String mobileNumber) throws IOException
 		{
 			System.out.println("hello sms class");
 			requestUrl  = "http://182.18.160.225/index.php/api/bulk-sms?username="+URLEncoder.encode(username, "UTF-8")+"&password="+ URLEncoder.encode(password, "UTF-8")+"&from="+from+"&to="+URLEncoder.encode(mobileNumber, "UTF-8")+"&message="+URLEncoder.encode(message, "UTF-8")+"&sms_type=2";

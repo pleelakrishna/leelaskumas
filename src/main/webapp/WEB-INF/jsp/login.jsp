@@ -45,11 +45,11 @@
 
 <script type='text/javascript' src='assets/js/jquery-1.10.2.min.js'></script>
 <script type="text/javascript">
-/* window.setTimeout(function() {
+ window.setTimeout(function() {
     $(".msgcss").fadeTo(500, 0).slideUp(500, function(){
         $(this).remove(); 
     });
-}, 5000); */
+}, 2000); 
 </script>
 
 </head>
@@ -63,19 +63,23 @@
 		<div class="panel-body">
 			<h4 class="text-center" style="margin-bottom: 25px;">Login to get started</h4>
 			<c:if test="${param.error ne null}">
-				<div class="alert-danger">Invalid username and password.</div>
+				  <div class="msgcss1 row">
+									<div align="center" class="form-group">
+										<div style="width:80%" class=" msgcss alert alert-danger fadeIn animated">Invalid username and password.</div>
+									</div>
+								</div>
 			
-				<div class="col-sm-12" style="margin-bottom: -1.3em;">
+				<%-- <div class="col-sm-12" style="margin-bottom: -1.3em;">
 					<div class="form-group">
 						<div class="msgcss fadeIn animated alert alert-danger" style="text-align: center;">${msg}</div>
 					</div>
-				</div>
+				</div> --%>
 			</c:if>
 			<div class="form-group">
 				<div class="col-sm-12">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-user"></i></span>
-						<input type="text"  name= "username" class="form-control validate"  placeholder="Username"/>
+						<input type="text" id="username" name= "username" class="form-control validate"  placeholder="Username"/>
 					</div>
 				</div>
 			</div>
@@ -83,7 +87,7 @@
 				<div class="col-sm-12">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-						<input type="password" name="password" class="form-control validate"  placeholder="Password"/>
+						<input type="password" id="password" name="password" class="form-control validate"  placeholder="Password"/>
 					</div>
 				</div>
 			</div>
@@ -91,7 +95,7 @@
 		<div class="panel-footer">
 			<div class="pull-right">
 				<input type="reset" value="Reset" class="btn btn-default cancel"/>
-				<input type="submit" value="Sign-in"  class="btn btn-primary">
+				<input type="submit" value="Sign-in" id="signin" class="btn btn-primary">
 			</div>
 		</div>
 		<input type="hidden" name="${_csrf.parameterName}"
@@ -99,6 +103,26 @@
 		</form>
 	</div>
 </div>
-<script type='text/javascript' src='js/customValidation.js'></script> 
+<script type='text/javascript' src='js/customValidation.js'></script>
+<script type="text/javascript">
+
+$('#signin').click(function() {
+	var musername =	$('#username').val();
+	var mpass =	$('#password').val();
+	if (musername == null || musername == "" || musername == "undefined") {
+		alert("Please Enter username")
+	return false;
+	}
+	if (mpass == null || mpass == "" || mpass == "undefined") {
+		alert(" Please Enter password")
+	return false;
+	}
+		
+	});
+
+
+
+
+</script> 
 </body>
 </html>
