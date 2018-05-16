@@ -280,11 +280,29 @@ public class UserDao {
 		return delete;
 	}
 
+	@SuppressWarnings("unchecked")
 	public User findByUserName(String userName)
 	{
-		User user= (User) em.createQuery("select user from User user where username=:Custname").setParameter("Custname", userName).getSingleResult();
-		System.out.println(user);
-		return user;
+		/*User user= (User) em.createQuery("select user from User user where username=:Custname").setParameter("Custname", userName).getSingleResult();
+		System.out.println(user);*/
+		
+		
+		String hql ="From User where username= '"+userName+"' ";
+		
+		Query query = em.createQuery(hql);
+		
+		
+		List<User> list =query.getResultList();
+		
+		       if(list.size() >0)
+		       {
+		    	   return list.get(0);
+		       }
+		       else
+		       return null;
+		
+		
+		
 	}
 	@SuppressWarnings("unchecked")
 	public List<String> findRoleByUserName(String Username)

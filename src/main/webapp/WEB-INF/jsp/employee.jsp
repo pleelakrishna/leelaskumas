@@ -96,7 +96,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Designation</label>
 									<div class="col-md-6">
-										<form:select path="designation" class="form-control " >
+										<form:select path="designation" class="form-control validate " >
 											<form:option value="">-- Select Designation --</form:option>
 											<form:options items="${roles}"/>
 										</form:select>
@@ -116,7 +116,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">ReportTo</label>
 									<div class="col-md-6">
-										<form:select path ="reportto" class="form-control" onfocus="removeBorder(this.id)">
+										<form:select path ="reportto" class="form-control validate" onfocus="removeBorder(this.id)">
 											<form:option value="">-- Select Report to --</form:option>
 								     		<form:options items="${reportto}"/>
 										</form:select>
@@ -127,7 +127,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Organization</label>
 									<div class="col-md-6">
-										<form:select path ="kpOrgId" class="form-control" onfocus="removeBorder(this.id)">
+										<form:select path ="kpOrgId" class="form-control validate" onfocus="removeBorder(this.id)">
 											<form:option value="">-- Select Organization --</form:option>
 								     		<form:options items="${orgNames}"/>
 										</form:select>

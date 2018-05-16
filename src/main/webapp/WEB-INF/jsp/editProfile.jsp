@@ -145,12 +145,10 @@
 </body>
 <script type="text/javascript">
 
-
-
 	$("#submit1").val("Update");
 
 
- $("#pageName").text("Your Details");
+ $("#pageName").text("Edit Profile");
 //".employee").addClass("active");
 
 </script>
