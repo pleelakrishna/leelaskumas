@@ -285,6 +285,8 @@ function toolTips(){
 		$('.time').attr('data-original-title', 'View Deadline');
 		$('.history').attr('data-toggle','tooltip');
 		$('.history').attr('data-original-title','History');
+		$('.clone').attr('data-toggle','tooltip');
+		$('.clone').attr('data-original-title','Clone');
 		$('[data-toggle="tooltip"]').tooltip(); 
 }
 
@@ -421,7 +423,7 @@ function getHeadersCounts(){
 </div>
                 </li>
 	             <%-- <li style="float:left;margin-right:35px"><a href="${baseurl}/task" style="color:white;">Create Task</a></li> --%>
-	            <li style="float:left; margin-right:5px; margin-top:5px;"><a href="${baseurl}/severity?id=Critical" style="color:white;">Create Task</a></li>
+	            <li style="float:left; margin-right:5px; margin-top:5px;"><a href="${baseurl}/task" style="color:white;">Create Task</a></li>
 	   
 	            <li style=" margin-top:5px;" class="dropdown">
 	                <a href="#" class="dropdown-toggle username" data-toggle="dropdown" style="color: white;"><span class="hidden-xs" > <%= userDesignation.getDesignationName() %> <i class="fa fa-caret-down"></i></span><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt="Dangerfield" /></a>
@@ -471,8 +473,8 @@ function getHeadersCounts(){
               <%-- <li class="desig"><a href="${baseurl }/desig"><i class="fa fa-plane"></i> <span>Designation</span></a></li> --%>
              <li class="orgDept"><a href="${baseurl }/orgDept"><i class="fa fa-sitemap"></i> <span>Hierarchical</span></a></li>
               <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-black-tie"></i> <span>Task Category</span></a></li>
-              <li class="category"><a href="${baseurl }/category"><i class="fa fa-black-tie"></i> <span>Product Category</span></a></li>
-             <li class="product"><a href="${baseurl }/product"><i class="fa fa-black-tie"></i> <span>Product Model</span></a></li>
+             <%--  <li class="category"><a href="${baseurl }/category"><i class="fa fa-black-tie"></i> <span>Product Category</span></a></li>
+             <li class="product"><a href="${baseurl }/product"><i class="fa fa-black-tie"></i> <span>Product Model</span></a></li> --%>
              	
              	
              	<li class="employee"><a href="${baseurl }/employee"><i class="fa fa-users"></i> <span>Employees</span></a></li>

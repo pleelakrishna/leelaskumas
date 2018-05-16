@@ -444,10 +444,11 @@ public List<ReportIssue> getAllReportIssues()
      //editissue.setAssignby(issue.getAssignby());
      editissue.setCategory(issue.getCategory());
      editissue.setDescription(issue.getDescription());
-     editissue.setPriority(issue.getPriority());
+    // editissue.setPriority(issue.getPriority());
      editissue.setSeverity(issue.getSeverity());
      editissue.setSubject(issue.getSubject());
      editissue.setTaskdeadline(issue.getTaskdeadline());
+     editissue.setNotificationsfrequency(issue.getNotificationsfrequency());
     // editissue.setKstatus(issue.getKstatus());
      //editissue.setAdditionalinfo(issue.getAdditionalinfo());
      if(issue.getUploadfile()!=null)
@@ -478,11 +479,11 @@ public List<ReportIssue> getAllReportIssues()
 	    	 fieldname = fieldname+" Severity field changed &";
 	    	 change =change+ editissue1.getSeverity() +"-->"+semap.get(Integer.parseInt(issue.getSeverity()))+"&";
 	     }
-	     if(!editissue1.getPriority().equals(pmap.get(Integer.parseInt(issue.getPriority()))) )
+	    /* if(!editissue1.getPriority().equals(pmap.get(Integer.parseInt(issue.getPriority()))) )
 	     {
 	    	 fieldname = fieldname+" Priority field changed  &";
 	    	 change =change+ editissue1.getPriority() +"-->"+pmap.get(Integer.parseInt(issue.getPriority()))+"&";
-	     }
+	     }*/
 	     if(!editissue1.getAssignto().equals(umap.get(Integer.parseInt(issue.getAssignto())) ))
 	     {
 	    	 fieldname = fieldname+" Assignto field changed  &";
@@ -650,7 +651,7 @@ public List<ReportIssue> getAllReportIssues()
 		
 		if(!editlog.getComment().equals(subtask.getComment()) )
 	     {
-	    	 fieldname = fieldname+" New comment addeded &";
+	    	 fieldname = fieldname+" New comment added &";
 	    	 change =change+editlog.getComment() +"-->"+ subtask.getComment()+"&";
 	     }
 		if(!editlog.getKpstatus().equals(listmap.get(Integer.parseInt(subtask.getKpstatus()))) )
@@ -666,7 +667,7 @@ public List<ReportIssue> getAllReportIssues()
 		 
 		if(subtask.getUploadfiles()!=null)
 	     {
-			 fieldname = fieldname+" New file addeded &";
+			 fieldname = fieldname+" New file added &";
 		subtask.setUploadfiles(fileTemplate.concurrentFileNames());
 		change =change+subtask.getUploadfiles()+"&";
 		
@@ -706,7 +707,7 @@ public List<ReportIssue> getAllReportIssues()
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,u1.username as asby,r.assignby,ks.name, r.kstatus from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks , kpstatuslogs kpl  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id and r.kstatus<>'1'  order by kpl.statustime desc").setParameter("id",id).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,u1.username as asby,r.assignby,ks.name, r.kstatus ,nf.frequence_name , r.notificationsfrequency  from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks , kpstatuslogs kpl,notifications_frequency nf   where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id and r.kstatus<>'1' and  nf.id=r.notificationsfrequency  order by kpl.statustime desc").setParameter("id",id).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -730,6 +731,8 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setKstatus((String) row[17]);
 				
 				issue.setKstatusid((String) row[18]);
+				issue.setNotificationsfrequency((String) row[19]);
+				issue.setNotificationsfrequencyid((String) row[20]);
 
 				
 				listissue.add(issue);
@@ -749,9 +752,9 @@ public List<ReportIssue> getAllReportIssues()
 	@SuppressWarnings("unchecked")
 	public Set<ReportIssue> getissuesByselectionAssignBy(String id) {
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
-		String hql ="select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name ,r.kstatus "
-				+ "from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,kpstatuslogs kpl "
-				+ "  where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby="+id+"  and r.kstatus<>'1' order by kpl.statustime desc";
+		String hql ="select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name ,r.kstatus, nf.frequence_name , r.notificationsfrequency  "
+				+ "from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,kpstatuslogs kpl ,notifications_frequency nf  "
+				+ "  where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby="+id+" and nf.id=r.notificationsfrequency  and r.kstatus<>'1' order by kpl.statustime desc";
 		
 		try {
 			//List<Object[]> rows = em.createNativeQuery(" select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name ,r.kstatus from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,kpstatuslogs kpl   where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby=:id  and r.kstatus<>'1' order by kpl.statustime desc").setParameter("id",id).getResultList();
@@ -778,9 +781,8 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setAssignby((String) row[16]);
 				issue.setKstatus((String) row[17]);
 				issue.setKstatusid((String) row[18]);
-
-
-				
+				issue.setNotificationsfrequency((String) row[19]);
+				issue.setNotificationsfrequencyid((String) row[20]);
 				listissue.add(issue);
 
 			}
@@ -853,7 +855,7 @@ public List<ReportIssue> getAllReportIssues()
 	public Set<ReportIssue> getTaskByCategory(String statusId,String categoryId) {
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.kstatus=:status and r.category=:categoryId").setParameter("status",statusId).setParameter("categoryId",categoryId).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name ,  nf.frequence_name , r.notificationsfrequency  from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,notifications_frequency nf     where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  nf.id=r.notificationsfrequency and r.kstatus=:status and r.category=:categoryId").setParameter("status",statusId).setParameter("categoryId",categoryId).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -874,6 +876,9 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setAssignbyid((String) row[15]);
 				issue.setAssignby((String) row[16]);
 				issue.setKstatus((String) row[17]);
+				
+				issue.setNotificationsfrequency((String) row[18]);
+				issue.setNotificationsfrequencyid((String) row[19]);
 
 
 				
@@ -1066,7 +1071,7 @@ public List<ReportIssue> getAllReportIssues()
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getDesignation());
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
-		String hqlAdmin = "select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.kstatus=:status";
+		String hqlAdmin = "select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name , nf.frequence_name , r.notificationsfrequency  from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,notifications_frequency nf    where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and nf.id=r.notificationsfrequency and  r.kstatus=:status";
 		String hqlUser= hqlAdmin + " and r.assignto=:assignto";
 		List<Object[]> rows =null;
 		try {
@@ -1096,6 +1101,9 @@ public List<ReportIssue> getAllReportIssues()
 				issue.setAssignbyid((String) row[15]);
 				issue.setAssignby((String) row[16]);
 				issue.setKstatus((String) row[17]);
+				
+				issue.setNotificationsfrequency((String) row[18]);
+				issue.setNotificationsfrequencyid((String) row[19]);
 
 
 				
@@ -1171,9 +1179,13 @@ public List<ReportIssue> getAllReportIssues()
 		
 		
 	}
+	
+	
+	
 */
 
-
+	
+	
 
 }
 

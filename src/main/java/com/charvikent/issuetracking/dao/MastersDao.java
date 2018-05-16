@@ -29,17 +29,15 @@ public class MastersDao {
 		
        List<Department> list=new ArrayList<Department>();
 		
-		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,kp.username,d.depthead,d.description,d.status ,d.kp_org_id from kpdepartment d,kpusers kp where d.depthead=kp.id and d.status='1'").getResultList();
+		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,d.description,d.status ,d.kp_org_id from kpdepartment d  where d.status='1'").getResultList();
 		for(Object[] row: rows)
 		{
 		Department dept =new Department();
 		dept.setId( Integer.parseInt(String.valueOf(row[0])));
 		dept.setName((String)row[1]);
-		dept.setDepthead((String)row[2]);
-		dept.setDeptheadid((String)row[3]);
-		dept.setDescription((String)row[4]);
-		dept.setStatus((String)row[5]);
-		dept.setKpOrgId((String)row[6]);
+		dept.setDescription((String)row[2]);
+		dept.setStatus((String)row[3]);
+		dept.setKpOrgId((String)row[4]);
 		
 		list.add(dept);
 		}
@@ -96,7 +94,7 @@ public class MastersDao {
 	public void updateDept(Department dept) {
 		Department ud =entityManager.find(Department.class,dept.getId());
 		ud.setName(dept.getName());
-		ud.setDepthead(dept.getDepthead());
+		//ud.setDepthead(dept.getDepthead());
 		ud.setDescription(dept.getDescription());;
 		
 		entityManager.merge(ud);

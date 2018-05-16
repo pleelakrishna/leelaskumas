@@ -68,6 +68,12 @@ public class ReportIssue  {
 	private  String departmentid;
 	
 	
+	private String notificationsfrequency;
+	
+	@Transient
+	private String notificationsfrequencyid;
+	
+	
 	
 	
 	
@@ -260,6 +266,24 @@ public class ReportIssue  {
 	}
 	public void setDepartmentid(String departmentid) {
 		this.departmentid = departmentid;
+	}
+	
+	
+	
+	public String getNotificationsfrequency() {
+		return notificationsfrequency;
+	}
+	public void setNotificationsfrequency(String notificationsfrequency) {
+		this.notificationsfrequency = notificationsfrequency;
+	}
+	
+	
+	
+	public String getNotificationsfrequencyid() {
+		return notificationsfrequencyid;
+	}
+	public void setNotificationsfrequencyid(String notificationsfrequencyid) {
+		this.notificationsfrequencyid = notificationsfrequencyid;
 	}
 	@Override
 	public String toString() {

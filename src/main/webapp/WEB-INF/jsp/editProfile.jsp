@@ -40,7 +40,7 @@
 						<h4>Your Details</h4>
 					</div>
 					
-					<form:form modelAttribute="editProfile" action="/editProfile" class="form-horizontal " method="Post">
+					<form:form modelAttribute="editProfile" action="editProfile" class="form-horizontal " method="Post">
 	                  <form:hidden path="id"/>
 						<%--<div class="col-md-6"><br>
 								<div class="form-group">
@@ -145,12 +145,10 @@
 </body>
 <script type="text/javascript">
 
-
-
 	$("#submit1").val("Update");
 
 
- $("#pageName").text("Your Details");
+ $("#pageName").text("Edit Profile");
 //".employee").addClass("active");
 
 </script>

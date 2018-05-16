@@ -50,13 +50,13 @@ public class MastersController {
 		ObjectMapper objectMapper = null;
 		String sJson = null;
 		model.addAttribute("deptf", new Department());
-		model.addAttribute("users",userService.getUserName());
+		//model.addAttribute("users",userService.getUserName());
 		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		System.out.println("User has authorities: " + userDetails.getAuthorities());
+		/*System.out.println("User has authorities: " + userDetails.getAuthorities());
 		System.out.println("User has authorities: " + userDetails.getUsername());
 		System.out.println("User has authorities: " + userDetails.getAuthorities());
-		
+		*/
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		System.out.println(user.getEmail()+""+user.getDepartment());
 		try {

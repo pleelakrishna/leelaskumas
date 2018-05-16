@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import com.charvikent.issuetracking.config.SendSMS;
 import com.charvikent.issuetracking.dao.UserDao;
-import com.charvikent.issuetracking.model.Category;
 import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.Designation;
 import com.charvikent.issuetracking.model.User;

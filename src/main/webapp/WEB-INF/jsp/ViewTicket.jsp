@@ -81,8 +81,8 @@ th {
 					</div>
 					<div class="panel panel-body collapse in">
 						<div class="widget-toolbox padding-8 clearfix noprint">
-							<div class="btn-group pull-left">
-							<a class="btn btn-primary  btn-round btn-sm" href="">Wiki</a><a class="btn btn-success  btn-round btn-sm" href="">Jump to Notes</a><a class="btn btn-warning  btn-round btn-sm" href="#history">Jump to History</a></div><div class="btn-group pull-right"></div></div><div class="clearfix"></div>
+							<!-- <div class="btn-group pull-left">
+							<a class="btn btn-primary  btn-round btn-sm" href="">Wiki</a><a class="btn btn-success  btn-round btn-sm" href="">Jump to Notes</a><a class="btn btn-warning  btn-round btn-sm" href="#history">Jump to History</a></div><div class="btn-group pull-right"></div></div><div class="clearfix"></div> -->
 						<br>
 						<div class="col-md-2"></div>
 						<div class="col-md-8">
@@ -93,8 +93,7 @@ th {
 <th style="width:20%;">Task Number</th><td style="width:80%;">${cissue.taskno}</td></tr>
 <tr><th>Summary</th><td>${cissue.subject}</td></tr>
 <tr><th>Category</th><td>${cissue.category}</td></tr>
-<tr><th>Severity</th><td>${cissue.severity}</td></tr>
-<tr><th>Priority</th><td>${cissue.priority}</td></tr>
+<tr><th>Priority</th><td>${cissue.severity}</td></tr>
 <tr><th>Description</th><td>${cissue.description}</td></tr>
 <tr><th>Assigned to </th><td>${cissue.assignto}</td></tr>
 <tr><th>Assigned by </th><td>${cissue.assignby}</td></tr>
@@ -112,6 +111,9 @@ th {
 </div>
 
 				</div>
+							</div>
+							<div align="center" style="margin-bottom:15px;" class="col-md-12">
+							<button onclick="goBack()" class="btn btn-primary"> <i class="fa fa-step-backward"></i> Back  </button></div>
 							</div>
 						
 				
@@ -139,7 +141,7 @@ th {
 
 
 <c:forTokens items="${logs.uploadfiles}" delims="*" var="mySplit">
-     	<a class="attachments" download href="reportDocuments/${mySplit}"><i class="fa fa-download" title="${mySplit}"></i></a>
+     	<a class="attachments" target="_black" href="reportDocuments/${mySplit}"><i class="fa fa-download" title="${mySplit}"></i></a>
      	</c:forTokens>
   
 
@@ -221,10 +223,17 @@ th {
 
 	<link rel="stylesheet" type="text/css" href="http://charvikent.com/mantis/css/dropzone-4.3.0.min.css" />
 <script type="text/javascript">
+$("#pageName").text("View Task Details");
 $(".createTicketIssues").addClass("active");
 $(".task").hide();
 /* $(function(){
 	 Dropzone.autoDiscover = false;
 }); */
+
+
+function goBack() {
+    window.history.go(-1);
+}
+
 
 </script>

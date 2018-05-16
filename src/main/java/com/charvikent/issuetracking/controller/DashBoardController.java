@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.charvikent.issuetracking.config.FilesStuff;
 import com.charvikent.issuetracking.dao.DashBoardDao;
+import com.charvikent.issuetracking.dao.NotificationsFrequencyDao;
 import com.charvikent.issuetracking.model.DashBordByCategory;
 import com.charvikent.issuetracking.model.DashBordByStatus;
 import com.charvikent.issuetracking.model.KpStatusLogs;
@@ -73,6 +74,8 @@ public class DashBoardController {
 	
 	@Autowired
 	DashBoardDao dashBoardDao;
+	@Autowired
+	NotificationsFrequencyDao notificationsFrequencyDao;
 	
 	
 	
@@ -168,6 +171,8 @@ public class DashBoardController {
 		
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
 		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
+		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
 		
@@ -219,6 +224,8 @@ public class DashBoardController {
 		
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
 		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
+		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
 		
@@ -268,6 +275,8 @@ public class DashBoardController {
 		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
 		
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
@@ -326,6 +335,9 @@ public class DashBoardController {
 		
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
 		
+		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
+		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
 		
@@ -376,6 +388,8 @@ public class DashBoardController {
 		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
 		
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
@@ -428,6 +442,8 @@ public class DashBoardController {
 		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
 		
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
@@ -486,6 +502,8 @@ public class DashBoardController {
 		
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
 		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
+		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
 		
@@ -543,6 +561,9 @@ public class DashBoardController {
 		
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
 		
+		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
+		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
 		
@@ -598,6 +619,8 @@ public class DashBoardController {
 		
 		model.addAttribute("objuserBean", objuserBean);
 		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
+		
 			
 		
 			try {
@@ -642,6 +665,8 @@ public class DashBoardController {
 		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
 		
 		model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
@@ -697,6 +722,8 @@ public class DashBoardController {
 		
 		model.addAttribute("objuserBean", objuserBean);
 		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
+		
 			
 		
 			try {
@@ -745,6 +772,8 @@ public class DashBoardController {
 		String id=String.valueOf(objuserBean.getId());
 		
 		model.addAttribute("objuserBean", objuserBean);
+		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
 		
 			
 		

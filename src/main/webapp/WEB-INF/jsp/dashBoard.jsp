@@ -114,7 +114,7 @@ td {
 										<td><c:forEach var="issue" items="${severityCount}">
 												<c:set var="String" value="${issue.key}" />
 
-												<c:if test="${fn:contains(String, 'Critical')}">
+												<c:if test="${fn:contains(String, 'High')}">
 													<div class="col-md-12">
 
 														<a href="severity?id=${issue.key}"
@@ -128,7 +128,7 @@ td {
 											</c:forEach></td>
 										<td><c:forEach var="issue" items="${severityCount}">
 												<c:set var="String" value="${issue.key}" />
-												<c:if test="${fn:contains(String, 'Major')}">
+												<c:if test="${fn:contains(String, 'Medium')}">
 													<div class="col-md-12">
 														<!-- <a href="severity?id=Major" class="btn btn-warning assigned"><span
 													id="unseentasks"> 0 </span> </a> -->
@@ -141,7 +141,7 @@ td {
 											</c:forEach></td>
 										<td><c:forEach var="issue" items="${severityCount}">
 												<c:set var="String" value="${issue.key}" />
-												<c:if test="${fn:contains(String, 'Minor')}">
+												<c:if test="${fn:contains(String, 'Low')}">
 													<div class="col-md-12">
 														<!-- <a href="severity?id=Minor" class="btn btn-primary assigned"><span
 													id="unseentasks"> 1 </span></a> -->
@@ -175,7 +175,7 @@ td {
 										</td>
 										<td><c:forEach var="issue" items="${severityCountsBY}">
 												<c:set var="String" value="${issue.key}" />
-												<c:if test="${fn:contains(String, 'Critical')}">
+												<c:if test="${fn:contains(String, 'High')}">
 													<div class="col-md-12">
 
 
@@ -192,7 +192,7 @@ td {
 											</c:forEach></td>
 										<td><c:forEach var="issue" items="${severityCountsBY}">
 												<c:set var="String" value="${issue.key}" />
-												<c:if test="${fn:contains(String, 'Major')}">
+												<c:if test="${fn:contains(String, 'Medium')}">
 													<div class="col-md-12">
 														<!-- <a href="severity?id=Major" class="btn btn-warning assigned"><span
 													id="unseentasks"> 0 </span> </a> -->
@@ -206,7 +206,7 @@ td {
 											</c:forEach></td>
 										<td><c:forEach var="issue" items="${severityCountsBY}">
 												<c:set var="String" value="${issue.key}" />
-												<c:if test="${fn:contains(String, 'Minor')}">
+												<c:if test="${fn:contains(String, 'Low')}">
 													<div class="col-md-12">
 														<!-- <a href="severity?id=Minor" class="btn btn-primary assigned"><span
 													id="unseentasks"> 1 </span> </a> -->
@@ -244,7 +244,7 @@ td {
 
 										<td><c:forEach var="issue" items="${SevMonitoredCounts}">
 												<c:set var="String" value="${issue.key}" />
-												<c:if test="${fn:contains(String, 'Critical')}">
+												<c:if test="${fn:contains(String, 'High')}">
 													<div class="col-md-12">
 														<a href="severityReportTo?id=${issue.key}"
 															class="btn btn-danger assigned"> <span
@@ -257,7 +257,7 @@ td {
 										<td><c:forEach var="issue" items="${SevMonitoredCounts}">
 												<c:set var="String" value="${issue.key}" />
 
-												<c:if test="${fn:contains(String, 'Major')}">
+												<c:if test="${fn:contains(String, 'Medium')}">
 													<div class="col-md-12">
 														<!-- <a href="severity?id=Critical"
 													class="btn btn-danger assigned"><span id="unseentasks">
@@ -273,7 +273,7 @@ td {
 
 										<td><c:forEach var="issue" items="${SevMonitoredCounts}">
 												<c:set var="String" value="${issue.key}" />
-												<c:if test="${fn:contains(String, 'Minor')}">
+												<c:if test="${fn:contains(String, 'Low')}">
 													<div class="col-md-12">
 														<!-- <a href="severity?id=Minor" class="btn btn-primary assigned"><span
 													id="unseentasks"> 1 </span></a> -->
@@ -620,12 +620,12 @@ td {
 						});
 			});
 	
-	$(document).ready(function(){
+	/* $(document).ready(function(){
 	    if(!window.location.hash) {
 	        window.location = window.location + '#loaded';
 	        window.location.reload();
 	    }
-	});
+	}); */
 
 	$(".dashBoard").addClass("active");
 	$(document).ready(function() {
@@ -792,7 +792,7 @@ td {
 								totalcategory = totalcategory + resolved;
 							}
 							//<a href="severity?id=${issue.key}"
-							console.log(occurrences['Assigned']);
+							//console.log(occurrences['Assigned']);
 							var tblRow = "<tr'>"
 									+ "<td  title='"+orderObj.categoryName+"'>"
 									+ orderObj.categoryName
@@ -807,7 +807,7 @@ td {
 									+ "'  class='btn btn-warning assigned'>"
 									+ resolved
 									+ "</td>"
-									+ "<td title='"+closed1+"'><a href='categoryDashBord?status=1&categoryId="
+									+ "<td title='"+closed2+"'><a href='categoryDashBord?status=1&categoryId="
 									+ orderObj.categoryId
 									+ "'  class='btn btn-primary assigned'>"
 									+ closed1 + "</td>"
@@ -866,7 +866,7 @@ td {
 								totalStatus = totalStatus + resolved;
 							}
 							//<a href="severity?id=${issue.key}"
-							console.log(occurrences['Assigned']);
+							//console.log(occurrences['Assigned']);
 							var tblRow = "<tr'>"
 									+ "<td  title='"+orderObj.statusName+"'>"
 									+ orderObj.statusName
@@ -881,7 +881,7 @@ td {
 									+ "'  class='btn btn-warning assigned'>"
 									+ resolved
 									+ "</td>"
-									+ "<td title='"+closed1+"'><a href='statusDashBord?status="
+									+ "<td title='"+closed2+"'><a href='statusDashBord?status="
 									+ orderObj.statusId
 									+ "'  class='btn btn-primary assigned'>"
 									+ closed2 + "</td>"
@@ -913,10 +913,10 @@ td {
 		
 		$.each(deptcountjson, function(i,item) {
 			
-			console.log(deptcountjson[i]+"------"+deptcountclosedjson[i]);
+			//console.log(deptcountjson[i]+"------"+deptcountclosedjson[i]);
 			
 			var diff=parseInt(item)-parseInt(deptcountclosedjson[i])
-			console.log(item);
+			//console.log(item);
 			 var tblRow = "<tr'>"
 					+ "<td> "
 					+ i
@@ -935,6 +935,22 @@ td {
 		});
 		
 	}
+	
+	
+	var socket = new WebSocket('ws://' + window.location.host + '/dashboard');
+	 
+	// Add an event listener for when a connection is open
+	socket.onopen = function() {
+	  console.log('WebSocket connection opened. Ready to send messages.');
+	 
+	  // Send a message to the server
+	  socket.send('Hello, from WebSocket client!');
+	};
+	 
+	// Add an event listener for when a message is received from the server
+	socket.onmessage = function(message) {
+	  console.log('Message received from server: ' + message);
+	};
 
 		
 	

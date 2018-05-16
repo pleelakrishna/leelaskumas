@@ -323,19 +323,19 @@ public Map<String, Integer> getSeverityCountsUnderReportTo()
 		List<Object[]> rows= em.createNativeQuery(hql).setParameter("id", id2).getResultList();
 		
          for (Object[] row : rows) {
-        	 if(row[0].equals("1"))
+        	 if(row[0].equals("3"))
         	 minor=minor+Integer.parseInt(String.valueOf(row[1]));
         	 else if(row[0].equals("2"))
         	 major=major+Integer.parseInt(String.valueOf(row[1]));
-        	 else if(row[0].equals("3"))
+        	 else if(row[0].equals("1"))
         	 critical=critical+Integer.parseInt(String.valueOf(row[1]));
 		}
 	
 	}
 	
-	severityList.put("Critical",critical);
-	severityList.put("Major",major);
-	severityList.put("Minor",minor);
+	severityList.put("High",critical);
+	severityList.put("Medium",major);
+	severityList.put("Low",minor);
 	severityList.put("Total",critical+major+minor);
 	
 	
@@ -588,9 +588,9 @@ public Set<ReportIssue> getTasksByStatusList(String status) {
 public Set<ReportIssue> getAllTasks() {
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		
-		String hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap" 
-                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks "  
-                   +" where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category ";
+		String hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks , notifications_frequency nf  "  
+                   +" where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and nf.id=r.notificationsfrequency ";
 		
 		
 		
@@ -621,6 +621,9 @@ public Set<ReportIssue> getAllTasks() {
 				
 				issue.setKstatusid((String) row[19]);
 				issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
+				
+				issue.setNotificationsfrequency((String) row[21]);
+				issue.setNotificationsfrequencyid((String) row[22]);
 				
 			    
 			    
@@ -724,18 +727,19 @@ String hql ="";
 	{
 	
 	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
-                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap"
-                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd "
-               +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid"
+                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap, nf.frequence_name , r.notificationsfrequency  "
+                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "
+               +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and nf.id=r.notificationsfrequency "
                +" and kpd.name='"+dept +"'";
 	}
 	
 	else
 		if(id.equals("2"))
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap" 
-                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd "  
-                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
+			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
+ 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
+                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and and nf.id=r.notificationsfrequency  and kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
 
 		}
 
@@ -766,6 +770,10 @@ String hql ="";
 			
 			issue.setKstatusid((String) row[19]);
 			issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
+			
+			
+			issue.setNotificationsfrequency((String) row[21]);
+			issue.setNotificationsfrequencyid((String) row[22]);
 			
 			listissue.add(issue);
 
@@ -832,25 +840,25 @@ String hql ="";
 	{
 	
 	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
-                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap"
-                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd "
+                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
+                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='1'"
-               +" and kpd.name='"+dept +"'";
+               +" and nf.id=r.notificationsfrequency  and kpd.name='"+dept +"'";
 	}
 	
 	else
 		if(id.equals("2"))
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap" 
-                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd "  
-                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='1' and kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
+			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
+                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='1' and and nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and  kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
 
 		}
 
 	try {
 		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
 		for (Object[] row : rows) {
-			ReportIssue issue = new ReportIssue();
+			ReportIssue issue = new ReportIssue(); 
 			issue.setId(Integer.parseInt(String.valueOf(row[0])));
 			issue.setAssignto((String) row[1]);
 			issue.setSeverity((String) row[2]);
@@ -874,6 +882,9 @@ String hql ="";
 			
 			issue.setKstatusid((String) row[19]);
 			issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
+			
+			issue.setNotificationsfrequency((String) row[21]);
+			issue.setNotificationsfrequencyid((String) row[22]);
 			
 			listissue.add(issue);
 
@@ -903,18 +914,18 @@ String hql ="";
 	{
 	
 	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
-                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap"
-                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd "
+                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
+                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus <>'1'"
-               +" and kpd.name='"+dept +"'";
+               +"  and nf.id=r.notificationsfrequency  and kpd.name='"+dept +"'";
 	}
 	
 	else
 		if(id.equals("2"))
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap" 
-                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd "  
-                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus<>'1' and kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
+			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,r.created_time,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
+                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus<>'1' and and nf.id=r.notificationsfrequency  and kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
 
 		}
 
@@ -946,6 +957,9 @@ String hql ="";
 			issue.setKstatusid((String) row[19]);
 			issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
 			
+			issue.setNotificationsfrequency((String) row[21]);
+			issue.setNotificationsfrequencyid((String) row[22]);
+			
 			listissue.add(issue);
 
 		}
@@ -958,6 +972,52 @@ String hql ="";
 	return listissue;
 	
 }
+
+
+public Set<ReportIssue> getfrequencyNotifications(String id) {
+	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+	//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	
+	String hql ="select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,r.additionalinfo,u1.username as asby,r.assignby ,r.notificationsfrequency"
+                 +"from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks , kpstatuslogs kpl ,kpusers u1"
+                 +"where  r.kstatus=ks.id and r.assignto=u.id and r.assignby =u1.id  and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto ='4'  and r.additionalinfo ='1'  and  notificationsfrequency ='2' and datediff(Date(STR_TO_DATE(taskdeadline, '%d-%M-%Y %H:%i')),date(r.created_time))>20 order by kpl.statustime desc";
+	
+	try {
+		List<Object[]> rows = em.createNativeQuery(hql).setParameter("id",id).getResultList();
+		for (Object[] row : rows) {
+			ReportIssue issue = new ReportIssue();
+			issue.setId(Integer.parseInt(String.valueOf(row[0])));
+			issue.setTaskno((String) row[1]);
+			issue.setSubject((String) row[2]);
+			issue.setCategory((String) row[3]);
+			issue.setCategoryid((String) row[4]);
+			issue.setPriority((String) row[5]);
+			issue.setPriorityid((String) row[6]);
+			issue.setAssignto((String) row[7]);
+			issue.setAssigntoid((String) row[8]);
+			issue.setCreatedTime((Date) row[9]);
+			issue.setSeverity((String) row[10]);
+			issue.setSeverityid((String) row[11]);
+			issue.setStatus((String) row[12]);
+			issue.setDescription((String) row[13]);
+			issue.setTaskdeadline((String) row[14]);
+			issue.setAdditionalinfo((String) row[15]);
+			
+			issue.setAssignby((String) row[16]);
+			issue.setAssignbyid((String) row[17]);
+			
+			listissue.add(issue);
+
+		}
+	} catch (Exception e) {
+		System.out.println("error here");
+		e.printStackTrace();
+	}
+	
+	
+	return listissue;
+}
+
 
 
      

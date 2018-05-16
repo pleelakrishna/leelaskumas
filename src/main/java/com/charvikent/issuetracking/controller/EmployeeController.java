@@ -218,7 +218,7 @@ public class EmployeeController {
 			userService.updatePassword(users);
 			redir.addFlashAttribute("msg", "Password Updated Successfully");
 			redir.addFlashAttribute("cssMsg", "warning");
-			return "redirect:/";
+			return "redirect:changePassword";
 		}else {
 			request.setAttribute("msg", "You Entered Wrong Password");
 			request.setAttribute("cssMsg", "warning");
@@ -255,7 +255,7 @@ public class EmployeeController {
 		redir.addFlashAttribute("msg", "You Details Updated Successfully");
 		redir.addFlashAttribute("cssMsg", "warning");
 
-			return "redirect:dashBoard";
+			return "editProfile";
 
 
 
@@ -308,6 +308,7 @@ public class EmployeeController {
 		return String.valueOf(jsonObj);
 	}
 
+	
 
 
 
