@@ -59,6 +59,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.css">
 <link rel="stylesheet" href="${baseurl }/assets/css/select2.css">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans|Roboto+Condensed" rel="stylesheet">
 
 
 
@@ -111,7 +112,9 @@ span.has-error,span.hasError
   display: block !important;
   position: absolute;
 }
-
+.btn-toolbar {
+	margin-top:9px;
+}
 .error{color: red; font-weight: bold;}
 
 .alert-success, .alert-warning, .alert-danger{color: white !important;}

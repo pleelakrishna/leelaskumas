@@ -2175,6 +2175,7 @@ select[multiple].form-group-lg .form-control {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  font-family: 'PT Sans';
 }
 .btn:focus,
 .btn:active:focus,
@@ -15260,7 +15261,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .input-group-addon:not(:first-child) {
   border-left: 0;
 }
-.btn span { font-size:20px;}
+.btn span { font-size:14px;}
 .red { color: #F00;}
 .green { color:#090;}
 .top20 { margin-top:20px;}

@@ -14,8 +14,7 @@
 }
 
 .assigned {
-	width: 120px;
-	height: 30px;
+	width:100px;
 	line-height: 0.8;
 	border-radius: 10px;
 }
@@ -24,16 +23,29 @@
 table:nth-of-type(1) .th {
   background-image: linear-gradient(
     to top right,
-    green 50%,
-    red 50%
+    #f1c40f 50%,
+    #e73c3c 50%
   );
 }
 .head {
 	background: #e73c3c;
 }
-
+th {
+	font-family: 'Roboto Condensed';
+	font-size: 15px;
+}
+.lighter {
+	font-family: 'Roboto Condensed';
+	font-size: 17px;
+}
+.panel-heading h4 {
+	font-size: 25px;
+}
+td {
+	font-family: 'PT Sans';
+	font-size: 14px;
+}
 </style>
-
 
 
 <!-- Body starts here -->
@@ -73,8 +85,7 @@ table:nth-of-type(1) .th {
 							<div class="table-responsive">
 								<table class="table table-bordered priority prioritybg"
 									style="border: 1px solid #006699; width:;">
-									<tr
-										style="background-color: #006699; color: #fff; text-align: center;">
+									<tr style="background-color: #006699; color: #fff; text-align: center;">
 
 										<th class="th"><span style="float:right;">Priority</span><br><span style="float:left;">Unclosed Tasks</span></th>
 										<th>High</th>
@@ -88,7 +99,7 @@ table:nth-of-type(1) .th {
 											<div class="col-md-12" style="margin-left: 5px"!important">
 
 												<span
-													style="font-size: 18px; lettee-spacin: 1px; color: #006699;">Assigned
+													style="font-size: 14px; lettee-spacin: 1px; color: #006699;">Assigned
 													To Me <c:forEach var="issue" items="${severityCount}">
 														<c:set var="String" value="${issue.key}" />
 														<c:if test="${fn:contains(String, 'Total')}">
@@ -148,7 +159,7 @@ table:nth-of-type(1) .th {
 
 
 												<span
-													style="font-size: 18px; lettee-spacin: 1px; color: #006699;">Assigned
+													style="font-size: 14px; lettee-spacin: 1px; color: #006699;">Assigned
 													By Me<c:forEach var="issue" items="${severityCountsBY}">
 														<c:set var="String" value="${issue.key}" />
 														<c:if test="${fn:contains(String, 'Total')}">
@@ -216,7 +227,7 @@ table:nth-of-type(1) .th {
 
 											<div class="col-md-12" style="margin-left: 5px"!important">
 												<span
-													style="font-size: 18px; lettee-spacin: 1px; color: #006699;">Monitored
+													style="font-size: 14px; lettee-spacin: 1px; color: #006699;">Monitored
 													BY Me<c:forEach var="issue" items="${SevMonitoredCounts}">
 														<c:set var="String" value="${issue.key}" />
 														<c:if test="${fn:contains(String, 'Total')}">
@@ -374,8 +385,7 @@ table:nth-of-type(1) .th {
 							<div id="assigned" class="widget-box widget-color-blue2">
 								<div class="widget-header widget-header-small">
 									<h4 class="widget-title lighter">
-										<i class="ace-icon fa fa-clock-o"></i> <a class="white"
-											href="#">Timeline</a>
+										<a class="white" href="#"><i class="ace-icon fa fa-clock-o"></i> Timeline</a>
 									</h4>
 									<div class="widget-toolbar">
 										<a data-action="collapse" href="#"> <!-- <i class="1 ace-icon fa bigger-125 fa-chevron-up"></i> -->
