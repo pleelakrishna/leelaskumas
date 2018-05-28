@@ -949,6 +949,35 @@ $(".cancel2").click(function()
 				}
 			});
 		});
+		
+		
+document.getElementById("file1").onchange = function () {
+    var reader = new FileReader();
+    if(this.files[0].size>528385){
+        alert("file Size should not be greater than 528Kb");
+        $("#file1").attr("src","blank");
+       // $("#file1").hide();  
+        $('#file1').wrap('<form>').closest('form').get(0).reset();
+        $('#file1').unwrap();     
+        return false;
+    }
+    /* if(this.files[0].type.indexOf("image")==-1){
+        alert("Invalid Type");
+        $("#file1").attr("src","blank");
+        //$("#file1").hide();  
+       $('#file1').wrap('<form>').closest('form').get(0).reset();
+      //  $('#file1').unwrap();         
+        return false;
+    }    */
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("menu_image").src = e.target.result;
+        $("#file1").show(); 
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+};
 
 
 $("#pageName").text("Task Master");

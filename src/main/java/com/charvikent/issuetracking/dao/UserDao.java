@@ -2,6 +2,7 @@ package com.charvikent.issuetracking.dao;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -10,6 +11,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.Department;
@@ -185,6 +190,13 @@ public class UserDao {
 	}
 */
 	public void updateUser(User user) {
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		   Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+			
+			
 		User users=getUserById(user.getId());
 		//users.setPassword(user.getCpassword());
 		users.setPassword(user.getPassword());
@@ -197,6 +209,11 @@ public class UserDao {
 		users.setMobilenumber(user.getMobilenumber());
 		users.setUsername(user.getUsername());
 		users.setReportto(user.getReportto());
+		
+		if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+		{
+			users.setKpOrgId(user.getKpOrgId());
+		}
 
 		em.merge(users);
 
@@ -287,7 +304,7 @@ public class UserDao {
 		System.out.println(user);*/
 		
 		
-		String hql ="From User where username= '"+userName+"' ";
+		String hql ="From User where   enabled ='1' and  username= '"+userName+"' ";
 		
 		Query query = em.createQuery(hql);
 		

@@ -308,6 +308,8 @@ function editEmployee(id) {
 	$("#department").val(serviceUnitArray[id].department);
 	$("#reportto").val(serviceUnitArray[id].reportto);
 	$("#email").val(serviceUnitArray[id].email);
+	
+	$("#kpOrgId").val(serviceUnitArray[id].kpOrgId);
 	$("#submit1").val("Update");
 	$(window).scrollTop($('#moveTo').offset().top);
 	document.getElementById("username").readOnly  = true;
