@@ -51,7 +51,7 @@ public class MastersDao {
 	 {
        List<Department> list=new ArrayList<Department>();
 		
-		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,kp.username,d.depthead,d.description,d.status from kpdepartment d,kpusers kp where d.depthead=kp.id and d.status='0'").getResultList();
+		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,d.description,d.status from kpdepartment d where  d.status='0'").getResultList();
 		for(Object[] row: rows)
 		{
 		 
@@ -59,10 +59,8 @@ public class MastersDao {
 		Department dept =new Department();
 		dept.setId( Integer.parseInt(String.valueOf(row[0])));
 		dept.setName((String)row[1]);
-		dept.setDepthead((String)row[2]);
-		dept.setDeptheadid((String)row[3]);
-		dept.setDescription((String)row[4]);
-		dept.setStatus((String)row[5]);
+		dept.setDescription((String)row[2]);
+		dept.setStatus((String)row[3]);
 		list.add(dept);
 		}
 		return list;

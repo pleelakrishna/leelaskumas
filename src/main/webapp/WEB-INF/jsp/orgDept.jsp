@@ -241,7 +241,7 @@
 							formData.append('dept', deptval);
 							formData.append('org', orgval);
 							$.fn.makeMultipartRequest('POST','existOrNot',false,formData,false,'text',function(data) {
-												alert(data);
+												/* alert(data); */
 												if (data === 'true') {
 													alert("selected department is already exists");
 													$('#dept').val("");
