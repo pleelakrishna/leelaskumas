@@ -431,7 +431,7 @@ function getHeadersCounts(){
 	                    <li class="username">
 	                        <a href="#">
 	                            <div class="pull-left"><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt=""/></div>
-	                            <div class="pull-right"><h5> hi ${pageContext.request.userPrincipal.name} !</h5><small>Logged in as <span><%= userDesignation.getDesignationName() %></span></small></div> 
+	                            <div class="pull-right"><h5> Hi ${pageContext.request.userPrincipal.name} !</h5><small style="font-size:10px;">Logged in as <span><%= userDesignation.getDesignationName() %></span></small></div> 
 	                        </a>
 	                    </li>
 	                    <li class="userlinks">
