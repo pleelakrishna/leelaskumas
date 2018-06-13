@@ -49,7 +49,7 @@ jQuery('.numericOnly').keyup(function() {
 
 $(".numericOnly").keydown(function(e) {
 			// Allow: backspace, delete, tab, escape, enter and .
-			if ($.inArray(e.keyCode, [ 46, 8, 9, 27, 13, 110, 190 ]) !== -1 ||
+			if ($.inArray(e.keyCode, [ 8, 9, 27, 13 ]) !== -1 ||
 			// Allow: Ctrl+A, Command+A
 			(e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
 			// Allow: home, end, left, right, down, up
@@ -129,7 +129,7 @@ $(".onlyCharacters").on("keypress",	function(event) {
 
 			// Disallow anything not matching the regex pattern (A to Z
 			// uppercase, a to z lowercase and white space)
-			var englishAlphabetAndWhiteSpace = /[A-Za-z. ]/g;
+			var englishAlphabetAndWhiteSpace = /[A-Za-z ]/g;
 
 			// Retrieving the key from the char code passed in event.which
 			var key = String.fromCharCode(event.which);

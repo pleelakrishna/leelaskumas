@@ -89,7 +89,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Email</label>
 									<div class="col-md-6">
-										<form:input path="email" class="form-control" placeholder="Enter Email"/>
+										<form:input path="email" class="form-control emailOnly" placeholder="Enter Email"/>
 									</div>
 								</div></div>
 								<div class="col-md-6">
@@ -308,6 +308,8 @@ function editEmployee(id) {
 	$("#department").val(serviceUnitArray[id].department);
 	$("#reportto").val(serviceUnitArray[id].reportto);
 	$("#email").val(serviceUnitArray[id].email);
+	
+	$("#kpOrgId").val(serviceUnitArray[id].kpOrgId);
 	$("#submit1").val("Update");
 	$(window).scrollTop($('#moveTo').offset().top);
 	document.getElementById("username").readOnly  = true;
