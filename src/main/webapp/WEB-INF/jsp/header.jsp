@@ -67,6 +67,8 @@
 <script type='text/javascript' src='${baseurl }/js/canvasjs.min.js'></script> 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
+
+
 <style type="text/css">
 
 @media (max-width: 767px) {
@@ -235,6 +237,8 @@ color: inherit !important;
 		text-align:center;
 	}
 </style>
+
+ 
 <script type="text/javascript">
 	var isClick = 'No';
 		window.setTimeout(function() {

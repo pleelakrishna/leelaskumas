@@ -45,6 +45,9 @@ td {
 	font-family: 'PT Sans';
 	font-size: 14px;
 }
+.pad {
+	padding-top:21px !important;
+}
 </style>
 
 
@@ -88,9 +91,9 @@ td {
 									<tr style="background-color: #006699; color: #fff; text-align: center;">
 
 										<th class="th"><span style="float:right;">Priority</span><br><span style="float:left;">Unclosed Tasks</span></th>
-										<th>High</th>
-										<th>Medium</th>
-										<th>Low</th>
+										<th class="pad">High</th>
+										<th class="pad">Medium</th>
+										<th class="pad">Low</th>
 
 									</tr>
 
@@ -100,7 +103,7 @@ td {
 
 												<span
 													style="font-size: 14px; lettee-spacin: 1px; color: #006699;">Assigned
-													To Me <c:forEach var="issue" items="${severityCount}">
+													to Me <c:forEach var="issue" items="${severityCount}">
 														<c:set var="String" value="${issue.key}" />
 														<c:if test="${fn:contains(String, 'Total')}">
 															<a href="severity?id=${issue.key}">( ${issue.value} )</a>
@@ -160,7 +163,7 @@ td {
 
 												<span
 													style="font-size: 14px; lettee-spacin: 1px; color: #006699;">Assigned
-													By Me<c:forEach var="issue" items="${severityCountsBY}">
+													by me<c:forEach var="issue" items="${severityCountsBY}">
 														<c:set var="String" value="${issue.key}" />
 														<c:if test="${fn:contains(String, 'Total')}">
 															<a href="severityby?id=${issue.key}">( ${issue.value}
@@ -228,7 +231,7 @@ td {
 											<div class="col-md-12" style="margin-left: 5px"!important">
 												<span
 													style="font-size: 14px; lettee-spacin: 1px; color: #006699;">Monitored
-													BY Me<c:forEach var="issue" items="${SevMonitoredCounts}">
+													bY me<c:forEach var="issue" items="${SevMonitoredCounts}">
 														<c:set var="String" value="${issue.key}" />
 														<c:if test="${fn:contains(String, 'Total')}">
 															<a href="severityReportTo?id=${issue.key}">(
@@ -937,21 +940,7 @@ td {
 	}
 	
 	
-	var socket = new WebSocket('ws://' + window.location.host + '/dashboard');
-	 
-	// Add an event listener for when a connection is open
-	socket.onopen = function() {
-	  console.log('WebSocket connection opened. Ready to send messages.');
-	 
-	  // Send a message to the server
-	  socket.send('Hello, from WebSocket client!');
-	};
-	 
-	// Add an event listener for when a message is received from the server
-	socket.onmessage = function(message) {
-	  console.log('Message received from server: ' + message);
-	};
-
+	
 		
 	
 

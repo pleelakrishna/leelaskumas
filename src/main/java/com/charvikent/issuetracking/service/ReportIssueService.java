@@ -80,7 +80,7 @@ public class ReportIssueService {
 		}
 		//sendConfirmationEmail(reportIssue,user,serverFile);
 		User touser = userDao.find(Integer.parseInt(reportIssue.getAssignto()));
-		String msg =" A Ticket is assigned to you with id: "+reportIssue.getId();
+		String msg =" A Ticket is assigned to you with id: "+reportIssue.getTaskno();
 		System.out.println("....Sending SMS ....");
 		String  mnum=touser.getMobilenumber();
 		smsTemplate.sendSMS(msg,mnum);
