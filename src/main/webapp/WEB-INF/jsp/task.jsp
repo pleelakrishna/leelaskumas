@@ -64,7 +64,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" id="moveTo">
+		<div class="row" id="moveTo ">
 			<div class="col-md-12 col-sm-12">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
@@ -337,6 +337,11 @@
 
 
 <script type="text/javascript">
+$(function() {
+	$(window).scrollTop($('#severity').offset().top);
+});
+
+
 
 $("#taskdeadline").keypress(function(){
 	return false;
@@ -462,7 +467,7 @@ function createDuplicate(id) {
 	$("#notificationsfrequency").val(serviceUnitArray[id].notificationsfrequencyid);
 	//$("#taskdeadline").val(serviceUnitArray[id].taskdeadline);
 	$("#submit1").val("Update");
-	$(window).scrollTop($('#moveTo').offset().top);
+	$(window).scrollTop($('#severity').offset().top);
 }
 
 /* Create Duplicate Task */
@@ -479,7 +484,7 @@ function editTask(id) {
 	$("#taskdeadline").val(serviceUnitArray[id].taskdeadline);
 	$("#notificationsfrequency").val(serviceUnitArray[id].notificationsfrequencyid);
 	$("#submit1").val("Update");
-	$(window).scrollTop($('#moveTo').offset().top);
+	$(window).scrollTop($('#severity').offset().top);
 }
 
 /* view task history */

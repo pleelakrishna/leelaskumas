@@ -42,7 +42,8 @@ public class FilesStuff {
 	 */
 	public  File   makeDirectory()
 	{
-		 String path = request.getServletContext().getRealPath("/");
+		String path = request.getServletContext().getRealPath("/");
+		//String path =System.getProperty("catalina.home");
     	 File dir = new File (path +"reportDocuments");
     	 if (!dir.exists()) {
 				dir.mkdirs();

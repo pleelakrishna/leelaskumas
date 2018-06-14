@@ -427,7 +427,7 @@ function getHeadersCounts(){
 </div>
                 </li>
 	             <%-- <li style="float:left;margin-right:35px"><a href="${baseurl}/task" style="color:white;">Create Task</a></li> --%>
-	            <li style="float:left; margin-right:5px; margin-top:5px;"><a href="${baseurl}/task" style="color:white;">Create Task</a></li>
+	            <li style="float:left; margin-right:5px; margin-top:5px;"><a href="${baseurl}/task" style="color:white;" >Create Task</a></li>
 	   
 	            <li style=" margin-top:5px;" class="dropdown">
 	                <a href="#" class="dropdown-toggle username" data-toggle="dropdown" style="color: white;"><span class="hidden-xs" > <%= userDesignation.getDesignationName() %> <i class="fa fa-caret-down"></i></span><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt="Dangerfield" /></a>
