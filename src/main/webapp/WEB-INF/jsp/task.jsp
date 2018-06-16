@@ -280,11 +280,13 @@
 							</div>
 							<br>
 							<div class="row">
-                    		<div class="col-md-7">
+                    		<div class="col-md-12">
                     			<div class="form-group">
-									<label for="focusedinput" class="col-md-6 control-label">Comment <span class="impColor">*</span></label>
+                    				<div class="col-md-2">
+										<label for="focusedinput" class="control-label">Comment <span class="impColor">*</span></label>
+                    				</div>
 									<div class="col-md-6">
-									<input type="text"  name="commet" id="commet"  onkeyup="removeBorder(this.id)" class="form-control validate2"  placeholder="Enter comment" style="width: 320px;">
+									<input type="text"  name="commet" id="commet"  onkeyup="removeBorder(this.id)" class="form-control validate2"  placeholder="Enter comment">
 									<span class="hasError" id="stationnameError"></span>
 								    </div>
                     			</div>
