@@ -1436,6 +1436,7 @@ th {
   width: 100%;
   max-width: 100%;
   margin-bottom: 20px;
+  overflow:auto;
 }
 .table > thead > tr > th,
 .table > tbody > tr > th,
@@ -9546,8 +9547,8 @@ header .nav .badge {
     box-shadow: none;
     border: none;
   }
-  .navbar-nav.toolbar > li {
-  	margin-top:20px;
+  .mob {
+  	margin-left:160px;
   }
   nav.navbar .navbar-header {
     width: auto;
@@ -10251,6 +10252,9 @@ body.collapse-leftbar #search.keep-open form button[type="submit"] {
 }
 .navbar:after {
   clear: both;
+}
+nav.navbar .navbar-header {
+	 margin-top:19px !important;
 }
 @media (min-width: 768px) {
   .navbar {

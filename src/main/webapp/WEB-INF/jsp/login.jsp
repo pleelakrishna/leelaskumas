@@ -56,12 +56,12 @@
 
 <body class="focusedform">
 <div class="verticalcenter">
-<div><img src="assets/img/klogo.png" style="width:250px;" class="img-responsive"></div>
+<div align="center"><img src="assets/img/klogo.png" style="width:250px;" class="img-responsive"></div>
 <!-- 	<h1 align="center">KHAIBAR GAS</h1> -->
 	<div class="panel panel-primary">
 		<form  action=login class="form-horizontal" method="POST"  style="margin-bottom: 0px !important;">
 		<div class="panel-body">
-			<h4 class="text-center" style="margin-bottom: 25px;">Login to get started</h4>
+			<h4 class="text-center" style="margin-bottom: 25px;">Login</h4>
 			<c:if test="${param.error ne null}">
 				  <div class="msgcss1 row">
 									<div align="center" class="form-group">

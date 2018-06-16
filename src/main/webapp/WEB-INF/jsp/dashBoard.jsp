@@ -103,7 +103,7 @@ td {
 
 												<span
 													style="font-size: 14px; lettee-spacin: 1px; color: #006699;">Assigned
-													to Me <c:forEach var="issue" items="${severityCount}">
+													to me <c:forEach var="issue" items="${severityCount}">
 														<c:set var="String" value="${issue.key}" />
 														<c:if test="${fn:contains(String, 'Total')}">
 															<a href="severity?id=${issue.key}">( ${issue.value} )</a>
@@ -231,7 +231,7 @@ td {
 											<div class="col-md-12" style="margin-left: 5px"!important">
 												<span
 													style="font-size: 14px; lettee-spacin: 1px; color: #006699;">Monitored
-													bY me<c:forEach var="issue" items="${SevMonitoredCounts}">
+													by me<c:forEach var="issue" items="${SevMonitoredCounts}">
 														<c:set var="String" value="${issue.key}" />
 														<c:if test="${fn:contains(String, 'Total')}">
 															<a href="severityReportTo?id=${issue.key}">(
@@ -577,7 +577,7 @@ td {
 	data-keyboard="false" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
-		<div class="col-md-12" style="width: 800px; margin-left: -55px;">
+		<div class="col-md-12 mod" style="width: auto;">
 			<div class="panel panel-primary">
 
 				<div class="panel-heading">
@@ -693,8 +693,7 @@ td {
 					 "</td>" */+ "</tr>";
 			$(tblRow).appendTo("#tableId table tbody");
 		});
-		if (isClick == 'Yes')
-			$('#notification').dataTable();
+		
 
 	}
 

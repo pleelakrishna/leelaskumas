@@ -67,8 +67,6 @@
 <script type='text/javascript' src='${baseurl }/js/canvasjs.min.js'></script> 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-
-
 <style type="text/css">
 
 @media (max-width: 767px) {
@@ -202,7 +200,7 @@ color: inherit !important;
    	width: 300px;
     z-index: 1;
 	margin-left:-35px;
-	right:0;
+	right:-140px;
 	height:200px;
 	overflow-y:auto;
 }
@@ -237,8 +235,6 @@ color: inherit !important;
 		text-align:center;
 	}
 </style>
-
- 
 <script type="text/javascript">
 	var isClick = 'No';
 		window.setTimeout(function() {
@@ -338,14 +334,15 @@ function getHeadersCounts(){
 
     <header class="navbar navbar-inverse navbar-fixed-top" role="banner" style="background: #4f8edc;">
         <div class="navbar-header pull-left">
-            <a class="navbar-brand" href="javascript:void(0);"><img src="${baseurl }/assets/img/klogo.png"  style ="width:auto;height:68px;" class="img-responsive"></a>
+            <a class="navbar-brand" href="javascript:void(0);"><img src="${baseurl }/assets/img/klogo.png"  style ="width:auto;height:58px;" class="img-responsive"></a>
             <div class="clearfix"></div>
         </div>
 		<div class="masters">
-	        <ul class="nav navbar-nav pull-right toolbar"><li style="float:left;">
+	        <ul class="nav navbar-nav pull-right toolbar">
+	        <li class="mob" style="float:left;">
             <div style="box-shadow:none;" class="navbar">
   <div style="border-left:none; margin-right:10px;" class="dropdown">
-    <diV style="color:#FFFFFF; background:#4f8edc; font-size:25px; margin-top:10px; margin-right:10px;" class="dropbtn"">    
+    <diV style="color:#FFFFFF; background:#4f8edc; font-size:20px; margin-top:12px; margin-right:10px;" class="dropbtn"">    
 
 
     <i class="fa fa-list-alt"></i><!-- <span class="badge">5</span> -->
@@ -386,7 +383,7 @@ function getHeadersCounts(){
             <li style="float:left;">
             <div style="box-shadow:none; margin-right:10px;" class="navbar">
   <div style="border-left:none;" class="dropdown">
-    <diV style="color:#FFFFFF; background:#4f8edc; font-size:25px; margin-top:10px;" class="dropbtn"">
+    <diV style="color:#FFFFFF; background:#4f8edc; font-size:20px; margin-top:12px;" class="dropbtn"">
 
 
       <i class="fa fa-bell-o"></i><!-- <span class="badge">5</span> -->
@@ -427,15 +424,15 @@ function getHeadersCounts(){
 </div>
                 </li>
 	             <%-- <li style="float:left;margin-right:35px"><a href="${baseurl}/task" style="color:white;">Create Task</a></li> --%>
-	            <li style="float:left; margin-right:5px; margin-top:5px;"><a href="${baseurl}/task" style="color:white;" >Create Task</a></li>
+	            <li style="float:left; margin-right:5px; margin-top:3px;"><a href="${baseurl}/task" style="color:white;">Create Task</a></li>
 	   
-	            <li style=" margin-top:5px;" class="dropdown">
+	            <li style=" margin-top:3px;" class="dropdown">
 	                <a href="#" class="dropdown-toggle username" data-toggle="dropdown" style="color: white;"><span class="hidden-xs" > <%= userDesignation.getDesignationName() %> <i class="fa fa-caret-down"></i></span><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt="Dangerfield" /></a>
 	                <ul class="dropdown-menu userinfo arrow">
 	                    <li class="username">
 	                        <a href="#">
 	                            <div class="pull-left"><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt=""/></div>
-	                            <div class="pull-right"><h5> Hi ${pageContext.request.userPrincipal.name} !</h5><small style="font-size:10px;">Logged in as <span><%= userDesignation.getDesignationName() %></span></small></div> 
+	                            <div class="pull-right"><h5> hi ${pageContext.request.userPrincipal.name} !</h5><small>Logged in as <span><%= userDesignation.getDesignationName() %></span></small></div> 
 	                        </a>
 	                    </li>
 	                    <li class="userlinks">
@@ -459,7 +456,7 @@ function getHeadersCounts(){
         </div>
     </header>
 <div class="clearfix"></div>
-    <nav style="margin-top:35px;" class="navbar navbar-default yamm top20" role="navigation">
+    <nav style="margin-top:30px;" class="navbar navbar-default yamm top20" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                 <i class="fa fa-bars"></i>
