@@ -337,10 +337,11 @@ public class UserDao {
 
 	public User getUserByObject(User user) {
 
-		String hql ="from User where username =:n";
+		String hql ="from User where username =:n and mobilenumber =:m ";
 
 		Query query =em.createQuery(hql);
 		query.setParameter("n", user.getUsername());
+		query.setParameter("m", user.getMobilenumber());
 
 		List<User>usersList =query.getResultList();
 		if(usersList.isEmpty())
