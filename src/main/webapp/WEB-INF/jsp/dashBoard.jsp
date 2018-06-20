@@ -1,8 +1,7 @@
 <style>
 .btn-toolbar {
-	margin-left: 5px;
+	margin-top:7px;
 }
-
 .priority th, td {
 	text-align: center;
 	border: 1px solid #efe9e9;
@@ -10,7 +9,6 @@
 
 .prioritybg tr:nth-child(even) {
 	background: #ccc;
-	border: 1px solid red;
 }
 
 .assigned {
