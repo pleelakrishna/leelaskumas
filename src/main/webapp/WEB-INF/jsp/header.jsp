@@ -112,9 +112,6 @@ span.has-error,span.hasError
   display: block !important;
   position: absolute;
 }
-.btn-toolbar {
-	margin-top:9px;
-}
 .error{color: red; font-weight: bold;}
 
 .alert-success, .alert-warning, .alert-danger{color: white !important;}
@@ -333,13 +330,11 @@ function getHeadersCounts(){
 
 
     <header class="navbar navbar-inverse navbar-fixed-top" role="banner" style="background: #4f8edc;">
-        <div class="navbar-header pull-left">
-            <a class="navbar-brand" href="javascript:void(0);"><img src="${baseurl }/assets/img/klogo.png"  style ="width:auto;height:58px;" class="img-responsive"></a>
-            <div class="clearfix"></div>
-        </div>
-		<div class="masters">
+            <a class="navbar-brand" href="javascript:void(0);"><img src="${baseurl }/assets/img/klogo.png"  style ="width:auto;height:57px;" class="img-responsive"></a>
+            
+		<div style="float:right;" class="masters">
 	        <ul class="nav navbar-nav pull-right toolbar">
-	        <li class="mob" style="float:left;">
+	        <li style="float:left;">
             <div style="box-shadow:none;" class="navbar">
   <div style="border-left:none; margin-right:10px;" class="dropdown">
     <diV style="color:#FFFFFF; background:#4f8edc; font-size:20px; margin-top:12px; margin-right:10px;" class="dropbtn"">    
@@ -437,7 +432,7 @@ function getHeadersCounts(){
 	                    </li>
 	                    <li class="userlinks">
 	                        <ul class="dropdown-menu">
-	                            <li><a href="editProfile">Edit Profile <i class="pull-right fa fa-pencil" style="margin-left:85px;"></i></a></li>
+	                            <!-- <li><a href="editProfile">Edit Profile <i class="pull-right fa fa-pencil" style="margin-left:85px;"></i></a></li> -->
 	                            <li><a href="changePassword">Change Password <i class="pull-right fa fa-cog"  style="margin-left:45px;"></i></a></li>
 	                         <%--    <c:url value="${peContext.request.contextPath}/logout" var="logoutUrl" /> --%>
 	
@@ -454,9 +449,11 @@ function getHeadersCounts(){
 	            </li>
 	        </ul>
         </div>
+            <div class="clearfix"></div>
+        </div>
     </header>
 <div class="clearfix"></div>
-    <nav style="margin-top:30px;" class="navbar navbar-default yamm top20" role="navigation">
+    <nav class="navbar navbar-default yamm top20" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                 <i class="fa fa-bars"></i>
@@ -484,7 +481,7 @@ function getHeadersCounts(){
 			</ul>
 		</div>
     </nav>
-<div class="clearfix" style="margin-bottom: 73px;"></div>
+<div class="clearfix bot"></div>
     <div id="page-container">
     	<div id="page-content" style="min-height: auto;">
     		<div id="wrap">

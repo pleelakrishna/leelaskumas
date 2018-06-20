@@ -43,6 +43,9 @@ a:active,
 a:hover {
   outline: 0;
 }
+.btn-toolbar {
+	padding-right:30px;
+}
 abbr[title] {
   border-bottom: 1px dotted;
 }
@@ -9547,9 +9550,6 @@ header .nav .badge {
     box-shadow: none;
     border: none;
   }
-  .mob {
-  	margin-left:160px;
-  }
   nav.navbar .navbar-header {
     width: auto;
     margin-top: 20px;
@@ -10017,6 +10017,9 @@ body.collapse-leftbar #sidebar > li.hasChild:hover > a:before {
   overflow: hidden;
 }
 @media (max-width: 767px) {
+  .navbar-default{
+  	margin-top:-30px !important;
+  }
   #page-leftbar {
     /* Collapsed */
     width: 0;
@@ -10259,6 +10262,9 @@ nav.navbar .navbar-header {
 @media (min-width: 768px) {
   .navbar {
     border-radius: 1px;
+  }
+  .navbar-default {
+  	margin-top:30px !important;
   }
 }
 .navbar-header:before,
@@ -10514,6 +10520,9 @@ nav.navbar .navbar-header {
   .navbar-form .form-group {
     margin-bottom: 5px;
   }
+  .bot {
+  	margin-bottom:29px !important;
+  }
 }
 @media (min-width: 768px) {
   .navbar-form {
@@ -10525,6 +10534,9 @@ nav.navbar .navbar-header {
     padding-bottom: 0;
     -webkit-box-shadow: none;
     box-shadow: none;
+  }
+  .bot {
+  	margin-bottom:73px !important;
   }
 }
 .navbar-nav > li > .dropdown-menu {

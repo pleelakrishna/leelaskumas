@@ -5,6 +5,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<style>
+.btn-toolbar {
+	margin-top:7px;
+}
+</style>
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
 		<li><a href="dashBoard">Home</a></li>
