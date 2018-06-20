@@ -95,12 +95,12 @@ public class EmployeeController {
 		int id = 0;
 		try
 		{
-			User userBean=null;
-			if(user.getId()!=null)
+			User 	  userBean= userService.getUserByObject(user);
+			/*if(user.getId()!=null)
 			{
 			  userBean= userService.getUserByObject(user);
 
-			}
+			}*/
 			int dummyId =0;
 
 			if(userBean != null){
