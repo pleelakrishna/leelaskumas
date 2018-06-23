@@ -99,7 +99,7 @@
 								</div></div>
 								<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label no-padding-right">Designation</label>
+									<label class="col-md-3 control-label no-padding-right">Designation<span class="impColor">*</span></label>
 									<div class="col-md-6">
 										<form:select path="designation" class="form-control validate " >
 											<form:option value="">-- Select Designation --</form:option>
@@ -119,7 +119,7 @@
 								</div></div>
 								<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label no-padding-right">ReportTo</label>
+									<label class="col-md-3 control-label no-padding-right">ReportTo<span class="impColor">*</span></label>
 									<div class="col-md-6">
 										<form:select path ="reportto" class="form-control validate" onfocus="removeBorder(this.id)">
 											<form:option value="">-- Select Report to --</form:option>
@@ -130,7 +130,7 @@
 								 <security:authorize access="hasRole('ROLE_MASTERADMIN')">
 								<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-md-3 control-label no-padding-right">Organization</label>
+									<label class="col-md-3 control-label no-padding-right">Organization<span class="impColor">*</span></label>
 									<div class="col-md-6">
 										<form:select path ="kpOrgId" class="form-control validate" onfocus="removeBorder(this.id)">
 											<form:option value="">-- Select Organization --</form:option>
