@@ -1664,6 +1664,55 @@ table th[class*="col-"] {
     border-bottom: 0;
   }
 }
+
+
+
+/* Media queries P */
+@media (max-width: 767px) {
+	#horizontal-navbar .navbar-nav li a {
+  	width:100%;
+  	text-align:left;
+  }
+}
+@media (max-width: 320px) {
+	.navbar-brand img {
+		height: 40px !important;
+		margin-top:10px;
+	}
+}
+@media (min-width: 320px) and (max-width: 639px) {
+	.horizontal-nav nav.navbar {
+		margin-top: -30px !important;
+	}
+	#page-heading {
+		margin-top: 0px !important;
+	}
+}
+@media (max-width: 640px) {
+	.horizontal-nav nav.navbar {
+		margin-top: 11px;
+	}
+	#page-heading {
+		margin-top: 40px;
+	}
+}
+@media (min-width: 641px) and (max-width: 767px) {
+	.horizontal-nav nav.navbar {
+		margin-top: 10px;
+	}
+	#page-heading {
+		margin-top: 40px;
+	}
+}
+@media (min-width: 76px) {
+	#page-heading {
+		margin-top: 40px;
+	}
+}
+/* Media queries P */
+
+
+
 fieldset {
   padding: 0;
   margin: 0;
@@ -10017,9 +10066,6 @@ body.collapse-leftbar #sidebar > li.hasChild:hover > a:before {
   overflow: hidden;
 }
 @media (max-width: 767px) {
-  .navbar-default{
-  	margin-top:-30px !important;
-  }
   #page-leftbar {
     /* Collapsed */
     width: 0;

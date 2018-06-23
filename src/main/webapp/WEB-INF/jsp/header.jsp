@@ -462,22 +462,22 @@ function getHeadersCounts(){
         <div class="collapse navbar-collapse navbar-ex1-collapse" id="horizontal-navbar">
             <ul class="nav navbar-nav">
             
-            <li class="dashBoard"><a href="${baseurl }/dashBoard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+            <li class="dashBoard mobi"><a href="${baseurl }/dashBoard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
              <security:authorize access="hasRole('ROLE_MASTERADMIN')">
-              <li class="org"><a href="${baseurl }/kporg"><i class="fa fa-building"></i><span>Organization</span></a></li>
+              <li class="org mobi"><a href="${baseurl }/kporg"><i class="fa fa-building"></i><span>Organization</span></a></li>
             </security:authorize>
             <security:authorize access="hasRole('ROLE_ADMIN')">
-            <li class="dept"><a href="${baseurl }/dept"><i class="fa fa-american-sign-language-interpreting"></i> <span>Department</span></a></li>
-              <%-- <li class="desig"><a href="${baseurl }/desig"><i class="fa fa-plane"></i> <span>Designation</span></a></li> --%>
-             <li class="orgDept"><a href="${baseurl }/orgDept"><i class="fa fa-sitemap"></i> <span>Hierarchical</span></a></li>
-              <li class="cate"><a href="${baseurl }/cate"><i class="fa fa-black-tie"></i> <span>Task Category</span></a></li>
+            <li class="dept mobi"><a href="${baseurl }/dept"><i class="fa fa-american-sign-language-interpreting"></i> <span>Department</span></a></li>
+              <%-- <li class="desig mobi"><a href="${baseurl }/desig"><i class="fa fa-plane"></i> <span>Designation</span></a></li> --%>
+             <li class="orgDept mobi"><a href="${baseurl }/orgDept"><i class="fa fa-sitemap"></i> <span>Hierarchical</span></a></li>
+              <li class="cate mobi"><a href="${baseurl }/cate"><i class="fa fa-black-tie"></i> <span>Task Category</span></a></li>
              <%--  <li class="category"><a href="${baseurl }/category"><i class="fa fa-black-tie"></i> <span>Product Category</span></a></li>
              <li class="product"><a href="${baseurl }/product"><i class="fa fa-black-tie"></i> <span>Product Model</span></a></li> --%>
              	
              	
-             	<li class="employee"><a href="${baseurl }/employee"><i class="fa fa-users"></i> <span>Employees</span></a></li>
+             	<li class="employee mobi"><a href="${baseurl }/employee"><i class="fa fa-users"></i> <span>Employees</span></a></li>
               </security:authorize>
-              <li class="task"><a href="${baseurl }/task"><i class="fa fa-tasks"></i> <span>Task</span></a></li>
+              <li class="task mobi"><a href="${baseurl }/task"><i class="fa fa-tasks"></i> <span>Task</span></a></li>
 			</ul>
 		</div>
     </nav>
