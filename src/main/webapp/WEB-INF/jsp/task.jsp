@@ -9,6 +9,20 @@
 .btn-toolbar {
 	margin-top:7px;
 }
+label {
+	float: left;
+}
+@media screen and (max-width: 767px) {
+	.mobi {
+		margin-left:16px;
+	}
+	.mobi0 {
+		margin-left:24px;
+	}
+	.mobi1 {
+		margin-left:10px;
+	}
+}
 </style>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
@@ -82,7 +96,7 @@
                     			<div class="form-group">
                     				<form:hidden path="id"/>
 									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Category  <span class="impColor">*</span></label>
-									<form:select path="category" class="col-xs-10 col-sm-5 validate1" onfocus="removeBorder(this.id)" >
+									<form:select path="category" class="col-xs-10 col-sm-5 validate1 mobi" onfocus="removeBorder(this.id)" >
 											<form:option value="" label="--- Select ---" />
 											<form:options items="${category}"/>
 										</form:select>
@@ -92,7 +106,7 @@
                     			<div class="form-group">
 									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Priority <span class="impColor">*</span></label>
 									
-										<form:select path="severity" class="col-xs-10 col-sm-5 validate1" onfocus="removeBorder(this.id)">
+										<form:select path="severity" class="col-xs-10 col-sm-5 validate1 mobi0" onfocus="removeBorder(this.id)">
 										<form:option value="" label="--- Select ---" />
 										 <form:options items="${severity}"/>
 										</form:select>	
@@ -117,7 +131,7 @@
                     		<div class="col-md-6">
                     			<div class="form-group">
 									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Summary  <span class="impColor">*</span></label>
-									<form:input path="subject"  placeholder="Summary" class="col-xs-10 col-sm-5 validate1" onfocus="removeBorder(this.id)" />
+									<form:input path="subject"  placeholder="Summary" class="col-xs-10 col-sm-5 validate1 mobi1" onfocus="removeBorder(this.id)" />
                     			</div>
                     		</div>
                     		

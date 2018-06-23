@@ -1673,6 +1673,15 @@ table th[class*="col-"] {
   	width:100%;
   	text-align:left;
   }
+	.mobi {
+		margin-left:16px;
+	}
+	.mobi0 {
+		margin-left:24px;
+	}
+	.mobi1 {
+		margin-left:10px;
+	}
 }
 @media (max-width: 320px) {
 	.navbar-brand img {
@@ -1687,6 +1696,18 @@ table th[class*="col-"] {
 	#page-heading {
 		margin-top: 0px !important;
 	}
+	
+	.mobi {
+		margin-left:0px !important;
+	}
+	.mobi0 {
+		margin-left:0px !important;
+	}
+	.mobi1 {
+		margin-left:0px !important;
+	}
+}
+@media (max-width: 360px) {
 }
 @media (max-width: 640px) {
 	.horizontal-nav nav.navbar {
