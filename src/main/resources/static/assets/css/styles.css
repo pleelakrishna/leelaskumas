@@ -10606,6 +10606,12 @@ nav.navbar .navbar-header {
   	margin-bottom:73px !important;
   }
 }
+@media (min-width: 892px) {
+	.bot {
+		margin-bottom:33px !important;
+	}
+}
+}
 .navbar-nav > li > .dropdown-menu {
   margin-top: 0;
   border-top-right-radius: 1px;

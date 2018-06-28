@@ -104,20 +104,6 @@ label {
                     		</div>
                     		<div class="col-md-6">
                     			<div class="form-group">
-									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Priority <span class="impColor">*</span></label>
-									
-										<form:select path="severity" class="col-xs-10 col-sm-5 validate1 mobi0" onfocus="removeBorder(this.id)">
-										<form:option value="" label="--- Select ---" />
-										 <form:options items="${severity}"/>
-										</form:select>	
-										<span class="hasError" id="stationnameError"></span>
-								    
-                    			</div>
-                    		</div>
-                    	</div>
-                    	<div class="row">
-                    		<div class="col-md-6">
-                    			<div class="form-group">
 									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Assigned to <span class="impColor">*</span></label>
 									
 										<form:select path="assignto" class="col-xs-10 col-sm-5 validate1" onfocus="removeBorder(this.id)">
@@ -128,10 +114,21 @@ label {
 								    
                     			</div>
                     		</div>
+                    	</div>
+                    	<div class="row">
                     		<div class="col-md-6">
                     			<div class="form-group">
 									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Summary  <span class="impColor">*</span></label>
 									<form:input path="subject"  placeholder="Summary" class="col-xs-10 col-sm-5 validate1 mobi1" onfocus="removeBorder(this.id)" />
+                    			</div>
+                    		</div>
+                    		<div class="col-md-6">
+                    			<div class="form-group">
+									<label for="focusedinput" class="col-md-6 control-label">Description <span class="impColor">*</span></label>
+									<div style="margin-left:-10px;" class="col-md-6">
+									<form:textarea style="width:273px;" path="description" class="form-control validate1" onfocus="removeBorder(this.id)" placeholder="Enter Description"/>
+									<span class="hasError" id="stationnameError"></span>
+								    </div>
                     			</div>
                     		</div>
                     		
@@ -140,11 +137,14 @@ label {
                     	<div class="row">
                     		<div class="col-md-6">
                     			<div class="form-group">
-									<label for="focusedinput" class="col-md-6 control-label">Description <span class="impColor">*</span></label>
-									<div style="margin-left:-10px;" class="col-md-6">
-									<form:textarea style="width:273px;" path="description" class="form-control validate1" onfocus="removeBorder(this.id)" placeholder="Enter Description"/>
-									<span class="hasError" id="stationnameError"></span>
-								    </div>
+									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Priority <span class="impColor">*</span></label>
+									
+										<form:select path="severity" class="col-xs-10 col-sm-5 validate1 mobi0" onfocus="removeBorder(this.id)">
+										<form:option value="" label="--- Select ---" />
+										 <form:options items="${severity}"/>
+										</form:select>	
+										<span class="hasError" id="stationnameError"></span>
+								    
                     			</div>
                     		</div>
                     		<div class="col-md-6">
@@ -416,7 +416,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>Priority</th><th>Assigned By</th><th>Assigned To</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Summary</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -457,11 +457,11 @@ function displayTable(listOrders) {
 		serviceUnitArray[orderObj.id] = orderObj;
 		var tblRow = "<tr>"
 			+ "<td title='"+orderObj.taskno+"'>"+ view2 + "</td>"
-			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
 			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
-			+ "<td title='"+orderObj.severity+"'>"+ orderObj.severity + "</td>"
-			+ "<td title='"+orderObj.assignby+"'>"+ orderObj.assignby + "</td>"
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
+			+ "<td title='"+orderObj.assignby+"'>"+ orderObj.assignby + "</td>"
+			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
+			+ "<td title='"+orderObj.severity+"'>"+ orderObj.severity + "</td>"
 			+ "<td title='"+orderObj.kstatus+"'>"+ orderObj.kstatus + "</td>"
 			+ "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>"
 			+ "<td title='"+orderObj.notificationsfrequency+"'>"+ orderObj.notificationsfrequency + "</td>"
@@ -504,7 +504,7 @@ function editTask(id) {
 	$("#description").val(serviceUnitArray[id].description);
 	$("#taskdeadline").val(serviceUnitArray[id].taskdeadline);
 	$("#notificationsfrequency").val(serviceUnitArray[id].notificationsfrequencyid);
-	$("#submit1").val("Update");
+	$("#submitMainForm").val("Update");
 	$(window).scrollTop($('#severity').offset().top);
 }
 
