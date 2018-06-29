@@ -554,7 +554,7 @@ function viewTask2(id){
 				var uploadfiles='';
 				for(var i=0;i<list.length;i++)
 				{
-					uploadfiles=uploadfiles+'<a href="reportDocuments/'+list[i]+'" target="_blank" title="'+list[i]+'"><i class="fa fa-paperclip fa-lg grey"></i></a>';
+					uploadfiles=uploadfiles+'<a href="../reportDocuments/'+list[i]+'" target="_blank" title="'+list[i]+'"><i class="fa fa-paperclip fa-lg grey"></i></a>';
 				}
 				orderObj.uploadfiles=uploadfiles;
 			}

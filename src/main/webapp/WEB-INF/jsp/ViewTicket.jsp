@@ -141,7 +141,7 @@ th {
 
 
 <c:forTokens items="${logs.uploadfiles}" delims="*" var="mySplit">
-     	<a class="attachments" target="_black" href="reportDocuments/${mySplit}"><i class="fa fa-download" title="${mySplit}"></i></a>
+     	<a class="attachments" target="_black" href="../reportDocuments/${mySplit}"><i class="fa fa-download" title="${mySplit}"></i></a>
      	</c:forTokens>
   
 
