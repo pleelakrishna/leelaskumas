@@ -272,40 +272,56 @@ label {
 					<form class="form-horizontal">
 					<div class="panel-body">
 						<div class="row">
-                    		<div class="col-md-5">
+                    		<div class="col-md-12">
                     			<div class="form-group">
                     				<!-- <input type=hidden path="id"/> -->
                     				
-                    				<input type=hidden name="issueid" id="issueid" value="">
-                    				<input type=hidden name="id" id="id" value="">
+                    				<input type="hidden" name="issueid" id="issueid" value="31">
+                    				<input type="hidden" name="id" id="id" value="">
                     				
-									<label for="focusedinput" class="col-md-4 control-label">Status  <span class="impColor">*</span></label>
-										<select  name="kpstatus" id="kpstatus" class="col-xs-10 col-sm-7  validate2 " style="margin-top:6px">
+									<div class="col-md-2"></div>
+<label for="focusedinput" class="col-md-2">Status  <span class="impColor">*</span></label>
+										<select name="kpstatus" id="kpstatus" class="col-md-3 validate2" style="margin-top:6px">
 											<option value="">--select-- </option>
-											<c:forEach var="list" items="${kpstatuses}">
-											<option value=${list.key}>${list.value} </option>
-											</c:forEach>
+											
+											<option value="1">Closed </option>
+											
+											<option value="2">Assigned </option>
+											
+											<option value="3">Acknowledged </option>
+											
+											<option value="4">Resolved </option>
+											
+											<option value="5">In progress </option>
+											
+											<option value="6">Reopen </option>
+											
 										</select>
                     			</div>
                     		</div>
-                    		<div class="col-md-6">
-                    		<div class="form-group" style=" width: 154%;">
-									<label class="ace-file-input ace-file-multiple col-sm-3 control-label no-padding-right" >Attach File(s)</label>
-									<div class="col-md-9">
-										<input type="file" name="fileupload[]" id="fileupload" multiple style="margin: 8px 0px 0px 0px;">
+                    		<div class="col-md-12">
+    <div class="col-md-1"></div>		
+                    		
+                    		<div class="col-md-3">
+									<label class="ace-file-input ace-file-multiple">Attach File(s)</label>
 									</div>
-							</div>
+										<div class="col-md-6">
+										<input type="file" name="fileupload[]" id="fileupload" multiple="" style="margin: 8px 0px 0px -12px;" placeholder="">
+									</div>
+							 
+						
 							</div>
 							</div>
 							<br>
-							<div class="row">
+							<div class="row" style="border-radius: 0px;">
                     		<div class="col-md-12">
                     			<div class="form-group">
-                    				<div class="col-md-2">
-										<label for="focusedinput" class="control-label">Comment <span class="impColor">*</span></label>
+                    				<div class="col-md-2"></div>
+                                      <div class="col-md-2">
+										<label for="focusedinput" class="control-label" style="margin-left: -20px;">Comment <span class="impColor">*</span></label>
                     				</div>
-									<div class="col-md-6">
-									<input type="text"  name="commet" id="commet"  onkeyup="removeBorder(this.id)" class="form-control validate2"  placeholder="Enter comment">
+									<div class="col-md-6" style="margin-left: -9px;">
+									<input type="text" name="commet" id="commet" onkeyup="removeBorder(this.id)" class="form-control validate2" placeholder="Enter comment">
 									<span class="hasError" id="stationnameError"></span>
 								    </div>
                     			</div>
@@ -318,8 +334,8 @@ label {
 				      	<div class="row">
 				      		<div class="col-sm-12">
 				      			<div class="btn-toolbar text-center">
-					      			<input type="button" id="modelSubmit" value="Submit"  onclick="submitCommet()" class="btn-primary btn"/>
-					      			<input type="reset" value="Reset" class="btn-danger btn cancel1"/>
+					      			<input type="button" id="modelSubmit" value="Submit" onclick="submitCommet()" class="btn-primary btn">
+					      			<input type="reset" value="Reset" class="btn-danger btn cancel1">
 				      			</div>
 				      		</div>
 				      	</div>
@@ -463,7 +479,8 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
 			+ "<td title='"+orderObj.severity+"'>"+ orderObj.severity + "</td>"
 			+ "<td title='"+orderObj.kstatus+"'>"+ orderObj.kstatus + "</td>"
-			+ "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>"
+			/* + "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>" */
+			+ "<td title='"+orderObj.strcreatedTime+"'>"+ orderObj.strcreatedTime + "</td>"
 			+ "<td title='"+orderObj.notificationsfrequency+"'>"+ orderObj.notificationsfrequency + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time +  "&nbsp;&nbsp;"+history2+ "&nbsp;&nbsp;"+createDuplicate+"</td>" 
 			+ "</tr>";

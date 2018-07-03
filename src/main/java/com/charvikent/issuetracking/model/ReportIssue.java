@@ -72,6 +72,8 @@ public class ReportIssue  {
 	
 	@Transient
 	private String notificationsfrequencyid;
+	@Transient
+	private String strcreatedTime;
 	
 	
 	
@@ -450,6 +452,12 @@ public class ReportIssue  {
 		} else if (!departmentid.equals(other.departmentid))
 			return false;
 		return true;
+	}
+	public String getStrcreatedTime() {
+		return strcreatedTime;
+	}
+	public void setStrcreatedTime(String strcreatedTime) {
+		this.strcreatedTime = strcreatedTime;
 	}
 
 	
