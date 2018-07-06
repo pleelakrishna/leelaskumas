@@ -101,7 +101,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label no-padding-right">Designation<span class="impColor">*</span></label>
 									<div class="col-md-6">
-										<form:select path="designation" class="form-control validate " >
+										<form:select path="designation" class="form-control validate " onfocus="removeBorder(this.id)" >
 											<form:option value="">-- Select Designation --</form:option>
 											<form:options items="${roles}"/>
 										</form:select>
