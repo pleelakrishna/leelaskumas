@@ -646,7 +646,7 @@ td {
 	function displayTable(listOrders) {
 		$('#tableId').html('');
 		var tableHead = '<table id="notification" class="table table-striped table-bordered datatables">'
-				+ '<thead><tr><th>Task No</th><th>Summary</th><th>Category</th><th>priority</th><th>Severity</th><th>Assigned By</th><th>Created Time</th><th>Description</th></tr></thead><tbody></tbody></table>';
+				+ '<thead><tr><th>Task No</th><th>Task Subject</th><th>Category</th><th>priority</th><th>Severity</th><th>Assigned By</th><th>Created Time</th><th>Description</th></tr></thead><tbody></tbody></table>';
 		$('#tableId').html(tableHead);
 		serviceUnitArray = {};
 

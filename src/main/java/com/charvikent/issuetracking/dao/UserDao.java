@@ -11,6 +11,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,6 +32,9 @@ public class UserDao {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 
 
 
@@ -414,6 +421,18 @@ public class UserDao {
 	}
 
 
+
+	
+	public User getUsersById(Integer id) {
+		
+		String sql = "SELECT * FROM kpusers  WHERE id = "+id;
+		RowMapper<User> rowMapper = new BeanPropertyRowMapper<User>(User.class);	
+		User user = jdbcTemplate.queryForObject(sql, rowMapper);
+		return user;
+		
+
+		
+	}
 
 
 

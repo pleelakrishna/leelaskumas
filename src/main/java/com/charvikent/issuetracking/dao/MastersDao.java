@@ -6,6 +6,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +23,9 @@ public class MastersDao {
 
 	@PersistenceContext
     private EntityManager entityManager;
+	
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 	
 	
 	
@@ -121,8 +128,12 @@ public class MastersDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<KpStatus> getKpStatues() {
-		return entityManager.createQuery("SELECT kpstatus FROM KpStatus kpstatus").getResultList();
-		//return entityManager.createQuery("from KpStatus where id in (1,4,5,6,7,8").getResultList();
+		
+		String hql ="select ks.id,ks.name from kpstatus ks order by  ks.sorder ";
+		
+		RowMapper<KpStatus> rowMapper = new BeanPropertyRowMapper<KpStatus>(KpStatus.class);	
+		List<KpStatus> kpStatus = jdbcTemplate.query(hql, rowMapper);
+		return kpStatus;
 	
 	
 	}

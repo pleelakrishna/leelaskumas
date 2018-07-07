@@ -139,8 +139,8 @@ margin-right:8px;
                     	<div class="row">
                     		<div class="col-md-6">
                     			<div class="form-group">
-									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Summary  <span class="impColor">*</span></label>
-									<form:input path="subject"  placeholder="Summary" class="col-xs-10 col-sm-5 validate1 mobi1" onfocus="removeBorder(this.id)" />
+									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Task Subject  <span class="impColor">*</span></label>
+									<form:input path="subject"  placeholder="Task Subject" class="col-xs-10 col-sm-5 validate1 mobi1" onfocus="removeBorder(this.id)" />
                     			</div>
                     		</div>
                     		<div class="col-md-6">
@@ -232,7 +232,7 @@ margin-right:8px;
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header"  style="background: #4f8edc;">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button style="color:#fff;opacity:100 !important;" type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title"> Task History </h4>
         	</div>
         	<div class="modal-body">
@@ -258,8 +258,8 @@ margin-right:8px;
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header"  style="background: #4f8edc;">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title"> Task History  </h4>
+				<button style="color:#fff;opacity:100 !important;" type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 style="color:#fff;" class="modal-title"> Task History  </h4>
         	</div>
         	<div class="modal-body">
 				<div class="row">
@@ -374,7 +374,7 @@ margin-right:8px;
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header" style="background: #2973cf;">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button style="color:#fff; opacity:100 !important;" type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title" style="color: white;">Task Count Down</h4>
 			</div>
 			<div> </div>	<div class="modal-body">
@@ -448,7 +448,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Summary</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody><tfoot><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th></tr></tfoot></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -506,6 +506,32 @@ function displayTable(listOrders) {
 	
 }
 
+
+
+$(function(){
+	
+	$('#example tfoot th').each( function () {
+	        var title = $(this).text();
+	        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+	    } );
+	 
+	    // DataTable
+	    var table = $('#example').DataTable();
+	 
+	    // Apply the search
+	    table.columns().every( function () {
+	        var that = this;
+	 
+	        $( 'input', this.footer() ).on( 'keyup change', function () {
+	            if ( that.search() !== this.value ) {
+	                that
+	                    .search( this.value )
+	                    .draw();
+	            }
+	        } );
+	    } );
+
+	});
 
 function createDuplicate(id) {
 	
@@ -669,11 +695,12 @@ function showdeadline(id){
 	    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
 	    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 	    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-	    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+	   // var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+	   var seconds ="";
 	    document.getElementById("demo").innerHTML='';
 	    // Output the result in an element with id="demo"
 	    document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-	    + minutes + "m " + seconds + "s ";
+	    + minutes + "m " + seconds + " ";
 	    
 	    
 	    // If the count down is over, write some text 
@@ -703,11 +730,12 @@ function showdeadline(id){
 		    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
 		    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 		    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+		  //  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+		  var seconds ="";
 		    document.getElementById("demo").innerHTML='';
 		    // Output the result in an element with id="demo"
 		    document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-		    + minutes + "m " + seconds + "s ";
+		    + minutes + "m " + seconds + " ";
 		    
 		    
 		    // If the count down is over, write some text 

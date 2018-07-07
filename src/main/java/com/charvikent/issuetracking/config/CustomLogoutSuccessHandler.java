@@ -33,9 +33,12 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler im
 			throws IOException, ServletException {
 
 		//String refererUrl = request.getHeader("Referer");
-		
+		if(authentication != null)
+		{
 		User objuserBean = (User)authentication.getPrincipal();
 		userService.setLoginRecord(objuserBean.getId(),"logout");
+		
+		}
 
 		String URL = request.getContextPath() + "/";
 		response.setStatus(HttpStatus.OK.value());

@@ -146,7 +146,7 @@ public class MastersService {
 		List<KpStatus> listkpstatues=mastersDao.getKpStatues();
 		
 		
-		HashMap<Integer,String> kpstatuesmap =new HashMap<Integer,String>();
+		HashMap<Integer,String> kpstatuesmap =new LinkedHashMap<Integer,String>();
 		
 		for(KpStatus kp:listkpstatues)
 		{

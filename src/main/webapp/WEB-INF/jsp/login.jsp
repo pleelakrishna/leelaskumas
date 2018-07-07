@@ -56,7 +56,10 @@
 
 <body class="focusedform">
 <div class="verticalcenter">
-<div align="center"><img src="assets/img/klogo.png" style="width:250px;" class="img-responsive"></div>
+<div align="center">
+	<img src="assets/img/klogo.png" style="width:250px;" class="img-responsive">
+	<p style="color:#3f83d8; font-size:30px;">Task Management System</p>
+</div>
 <!-- 	<h1 align="center">KHAIBAR GAS</h1> -->
 	<div class="panel panel-primary">
 		<form  action=login class="form-horizontal" method="POST"  style="margin-bottom: 0px !important;">

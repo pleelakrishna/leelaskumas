@@ -25,6 +25,8 @@ public class KpStatus {
 	
 	private String scolour;
 	
+	private String sorder;
+	
 	@CreationTimestamp
 	private Date createdTime;
 
@@ -72,6 +74,18 @@ public class KpStatus {
 
 	public void setUpdatedTime(Date updatedTime) {
 		this.updatedTime = updatedTime;
+	}
+
+	
+	
+	
+
+	public String getSorder() {
+		return sorder;
+	}
+
+	public void setSorder(String sorder) {
+		this.sorder = sorder;
 	}
 
 	@Override

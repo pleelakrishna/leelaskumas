@@ -5,14 +5,24 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 @Component
 public class SendSMS {
+	
+	
+	@Autowired
+    private Environment environment;
+	
 	
 	//public  String  mobileNumber =null;
 	static String username = "ssjewellers";
 	static String password = "SSjewellers@123";
 		static String from = "GTCLUB";
+		
+		//String username = environment.getProperty("app.smsusername");
+		//String password = environment.getProperty("app.smspassword");
 		
 		//static String from = "KPTMS";
 		//static String from = "AARNA-MATRIMONY";

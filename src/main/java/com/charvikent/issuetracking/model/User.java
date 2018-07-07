@@ -35,9 +35,9 @@ public class User {
 	// private String designation;
 	@Column
 	private String department;
-
+	@Column
 	private String reportto;
-	
+	@Column
 	private String kpOrgId;
 
 	@Column

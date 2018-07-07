@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -22,6 +23,7 @@ import javax.transaction.Transactional;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -64,26 +66,74 @@ public class ReportIssueService {
 	@Autowired
 	private SendSMS smsTemplate;
 	
+	
+	@Autowired
+    private Environment environment;
+	
 	public void saveReportIssue(ReportIssue reportIssue) throws MessagingException, IOException
 	{
+		
+		Set<String> mobileNumbers =new HashSet<String>();
 		reportIssueDao.saveReportIssue(reportIssue);
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		userDao.getAllParents(String.valueOf(objuserBean.getId()));
+		//send sms to all users hiraricla level use below code
+		
+		/*userDao.getAllParents(String.valueOf(objuserBean.getId()));
 		userDao.getAllParents(reportIssue.getAssignto());
 		
 		
 		for(String id:UserDao.parents)
 		{
 			System.out.println(id);
-		}
+		}*/
+		
+		  
+		  
+		  Integer assigntoUserBeanId = Integer.parseInt(reportIssue.getAssignto());
+		
+		  
+		  User  assigntoUserBean =userDao.getUsersById(assigntoUserBeanId);
+		  Integer assigntoUserReportToBeanId =Integer.parseInt(assigntoUserBean.getReportto());
+		  
+		  User  assigntoUserReportToBean =userDao.getUsersById(assigntoUserReportToBeanId);
+		  
+		  Integer assignbyUserReportToBeanId =Integer.parseInt(objuserBean.getReportto());
+		  
+		  User  assignbyUserReportToBean =userDao.getUsersById(assigntoUserReportToBeanId);
+		  
+		  User assignedToUser = userDao.find(Integer.parseInt(reportIssue.getAssignto()));
+		  
+		  
+		  
+		  mobileNumbers.add(objuserBean.getMobilenumber());  // saving mobilenumber of task created by
+		  mobileNumbers.add(assignbyUserReportToBean.getMobilenumber());  // saving mobilenumber of head of task created by 
+		  mobileNumbers.add(assignedToUser.getMobilenumber());  // saving mobilenumber of task created to
+		  mobileNumbers.add(assigntoUserReportToBean.getMobilenumber());  // saving mobilenumber of head of task created to
+		  
+		  
+		  String tmsg =environment.getProperty("app.taskmsg");
+		  System.out.println(tmsg);
+		  
+		  tmsg=  tmsg.replaceAll("_subject_", reportIssue.getSubject());
+		  tmsg=  tmsg.replaceAll("_deadline_", reportIssue.getTaskdeadline());
+		  tmsg= tmsg.replaceAll("_assignby_", objuserBean.getUsername());
+		  tmsg= tmsg.replaceAll("_assignto_", assigntoUserBean.getUsername());
+		  
+		  
+		  System.out.println(tmsg);
+		  
 		//sendConfirmationEmail(reportIssue,user,serverFile);
-		User touser = userDao.find(Integer.parseInt(reportIssue.getAssignto()));
-		String msg =" A Ticket is assigned to you with id: "+reportIssue.getTaskno();
-		System.out.println("....Sending SMS ....");
-		String  mnum=touser.getMobilenumber();
-		smsTemplate.sendSMS(msg,mnum);
+		
+		//String msg =" A Ticket is assigned to you with id: "+reportIssue.getTaskno();
+		//System.out.println("....Sending SMS ....");
+		//String  mnum=touser.getMobilenumber();
+		  
+		  for(String entry:mobileNumbers)
+		  {
+		smsTemplate.sendSMS(tmsg,entry);
+		  }
 	}
 	
 	public Set<ReportIssue> getAllReportIssues()
