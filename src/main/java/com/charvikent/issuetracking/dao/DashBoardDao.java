@@ -1,6 +1,7 @@
 package com.charvikent.issuetracking.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -16,6 +17,9 @@ import javax.persistence.PersistenceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
@@ -689,9 +693,13 @@ public Map<String, String> getDepartmentCounts()
 	
 	String hql ="";
 	
-	if(id.equals("1"))
-	{
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
      hql ="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment "
                     +" ON (kpdepartment.id=report_issue.departmentid)  GROUP BY kpdepartment.id ";
 	}
@@ -719,11 +727,16 @@ public Set<ReportIssue> getTasksByDepartmentWise(String dept) {
 	String id=String.valueOf(objuserBean.getDesignation());
 	String orgid=String.valueOf(objuserBean.getKpOrgId());
 	
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
 	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 	
 String hql ="";
 	
-	if(id.equals("1"))
+if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
 	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
@@ -734,7 +747,6 @@ String hql ="";
 	}
 	
 	else
-		if(id.equals("2"))
 		{
 			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
  
@@ -795,15 +807,17 @@ public Map<String, String> getDepartmentCountsForClosed()
 	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	String id=String.valueOf(objuserBean.getDesignation());
 	String orgid=String.valueOf(objuserBean.getKpOrgId());
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
 
 	
 	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
 	
 	String hql ="";
 	
-	if(id.equals("1"))
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
-	
      hql ="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment "
                     +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='1'  GROUP BY kpdepartment.id ";
 	}
@@ -827,16 +841,21 @@ public Map<String, String> getDepartmentCountsForClosed()
 
 public Set<ReportIssue> getTasksBydepartmentClosed(String dept) {
 	
-
 	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	String id=String.valueOf(objuserBean.getDesignation());
 	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
 	
 	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 	
 String hql ="";
 	
-	if(id.equals("1"))
+if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
 	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
@@ -847,7 +866,7 @@ String hql ="";
 	}
 	
 	else
-		if(id.equals("2"))
+	
 		{
 			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
@@ -906,11 +925,16 @@ public Set<ReportIssue> getTasksBydepartmentBalanced(String dept) {
 	String id=String.valueOf(objuserBean.getDesignation());
 	String orgid=String.valueOf(objuserBean.getKpOrgId());
 	
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
 	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 	
 String hql ="";
 	
-	if(id.equals("1"))
+if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
 	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
@@ -921,7 +945,6 @@ String hql ="";
 	}
 	
 	else
-		if(id.equals("2"))
 		{
 			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
@@ -1018,8 +1041,595 @@ public Set<ReportIssue> getfrequencyNotifications(String id) {
 	return listissue;
 }
 
+public Map<String, String> getDepartmentCountsForAssigned()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+	
+     hql ="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment "
+                    +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='2'  GROUP BY kpdepartment.id ";
+	}
+	
+	else
+	{
+	
+	 hql="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment" 
+                   +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='2'and kp_org_id='"+orgid+" ' GROUP BY kpdepartment.id ";
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+public Map<String, String> getDepartmentCountsForAcknowledged()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+	
+     hql ="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment "
+                    +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='3'  GROUP BY kpdepartment.id ";
+	}
+	
+	else
+	{
+	
+	 hql="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment" 
+                   +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='3'and kp_org_id='"+orgid+" ' GROUP BY kpdepartment.id ";
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
 
 
+public Map<String, String> getDepartmentCountsForResolved()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+	
+     hql ="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment "
+                    +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='4'  GROUP BY kpdepartment.id ";
+	}
+	
+	else
+	{
+	
+	 hql="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment" 
+                   +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='4'and kp_org_id='"+orgid+" ' GROUP BY kpdepartment.id ";
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+
+public Map<String, String> getDepartmentCountsForInProgress()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+	
+     hql ="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment "
+                    +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='5'  GROUP BY kpdepartment.id ";
+	}
+	
+	else
+	{
+	
+	 hql="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment" 
+                   +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='5' and kp_org_id='"+orgid+" ' GROUP BY kpdepartment.id ";
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+
+public Map<String, String> getDepartmentCountsForReopen()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+	
+     hql ="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment "
+                    +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='6'  GROUP BY kpdepartment.id ";
+	}
+	
+	else
+	{
+	
+	 hql="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment" 
+                   +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='6' and kp_org_id='"+orgid+" ' GROUP BY kpdepartment.id ";
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+
+public Set<ReportIssue> getTasksBydepartmentAssigned(String dept) {
+	
+
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+	
+String hql ="";
+	
+if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+	
+	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
+                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
+               +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='2'"
+               +" and nf.id=r.notificationsfrequency  and kpd.name='"+dept +"'";
+	}
+	
+	else
+		
+		{
+			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
+                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='2' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and  kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
+
+		}
+
+	try {
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			ReportIssue issue = new ReportIssue(); 
+			issue.setId(Integer.parseInt(String.valueOf(row[0])));
+			issue.setAssignto((String) row[1]);
+			issue.setSeverity((String) row[2]);
+			issue.setPriority((String) row[3]);
+			issue.setUploadfile((String) row[4]);
+			issue.setSubject((String) row[5]);
+			issue.setStrcreatedTime((String) row[6]);
+			issue.setCategory((String) row[7]);
+			issue.setKstatus((String) row[8]);
+			issue.setStatus((String) row[9]);
+			issue.setTaskno((String) row[10]);
+			
+			issue.setSeverityid((String) row[11]);
+			issue.setPriorityid((String) row[12]);
+			issue.setAssigntoid((String) row[13]);
+		    issue.setCategoryid((String) row[14]);
+		    issue.setDescription((String) row[15]);
+			issue.setTaskdeadline((String) row[16]);
+			issue.setAssignbyid((String) row[17]);
+			issue.setAssignby((String) row[18]);
+			
+			issue.setKstatusid((String) row[19]);
+			issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
+			
+			issue.setNotificationsfrequency((String) row[21]);
+			issue.setNotificationsfrequencyid((String) row[22]);
+			
+			listissue.add(issue);
+
+		}
+		
+	} catch (Exception e) {
+		System.out.println("error here");
+		e.printStackTrace();
+	}
+	
+	return listissue;
+	
+}
+
+public Set<ReportIssue> getTasksBydepartmentAcknowledged(String dept) {
+	
+
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+	
+String hql ="";
+	
+if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+	
+	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
+                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
+               +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='3'"
+               +" and nf.id=r.notificationsfrequency  and kpd.name='"+dept +"'";
+	}
+	
+	else
+		
+		{
+			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
+                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='3' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and  kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
+
+		}
+
+	try {
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			ReportIssue issue = new ReportIssue(); 
+			issue.setId(Integer.parseInt(String.valueOf(row[0])));
+			issue.setAssignto((String) row[1]);
+			issue.setSeverity((String) row[2]);
+			issue.setPriority((String) row[3]);
+			issue.setUploadfile((String) row[4]);
+			issue.setSubject((String) row[5]);
+			issue.setStrcreatedTime((String) row[6]);
+			issue.setCategory((String) row[7]);
+			issue.setKstatus((String) row[8]);
+			issue.setStatus((String) row[9]);
+			issue.setTaskno((String) row[10]);
+			
+			issue.setSeverityid((String) row[11]);
+			issue.setPriorityid((String) row[12]);
+			issue.setAssigntoid((String) row[13]);
+		    issue.setCategoryid((String) row[14]);
+		    issue.setDescription((String) row[15]);
+			issue.setTaskdeadline((String) row[16]);
+			issue.setAssignbyid((String) row[17]);
+			issue.setAssignby((String) row[18]);
+			
+			issue.setKstatusid((String) row[19]);
+			issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
+			
+			issue.setNotificationsfrequency((String) row[21]);
+			issue.setNotificationsfrequencyid((String) row[22]);
+			
+			listissue.add(issue);
+
+		}
+		
+	} catch (Exception e) {
+		System.out.println("error here");
+		e.printStackTrace();
+	}
+	
+	return listissue;
+	
+}
+
+public Set<ReportIssue> getTasksBydepartmentResolved(String dept) {
+	
+
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+	
+String hql ="";
+	
+if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+	
+	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
+                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
+               +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='4'"
+               +" and nf.id=r.notificationsfrequency  and kpd.name='"+dept +"'";
+	}
+	
+	else
+		
+		{
+			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
+                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='4' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and  kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
+
+		}
+
+	try {
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			ReportIssue issue = new ReportIssue(); 
+			issue.setId(Integer.parseInt(String.valueOf(row[0])));
+			issue.setAssignto((String) row[1]);
+			issue.setSeverity((String) row[2]);
+			issue.setPriority((String) row[3]);
+			issue.setUploadfile((String) row[4]);
+			issue.setSubject((String) row[5]);
+			issue.setStrcreatedTime((String) row[6]);
+			issue.setCategory((String) row[7]);
+			issue.setKstatus((String) row[8]);
+			issue.setStatus((String) row[9]);
+			issue.setTaskno((String) row[10]);
+			
+			issue.setSeverityid((String) row[11]);
+			issue.setPriorityid((String) row[12]);
+			issue.setAssigntoid((String) row[13]);
+		    issue.setCategoryid((String) row[14]);
+		    issue.setDescription((String) row[15]);
+			issue.setTaskdeadline((String) row[16]);
+			issue.setAssignbyid((String) row[17]);
+			issue.setAssignby((String) row[18]);
+			
+			issue.setKstatusid((String) row[19]);
+			issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
+			
+			issue.setNotificationsfrequency((String) row[21]);
+			issue.setNotificationsfrequencyid((String) row[22]);
+			
+			listissue.add(issue);
+
+		}
+		
+	} catch (Exception e) {
+		System.out.println("error here");
+		e.printStackTrace();
+	}
+	
+	return listissue;
+	
+}
+
+public Set<ReportIssue> getTasksBydepartmentInprogress(String dept) {
+	
+
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+	
+String hql ="";
+	
+if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+	
+	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
+                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
+               +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='5'"
+               +" and nf.id=r.notificationsfrequency  and kpd.name='"+dept +"'";
+	}
+	
+	else
+		
+		{
+			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
+                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='5' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and  kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
+
+		}
+
+	try {
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			ReportIssue issue = new ReportIssue(); 
+			issue.setId(Integer.parseInt(String.valueOf(row[0])));
+			issue.setAssignto((String) row[1]);
+			issue.setSeverity((String) row[2]);
+			issue.setPriority((String) row[3]);
+			issue.setUploadfile((String) row[4]);
+			issue.setSubject((String) row[5]);
+			issue.setStrcreatedTime((String) row[6]);
+			issue.setCategory((String) row[7]);
+			issue.setKstatus((String) row[8]);
+			issue.setStatus((String) row[9]);
+			issue.setTaskno((String) row[10]);
+			
+			issue.setSeverityid((String) row[11]);
+			issue.setPriorityid((String) row[12]);
+			issue.setAssigntoid((String) row[13]);
+		    issue.setCategoryid((String) row[14]);
+		    issue.setDescription((String) row[15]);
+			issue.setTaskdeadline((String) row[16]);
+			issue.setAssignbyid((String) row[17]);
+			issue.setAssignby((String) row[18]);
+			
+			issue.setKstatusid((String) row[19]);
+			issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
+			
+			issue.setNotificationsfrequency((String) row[21]);
+			issue.setNotificationsfrequencyid((String) row[22]);
+			
+			listissue.add(issue);
+
+		}
+		
+	} catch (Exception e) {
+		System.out.println("error here");
+		e.printStackTrace();
+	}
+	
+	return listissue;
+	
+}
+
+public Set<ReportIssue> getTasksBydepartmentReopen(String dept) {
+	
+
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
+	
+String hql ="";
+	
+if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+	
+	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+                 +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
+                +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
+               +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='6'"
+               +" and nf.id=r.notificationsfrequency  and kpd.name='"+dept +"'";
+	}
+	
+	else
+		
+		{
+			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+                  +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
+                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='6' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and  kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
+
+		}
+
+	try {
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			ReportIssue issue = new ReportIssue(); 
+			issue.setId(Integer.parseInt(String.valueOf(row[0])));
+			issue.setAssignto((String) row[1]);
+			issue.setSeverity((String) row[2]);
+			issue.setPriority((String) row[3]);
+			issue.setUploadfile((String) row[4]);
+			issue.setSubject((String) row[5]);
+			issue.setStrcreatedTime((String) row[6]);
+			issue.setCategory((String) row[7]);
+			issue.setKstatus((String) row[8]);
+			issue.setStatus((String) row[9]);
+			issue.setTaskno((String) row[10]);
+			
+			issue.setSeverityid((String) row[11]);
+			issue.setPriorityid((String) row[12]);
+			issue.setAssigntoid((String) row[13]);
+		    issue.setCategoryid((String) row[14]);
+		    issue.setDescription((String) row[15]);
+			issue.setTaskdeadline((String) row[16]);
+			issue.setAssignbyid((String) row[17]);
+			issue.setAssignby((String) row[18]);
+			
+			issue.setKstatusid((String) row[19]);
+			issue.setGapdays(Integer.parseInt(String.valueOf(row[20])));
+			
+			issue.setNotificationsfrequency((String) row[21]);
+			issue.setNotificationsfrequencyid((String) row[22]);
+			
+			listissue.add(issue);
+
+		}
+		
+	} catch (Exception e) {
+		System.out.println("error here");
+		e.printStackTrace();
+	}
+	
+	return listissue;
+	
+}
+    
      
      }
 

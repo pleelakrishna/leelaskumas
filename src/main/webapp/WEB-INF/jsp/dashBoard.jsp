@@ -362,8 +362,13 @@ td {
 
 											<th class="head">Department Name</th>
 											<th>Open</th>
+											<th>Assigned</th>
+											<th>Acknowledged</th>
+											<th>Resolved</th>
+											<th>InProgress</th>
 											<th>Closed</th>
-											<th>Balanced</th>
+											<th>Resolved</th>
+											<th>Pending</th>
 
 										</tr>
 									</thead>
@@ -899,17 +904,22 @@ td {
 	}); */
 	var deptcountjson = ${deptcountjson};
 	var deptcountclosedjson = ${deptcountclosedjson};
+	var deptcountAssignedjson = ${deptcountAssignedjson};
+	var deptcountAcknowldgedson = ${deptcountAcknowldgedson};
+	var deptcountResolved = ${deptcountResolved};
+	var deptcountInProgress = ${deptcountInProgress};
+	var deptcountReopen = ${deptcountReopen};
 	
 	
 	
 	
 	if (deptcountjson != "") {
 		$('#deptTable body').html('');
-		displayDeptTask(deptcountjson,deptcountclosedjson);
+		displayDeptTask(deptcountjson,deptcountclosedjson,deptcountAssignedjson,deptcountAcknowldgedson,deptcountResolved,deptcountInProgress,deptcountReopen);
 		
 	}
 	
-	function displayDeptTask(deptcountjson,deptcountclosedjson){
+	function displayDeptTask(deptcountjson,deptcountclosedjson,deptcountAssignedjson,deptcountResolved,deptcountInProgress,deptcountReopen){
 		
 		$.each(deptcountjson, function(i,item) {
 			
@@ -924,8 +934,23 @@ td {
 					+ "<td ><a href='deptAll?id="+i+"'>"
 					+ item
 					+ "</a></td>"
+					+ "<td ><a href='deptAssigned?id="+i+"'>"
+					+ deptcountAssignedjson[i]
+					+ "</a></td>"
+					+ "<td ><a href='deptacknowledged?id="+i+"'>"
+					+ deptcountAcknowldgedson[i]
+					+ "</a></td>"
+					+ "<td ><a href='deptresolved?id="+i+"'>"
+					+ deptcountResolved[i]
+					+ "</a></td>"
+					+ "<td ><a href='deptinprogress?id="+i+"'>"
+					+ deptcountInProgress[i]
+					+ "</a></td>"
 					+ "<td ><a href='deptClosed?id="+i+"'>"
 					+ deptcountclosedjson[i]
+					+ "</a></td>"
+					+ "<td ><a href='deptReopen?id="+i+"'>"
+					+ deptcountReopen[i]
 					+ "</a></td>"
 					+ "<td ><a href='deptBalanced?id="+i+"'>"
 					+ diff

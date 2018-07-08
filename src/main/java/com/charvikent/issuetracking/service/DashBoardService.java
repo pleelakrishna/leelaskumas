@@ -445,7 +445,47 @@ public Set<ReportIssue> getTasksBydepartmentBalanced(String deptname) {
 
 
 	
+public Object getDepartmentCountsForAssigned() {
+	return dashBoardDao.getDepartmentCountsForAssigned();
+}
+
+public Object getDepartmentCountsForacKnowledged() {
+	return dashBoardDao.getDepartmentCountsForAcknowledged();
+}
+public Object getDepartmentCountsForResolved() {
+	return dashBoardDao.getDepartmentCountsForResolved();
+}
+public Object getDepartmentCountsForInprogressed() {
+	return dashBoardDao.getDepartmentCountsForInProgress();
+}
+public Object getDepartmentCountsForReopen() {
+	return dashBoardDao.getDepartmentCountsForReopen();
+}
+
 	
+
+public Set<ReportIssue> getTasksBydepartmentAssigned(String deptname) {
 	
+	return dashBoardDao.getTasksBydepartmentAssigned(deptname);
+}
+
+public Set<ReportIssue> getTasksBydepartmentAcknowledged(String deptname) {
+	
+	return dashBoardDao.getTasksBydepartmentAcknowledged(deptname);
+}
+
+public Set<ReportIssue> getTasksBydepartmentresolved(String deptname) {
+	
+	return dashBoardDao.getTasksBydepartmentResolved(deptname);
+}
+
+public Set<ReportIssue> getTasksBydepartmentInProgress(String deptname) {
+	
+	return dashBoardDao.getTasksBydepartmentInprogress(deptname);
+}
+public Set<ReportIssue> getTasksBydepartmentReopen(String deptname) {
+	
+	return dashBoardDao.getTasksBydepartmentReopen(deptname);
+}
 
 }
