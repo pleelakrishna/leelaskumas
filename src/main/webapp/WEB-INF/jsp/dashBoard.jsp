@@ -291,32 +291,7 @@ td {
 							</div>
 							<!-- *********************************** By Severity End *****************-->
 
-							<!-- *********************************** By Status Start *****************-->
-
-							<br>
-							<div class="table-responsive">
-								<table class="table table-bordered priority prioritybg"
-									style="border: 1px solid #006699; width:;" id="statusTable">
-									<thead>
-										<tr
-											style="background-color: #006699; color: #fff; text-align: center;">
-											<th class="head">By Status</th>
-											<th>Open</th>
-											<th>Resolved</th>
-											<th>Closed</th>
-											<th>Total</th>
-										</tr>
-									</thead>
-									<tbody>
-
-
-									</tbody>
-
-								</table>
-							</div>
-
-							<!--  **************************  By Status End  ******************************-->
-
+							
 							<!-- *********************************** By Category Start *****************-->
 							<br>
 							<div class="table-responsive">
@@ -328,9 +303,13 @@ td {
 
 											<th class="head">By Category</th>
 											<th>Open</th>
+											<th>Assigned</th>
+											<th>Acknowledged</th>
 											<th>Resolved</th>
+											<th>InProgress</th>
 											<th>Closed</th>
-											<th>Total</th>
+											<th>Resolved</th>
+											<th>Pending</th>
 
 										</tr>
 									</thead>
@@ -744,157 +723,14 @@ td {
 				});
 	}
 
-	var listOrders1 = ${list};
+	/* var listOrders1 = ${list};
 	if (listOrders1 != "") {
 		showCategoryTable(listOrders1);
 	}else{
 		showCategoryTable(listOrders1);
-	}
-	function showCategoryTable(listOrders1){
-		$('#categoryTable body').html('');
-		/* var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Company Code</th><th>Company Name</th><th>Contact Person Name</th><th>Contact Person Mobile</th><th>Email Id</th><th>Type of Comapany</th><th>Company Address</th><th>Remarks</th><th>Status</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
-		$('#tableId').html(tableHead); */
-		serviceUnitArray = {};
-		var categoryarray = null;
-		var assigned = 0;
-		var closed1 = 0;
-		var resolved = 0;
-		$
-				.each(
-						listOrders1,
-						function(i, orderObj) {
-							var totalcategory = 0;
-							if (orderObj.kStatusNameWithId != "") {
+	} */
+	
 
-								categoryarray = orderObj.kStatusNameWithId
-										.split(",");
-							}
-							var occurrences = {};
-							for (var i = 0, j = categoryarray.length; i < j; i++) {
-								occurrences[categoryarray[i]] = (occurrences[categoryarray[i]] || 0) + 1;
-							}
-							if (occurrences['Assigned'] != undefined) {
-								assigned = occurrences['Assigned'];
-								totalcategory = totalcategory + assigned;
-							} else {
-								assigned = 0;
-								totalcategory = totalcategory + assigned;
-							}
-							if (occurrences['Closed'] != undefined) {
-								closed1 = occurrences['Closed'];
-								totalcategory = totalcategory + closed1;
-							} else {
-								closed1 = 0;
-								totalcategory = totalcategory + closed1;
-
-							}
-							if (occurrences['Resolved'] != undefined) {
-								resolved = occurrences['Resolved'];
-								totalcategory = totalcategory + resolved;
-							} else {
-								resolved = 0;
-								totalcategory = totalcategory + resolved;
-							}
-							//<a href="severity?id=${issue.key}"
-							//console.log(occurrences['Assigned']);
-							var tblRow = "<tr'>"
-									+ "<td  title='"+orderObj.categoryName+"'>"
-									+ orderObj.categoryName
-									+ "</td>"
-									+ "<td title='"+assigned+"' ><a href='categoryDashBord?status=2&categoryId="
-									+ orderObj.categoryId
-									+ "'  class='btn btn-danger assigned'>"
-									+ assigned
-									+ "</a></td>"
-									+ "<td title='"+resolved+"'><a href='categoryDashBord?status=4&categoryId="
-									+ orderObj.categoryId
-									+ "'  class='btn btn-warning assigned'>"
-									+ resolved
-									+ "</td>"
-									+ "<td title='"+closed2+"'><a href='categoryDashBord?status=1&categoryId="
-									+ orderObj.categoryId
-									+ "'  class='btn btn-primary assigned'>"
-									+ closed1 + "</td>"
-									+ "<td title='"+totalcategory+"'>"
-									+ totalcategory + "</td>" + "</tr >";
-							$(tblRow).appendTo("#categoryTable tbody");
-						});
-	}
-
-	var byStatusList = ${byStatusList};
-	if (byStatusList != "") {
-		$('#statusTable body').html('');
-		/* var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Company Code</th><th>Company Name</th><th>Contact Person Name</th><th>Contact Person Mobile</th><th>Email Id</th><th>Type of Comapany</th><th>Company Address</th><th>Remarks</th><th>Status</th><th style="text-align: center;"></th></tr></thead><tbody></tbody></table>';
-		$('#tableId').html(tableHead); */
-		serviceUnitArray = {};
-		var categoryarray = null;
-		var assigned = 0;
-		var closed2 = 0;
-		var resolved = 0;
-
-		$
-				.each(
-						byStatusList,
-						function(i, orderObj) {
-							var totalStatus = 0;
-							if (orderObj.kStatusNameWithId != "") {
-
-								categoryarray = orderObj.statusConcatination
-										.split(",");
-							}
-							var occurrences = {};
-							for (var i = 0, j = categoryarray.length; i < j; i++) {
-								occurrences[categoryarray[i]] = (occurrences[categoryarray[i]] || 0) + 1;
-							}
-							if (occurrences['Assigned'] != undefined) {
-								assigned = occurrences['Assigned'];
-								totalStatus = totalStatus + assigned;
-							} else {
-								assigned = 0;
-								totalStatus = totalStatus + assigned;
-							}
-							if (occurrences['Closed'] != undefined) {
-								closed2 = occurrences['Closed'];
-								totalStatus = totalStatus + closed2;
-							} else {
-								closed2 = 0;
-								totalStatus = totalStatus + closed2;
-
-							}
-							if (occurrences['Resolved'] != undefined) {
-								resolved = occurrences['Resolved'];
-								totalStatus = totalStatus + resolved;
-							} else {
-								resolved = 0;
-								totalStatus = totalStatus + resolved;
-							}
-							//<a href="severity?id=${issue.key}"
-							//console.log(occurrences['Assigned']);
-							var tblRow = "<tr'>"
-									+ "<td  title='"+orderObj.statusName+"'>"
-									+ orderObj.statusName
-									+ "</td>"
-									+ "<td title='"+assigned+"' ><a href='statusDashBord?status="
-									+ orderObj.statusId
-									+ "'  class='btn btn-danger assigned'>"
-									+ assigned
-									+ "</a></td>"
-									+ "<td title='"+resolved+"'><a href='statusDashBord?status="
-									+ orderObj.statusId
-									+ "'  class='btn btn-warning assigned'>"
-									+ resolved
-									+ "</td>"
-									+ "<td title='"+closed2+"'><a href='statusDashBord?status="
-									+ orderObj.statusId
-									+ "'  class='btn btn-primary assigned'>"
-									+ closed2 + "</td>"
-									+ "<td title='"+totalStatus+"'>"
-									+ totalStatus + "</td>" + "</tr >";
-							$(tblRow).appendTo("#statusTable tbody");
-						});
-	}
 	
 	
 	
@@ -961,7 +797,67 @@ td {
 		
 	}
 	
+	/* *****************************************category table code***************************** */
+	var categorycountjson = ${categorycountjson};
+	var categorycountclosedjson = ${categorycountclosedjson};
+	var categorycountAssignedjson = ${categorycountAssignedjson};
+	var categorycountAcknowldgedson = ${categorycountAcknowldgedson};
+	var categorycountResolved = ${categorycountResolved};
+	var categorycountInProgress = ${categorycountInProgress};
+	var categorycountReopen = ${categorycountReopen};
+	var categorycountPending = ${categorycountPending};
 	
+	
+	
+	
+	if (categorycountjson != "") {
+		$('#categoryTable body').html('');
+		displayCategoryTask(categorycountjson,categorycountclosedjson,categorycountAssignedjson,categorycountAcknowldgedson,categorycountResolved,categorycountInProgress,categorycountReopen,categorycountPending);
+		
+	}
+	
+	function displayCategoryTask(categorycountclosedjson,categorycountAssignedjson,categorycountAcknowldgedson,categorycountResolved,categorycountInProgress,categorycountReopen,categorycountPending){
+		
+		$.each(categorycountjson, function(i,item) {
+			
+			//console.log(deptcountjson[i]+"------"+deptcountclosedjson[i]);
+			
+			var diff=parseInt(item)-parseInt(deptcountclosedjson[i])
+			//console.log(item);
+			 var tblRow = "<tr'>"
+					+ "<td> "
+					+ i
+					+ "</a></td>"
+					+ "<td ><a href='deptAll?id="+i+"'>"
+					+ item
+					+ "</a></td>"
+					+ "<td ><a href='deptAssigned?id="+i+"'>"
+					+ categorycountAssignedjson[i]
+					+ "</a></td>"
+					+ "<td ><a href='deptacknowledged?id="+i+"'>"
+					+ categorycountAcknowldgedson[i]
+					+ "</a></td>"
+					+ "<td ><a href='deptresolved?id="+i+"'>"
+					+ categorycountResolved[i]
+					+ "</a></td>"
+					+ "<td ><a href='deptinprogress?id="+i+"'>"
+					+ categorycountInProgress[i]
+					+ "</a></td>"
+					+ "<td ><a href='deptClosed?id="+i+"'>"
+					+ categorycountclosedjson[i]
+					+ "</a></td>"
+					+ "<td ><a href='deptReopen?id="+i+"'>"
+					+ categorycountReopen[i]
+					+ "</a></td>"
+					+ "<td ><a href='deptBalanced?id="+i+"'>"
+					+ categorycountPending[i]
+				
+					+ "</a></td>"
+					+ "</tr >";
+			$(tblRow).appendTo("#categoryTable tbody"); 
+		});
+		
+	}
 	
 		
 	

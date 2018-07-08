@@ -1630,6 +1630,336 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	
 }
     
+
+
+public Map<String, String> getCategoriesCounts()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+     hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+     		" ON (kpcategory.id=report_issue.category)  GROUP BY kpcategory.id";
+	}
+	
+	else
+	{
+	
+		
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and kp_org_id='"+orgid+" '  GROUP BY kpcategory.id";
+		
+	 
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+
+public Map<String, String> getCategoryCountsForAssigned()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus='2'  GROUP BY kpcategory.id";
+		
+	}
+	
+	else
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus='2' and kp_org_id='"+orgid+" '  GROUP BY kpcategory.id";
+	
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+
+
+public Map<String, String> getCategoryCountsForAcknowledged()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus='3'  GROUP BY kpcategory.id";
+		
+	}
+	
+	else
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus='3' and kp_org_id='"+orgid+" '  GROUP BY kpcategory.id";
+	
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+public Map<String, String> getCategoryCountsForResolved()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus='4'  GROUP BY kpcategory.id";
+		
+	}
+	
+	else
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus='4' and kp_org_id='"+orgid+" '  GROUP BY kpcategory.id";
+	
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+
+public Map<String, String> getCategoryCountsForInprocess()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus='5'  GROUP BY kpcategory.id";
+		
+	}
+	
+	else
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus='5' and kp_org_id='"+orgid+" '  GROUP BY kpcategory.id";
+	
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+public Map<String, String> getCategoryCountsForReopen()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus='6'  GROUP BY kpcategory.id";
+		
+	}
+	
+	else
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus='6' and kp_org_id='"+orgid+" '  GROUP BY kpcategory.id";
+	
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+public Map<String, String> getCategoryCountsForClosed()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus='1'  GROUP BY kpcategory.id";
+		
+	}
+	
+	else
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus='1' and kp_org_id='"+orgid+" '  GROUP BY kpcategory.id";
+	
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+
+public Map<String, String> getCategoryCountsForPending()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus <>'1'  GROUP BY kpcategory.id";
+		
+	}
+	
+	else
+	{
+		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+	     		" ON (kpcategory.id=report_issue.category) and report_issue.kstatus <> '1' and kp_org_id='"+orgid+" '  GROUP BY kpcategory.id";
+	
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
      
      }
 

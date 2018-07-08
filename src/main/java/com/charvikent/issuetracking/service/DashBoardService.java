@@ -488,4 +488,48 @@ public Set<ReportIssue> getTasksBydepartmentReopen(String deptname) {
 	return dashBoardDao.getTasksBydepartmentReopen(deptname);
 }
 
+
+
+
+
+public Object getCategoryCountsForAll() {
+	return dashBoardDao.getCategoriesCounts();
+}
+
+public Object getCategoryCountsForAssigned() {
+	return dashBoardDao.getCategoriesCounts();
+}
+
+public Object getCategoryCountsForAcknowledged() {
+	return dashBoardDao.getCategoryCountsForAcknowledged();
+}
+public Object getCategoryCountsForResolved() {
+	return dashBoardDao.getCategoryCountsForResolved();
+}
+public Object getCategoryCountsForInprocess() {
+	return dashBoardDao.getCategoryCountsForInprocess();
+}
+public Object getCategoryCountsForReopen(){
+	return dashBoardDao.getCategoryCountsForReopen();
+}
+
+
+public Object getCategoryCountsForClosed() {
+	return dashBoardDao.getCategoryCountsForClosed();
+}
+
+public Object getCategoryCountsForPending() {
+	return dashBoardDao.getCategoryCountsForPending();
+}
+
+
+
+
+
+
+
+
+
+
+
 }

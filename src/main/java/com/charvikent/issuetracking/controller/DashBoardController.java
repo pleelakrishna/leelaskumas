@@ -120,6 +120,29 @@ public class DashBoardController {
 		request.setAttribute("deptcountInProgress", deptcountInProgress);
 		request.setAttribute("deptcountReopen", deptcountReopen);
 		
+		
+		
+		String categorycountjson = deptmapper.writeValueAsString(dashBoardService.getCategoryCountsForAll());
+		String categorycountclosedjson = deptmapper.writeValueAsString(dashBoardService.getCategoryCountsForClosed());
+		String categorycountAssignedjson = deptmapper.writeValueAsString(dashBoardService.getCategoryCountsForAssigned());
+		String categorycountAcknowldgedson = deptmapper.writeValueAsString(dashBoardService.getCategoryCountsForAcknowledged());
+		String categorycountResolved = deptmapper.writeValueAsString(dashBoardService.getCategoryCountsForResolved());
+		String categorycountInProgress = deptmapper.writeValueAsString(dashBoardService.getCategoryCountsForInprocess());
+		String categorycountReopen = deptmapper.writeValueAsString(dashBoardService.getCategoryCountsForReopen());
+		String categorycountPending = deptmapper.writeValueAsString(dashBoardService.getCategoryCountsForPending());
+		
+		
+		
+		request.setAttribute("categorycountjson", categorycountjson);
+		request.setAttribute("categorycountclosedjson", categorycountclosedjson);
+		request.setAttribute("categorycountAssignedjson", categorycountAssignedjson);
+		request.setAttribute("categorycountAcknowldgedson", categorycountAcknowldgedson);
+		request.setAttribute("categorycountResolved", categorycountResolved);
+		request.setAttribute("categorycountInProgress", categorycountInProgress);
+		request.setAttribute("categorycountReopen", categorycountReopen);
+		request.setAttribute("categorycountPending", categorycountPending);
+		
+		
 		System.out.println(deptcountjson);
 		 
 		 
