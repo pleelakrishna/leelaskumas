@@ -817,7 +817,6 @@ td {
 	}
 	
 	function displayCategoryTask(categorycountclosedjson,categorycountAssignedjson,categorycountAcknowldgedson,categorycountResolved,categorycountInProgress,categorycountReopen,categorycountPending){
-		
 		$.each(categorycountjson, function(i,item) {
 			
 			//console.log(deptcountjson[i]+"------"+deptcountclosedjson[i]);
@@ -826,10 +825,10 @@ td {
 			//console.log(item);
 			 var tblRow = "<tr'>"
 					+ "<td> "
-					+ i
+					+ item.category
 					+ "</a></td>"
 					+ "<td ><a href='deptAll?id="+i+"'>"
-					+ item
+					+ item.number
 					+ "</a></td>"
 					+ "<td ><a href='deptAssigned?id="+i+"'>"
 					+ categorycountAssignedjson[i]

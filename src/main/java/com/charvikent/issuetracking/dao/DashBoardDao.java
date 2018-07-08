@@ -17,6 +17,7 @@ import javax.persistence.PersistenceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -43,6 +44,9 @@ public class DashBoardDao {
 	
 	@Autowired
 	ReportIssueService taskService;
+	
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 	
 	
 	
@@ -1632,7 +1636,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
     
 
 
-public Map<String, String> getCategoriesCounts()
+public List<Map<String, Object>> getCategoriesCounts()
 {
 	
 	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -1640,7 +1644,6 @@ public Map<String, String> getCategoriesCounts()
 	String orgid=String.valueOf(objuserBean.getKpOrgId());
 
 	
-	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
 	
 	String hql ="";
 	
@@ -1651,7 +1654,7 @@ Authentication authentication = SecurityContextHolder.getContext().getAuthentica
 	
 	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
-     hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+     hql ="SELECT kpcategory.id,kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
      		" ON (kpcategory.id=report_issue.category)  GROUP BY kpcategory.id";
 	}
 	
@@ -1659,17 +1662,19 @@ Authentication authentication = SecurityContextHolder.getContext().getAuthentica
 	{
 	
 		
-		hql ="SELECT kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
+		hql ="SELECT kpcategory.id, kpcategory.category ,COUNT(report_issue.category)as number  FROM report_issue  RIGHT  JOIN kpcategory " + 
 	     		" ON (kpcategory.id=report_issue.category) and kp_org_id='"+orgid+" '  GROUP BY kpcategory.id";
 		
 	 
 	}	
 	
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
 		for (Object[] row : rows) {
 			deptCounts.put((String)row[0], String.valueOf(row[1]));
-    }
+    }*/
+	
+	List<Map<String,Object>> deptCounts =jdbcTemplate.queryForList(hql);
 		return deptCounts;
 }
 
