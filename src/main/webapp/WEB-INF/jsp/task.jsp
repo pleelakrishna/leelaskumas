@@ -448,7 +448,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody><tfoot><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th></tr></tfoot></table>';
+			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	

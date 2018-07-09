@@ -216,7 +216,9 @@ public Set<ReportIssue> getAllTasks(String qvalue) {
             {
 	for(ReportIssue entry :listissue )
 	 {
-		if(entry.getAssigntoid().equals(id))
+		
+		System.out.println(entry);
+		if(entry.getAssigntoid().equals(id)   || entry.getAssignbyid().equals(id))
 		{
 			
 		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
@@ -290,7 +292,7 @@ public Set<ReportIssue> getAllTasksByclosed(String qvalue) {
             {
 	for(ReportIssue entry :listissue )
 	 {
-		if(entry.getAssigntoid().equals(id) && entry.getKstatus().equals("Closed"))
+		if((entry.getAssigntoid().equals(id)  || entry.getAssignbyid().equals(id)) && entry.getKstatus().equals("Closed"))
 		{
 			
 		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
@@ -340,7 +342,7 @@ public Set<ReportIssue> getAllTasksByBalenced(String qvalue) {
             {
 	for(ReportIssue entry :listissue )
 	 {
-		if(entry.getAssigntoid().equals(id) && (!entry.getKstatus().equals("1")))
+		if((entry.getAssigntoid().equals(id) || entry.getAssignbyid().equals(id)) && (!entry.getKstatus().equals("1")))
 		{
 			
 		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
@@ -497,7 +499,7 @@ public Object getCategoryCountsForAll() {
 }
 
 public Object getCategoryCountsForAssigned() {
-	return dashBoardDao.getCategoriesCounts();
+	return dashBoardDao.getCategoryCountsForAssigned();
 }
 
 public Object getCategoryCountsForAcknowledged() {
@@ -523,12 +525,49 @@ public Object getCategoryCountsForPending() {
 }
 
 
+public Object getCategoryCountsForIds() {
+	return dashBoardDao.getCategoriesCountsForids();
+}
 
 
 
+public Set<ReportIssue> getTasksByCategoryWise(String dept) {
+	// TODO Auto-generated method stub
+	return dashBoardDao.getTasksByCategoryWise(dept);
+}
+public Set<ReportIssue> getTasksByCategoryAssigned(String deptname) {
+	
+	return dashBoardDao.getTasksByCategoryAssigned(deptname);
+}
 
+public Set<ReportIssue> getTasksByCategoryAcknowledged(String deptname) {
+	
+	return dashBoardDao.getTasksByCategoryAcknowledged(deptname);
+}
 
+public Set<ReportIssue> getTasksByCategoryResolved(String deptname) {
+	
+	return dashBoardDao.getTasksByCategoryresolved(deptname);
+}
 
+public Set<ReportIssue> getTasksByCategoryInprocess(String deptname) {
+	
+	return dashBoardDao.getTasksByCategoryInprogressed(deptname);
+}
+public Set<ReportIssue> getTasksByCategoryReopen(String deptname) {
+	
+	return dashBoardDao.getTasksByCategoryReopen(deptname);
+}
+
+public Set<ReportIssue> getTasksByCategoryClosed(String deptname) {
+	
+	return dashBoardDao.getTasksByCategoryClosed(deptname);
+}
+
+public Set<ReportIssue> getTasksByCategoryPending(String deptname) {
+	
+	return dashBoardDao.getTasksByCategoryPending(deptname);
+}
 
 
 

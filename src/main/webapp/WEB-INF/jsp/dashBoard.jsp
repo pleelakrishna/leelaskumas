@@ -302,14 +302,13 @@ td {
 											style="background-color: #006699; color: #fff; text-align: center;">
 
 											<th class="head">By Category</th>
-											<th>Open</th>
 											<th>Assigned</th>
 											<th>Acknowledged</th>
+											<th>In-Process</th>
 											<th>Resolved</th>
-											<th>InProgress</th>
 											<th>Closed</th>
-											<th>Resolved</th>
-											<th>Pending</th>
+											<th>Reopen</th>
+											<th>Total</th>
 
 										</tr>
 									</thead>
@@ -340,14 +339,13 @@ td {
 											style="background-color: #006699; color: #fff; text-align: center;">
 
 											<th class="head">Department Name</th>
-											<th>Open</th>
 											<th>Assigned</th>
 											<th>Acknowledged</th>
+											<th>In-Process</th>
 											<th>Resolved</th>
-											<th>InProgress</th>
 											<th>Closed</th>
-											<th>Resolved</th>
-											<th>Pending</th>
+											<th>Reopen</th>
+											<th>Total</th>
 
 										</tr>
 									</thead>
@@ -755,7 +753,7 @@ td {
 		
 	}
 	
-	function displayDeptTask(deptcountjson,deptcountclosedjson,deptcountAssignedjson,deptcountResolved,deptcountInProgress,deptcountReopen){
+	function displayDeptTask(deptcountjson,deptcountclosedjson,deptcountAssignedjson,deptcountAcknowldgedson,deptcountResolved,deptcountInProgress,deptcountReopen){
 		
 		$.each(deptcountjson, function(i,item) {
 			
@@ -767,20 +765,17 @@ td {
 					+ "<td> "
 					+ i
 					+ "</a></td>"
-					+ "<td ><a href='deptAll?id="+i+"'>"
-					+ item
-					+ "</a></td>"
 					+ "<td ><a href='deptAssigned?id="+i+"'>"
 					+ deptcountAssignedjson[i]
 					+ "</a></td>"
 					+ "<td ><a href='deptacknowledged?id="+i+"'>"
 					+ deptcountAcknowldgedson[i]
 					+ "</a></td>"
-					+ "<td ><a href='deptresolved?id="+i+"'>"
-					+ deptcountResolved[i]
-					+ "</a></td>"
 					+ "<td ><a href='deptinprogress?id="+i+"'>"
 					+ deptcountInProgress[i]
+					+ "</a></td>"
+					+ "<td ><a href='deptresolved?id="+i+"'>"
+					+ deptcountResolved[i]
 					+ "</a></td>"
 					+ "<td ><a href='deptClosed?id="+i+"'>"
 					+ deptcountclosedjson[i]
@@ -788,9 +783,12 @@ td {
 					+ "<td ><a href='deptReopen?id="+i+"'>"
 					+ deptcountReopen[i]
 					+ "</a></td>"
-					+ "<td ><a href='deptBalanced?id="+i+"'>"
-					+ diff
+					+ "<td ><a href='deptAll?id="+i+"'>"
+					+ item
 					+ "</a></td>"
+					/* + "<td ><a href='deptBalanced?id="+i+"'>"
+					+ diff
+					+ "</a></td>" */
 					+ "</tr >";
 			$(tblRow).appendTo("#deptTable tbody"); 
 		});
@@ -816,41 +814,37 @@ td {
 		
 	}
 	
-	function displayCategoryTask(categorycountclosedjson,categorycountAssignedjson,categorycountAcknowldgedson,categorycountResolved,categorycountInProgress,categorycountReopen,categorycountPending){
+	function displayCategoryTask(categorycountjson,categorycountclosedjson,categorycountAssignedjson,categorycountAcknowldgedson,categorycountResolved,categorycountInProgress,categorycountReopen,categorycountPending){
 		$.each(categorycountjson, function(i,item) {
 			
 			//console.log(deptcountjson[i]+"------"+deptcountclosedjson[i]);
 			
-			var diff=parseInt(item)-parseInt(deptcountclosedjson[i])
+			//var diff=parseInt(item)-parseInt(deptcountclosedjson[i])
 			//console.log(item);
 			 var tblRow = "<tr'>"
 					+ "<td> "
-					+ item.category
+					+ i
 					+ "</a></td>"
-					+ "<td ><a href='deptAll?id="+i+"'>"
-					+ item.number
-					+ "</a></td>"
-					+ "<td ><a href='deptAssigned?id="+i+"'>"
+					+ "<td ><a href='catAssigned?id="+i+"'>"
 					+ categorycountAssignedjson[i]
 					+ "</a></td>"
-					+ "<td ><a href='deptacknowledged?id="+i+"'>"
+					+ "<td ><a href='catacknowledged?id="+i+"'>"
 					+ categorycountAcknowldgedson[i]
 					+ "</a></td>"
-					+ "<td ><a href='deptresolved?id="+i+"'>"
-					+ categorycountResolved[i]
-					+ "</a></td>"
-					+ "<td ><a href='deptinprogress?id="+i+"'>"
+					+ "<td ><a href='catinprogress?id="+i+"'>"
 					+ categorycountInProgress[i]
 					+ "</a></td>"
-					+ "<td ><a href='deptClosed?id="+i+"'>"
+					+ "<td ><a href='catresolved?id="+i+"'>"
+					+ categorycountResolved[i]
+					+ "</a></td>"
+					+ "<td ><a href='catClosed?id="+i+"'>"
 					+ categorycountclosedjson[i]
 					+ "</a></td>"
-					+ "<td ><a href='deptReopen?id="+i+"'>"
+					+ "<td ><a href='catReopen?id="+i+"'>"
 					+ categorycountReopen[i]
 					+ "</a></td>"
-					+ "<td ><a href='deptBalanced?id="+i+"'>"
-					+ categorycountPending[i]
-				
+					+ "<td ><a href='catAll?id="+i+"'>"
+					+ item
 					+ "</a></td>"
 					+ "</tr >";
 			$(tblRow).appendTo("#categoryTable tbody"); 

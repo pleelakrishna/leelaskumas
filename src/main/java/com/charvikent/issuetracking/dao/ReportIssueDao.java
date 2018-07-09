@@ -1,6 +1,7 @@
 package com.charvikent.issuetracking.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -15,6 +16,9 @@ import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
@@ -289,28 +293,42 @@ public List<ReportIssue> getAllReportIssues()
 	public Map<Integer, Integer>  getGapAndCount() {
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String id=String.valueOf(objuserBean.getDesignation());
+		String id=String.valueOf(objuserBean.getId());
+		String orgid=String.valueOf(objuserBean.getKpOrgId());
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+		
+		Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
+		
+		
 
 		List<ReportIssue> listissuegap=new ArrayList<>();
 		ReportIssue issuegap =null;
 		
 		List<Object[]> rows =null;
 		
-		String hql ="SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue  r where r.assignto=:cuid  group by gap";
+		
+         String hql ="";
          
-		if(id.equals("1"))
+		if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 		{
 		
-		 rows = 	em.createNativeQuery("SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue group by gap ").getResultList();
+		// rows = 	em.createNativeQuery("SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue group by gap ").getResultList();
+			hql ="SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue group by gap";
 		}
-		else
+		else 
 		{
 		
-	      rows = 	em.createNativeQuery(hql).setParameter("cuid", id).getResultList();
+	     // rows = 	em.createNativeQuery(hql).setParameter("cuid", id).getResultList();
+			 hql ="SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue  r where r.assignto='"+id+" '  or r.assignby='"+id+" '  group by gap";
 		}
 		
 		
-		Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
+		   rows = 	em.createNativeQuery(hql).getResultList();
+		
+		
 
 		for (Object[] row : rows) {
 			issuegap = new ReportIssue();
@@ -334,24 +352,37 @@ public List<ReportIssue> getAllReportIssues()
 		
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+		
 
 		//String custName=null;
 		
 		List<Object[]> rows =null;
 		
-		String hql ="SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue  r where r.assignto=:cuid and r.kstatus =:kstatus  group by gap";
+		String hql ="";
+		
+		//String hql ="SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue  r where r.assignto=:cuid and r.kstatus =:kstatus  group by gap";
           
-		if(id.equals("1"))
+		if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 		{
 
-		 rows = 	em.createNativeQuery(" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue where kstatus =:custName  group by gap  ").setParameter("custName", "1").getResultList();
+		// rows = 	em.createNativeQuery(" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue where kstatus =:custName  group by gap  ").setParameter("custName", "1").getResultList();
+		
+		 hql = " SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue where kstatus ='1'  group by gap";
 		}
 		else
 		{
-		 rows = 	em.createNativeQuery(hql).setParameter("cuid",id).setParameter("kstatus", "1").getResultList();
+		// rows = 	em.createNativeQuery(hql).setParameter("cuid",id).setParameter("kstatus", "1").getResultList();
+		
+		 hql =" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue  r where r.assignto='"+id+" ' and r.kstatus ='1'   group by gap ";
 		}
 		
 		Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
+		
+		 rows = 	em.createNativeQuery(hql).getResultList();
 
 		for (Object[] row : rows) {
 			issuegap = new ReportIssue();
