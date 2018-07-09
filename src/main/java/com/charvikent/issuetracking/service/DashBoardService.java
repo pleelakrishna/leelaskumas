@@ -292,13 +292,19 @@ public Set<ReportIssue> getAllTasksByclosed(String qvalue) {
             {
 	for(ReportIssue entry :listissue )
 	 {
-		if((entry.getAssigntoid().equals(id)  || entry.getAssignbyid().equals(id)) && entry.getKstatus().equals("Closed"))
+		
+		if(entry.getKstatusid().equals("1"))
+		{
+		
+		if(entry.getAssigntoid().equals(id)  || entry.getAssignbyid().equals(id))  
 		{
 			
 		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )
 		{
 			sortedtaskslist.add(entry);
 		}
+		}
+		
 		}
 	 }
 	 }
@@ -342,7 +348,7 @@ public Set<ReportIssue> getAllTasksByBalenced(String qvalue) {
             {
 	for(ReportIssue entry :listissue )
 	 {
-		if((entry.getAssigntoid().equals(id) || entry.getAssignbyid().equals(id)) && (!entry.getKstatus().equals("1")))
+		if((entry.getAssigntoid().equals(id) || entry.getAssignbyid().equals(id)) && (!entry.getKstatusid().equals("1")))
 		{
 			
 		if(entry.getGapdays() >=fvalue &&  entry.getGapdays() < svalue )

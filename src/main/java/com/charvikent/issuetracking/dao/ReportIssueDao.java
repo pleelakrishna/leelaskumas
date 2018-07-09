@@ -377,7 +377,7 @@ public List<ReportIssue> getAllReportIssues()
 		{
 		// rows = 	em.createNativeQuery(hql).setParameter("cuid",id).setParameter("kstatus", "1").getResultList();
 		
-		 hql =" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue  r where r.assignto='"+id+" ' and r.kstatus ='1'   group by gap ";
+		 hql =" SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue  r where ( r.assignto='"+id+" ' or r.assignby='"+id+" ' ) and r.kstatus ='1'   group by gap ";
 		}
 		
 		Map<Integer, Integer> issueTimelines = new HashMap<Integer, Integer>();
