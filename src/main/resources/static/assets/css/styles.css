@@ -2993,7 +2993,7 @@ a.list-group-item-danger.active:focus {
   line-height: 1;
   color: #000000;
   text-shadow: 0 1px 0 #ffffff;
-  opacity: 0.2;
+  /* opacity: 0.2; */
   filter: alpha(opacity=20);
 }
 .close:hover,
@@ -8951,13 +8951,13 @@ footer #back-to-top {
   clear: both;
 }
 #page-heading h1 {
-  margin: 0;
-  padding: 30px 10px 0px 20px;
-  float: left;
-  line-height: 30px;
-  font-weight: 300;
-  font-size: 42px;
-  margin-bottom:10px;
+    margin: 0;
+    padding: 16px 1px 0px 20px;
+    float: left;
+    line-height: 28px;
+    font-weight: 300;
+    font-size: 42px;
+    margin-bottom: 22px;
 }
 #page-heading .options {
   display: inline;

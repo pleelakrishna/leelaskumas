@@ -6,11 +6,17 @@
 	text-align: center;
 	border: 1px solid #efe9e9;
 }
-
+.prioritybg th,td:first-child {
+text-align:left;}
 .prioritybg tr:nth-child(even) {
 	background: #ccc;
 }
-
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 5px;
+    line-height: 1.428571429;
+    vertical-align: top;
+    border-top: 1px solid #e6e7e8;
+}
 .assigned {
 	width:100px;
 	line-height: 0.8;

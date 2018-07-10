@@ -249,7 +249,7 @@ function displayTable(listOrders) {
 }
 function changePasswordModal(){
 
-	
+	$("#passwordErrormsg").text("");
 	var id=$("#userid").val();
 	var npassword=$("#npassword").val();
 	var cpassword=$("#cpassword").val();
@@ -297,6 +297,7 @@ var userData="";
 function getPasswordModal(id)
 {
 	userData=$('#userid').val(id);
+	$("#passwordErrormsg").text("");
 	$('#password_modal').trigger('click');
 }
 
