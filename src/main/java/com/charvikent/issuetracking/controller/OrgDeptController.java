@@ -211,4 +211,57 @@ public class OrgDeptController {
 		Boolean result =orgDeptService.checkDeptExistsOrnot(dept,org);
 		return result;
 	}
+	
+	
+	
+	
+	
+	@RequestMapping("/orgemployee")
+	public String  ShowHiraricalEmployeewise(Model model ,HttpServletRequest request) {
+		List<OrgDeptHierarchical> listOrderBeans1 = null;
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+
+try
+{
+			//listOrderBeans1 = orgDeptService.orgDeptListHierarchical();
+			listOrderBeans1 = userService.getEmployessForChart();
+			if (listOrderBeans1 != null && listOrderBeans1.size() > 0) {
+				objectMapper = new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(listOrderBeans1);
+				request.setAttribute("hierarchical", sJson);
+				// System.out.println(sJson);
+			} else {
+				objectMapper = new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(listOrderBeans1);
+				request.setAttribute("hierarchical", "''");
+			}
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+
+		}
+
+
+		return "orgemployee";
+
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

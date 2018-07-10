@@ -23,6 +23,7 @@ import com.charvikent.issuetracking.config.SendSMS;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.Designation;
+import com.charvikent.issuetracking.model.OrgDeptHierarchical;
 import com.charvikent.issuetracking.model.User;
 
 @Service
@@ -289,6 +290,11 @@ public class UserService {
 	public User getUserDesignationById(Integer id) {
 		User obj=userDao.getUserDesignationById(id);
 		return obj;
+	}
+
+	public List<OrgDeptHierarchical> getEmployessForChart() {
+		// TODO Auto-generated method stub
+		return userDao.getEmployessForChart();
 	}
 
 

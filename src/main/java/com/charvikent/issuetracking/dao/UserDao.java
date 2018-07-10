@@ -23,6 +23,7 @@ import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.Department;
 import com.charvikent.issuetracking.model.Designation;
+import com.charvikent.issuetracking.model.OrgDeptHierarchical;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.model.UserLogs;
 
@@ -431,6 +432,14 @@ public class UserDao {
 		return user;
 		
 
+		
+	}
+
+	public List<OrgDeptHierarchical> getEmployessForChart() {
+		String sql = "SELECT username as name,id,reportto as parent from kpusers ";
+		RowMapper<OrgDeptHierarchical> rowMapper = new BeanPropertyRowMapper<OrgDeptHierarchical>(OrgDeptHierarchical.class);	
+		List<OrgDeptHierarchical> user = jdbcTemplate.query(sql, rowMapper);
+		return user;
 		
 	}
 
