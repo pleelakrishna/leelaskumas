@@ -58,7 +58,7 @@ public class DashBoardDao {
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,r.status,ks.name,r.taskno from ReportIssue r, Category c, Priority p, User u, Severity s, KpStatus ks where r.assignto=u.id and r.kstatus=ks.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus<>'1'  and  r.assignby =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createQuery("select r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,r.status,ks.name,r.taskno from ReportIssue r, Category c, Priority p, User u, Severity s, KpStatus ks where r.assignto=u.id and r.kstatus=ks.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus<>'1'  and  r.assignby =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();
@@ -96,7 +96,7 @@ public class DashBoardDao {
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createNativeQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category,ks.name,ks.scolour,r.taskno from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s ,kpstatus ks  where r.assignto=u.id and r.kstatus=ks.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus in(2,6,9) and r.assignto =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createNativeQuery("select r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.colour, p.priority,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category,ks.name,ks.scolour,r.taskno from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s ,kpstatus ks  where r.assignto=u.id and r.kstatus=ks.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus in(2,6,9) and r.assignto =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();
@@ -137,7 +137,7 @@ public class DashBoardDao {
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category,ks.scolour,ks.name ,r.taskno from ReportIssue r, Category c, Priority p, User u, Severity s, KpStatus ks   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='4' and  r.assignto =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createQuery("select r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.colour, p.priority,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category,ks.scolour,ks.name ,r.taskno from ReportIssue r, Category c, Priority p, User u, Severity s, KpStatus ks   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='4' and  r.assignto =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();
@@ -206,7 +206,7 @@ public class DashBoardDao {
 
 		try {
 			List<Object[]> rows = em
-			.createNativeQuery(" select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,ks.name,ks.scolour,r.taskno from vreport_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignby =:custName union (select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignto =:custName )").setParameter("custName", id)
+			.createNativeQuery(" select   r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,ks.name,ks.scolour,r.taskno from vreport_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignby =:custName union (select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignto =:custName )").setParameter("custName", id)
 			.getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
@@ -596,7 +596,7 @@ public Set<ReportIssue> getTasksByStatusList(String status) {
 public Set<ReportIssue> getAllTasks() {
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		
-		String hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+		String hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby ,r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks , notifications_frequency nf  "  
                    +" where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and nf.id=r.notificationsfrequency ";
 		
@@ -743,7 +743,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap, nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and nf.id=r.notificationsfrequency "
@@ -752,7 +752,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	
 	else
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
  
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and  nf.id=r.notificationsfrequency  and kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"' ";
@@ -862,7 +862,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='1'"
@@ -872,7 +872,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	else
 	
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='1' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and  kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
 
@@ -941,7 +941,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus <>'1'"
@@ -950,7 +950,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	
 	else
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus<>'1' and  nf.id=r.notificationsfrequency  and kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
 
@@ -1005,7 +1005,7 @@ public Set<ReportIssue> getfrequencyNotifications(String id) {
 	Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 	//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	
-	String hql ="select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,r.additionalinfo,u1.username as asby,r.assignby ,r.notificationsfrequency"
+	String hql ="select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,CONCAT(u.firstname,' ',u.lastname) as username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,r.additionalinfo,CONCAT(u1.firstname, ' ',u1.lastname)  as asby,r.assignby ,r.notificationsfrequency"
                  +"from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks , kpstatuslogs kpl ,kpusers u1"
                  +"where  r.kstatus=ks.id and r.assignto=u.id and r.assignby =u1.id  and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto ='4'  and r.additionalinfo ='1'  and  notificationsfrequency ='2' and datediff(Date(STR_TO_DATE(taskdeadline, '%d-%M-%Y %H:%i')),date(r.created_time))>20 order by kpl.statustime desc";
 	
@@ -1258,7 +1258,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='2'"
@@ -1268,7 +1268,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	else
 		
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='2' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and  kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
 
@@ -1337,7 +1337,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname) as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='3'"
@@ -1347,7 +1347,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	else
 		
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id ,CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='3' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and  kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
 
@@ -1416,7 +1416,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname) as username, as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='4'"
@@ -1426,7 +1426,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	else
 		
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='4' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and  kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
 
@@ -1495,7 +1495,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='5'"
@@ -1505,7 +1505,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	else
 		
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='5' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and  kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
 
@@ -1574,7 +1574,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname) as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='6'"
@@ -1584,7 +1584,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	else
 		
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='6' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and  kpd.name='"+dept+"' and kpd.kp_org_id ='"+orgid+"'";
 
@@ -2068,7 +2068,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id ,CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap, nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and nf.id=r.notificationsfrequency "
@@ -2077,7 +2077,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	
 	else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
  
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and  nf.id=r.notificationsfrequency  and c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
@@ -2087,7 +2087,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	else
 	{
 		
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname) as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
  
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and  nf.id=r.notificationsfrequency  and   (r.assignto='"+id+" '  or r.assignby='"+id+" '  ) and  c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
@@ -2165,7 +2165,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id ,CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='2'"
@@ -2175,7 +2175,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 		
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='2' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
 
@@ -2184,7 +2184,7 @@ else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 	else
 	{
 		
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username,s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
  
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and  and r.kstatus='2' and  nf.id=r.notificationsfrequency  and  (r.assignto='"+id+" '  or r.assignby='"+id+" '  ) and  c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
@@ -2256,7 +2256,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname) as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='3'"
@@ -2266,7 +2266,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 		
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id ,CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='3' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
 
@@ -2275,7 +2275,7 @@ else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 	else
 	{
 		
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname) as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
  
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='3'  and  nf.id=r.notificationsfrequency  and  (r.assignto='"+id+" '  or r.assignby='"+id+" '  ) and  c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
@@ -2347,7 +2347,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='4'"
@@ -2357,7 +2357,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 		
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='4' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
 
@@ -2366,7 +2366,7 @@ else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 	else
 	{
 		
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
+			hql ="select  r.id ,CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
  
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='4' and  nf.id=r.notificationsfrequency  and  (r.assignto='"+id+" '  or r.assignby='"+id+" '  ) and  c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
@@ -2437,7 +2437,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname) as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='5'"
@@ -2447,7 +2447,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 		
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='5' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
 
@@ -2456,7 +2456,7 @@ else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 	else
 	{
 		
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
  
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='5' and  nf.id=r.notificationsfrequency  and  (r.assignto='"+id+" '  or r.assignby='"+id+" '  ) and  c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
@@ -2530,7 +2530,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='6'"
@@ -2540,7 +2540,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 		
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='6' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
 
@@ -2549,7 +2549,7 @@ else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 	else
 	{
 		
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
  
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='6' and  nf.id=r.notificationsfrequency  and  (r.assignto='"+id+" '  or r.assignby='"+id+" '  ) and  c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
@@ -2619,7 +2619,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='1'"
@@ -2629,7 +2629,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 		
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id ,CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname) as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='1' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
 
@@ -2638,7 +2638,7 @@ else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 	else
 	{
 		
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
  
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus='1' and  nf.id=r.notificationsfrequency  and  (r.assignto='"+id+" '  or r.assignby='"+id+" '  ) and  c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
@@ -2710,7 +2710,7 @@ String hql ="";
 if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 	{
 	
-	 hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,"
+	 hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby ,"
                  +" r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency  "
                 +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf  "
                +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus <> '1'"
@@ -2720,7 +2720,7 @@ if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 		
 		{
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname) as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap , nf.frequence_name , r.notificationsfrequency " 
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd , notifications_frequency nf "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus <> '1' and  nf.id=r.notificationsfrequency and nf.id=r.notificationsfrequency  and c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";
 
@@ -2729,7 +2729,7 @@ else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 	else
 	{
 		
-			hql ="select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
+			hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname, ' ',u1.lastname)  as asby , r.kstatus ,DATEDIFF(CURDATE(),r.created_time ) as gap ,nf.frequence_name , r.notificationsfrequency "
  
                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks,kpdepartment kpd ,notifications_frequency nf  "  
                    +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpd.id=r.departmentid and r.kstatus <> '1' and  nf.id=r.notificationsfrequency  and  (r.assignto='"+id+" '  or r.assignby='"+id+" '  ) and  c.category ='"+dept+"' and c.kp_org_id = '"+orgid+"' ";

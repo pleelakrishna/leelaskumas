@@ -91,7 +91,7 @@ th {
 				<c:forEach var="cissue" items="${clist}">	
 							<tr>
 <th style="width:20%;">Task Number</th><td style="width:80%;">${cissue.taskno}</td></tr>
-<tr><th>Summary</th><td>${cissue.subject}</td></tr>
+<tr><th>Task Subject</th><td>${cissue.subject}</td></tr>
 <tr><th>Category</th><td>${cissue.category}</td></tr>
 <tr><th>Priority</th><td>${cissue.severity}</td></tr>
 <tr><th>Description</th><td>${cissue.description}</td></tr>

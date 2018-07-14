@@ -330,7 +330,7 @@ function getHeadersCounts(){
 
 
     <header class="navbar navbar-inverse navbar-fixed-top" role="banner" style="background: #4f8edc;">
-            <a class="navbar-brand" href="javascript:void(0);"><img src="${baseurl }/assets/img/klogo.png"  style ="width:auto;height:57px;" class="img-responsive"></a>
+            <a class="navbar-brand" href="javascript:void(0);"><img src="${baseurl }/assets/img/klogo.png"  style ="width:auto;height:57px;" class="img-responsive hde"><img src="${baseurl }/assets/img/klogo1.png"  style ="width:auto;height:57px;" class="img-responsive hde0"></a>
             
 		<div style="float:right;" class="masters">
 	        <ul class="nav navbar-nav pull-right toolbar">
@@ -479,9 +479,9 @@ function getHeadersCounts(){
               </security:authorize>
               <li class="task mobi"><a href="${baseurl }/task"><i class="fa fa-tasks"></i> <span>Task</span></a></li>
 			  <li class="empchart"><a href="${baseurl }/orgemployee"><i class="fa fa-sitemap"></i> <span>EmployesChart</span></a></li>
-			
-			
-			
+			 <%-- <security:authorize access="hasRole('ROLE_ADMIN')">
+			 <li class="taskreports"><a href="${baseurl }/taskReports"><i class="fa fa-tasks"></i> <span>Reports</span></a></li>
+			</security:authorize> --%>
 			</ul>
 		</div>
     </nav>

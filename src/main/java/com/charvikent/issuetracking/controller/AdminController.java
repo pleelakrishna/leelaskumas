@@ -1,18 +1,22 @@
 package com.charvikent.issuetracking.controller;
 
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.charvikent.issuetracking.config.SendSMS;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.User;
 import com.charvikent.issuetracking.service.UserService;
@@ -31,6 +35,13 @@ public class AdminController {
 
 	@Autowired
 	HttpSession session;
+	
+	@Autowired
+	private SendSMS smsTemplate;
+	
+	
+	@Autowired
+    private Environment environment;
 
 	/*@RequestMapping("/summary")
 	public String summary(Model model) {
@@ -256,7 +267,7 @@ public class AdminController {
 	*/
 	
 	@RequestMapping(value="/adminChangePassword", method= RequestMethod.POST )
-	public  @ResponseBody String adminChangePassword(User user,RedirectAttributes redir,HttpServletRequest request) throws JSONException{
+	public  @ResponseBody String adminChangePassword(User user,RedirectAttributes redir,HttpServletRequest request) throws JSONException, IOException{
 		boolean result=false;
 		JSONObject jsonObj = new JSONObject();
 		User users = userService.getUserById(user.getId());
@@ -265,6 +276,15 @@ public class AdminController {
 			users.setPassword(user.getNpassword());
 			userService.updatePassword(users);
 			jsonObj.put("message", "Password Updated Successfully");
+			
+			 String tmsg =environment.getProperty("app.changepassword");
+			  System.out.println(tmsg);
+			  
+			  tmsg=  tmsg.replaceAll("_username_", users.getUsername());
+			  tmsg=  tmsg.replaceAll("_password_", users.getPassword());
+			  
+			  smsTemplate.sendSMS(tmsg,users.getMobilenumber());
+			
 //				System.out.println("**************************************************"+result+"**************"+jsonObject);
 //				jsonObject.put("msg", "You Entered Wrong Password");
 //				System.out.println("**************************************************"+result+"**************"+jsonObject);

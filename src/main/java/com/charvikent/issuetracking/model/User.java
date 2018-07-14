@@ -66,6 +66,16 @@ public class User {
 	private String lastname;
 	@Transient
 	private String status;
+	@Transient
+	private String fullname;
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String firstname, String lastname) {
+		this.fullname = getFirstname() + " " + getLastname();
+	}
 
 	public String getReportName() {
 		return reportName;
@@ -229,7 +239,7 @@ public class User {
 	}
 
 	public String getUsername() {
-		return username;
+		return username; 
 	}
 
 	public void setUsername(String username) {

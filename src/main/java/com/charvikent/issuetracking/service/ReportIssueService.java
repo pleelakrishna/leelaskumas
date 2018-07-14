@@ -118,8 +118,8 @@ public class ReportIssueService {
 		  
 		  tmsg=  tmsg.replaceAll("_subject_", reportIssue.getSubject());
 		  tmsg=  tmsg.replaceAll("_deadline_", reportIssue.getTaskdeadline());
-		  tmsg= tmsg.replaceAll("_assignby_", objuserBean.getUsername());
-		  tmsg= tmsg.replaceAll("_assignto_", assigntoUserBean.getUsername());
+		  tmsg= tmsg.replaceAll("_assignby_", objuserBean.getFirstname()+" "+objuserBean.getLastname());
+		  tmsg= tmsg.replaceAll("_assignto_", assigntoUserBean.getFirstname()+" "+assigntoUserBean.getLastname());
 		  
 		  
 		  System.out.println(tmsg);

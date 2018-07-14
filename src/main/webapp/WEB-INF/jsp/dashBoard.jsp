@@ -17,6 +17,9 @@ text-align:left;}
     vertical-align: top;
     border-top: 1px solid #e6e7e8;
 }
+.btp {
+	border-top: 1px solid #aba8a8 !important;
+}
 .assigned {
 	width:100px;
 	line-height: 0.8;
@@ -50,7 +53,11 @@ td {
 	font-size: 14px;
 }
 .pad {
-	padding-top:21px !important;
+	padding-top:17px !important;
+	text-align:center !important;
+}
+.pad1 {
+	text-align:center !important;
 }
 </style>
 
@@ -106,7 +113,7 @@ td {
 											<div class="col-md-12" style="margin-left: 5px"!important">
 
 												<span
-													style="font-size: 14px; lettee-spacin: 1px; color: #006699;">Assigned
+													style="font-size: 14px; lettee-spacin: 1px; color: #006699; margin-left:-15px;">Assigned
 													to me <c:forEach var="issue" items="${severityCount}">
 														<c:set var="String" value="${issue.key}" />
 														<c:if test="${fn:contains(String, 'Total')}">
@@ -166,7 +173,7 @@ td {
 
 
 												<span
-													style="font-size: 14px; lettee-spacin: 1px; color: #006699;">Assigned
+													style="font-size: 14px; lettee-spacin: 1px; color: #006699; margin-left:-15px;">Assigned
 													by me<c:forEach var="issue" items="${severityCountsBY}">
 														<c:set var="String" value="${issue.key}" />
 														<c:if test="${fn:contains(String, 'Total')}">
@@ -234,7 +241,7 @@ td {
 
 											<div class="col-md-12" style="margin-left: 5px"!important">
 												<span
-													style="font-size: 14px; lettee-spacin: 1px; color: #006699;">Monitored
+													style="font-size: 14px; lettee-spacin: 1px; color: #006699; margin-left:-15px;">Monitored
 													by me<c:forEach var="issue" items="${SevMonitoredCounts}">
 														<c:set var="String" value="${issue.key}" />
 														<c:if test="${fn:contains(String, 'Total')}">
@@ -307,14 +314,14 @@ td {
 										<tr
 											style="background-color: #006699; color: #fff; text-align: center;">
 
-											<th class="head">By Category</th>
-											<th>Assigned</th>
-											<th>Acknowledged</th>
-											<th>In-Process</th>
-											<th>Resolved</th>
-											<th>Closed</th>
-											<th>Reopen</th>
-											<th>Total</th>
+											<th class="head pad1">By Category</th>
+											<th class="pad1">Assigned</th>
+											<th class="pad1">Acknowledged</th>
+											<th class="pad1">In-Process</th>
+											<th class="pad1">Resolved</th>
+											<th class="pad1">Closed</th>
+											<th class="pad1">Reopen</th>
+											<th class="pad1">Total</th>
 
 										</tr>
 									</thead>
@@ -344,14 +351,14 @@ td {
 										<tr
 											style="background-color: #006699; color: #fff; text-align: center;">
 
-											<th class="head">Department Name</th>
-											<th>Assigned</th>
-											<th>Acknowledged</th>
-											<th>In-Process</th>
-											<th>Resolved</th>
-											<th>Closed</th>
-											<th>Reopen</th>
-											<th>Total</th>
+											<th class="head pad1">Department Name</th>
+											<th class="pad1">Assigned</th>
+											<th class="pad1">Acknowledged</th>
+											<th class="pad1">In-Process</th>
+											<th class="pad1">Resolved</th>
+											<th class="pad1">Closed</th>
+											<th class="pad1">Reopen</th>
+											<th class="pad1">Total</th>
 
 										</tr>
 									</thead>
@@ -392,10 +399,10 @@ td {
 
 													<tr class="my-buglist-bug ">
 													<tr>
-														<th>By Date(days)</th>
-														<th>Open</th>
-														<th>Closed</th>
-														<th>Balanced</th>
+														<th class="pad1 btp">By Date(days)</th>
+														<th class="pad1 btp">Open</th>
+														<th class="pad1 btp">Closed</th>
+														<th class="pad1 btp">Pending</th>
 
 													</tr>
 													<c:forEach var="issue" items="${gapAndCount}">
@@ -609,12 +616,12 @@ td {
 						});
 			});
 	
-	/* $(document).ready(function(){
+	 $(document).ready(function(){
 	    if(!window.location.hash) {
 	        window.location = window.location + '#loaded';
 	        window.location.reload();
 	    }
-	}); */
+	}); 
 
 	$(".dashBoard").addClass("active");
 	$(document).ready(function() {

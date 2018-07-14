@@ -6,14 +6,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <style>
-tfoot input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-    }
-tfoot {
-     display: table-header-group;
-}
 .btn-toolbar {
 	margin-top:7px;
 }
@@ -124,32 +116,21 @@ margin-right:8px;
                     		<div class="col-md-6">
                     			<div class="form-group">
                     				<form:hidden path="id"/>
-                    				<div class="col-sm-4">
-										<label for="focusedinput" style="float:right; margin-top:7px;">Category  <span class="impColor">*</span></label>
-                    				</div>
-									<div class="col-sm-6">
-										<form:select path="category" class="form-control validate1 mobi" onfocus="removeBorder(this.id)" >
+									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Category  <span class="impColor">*</span></label>
+									<form:select path="category" class="col-xs-10 col-sm-5 validate1 mobi" onfocus="removeBorder(this.id)" >
 											<form:option value="" label="--- Select ---" />
 											<form:options items="${category}"/>
 										</form:select>
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
                     			</div>
                     		</div>
                     		<div class="col-md-6">
                     			<div class="form-group">
-                    			<div class="col-sm-4">
-									<label for="focusedinput" style="float:right; margin-top:7px;">Assigned to <span class="impColor">*</span></label>
-                    			</div>
-									<div class="col-sm-6">
-										<form:select path="assignto" class="form-control validate1" onfocus="removeBorder(this.id)">
+									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Assigned to <span class="impColor">*</span></label>
+									
+										<form:select path="assignto" class="col-xs-10 col-sm-5 validate1" onfocus="removeBorder(this.id)">
 											<form:option value="" label="--- Select ---" />
 										 	<form:options items="${userNames}"/>
 										</form:select>
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
 										<span class="hasError" id="stationnameError"></span>
 								    
                     			</div>
@@ -158,27 +139,17 @@ margin-right:8px;
                     	<div class="row">
                     		<div class="col-md-6">
                     			<div class="form-group">
-                    			<div class="col-sm-4">
-									<label for="focusedinput" style="float:right; margin-top:7px;">Task Subject  <span class="impColor">*</span></label>
-								</div>
-									<div class="col-sm-6">
-										<form:input path="subject"  placeholder="Task Subject" class="form-control validate1 mobi1" onfocus="removeBorder(this.id)" />
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
+									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Task Subject  <span class="impColor">*</span></label>
+									<form:input path="subject"  placeholder="Task Subject" class="col-xs-10 col-sm-5 validate1 mobi1" onfocus="removeBorder(this.id)" />
                     			</div>
                     		</div>
                     		<div class="col-md-6">
                     			<div class="form-group">
-                    				<div class="col-sm-4">
-										<label for="focusedinput" style="float:right; margin-top:7px;">Description <span class="impColor">*</span></label>
-									</div>
-									<div class="col-sm-6">
-										<form:textarea path="description" class="form-control validate1" onfocus="removeBorder(this.id)" placeholder="Enter Description"/>
-										<span class="hasError" id="stationnameError"></span>
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
+									<label for="focusedinput" class="col-md-6 control-label">Description <span class="impColor">*</span></label>
+									<div style="margin-left:-10px;" class="col-md-6">
+									<form:textarea style="width:273px;" path="description" class="form-control validate1" onfocus="removeBorder(this.id)" placeholder="Enter Description"/>
+									<span class="hasError" id="stationnameError"></span>
+								    </div>
                     			</div>
                     		</div>
                     		
@@ -187,32 +158,23 @@ margin-right:8px;
                     	<div class="row">
                     		<div class="col-md-6">
                     			<div class="form-group">
-                    			<div class="col-sm-4">
-									<label for="focusedinput" style="float:right; margin-top:7px;">Priority <span class="impColor">*</span></label>
-								</div>
-									<div class="col-sm-6">
-										<form:select path="severity" class="form-control validate1 mobi0" onfocus="removeBorder(this.id)">
+									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Priority <span class="impColor">*</span></label>
+									
+										<form:select path="severity" class="col-xs-10 col-sm-5 validate1 mobi0" onfocus="removeBorder(this.id)">
 										<form:option value="" label="--- Select ---" />
 										 <form:options items="${severity}"/>
 										</form:select>	
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
 										<span class="hasError" id="stationnameError"></span>
 								    
                     			</div>
                     		</div>
                     		<div class="col-md-6">
                     			<div class="form-group">
-                    			<div class="col-sm-4">
-									<label for="focusedinput" style="float:right; margin-top:7px;">Task DeadLine <span class="impColor">*</span></label>
-								</div>
-									<div class="col-sm-6">
+									<label for="focusedinput" class="col-md-6 control-label">Task DeadLine <span class="impColor">*</span></label>
+									<div style="margin-left:-10px;" class="col-md-5">
 								    	<%-- <form:input type="datetime-local" path="taskdeadline"  class="form-control validate"   /> --%>
-								    <form:input path="taskdeadline"  class="form-control validate1"  onfocus="removeBorder(this.id)"  autocomplete="off"  />
+								    <form:input style="width:273px;"  path="taskdeadline"  class="form-control validate1"  onfocus="removeBorder(this.id)"   />
 								    </div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
                     			</div>
                     		</div>
                     	</div>
@@ -220,30 +182,21 @@ margin-right:8px;
                     	<div class="row">
                     		<div class="col-md-6">
                     		<div class="form-group">
-                    			<div class="col-sm-4">
-									<label style="float:right; margin-top:7px;">Attach File(s)</label>
-								</div>
-									<div class="col-sm-6">
-										<input type="file" name="file1" id="file1" multiple="multiple" style="margin: 7px 0px 0px 0px;">
+                    		<label class="ace-file-input ace-file-multiple col-sm-3 col-md-push-3 control-label no-padding-right" >Attach File(s)</label>
+									<div class="col-md-8">
+										<input type="file" name="file1" id="file1" class="col-sm-9 col-md-push-5" multiple="multiple" style="margin: 7px 0px 0px 0px;">
 									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
                     		</div>
                     		</div>
                     		
                     		<div class="col-md-6">
                     			<div class="form-group">
-                    			<div class="col-sm-4">
-									<label for="focusedinput" style="float:right; margin-top:7px;">Notifications Frequency <span class="impColor">*</span></label>
-								</div>
-									<div class="col-sm-6">
-										<form:select path="notificationsfrequency" class="form-control validate1" onfocus="removeBorder(this.id)">
+									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Notifications Frequency <span class="impColor">*</span></label>
+									
+										<form:select path="notificationsfrequency" class="col-xs-10 col-sm-5 validate1" onfocus="removeBorder(this.id)">
 											<form:option value="" label="--- Select ---" />
 										 	<form:options items="${NotificationsFrequency}"/>
 										</form:select>
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
 										<span class="hasError" id="stationnameError"></span>
 								    
                     			</div>
@@ -495,7 +448,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody><tfoot><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th><td></td></tfoot></table>';
+			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -556,16 +509,27 @@ function displayTable(listOrders) {
 
 
 $(function(){
-	var table = $('#example').dataTable();
-	$('#example tfoot th').each(function (i) 
-	{
-
-	            var title = $('#example thead th').eq($(this).index()).text();
-	            // or just var title = $('#sample_3 thead th').text();
-	            var serach = '<input type="text" />';
-	            $(this).html('');
-	            $(serach).appendTo(this).keyup(function(){table.fnFilter($(this).val(),i)})
-	});
+	
+	$('#example tfoot th').each( function () {
+	        var title = $(this).text();
+	        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+	    } );
+	 
+	    // DataTable
+	    var table = $('#example').DataTable();
+	 
+	    // Apply the search
+	    table.columns().every( function () {
+	        var that = this;
+	 
+	        $( 'input', this.footer() ).on( 'keyup change', function () {
+	            if ( that.search() !== this.value ) {
+	                that
+	                    .search( this.value )
+	                    .draw();
+	            }
+	        } );
+	    } );
 
 	});
 
@@ -1104,5 +1068,5 @@ document.getElementById("file1").onchange = function () {
 
 
 $("#pageName").text("Task Master");
-$(".task").addClass("active"); 
+$(".taskreports").addClass("active"); 
 </script>

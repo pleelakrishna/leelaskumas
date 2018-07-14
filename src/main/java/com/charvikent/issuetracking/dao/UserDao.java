@@ -436,7 +436,7 @@ public class UserDao {
 	}
 
 	public List<OrgDeptHierarchical> getEmployessForChart() {
-		String sql = "SELECT username as name,id,reportto as parent from kpusers ";
+		String sql = "SELECT  CONCAT(firstname, ' ',lastname)  as name,id,reportto as parent from kpusers ";
 		RowMapper<OrgDeptHierarchical> rowMapper = new BeanPropertyRowMapper<OrgDeptHierarchical>(OrgDeptHierarchical.class);	
 		List<OrgDeptHierarchical> user = jdbcTemplate.query(sql, rowMapper);
 		return user;

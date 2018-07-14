@@ -195,8 +195,11 @@ public class UserService {
 			{
 		for(User bean: rolesList){
 			if(bean.getId()!=(objuserBean.getId()))
+				
 			{
-				userMapForMaster.put(bean.getId(), bean.getUsername());
+				bean.setFullname(bean.getFirstname(),bean.getLastname());
+				
+				userMapForMaster.put(bean.getId(), bean.getFullname());
 			}
 		
 
@@ -209,16 +212,19 @@ public class UserService {
 				if(bean.getKpOrgId().equals(objuserBean.getKpOrgId()))
 				{
 				if(bean.getId()!=(objuserBean.getId()))
+					
 				{
-					userMapForMaster.put(bean.getId(), bean.getUsername());
-				}
+					bean.setFullname(bean.getFirstname(),bean.getLastname());
+					userMapForMaster.put(bean.getId(), bean.getFullname());
+				
 				}
 			}
 			
 		
-			return userMapForMaster;
 		}
+			return userMapForMaster;
 
+	}
 	}
 	
 
@@ -235,7 +241,8 @@ public class UserService {
 			if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
 			{
 		for(User bean: rolesList){
-				userMapForMaster.put(bean.getId(), bean.getUsername());
+			bean.setFullname(bean.getFirstname(),bean.getLastname());
+				userMapForMaster.put(bean.getId(), bean.getFullname());
 		
 
 	} 
@@ -246,8 +253,8 @@ public class UserService {
 			for(User bean: rolesList){
 				if(bean.getKpOrgId().equals(objuserBean.getKpOrgId()))
 				{
-				
-					userMapForMaster.put(bean.getId(), bean.getUsername());
+					bean.setFullname(bean.getFirstname(),bean.getLastname());
+					userMapForMaster.put(bean.getId(), bean.getFullname());
 				}
 			}
 			

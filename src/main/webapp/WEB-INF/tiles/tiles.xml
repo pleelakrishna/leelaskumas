@@ -115,6 +115,14 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/kpproduct.jsp" />
 	</definition>
 	
+	<definition name="orgemployee" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/orgemployee.jsp" />
+	</definition>
+	
+	<definition name="taskReports" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/taskReports.jsp" />
+	</definition>
+	
 	
 		
 

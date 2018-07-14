@@ -1682,6 +1682,10 @@ table th[class*="col-"] {
 	.mobi1 {
 		margin-left:10px;
 	}
+	
+  .navbar-brand .hde0 {
+  	display:none;
+  }
 }
 @media (max-width: 320px) {
 	.navbar-brand img {
@@ -2149,6 +2153,9 @@ select[multiple].form-group-lg .form-control {
     display: inline-block;
     margin-bottom: 0;
     vertical-align: middle;
+  }
+  .navbar-brand .hde{
+  	display:none;
   }
   .form-inline .form-control {
     display: inline-block;

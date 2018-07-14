@@ -39,7 +39,7 @@ public class KpHistoryDao {
 		
 		TreeSet<KpHistory> listissue=new TreeSet<KpHistory>();
 		
-		String hql ="select r.id,r.taskno,h.kpchange,h.kpfield,h.created_time,u.username,h.issueid,h.uploadfiles, r.assignto,r.assignby "+ 
+		String hql ="select r.id,r.taskno,h.kpchange,h.kpfield,h.created_time,CONCAT(u.firstname,u.lastname) as username,h.issueid,h.uploadfiles, r.assignto,r.assignby "+ 
 				" from kp_history h, report_issue r,kpusers u" + 
 				" where  h.issueid=r.id and h.changedby=u.id";
 		

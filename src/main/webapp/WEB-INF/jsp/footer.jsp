@@ -54,6 +54,7 @@
 	
 <script type="text/javascript">
 var isClick = 'Yes';
+$.fn.dataTableExt.sErrMode = 'console';
 
 
 

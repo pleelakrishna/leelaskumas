@@ -228,11 +228,6 @@ public class ReportIssue  {
 		this.severityid = severityid;
 	}
 	
-	
-	
-	
-	
-	
 	public String getTaskdeadline() {
 		return taskdeadline;
 	}

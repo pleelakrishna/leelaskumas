@@ -130,7 +130,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.createdTime,ks.scolour,ks.name ,r.status, r.taskno from ReportIssue r, Category c, Priority p, User u, Severity s, KpStatus ks where r.assignto=u.id and r.kstatus=ks.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus<>'1'  and  r.assignby =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createQuery("select r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.createdTime,ks.scolour,ks.name ,r.status, r.taskno from ReportIssue r, Category c, Priority p, User u, Severity s, KpStatus ks where r.assignto=u.id and r.kstatus=ks.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus<>'1'  and  r.assignby =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();
@@ -167,7 +167,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,r.created_time from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.assignto=:custid").setParameter("custid", id).getResultList();
+			List <Object[]> rows=em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,CONCAT(u.firstname,' ',u.lastname) as username, r.assignto,r.created_time from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.assignto=:custid").setParameter("custid", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();
@@ -208,7 +208,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		try {
 			@SuppressWarnings("unchecked")
-			List <Object[]> rows=em.createQuery("select r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category,ks.scolour,ks.name, t.status ,r.taskno  from ReportIssue r, Category c, Priority p, User u, Severity s, KpStatus ks   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='4' and  r.assignto =:custName").setParameter("custName", id).getResultList();
+			List <Object[]> rows=em.createQuery("select r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.colour, p.priority,r.uploadfile,r.subject ,r.createdTime,c.category,ks.scolour,ks.name, t.status ,r.taskno  from ReportIssue r, Category c, Priority p, User u, Severity s, KpStatus ks   where  r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and r.kstatus='4' and  r.assignto =:custName").setParameter("custName", id).getResultList();
 			for(Object[] row: rows)
 			{
 				ReportIssue issue =new ReportIssue();
@@ -253,7 +253,7 @@ public List<ReportIssue> getAllReportIssues()
 		try {
 			@SuppressWarnings("unchecked")
 			List<Object[]> rows = em.createQuery("select r.id, c.category ,s.severity,p.priority,"
-					+ "u.username ,r.subject ,r.uploadfile,"
+					+ "CONCAT(u.firstname,' ',u.lastname) as username,r.subject ,r.uploadfile,"
 					+ "DATE(r.createdTime), Date(r.updatedTime),r.status,r.description,r.assignto,r.category,r.priority,r.severity,r.status from ReportIssue r, Category c ,Severity s,Priority p,User u  where r.category=c.id and r.severity=s.id and r.priority=p.id and r.assignto=u.id")
 			.getResultList();
 			for (Object[] row : rows) {
@@ -403,7 +403,7 @@ public List<ReportIssue> getAllReportIssues()
 
 		try {
 			List<Object[]> rows = em
-			.createNativeQuery(" select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour,r.status ,r.taskno from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignby =:custName union (select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignto =:custName )").setParameter("custName", id)
+			.createNativeQuery(" select   r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour,r.status ,r.taskno from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignby =:custName union (select   r.id , u.username, s.colour, p.priority,r.uploadfile,r.subject ,c.category,r.created_time,ks.name,ks.scolour from report_issue r, category c, priority p, kpusers u, severity s,kpstatus ks  where r.kstatus=ks.id and r.assignto=u.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus='1'  and DATEDIFF (CURDATE(),r.updated_time )<=30 and  r.assignto =:custName )").setParameter("custName", id)
 			.getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
@@ -738,7 +738,7 @@ public List<ReportIssue> getAllReportIssues()
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,u1.username as asby,r.assignby,ks.name, r.kstatus ,nf.frequence_name , r.notificationsfrequency  from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks , kpstatuslogs kpl,notifications_frequency nf   where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id and r.kstatus<>'1' and  nf.id=r.notificationsfrequency  order by kpl.statustime desc").setParameter("id",id).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,CONCAT(u.firstname,' ',u.lastname) as username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,u1.username as asby,r.assignby,ks.name, r.kstatus ,nf.frequence_name , r.notificationsfrequency  from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks , kpstatuslogs kpl,notifications_frequency nf   where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id and r.kstatus<>'1' and  nf.id=r.notificationsfrequency  order by kpl.statustime desc").setParameter("id",id).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -783,7 +783,7 @@ public List<ReportIssue> getAllReportIssues()
 	@SuppressWarnings("unchecked")
 	public Set<ReportIssue> getissuesByselectionAssignBy(String id) {
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
-		String hql ="select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name ,r.kstatus, nf.frequence_name , r.notificationsfrequency  "
+		String hql ="select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,CONCAT(u.firstname,' ',u.lastname) as username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname,' ',u1.lastname)  as asby,ks.name ,r.kstatus, nf.frequence_name , r.notificationsfrequency  "
 				+ "from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,kpstatuslogs kpl ,notifications_frequency nf  "
 				+ "  where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and kpl.issueid=r.id and  r.assignby="+id+" and nf.id=r.notificationsfrequency  and r.kstatus<>'1' order by kpl.statustime desc";
 		
@@ -842,7 +842,7 @@ public List<ReportIssue> getAllReportIssues()
 		
 		
 		try {
-			List<Object[]> rows = em.createNativeQuery("select  r.id , u.username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,u1.username as asby ,r.kstatus from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks, kpstatuslogs kpl    where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category   and  kpl.issueid=r.id and u.department =:custName order by kpl.statustime desc").setParameter("custName", deptid).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname,' ',u1.lastname) as asby ,r.kstatus from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks, kpstatuslogs kpl    where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category   and  kpl.issueid=r.id and u.department =:custName order by kpl.statustime desc").setParameter("custName", deptid).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -886,7 +886,7 @@ public List<ReportIssue> getAllReportIssues()
 	public Set<ReportIssue> getTaskByCategory(String statusId,String categoryId) {
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name ,  nf.frequence_name , r.notificationsfrequency  from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,notifications_frequency nf     where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  nf.id=r.notificationsfrequency and r.kstatus=:status and r.category=:categoryId").setParameter("status",statusId).setParameter("categoryId",categoryId).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,CONCAT(u.firstname,' ',u.lastname) as username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname,' ',u1.lastname)  as asby,ks.name ,  nf.frequence_name , r.notificationsfrequency  from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,notifications_frequency nf     where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  nf.id=r.notificationsfrequency and r.kstatus=:status and r.category=:categoryId").setParameter("status",statusId).setParameter("categoryId",categoryId).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -971,7 +971,7 @@ public List<ReportIssue> getAllReportIssues()
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		//User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,r.additionalinfo,u1.username as asby,r.assignby from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks , kpstatuslogs kpl ,kpusers u1 where  r.kstatus=ks.id and r.assignto=u.id and r.assignby =u1.id  and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id  and r.additionalinfo ='0' order by kpl.statustime desc").setParameter("id",id).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,CONCAT(u.firstname,' ',u.lastname) as username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid,r.status,r.description ,r.taskdeadline ,r.additionalinfo,CONCAT(u1.firstname,' ',u1.lastname)  as asby,r.assignby from report_issue r, kpcategory c, kppriority p, kpusers u, kpseverity s, kpstatus ks , kpstatuslogs kpl ,kpusers u1 where  r.kstatus=ks.id and r.assignto=u.id and r.assignby =u1.id  and p.id=r.priority and s.id=r.severity and c.id=r.category and kpl.issueid=r.id and r.assignto =:id  and r.additionalinfo ='0' order by kpl.statustime desc").setParameter("id",id).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -1018,7 +1018,7 @@ public List<ReportIssue> getAllReportIssues()
 		String id=String.valueOf(objuserBean.getId());
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
 		
-		String hql ="select r.id, r.taskno,r.subject,c.category as cname,r.category as cid,p.priority as pname,r.priority as pid,u.username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name,r.uploadfile"
+		String hql ="select r.id, r.taskno,r.subject,c.category as cname,r.category as cid,p.priority as pname,r.priority as pid,CONCAT(u.firstname,' ',u.lastname) as username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname,' ',u1.lastname)  as asby,ks.name,r.uploadfile"
         +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks"   
         +" where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and r.id=:tid"; 
 
@@ -1062,7 +1062,7 @@ public List<ReportIssue> getAllReportIssues()
 	public List<ReportIssue> getStatusList(String id) {
 		List<ReportIssue> listissue=null;
 		try {
-			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.kstatus=:status and r.kstatus=:id").setParameter("id",id).getResultList();
+			List<Object[]> rows = em.createNativeQuery("select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,CONCAT(u.firstname,' ',u.lastname) as username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname,' ',u1.lastname)  as asby,ks.name from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks    where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category  and  r.kstatus=:status and r.kstatus=:id").setParameter("id",id).getResultList();
 			for (Object[] row : rows) {
 				ReportIssue issue = new ReportIssue();
 				issue.setId(Integer.parseInt(String.valueOf(row[0])));
@@ -1102,7 +1102,7 @@ public List<ReportIssue> getAllReportIssues()
 		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getDesignation());
 		Set<ReportIssue> listissue=new LinkedHashSet<ReportIssue>();
-		String hqlAdmin = "select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,u.username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,u1.username as asby,ks.name , nf.frequence_name , r.notificationsfrequency  from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,notifications_frequency nf    where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and nf.id=r.notificationsfrequency and  r.kstatus=:status";
+		String hqlAdmin = "select r.id, r.taskno,r.subject,c.category as cname,r.category cid,p.priority as pname,r.priority as pid,CONCAT(u.firstname,' ',u.lastname) as username, r.assignto,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,s.severity as sname ,r.severity  as sid ,r.status,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname,' ',u1.lastname) as username, as asby,ks.name , nf.frequence_name , r.notificationsfrequency  from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks ,notifications_frequency nf    where  r.kstatus=ks.id and r.assignto=u.id and  r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category and nf.id=r.notificationsfrequency and  r.kstatus=:status";
 		String hqlUser= hqlAdmin + " and r.assignto=:assignto";
 		List<Object[]> rows =null;
 		try {
