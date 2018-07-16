@@ -454,13 +454,13 @@ $(document).ready(function () {
 	 
 
 	  $('#dateFrom').datepicker({
-	    format: "yyyy-mm-dd",
+		dateFormat: "yy-mm-dd",
 	    orientation: "top",
 	    autoclose: true
 	  });
 	  
 	  $('#dateTo').datepicker({
-		    format: "yyyy-mm-dd",
+		  dateFormat: "yy-mm-dd",
 		    orientation: "top",
 		    autoclose: true
 		  });
@@ -1123,13 +1123,18 @@ $("#getdatabydates").click(function(){
 	$.ajax({
 		type : "GET",
 		url : "getDataByDates",
-		data : {"fromdateval":fromdateval,"&todateval":todateval},
+		data : "fromdateval="+fromdateval+"&todateval="+todateval,
 		dataType : "text",
 		beforeSend : function() {
              $.blockUI({ message: 'Please wait' });
           }, 
 		success : function(data) {
 			alert(data);
+			var parsejson = JSON.parse(data);
+			var list =parsejson.listByDates;
+			alert(list);
+			displayTable(list);
+			
 			
 		},
 		complete: function () {

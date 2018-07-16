@@ -20,12 +20,20 @@ public class TasksReportsDao {
 
 	public Set<Map<String, Object>> getTasksByDates(String fromDate, String toDate) {
 
-		String hql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto , r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname,' ',u1.lastname) as asby ,r.kstatus" 
-                    +"from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks, kpstatuslogs kpl"    
-                    +"where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category   and  kpl.issueid=r.id and r.created_time='2018-07-07'"
-                    +"order by kpl.statustime desc";
+		String sql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto ,"
+                     +" r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname,' ',u1.lastname) as asby ,r.kstatus "
+                   +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks, kpstatuslogs kpl  " 
+                  +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category   and  kpl.issueid=r.id and date(r.created_time)='2018-07-07' "
+                   +" order by kpl.statustime desc";
 		
-		List<Map<String, Object>> list = template.queryForList(hql);
+		String sql2 ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid"      
+                     +" from report_issue r,kpusers u,kpusers u1, kppriority p, kpseverity s,kpcategory c, kpstatus ks,notifications_frequency nf "
+                     +" where  r.assignto=u.id and r.assignby=u1.id and  p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus=ks.id and nf.id=r.notificationsfrequency and  Date(r.created_time) >=' "+fromDate+" ' and Date(r.created_time) <=' "+toDate+" ' ";
+		
+		
+		System.out.println(sql2);
+		
+		List<Map<String,Object>> list = template.queryForList(sql2, new Object[]{});
 		
 		Set<Map<String, Object>> set =new HashSet<Map<String,Object>>(list);
 		
