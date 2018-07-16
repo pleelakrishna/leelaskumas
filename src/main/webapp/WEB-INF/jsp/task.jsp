@@ -11,6 +11,8 @@ tfoot input {
         padding: 3px;
         box-sizing: border-box;
     }
+    .newcog {
+    margin-left:25px !important;}
 tfoot {
      display: table-header-group;
 }
@@ -56,6 +58,7 @@ margin-right:8px;
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css">
+<link rel="stylesheet" href="${baseurl }/assets/css/bootstrap-glyphicons.css">
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
 		<li><a href="dashBoard">Home</a></li>
@@ -437,9 +440,14 @@ margin-right:8px;
 
 
 <script type="text/javascript">
-$(function() {
-	$(window).scrollTop($('#severity').offset().top);
-});
+
+	
+	$('#ttop').click(function(){
+		$(window).scrollTop($('#severity').offset().top);
+	});
+
+	//$(window).scrollTop($('#severity').offset().top);
+
 
 
 

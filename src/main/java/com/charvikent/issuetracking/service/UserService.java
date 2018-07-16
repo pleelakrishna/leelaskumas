@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,6 +38,9 @@ public class UserService {
 
 	@Autowired
 	private SendSMS smsTemplate;
+	
+	@Autowired
+    private Environment environment;
 
 
     SendSMS smstemplate =new SendSMS();
@@ -51,9 +55,16 @@ public class UserService {
 		}
 		String msg =user.getFirstname()+" "+user.getLastname()+",  Successfully registered with KPTMS. \n You can login using \n Username:  "+user.getUsername()+"\n password: "+user.getPassword();
 		String mbnum=user.getMobilenumber();
+		
+		 String tmsg =environment.getProperty("app.empregistration");
+		  System.out.println(tmsg);
+		  
+		  tmsg=  tmsg.replaceAll("_fullname_", user.getFirstname()+" "+user.getLastname());
+		  tmsg=  tmsg.replaceAll("_username_", user.getUsername());
+		  tmsg= tmsg.replaceAll("_password_", user.getPassword());
 		userDao.saveuser(user);
 		logger.info("Sending message.......");
-		smsTemplate.sendSMS(msg,mbnum);
+		smsTemplate.sendSMS(tmsg,mbnum);
 	}
 
 	public List<User> getAllUsers()

@@ -53,7 +53,7 @@ margin-right:8px;
 		<li><a href="dashBoard">Home</a></li>
 		<li>Task Master</li>
 	</ol>
-	<security:authorize access="hasRole('ROLE_MASTERADMIN')">
+	<security:authorize access="hasRole('ROLE_ADMIN')">
 	                       <div class="clearfix"></div><br>
 	                       <form>
 	                        <div class="row">
@@ -67,7 +67,7 @@ margin-right:8px;
 										</select>
                     			</div> --%>
                     		</div>
-                    		<%-- <div class="col-md-4">
+                    		 <%-- <div class="col-md-4">
                     			<div class="form-horizontal">
 									<label for="focusedinput" class="col-md-6 control-label" style="padding-top:2px;">Department  <span class="impColor">*</span></label>
 									<select id="deptid"  class="col-xs-10 col-sm-5 " >
@@ -76,11 +76,29 @@ margin-right:8px;
 											</c:forEach>
 										</select>
                     			</div>
-                    		</div> --%>
+                    		</div>  --%>
                     		</div>
                     		</form>
                     		</security:authorize>
                     		<br>
+                    		
+                    		<div class="form-group col-xs-6">
+  <div class="input-group">
+    <div class="input-group-addon flat">
+                <div class="glyphicon glyphicon-calendar"></div>
+    </div>
+    <div class="col-sm-4">
+      <input name="DATEFROM" id="dateFrom" type="text" class="form-control" />
+    </div>
+     <div class="col-sm-4">
+      <input name="DATEFROM" id="dateTo" type="text" class="form-control" />
+    </div>
+     <div class="col-sm-4">
+    <button type="button"  id="getdatabydates" class="btn">Go</button>
+    </div>
+  </div>
+</div>
+                    		
 	<div class="clearfix"></div>
 	<div class="container">
 		<div class="row">
@@ -390,9 +408,9 @@ margin-right:8px;
 
 
 <script type="text/javascript">
-$(function() {
+/* $(function() {
 	$(window).scrollTop($('#severity').offset().top);
-});
+}); */
 
 
 
@@ -431,6 +449,20 @@ $(document).ready(function () {
 		    toolbarPlacement: 'top',
 		        focusOnShow: false,
 
+		  });
+	 
+	 
+
+	  $('#dateFrom').datepicker({
+	    format: "yyyy-mm-dd",
+	    orientation: "top",
+	    autoclose: true
+	  });
+	  
+	  $('#dateTo').datepicker({
+		    format: "yyyy-mm-dd",
+		    orientation: "top",
+		    autoclose: true
 		  });
 });
  
@@ -508,7 +540,7 @@ function displayTable(listOrders) {
 
 
 
-$(function(){
+/* $(function(){
 	
 	$('#example tfoot th').each( function () {
 	        var title = $(this).text();
@@ -531,7 +563,7 @@ $(function(){
 	        } );
 	    } );
 
-	});
+	}); */
 
 function createDuplicate(id) {
 	
@@ -1065,6 +1097,52 @@ document.getElementById("file1").onchange = function () {
     // read the image file as a data URL.
     reader.readAsDataURL(this.files[0]);
 };
+
+
+$("#getdatabydates").click(function(){
+	
+	
+	var fromdateval =	$("#dateFrom").val();
+	var todateval =	$("#dateTo").val();
+	
+	if(fromdateval == "")
+		{
+		alert("select From Date")
+		return false;
+		}
+	if(todateval == "")
+	{
+	alert("select Too Date")
+	return false;
+	}
+	
+	
+	alert(fromdateval+"  "+todateval);
+	
+	
+	$.ajax({
+		type : "GET",
+		url : "getDataByDates",
+		data : {"fromdateval":fromdateval,"&todateval":todateval},
+		dataType : "text",
+		beforeSend : function() {
+             $.blockUI({ message: 'Please wait' });
+          }, 
+		success : function(data) {
+			alert(data);
+			
+		},
+		complete: function () {
+            
+            $.unblockUI();
+       },
+		error :  function(e){$.unblockUI();console.log(e);}
+		
+	});
+
+
+	
+});
 
 
 $("#pageName").text("Task Master");

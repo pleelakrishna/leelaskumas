@@ -419,7 +419,7 @@ function getHeadersCounts(){
 </div>
                 </li>
 	             <%-- <li style="float:left;margin-right:35px"><a href="${baseurl}/task" style="color:white;">Create Task</a></li> --%>
-	            <li style="float:left; margin-right:5px; margin-top:3px;"><a href="${baseurl}/task" style="color:white;">Create Task</a></li>
+	            <li style="float:left; margin-right:5px; margin-top:3px;"><a href="${baseurl}/task#taskf" style="color:white;"><span id="ttop">Create Task</span></a></li>
 	   
 	            <li style=" margin-top:3px;" class="dropdown">
 	                <a href="#" class="dropdown-toggle username" data-toggle="dropdown" style="color: white;"><span class="hidden-xs" > <%= userDesignation.getDesignationName() %> <i class="fa fa-caret-down"></i></span><img src="${baseurl }/assets/demo/avatar/dangerfield.png" alt="Dangerfield" /></a>
@@ -433,7 +433,7 @@ function getHeadersCounts(){
 	                    <li class="userlinks">
 	                        <ul class="dropdown-menu">
 	                            <!-- <li><a href="editProfile">Edit Profile <i class="pull-right fa fa-pencil" style="margin-left:85px;"></i></a></li> -->
-	                            <li><a href="changePassword">Change Password <i class="pull-right fa fa-cog"  style="margin-left:45px;"></i></a></li>
+	                            <li><a href="changePassword">Change Password <i class="pull-right fa fa-cog newcog"  style="margin-left:45px;"></i></a></li>
 	                         <%--    <c:url value="${peContext.request.contextPath}/logout" var="logoutUrl" /> --%>
 	
 	                          <%--  <li><a href="<c:url value="${baseurl}/logOutKptms" />"> Sign Out</a></li> --%>
@@ -479,9 +479,9 @@ function getHeadersCounts(){
               </security:authorize>
               <li class="task mobi"><a href="${baseurl }/task"><i class="fa fa-tasks"></i> <span>Task</span></a></li>
 			  <li class="empchart"><a href="${baseurl }/orgemployee"><i class="fa fa-sitemap"></i> <span>EmployesChart</span></a></li>
-			 <%-- <security:authorize access="hasRole('ROLE_ADMIN')">
+			<security:authorize access="hasRole('ROLE_ADMIN')">
 			 <li class="taskreports"><a href="${baseurl }/taskReports"><i class="fa fa-tasks"></i> <span>Reports</span></a></li>
-			</security:authorize> --%>
+			</security:authorize> 
 			</ul>
 		</div>
     </nav>
