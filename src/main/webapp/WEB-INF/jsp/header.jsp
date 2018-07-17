@@ -53,6 +53,8 @@
 <link href="${baseurl }/assets/css/datepicker1.css" rel="stylesheet" type="text/css" />
 
 <script type='text/javascript' src='${baseurl }/assets/js/jquery-1.10.2.min.js'></script>
+<script type='text/javascript' src='${baseurl }/assets/js/jquery.printThis.js'></script>
+
 
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 <script type='text/javascript' src='${baseurl }/js/ajax.js'></script>

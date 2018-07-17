@@ -119,6 +119,7 @@ margin-right:8px;
 							</table>
 						</div>
 					</div>
+					  <button type="button"  id="print" class="btn">Print</button>
 				</div>
 			</div>
 		</div>
@@ -1101,7 +1102,6 @@ document.getElementById("file1").onchange = function () {
 
 $("#getdatabydates").click(function(){
 	
-	
 	var fromdateval =	$("#dateFrom").val();
 	var todateval =	$("#dateTo").val();
 	
@@ -1117,7 +1117,6 @@ $("#getdatabydates").click(function(){
 	}
 	
 	
-	alert(fromdateval+"  "+todateval);
 	
 	
 	$.ajax({
@@ -1129,10 +1128,8 @@ $("#getdatabydates").click(function(){
              $.blockUI({ message: 'Please wait' });
           }, 
 		success : function(data) {
-			alert(data);
 			var parsejson = JSON.parse(data);
 			var list =parsejson.listByDates;
-			alert(list);
 			displayTable(list);
 			
 			
@@ -1148,6 +1145,20 @@ $("#getdatabydates").click(function(){
 
 	
 });
+
+ $("#print").click(function(){
+$("#example").printThis({
+	 debug: false,               // show the iframe for debugging
+	  importCSS: true,            // import page CSS
+	  importStyle: false,         // import style tags
+	  printContainer: true, 
+	  pageTitle: "hi leelakrishna", 
+	  removeInline: false
+	 
+ });
+});
+ 
+ 
 
 
 $("#pageName").text("Task Master");
