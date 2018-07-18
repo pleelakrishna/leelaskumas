@@ -59,6 +59,10 @@ margin-right:8px;
 <script type="text/javascript" src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css">
 <link rel="stylesheet" href="${baseurl }/assets/css/bootstrap-glyphicons.css">
+
+
+
+
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
 		<li><a href="dashBoard">Home</a></li>
@@ -487,6 +491,10 @@ $(document).ready(function () {
 		        focusOnShow: false,
 
 		  });
+	 
+	 
+	 
+	
 });
  
 
@@ -503,7 +511,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody><tfoot><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th><td></td></tfoot></table>';
+			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Created Time</th><th>Task Status</th><th>Task Deadline</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody><tfoot><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Created Time</th><th>Task Status</th><th>Task Deadline</th><th>Notifications Frequency</th><td></td></tfoot></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -549,9 +557,11 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.assignby+"'>"+ orderObj.assignby + "</td>"
 			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
 			+ "<td title='"+orderObj.severity+"'>"+ orderObj.severity + "</td>"
+			+ "<td title='"+orderObj.strcreatedTime+"'>"+ orderObj.strcreatedTime + "</td>"
 			+ "<td title='"+orderObj.kstatus+"'>"+ orderObj.kstatus + "</td>"
 			/* + "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>" */
-			+ "<td title='"+orderObj.strcreatedTime+"'>"+ orderObj.strcreatedTime + "</td>"
+			+ "<td title='"+orderObj.taskdeadline+"'>"+ orderObj.taskdeadline + "</td>"
+			
 			+ "<td title='"+orderObj.notificationsfrequency+"'>"+ orderObj.notificationsfrequency + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time +  "&nbsp;&nbsp;"+history2+ "&nbsp;&nbsp;"+createDuplicate+"</td>" 
 			+ "</tr>";
@@ -661,7 +671,7 @@ function viewTask2(id){
 		var alldata = jsonobj.list;
 		$('#HtableId2').html('');
 		var tableHead = '<table id="example2" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Date Modified</th><th>User Name</th><th>Attachment</th><th>field</th><th>Change</th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Date Modified</th><th>User Name</th><th>Attachment</th><th>Field</th><th>Change</th></tr></thead><tbody></tbody></table>';
 	$('#HtableId2').html(tableHead);
 	$.each(alldata,function(i, orderObj) {
 		if(orderObj.uploadfiles==undefined) orderObj.uploadfiles='';

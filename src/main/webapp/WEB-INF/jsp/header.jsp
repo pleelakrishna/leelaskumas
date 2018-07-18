@@ -46,7 +46,7 @@
 <link rel='stylesheet' type='text/css' href='${baseurl }/assets/plugins/charts-morrisjs/morris.css' /> 
 <link rel='stylesheet' type='text/css' href='${baseurl }/assets/plugins/codeprettifier/prettify.css' /> 
 <link rel='stylesheet' type='text/css' href='${baseurl }/assets/plugins/form-toggle/toggles.css' /> 
-<link rel='stylesheet' type='text/css' href='${baseurl }/assets/plugins/datatables/dataTables.css' /> 
+<%-- <link rel='stylesheet' type='text/css' href='${baseurl }/assets/plugins/datatables/dataTables.css' />  --%>
 <link rel='stylesheet' type='text/css' href='${baseurl }/assets/css/styles.css' /> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -69,6 +69,9 @@
 <script type='text/javascript' src='${baseurl }/js/canvasjs.min.js'></script> 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
+<link rel="stylesheet" href="${baseurl }/assets/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="${baseurl }/assets/css/jquery.dataTables.min.css">
+
 <style type="text/css">
 
 @media (max-width: 767px) {
@@ -78,6 +81,14 @@ nav.navbar .navbar-header {
     margin-top: 32px;
 }
 
+}
+
+.dataTables_wrapper .form-control
+{
+padding: 0px !important;
+height: auto !important;
+display: inline-block !important;
+width: auto !important;
 }
 
 .panel-heading {

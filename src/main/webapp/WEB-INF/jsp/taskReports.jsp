@@ -48,6 +48,13 @@ margin-right:8px;
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css">
+	
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js">
+	
+	
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
 		<li><a href="dashBoard">Home</a></li>
@@ -119,7 +126,6 @@ margin-right:8px;
 							</table>
 						</div>
 					</div>
-					  <button type="button"  id="print" class="btn">Print</button>
 				</div>
 			</div>
 		</div>
@@ -419,6 +425,15 @@ $("#taskdeadline").keypress(function(){
 	return false;
 })
 
+$(function(){
+	$('.datatables').DataTable({
+		  dom: 'lBfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+	});
+});
+
 
 function makeEmpty()
 {
@@ -465,6 +480,10 @@ $(document).ready(function () {
 		    orientation: "top",
 		    autoclose: true
 		  });
+	  
+	  
+	  
+	  
 });
  
 
@@ -535,9 +554,17 @@ function displayTable(listOrders) {
 			+ "</tr>";
 		$(tblRow).appendTo("#tableId table tbody");
 	});
-	if(isClick=='Yes') $('#example').dataTable();
-	
+// 	if(isClick=='Yes') $('#example').dataTable();
+		if(isClick=='Yes') {
+		$('.datatables').DataTable({
+			  dom: 'lBfrtip',
+		        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'
+		        ]
+		});
 }
+}
+	
+
 
 
 
@@ -650,7 +677,7 @@ function viewTask2(id){
 		var alldata = jsonobj.list;
 		$('#HtableId2').html('');
 		var tableHead = '<table id="example2" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Date Modified</th><th>User Name</th><th>Attachment</th><th>field</th><th>Change</th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Date Modified</th><th>User Name</th><th>Attachment</th><th>Field</th><th>Change</th></tr></thead><tbody></tbody></table>';
 	$('#HtableId2').html(tableHead);
 	$.each(alldata,function(i, orderObj) {
 		if(orderObj.uploadfiles==undefined) orderObj.uploadfiles='';
@@ -1158,8 +1185,6 @@ $("#example").printThis({
  });
 });
  
- 
-
 
 $("#pageName").text("Task Master");
 $(".taskreports").addClass("active"); 
