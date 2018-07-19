@@ -1,3 +1,0 @@
-CURDATE()
-
-SELECT DATEDIFF(CURDATE(),created_time ) as gap ,count(id)  from report_issue group by gap;
