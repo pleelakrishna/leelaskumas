@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	  .antMatchers("/orgDept").access("hasRole('ROLE_ADMIN')")
 	  .antMatchers("/cate").access("hasRole('ROLE_ADMIN')")
 	  .antMatchers("/employee").access("hasRole('ROLE_ADMIN')")
+	  .antMatchers("/taskReports").access("hasRole('ROLE_ADMIN')")
 	  .antMatchers("/dashBoard").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	  .antMatchers("/task").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	  .antMatchers("/viewTicket").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')").antMatchers("/task").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")

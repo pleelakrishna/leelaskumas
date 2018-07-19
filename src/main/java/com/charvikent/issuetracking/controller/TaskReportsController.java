@@ -1,5 +1,6 @@
 package com.charvikent.issuetracking.controller;
 
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.charvikent.issuetracking.config.FilesStuff;
 import com.charvikent.issuetracking.dao.KpHistoryDao;
 import com.charvikent.issuetracking.dao.NotificationsFrequencyDao;
+import com.charvikent.issuetracking.dao.TasksReportsDao;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
@@ -60,10 +62,13 @@ public class TaskReportsController {
 	@Autowired
 	NotificationsFrequencyDao notificationsFrequencyDao;
 	
+	@Autowired
+	TasksReportsDao tasksReportsDao;
+	
 	
 	@RequestMapping("/taskReports")
 	public String  department( @ModelAttribute("taskf")  ReportIssue taskf, Model model , HttpServletRequest request,HttpSession session) {
-		Set<ReportIssue> listOrderBeans = null;
+		Set<Map<String, Object>> listOrderBeans = null;
 		ObjectMapper objectMapper = null;
 		String sJson = null;
 		
@@ -87,7 +92,7 @@ public class TaskReportsController {
 		model.addAttribute("objuserBean", objuserBean);
 		
 		try {
-			listOrderBeans = taskService.getissuesByselectionAssignBy(id);
+			listOrderBeans = tasksReportsDao.getAlltasksForReports();
 			if (listOrderBeans != null && listOrderBeans.size() > 0) {
 				objectMapper = new ObjectMapper();
 				sJson = objectMapper.writeValueAsString(listOrderBeans);

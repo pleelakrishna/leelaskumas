@@ -1,7 +1,6 @@
 package com.charvikent.issuetracking.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -12,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.charvikent.issuetracking.model.NotificationsBean;
+import com.charvikent.issuetracking.model.ReportIssue;
 
 @Repository
 @Transactional
@@ -75,6 +75,20 @@ public class NotificationsDao {
 		 RowMapper<NotificationsBean> rowMapper = new BeanPropertyRowMapper<NotificationsBean>(NotificationsBean.class);
 		
 		List<NotificationsBean>  retlist = jdbcTemplate.query(sql,rowMapper);
+		System.out.println(retlist);
+		return retlist;
+	}
+	
+	
+	public List<ReportIssue> getTasksTommorrowDeadLine() 
+	{
+		String sql="select  r.subject,r.taskdeadline,CONCAT(u.firstname,' ',u.lastname) as assignto,CONCAT(u1.firstname,' ',u1.lastname) as assignby,u.mobilenumber  as assigntoid, u1.mobilenumber as assignbyid from report_issue r ,kpusers u , kpusers u1 where   r.assignto = u.id and  r.assignby = u1.id and r.kstatus <> '1' and STR_TO_DATE(r.taskdeadline, '%d-%b-%Y  %k:%i') = CURDATE() + INTERVAL 1 DAY ";
+		
+		System.out.println(sql);
+		
+		 RowMapper<ReportIssue> rowMapper = new BeanPropertyRowMapper<ReportIssue>(ReportIssue.class);
+		
+		List<ReportIssue>  retlist = jdbcTemplate.query(sql,rowMapper);
 		System.out.println(retlist);
 		return retlist;
 	}

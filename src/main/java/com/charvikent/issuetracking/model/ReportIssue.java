@@ -33,6 +33,7 @@ public class ReportIssue  {
 	private String severity;
 	private String priority;
 	private String assignto;
+	private String  assignby;
 	private String subject;
 	private String description;
 	private  String uploadfile;
@@ -74,6 +75,8 @@ public class ReportIssue  {
 	private String notificationsfrequencyid;
 	@Transient
 	private String strcreatedTime;
+	@Transient
+	private String departmentName;
 	
 	
 	
@@ -117,7 +120,7 @@ public class ReportIssue  {
 		this.gapcount = gapcount;
 	}
 
-	private String  assignby;
+
 
 	public String getAssignby() {
 		return assignby;
@@ -286,12 +289,23 @@ public class ReportIssue  {
 	
 	
 	
+	public String getDepartmentName() {
+		return departmentName;
+	}
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
 	public String getStrcreatedTime() {
 		return strcreatedTime;
 	}
 	public void setStrcreatedTime(String strcreatedTime) {
 		this.strcreatedTime = strcreatedTime;
 	}
+	
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		return "ReportIssue [id=" + id + ", taskno=" + taskno + ", createdTime=" + createdTime + ", updatedTime="
@@ -303,7 +317,7 @@ public class ReportIssue  {
 				+ priorityid + ", severityid=" + severityid + ", assignbyid=" + assignbyid + ", kstatusid=" + kstatusid
 				+ ", departmentid=" + departmentid + ", notificationsfrequency=" + notificationsfrequency
 				+ ", notificationsfrequencyid=" + notificationsfrequencyid + ", strcreatedTime=" + strcreatedTime
-				+ ", assignby=" + assignby + "]";
+				+ ", departmentName=" + departmentName + ", assignby=" + assignby + "]";
 	}
 	@Override
 	public int hashCode() {

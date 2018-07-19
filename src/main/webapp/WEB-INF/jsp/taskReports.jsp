@@ -12,6 +12,13 @@
 label {
 	float: left;
 }
+.lrt {
+	float:right !important;
+	margin-top:7px;
+}
+.col-sm-1 h3 {
+	float:right;
+}
 @media screen and (max-width: 767px) {
 	.mobi {
 		margin-left:16px;
@@ -51,14 +58,15 @@ margin-right:8px;
 	
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js">
+
+<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js'></script>
+<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js'></script>
 	
 	
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
 		<li><a href="dashBoard">Home</a></li>
-		<li>Task Master</li>
+		<li>Task Reports</li>
 	</ol>
 	<security:authorize access="hasRole('ROLE_ADMIN')">
 	                       <div class="clearfix"></div><br>
@@ -88,20 +96,31 @@ margin-right:8px;
                     		</form>
                     		</security:authorize>
                     		<br>
-                    		
-                    		<div class="form-group col-xs-6">
+                    		<div class="col-md-6">
+                    		</div>
+                    		<div class="form-group col-md-6">
   <div class="input-group">
-    <div class="input-group-addon flat">
-                <div class="glyphicon glyphicon-calendar"></div>
+  	<div class="col-sm-1">
+  		<h3><i class="fa fa-calendar" aria-hidden="true"></i></h3>
+  	</div>
+    <div class="col-sm-5">
+    	<div class="col-xs-4">
+    		<label class="lrt"><b>From :</b></label>
+    	</div>
+    	<div class="col-xs-8">
+      		<input name="DATEFROM" id="dateFrom" type="text" class="form-control" placeholder="select from date"/>
+    	</div><div class="clearfix"></div>
     </div>
-    <div class="col-sm-4">
-      <input name="DATEFROM" id="dateFrom" type="text" class="form-control" />
+     <div class="col-sm-5">
+    	<div class="col-xs-4">
+    		<label class="lrt"><b>To :</b></label>
+    	</div>
+    	<div class="col-xs-8">
+      		<input name="DATEFROM" id="dateTo" type="text" class="form-control"  placeholder="select to date"/>
+    	</div><div class="clearfix"></div>
     </div>
-     <div class="col-sm-4">
-      <input name="DATEFROM" id="dateTo" type="text" class="form-control" />
-    </div>
-     <div class="col-sm-4">
-    <button type="button"  id="getdatabydates" class="btn">Go</button>
+     <div class="col-sm-1">
+    <button type="button"  id="getdatabydates" class="btn btn-success">Go</button>
     </div>
   </div>
 </div>
@@ -129,126 +148,8 @@ margin-right:8px;
 				</div>
 			</div>
 		</div>
-		<div class="row" id="moveTo ">
-			<div class="col-md-12 col-sm-12">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h4>Add Task</h4>
-					</div>
-					<form:form class="form-horizontal" modelAttribute="taskf"  action="savetask" method="post" enctype="multipart/form-data">
-					<div class="panel-body">
-						<div class="row">
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-                    				<form:hidden path="id"/>
-									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Category  <span class="impColor">*</span></label>
-									<form:select path="category" class="col-xs-10 col-sm-5 validate1 mobi" onfocus="removeBorder(this.id)" >
-											<form:option value="" label="--- Select ---" />
-											<form:options items="${category}"/>
-										</form:select>
-                    			</div>
-                    		</div>
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Assigned to <span class="impColor">*</span></label>
-									
-										<form:select path="assignto" class="col-xs-10 col-sm-5 validate1" onfocus="removeBorder(this.id)">
-											<form:option value="" label="--- Select ---" />
-										 	<form:options items="${userNames}"/>
-										</form:select>
-										<span class="hasError" id="stationnameError"></span>
-								    
-                    			</div>
-                    		</div>
-                    	</div>
-                    	<div class="row">
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Task Subject  <span class="impColor">*</span></label>
-									<form:input path="subject"  placeholder="Task Subject" class="col-xs-10 col-sm-5 validate1 mobi1" onfocus="removeBorder(this.id)" />
-                    			</div>
-                    		</div>
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-									<label for="focusedinput" class="col-md-6 control-label">Description <span class="impColor">*</span></label>
-									<div style="margin-left:-10px;" class="col-md-6">
-									<form:textarea style="width:273px;" path="description" class="form-control validate1" onfocus="removeBorder(this.id)" placeholder="Enter Description"/>
-									<span class="hasError" id="stationnameError"></span>
-								    </div>
-                    			</div>
-                    		</div>
-                    		
-                    		
-                    	</div>
-                    	<div class="row">
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Priority <span class="impColor">*</span></label>
-									
-										<form:select path="severity" class="col-xs-10 col-sm-5 validate1 mobi0" onfocus="removeBorder(this.id)">
-										<form:option value="" label="--- Select ---" />
-										 <form:options items="${severity}"/>
-										</form:select>	
-										<span class="hasError" id="stationnameError"></span>
-								    
-                    			</div>
-                    		</div>
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-									<label for="focusedinput" class="col-md-6 control-label">Task DeadLine <span class="impColor">*</span></label>
-									<div style="margin-left:-10px;" class="col-md-5">
-								    	<%-- <form:input type="datetime-local" path="taskdeadline"  class="form-control validate"   /> --%>
-								    <form:input style="width:273px;"  path="taskdeadline"  class="form-control validate1"  onfocus="removeBorder(this.id)"   />
-								    </div>
-                    			</div>
-                    		</div>
-                    	</div>
-                    	
-                    	<div class="row">
-                    		<div class="col-md-6">
-                    		<div class="form-group">
-                    		<label class="ace-file-input ace-file-multiple col-sm-3 col-md-push-3 control-label no-padding-right" >Attach File(s)</label>
-									<div class="col-md-8">
-										<input type="file" name="file1" id="file1" class="col-sm-9 col-md-push-5" multiple="multiple" style="margin: 7px 0px 0px 0px;">
-									</div>
-                    		</div>
-                    		</div>
-                    		
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-									<label style="margin-top:-8px;" for="focusedinput" class="col-md-6 control-label">Notifications Frequency <span class="impColor">*</span></label>
-									
-										<form:select path="notificationsfrequency" class="col-xs-10 col-sm-5 validate1" onfocus="removeBorder(this.id)">
-											<form:option value="" label="--- Select ---" />
-										 	<form:options items="${NotificationsFrequency}"/>
-										</form:select>
-										<span class="hasError" id="stationnameError"></span>
-								    
-                    			</div>
-                    		</div>
-                    		
-                    		</div>
-                    		
-                    		<div id="getting-started"></div>
-                    		
-
-
-					</div>
-					<div class="panel-footer">
-				      	<div class="row">
-				      		<div class="col-sm-12">
-				      			<div class="btn-toolbar text-center">
-					      			<input type="submit" id="submitMainForm"  value="Submit" class="btn-primary btn"/>
-					      			<input type="reset" value="Reset" class="btn-danger btn cancel2"/>
-				      			</div>
-				      		</div>
-				      	</div>
-			      	</div>
-					</form:form>
+										<div id="file1"></div>
 				</div>
-			</div>
-		</div>
-	</div>
 	
 	
 	<!-- Task History Modal Starts here-->
@@ -425,14 +326,52 @@ $("#taskdeadline").keypress(function(){
 	return false;
 })
 
-$(function(){
-	$('.datatables').DataTable({
-		  dom: 'lBfrtip',
-	        buttons: [
-	            'copy', 'csv', 'excel', 'pdf', 'print'
-	        ]
-	});
+
+var documentMessage ="KPTMS";
+
+ $(function(){
+	 $('.datatables').dataTable({
+         dom: 'lBfrtip',
+         
+         
+         buttons: [
+{
+    extend: 'csv',
+    title: documentMessage,
+    filename: documentMessage
+  }, 
+                   {
+                                extend: 'pdfHtml5',
+                                orientation : 'landscape',
+				                pageSize : 'LEGAL',
+//                                 title : documentMessage,
+                                                        exportOptions: {columns: [0,1,2,3,4,5,6,7,8,9]},
+                                customize: function ( doc ) {/* 
+                                                                doc.content.splice( 1, 0, {
+                                                                        margin: [ 0, 0, 0, 12 ], 
+                                                                        alignment: 'center'
+                                                                                 });*/
+                                                        }
+                            }, {
+      extend: 'excel',
+      title: documentMessage,
+      filename: documentMessage
+    }, 
+    {
+extend: 'print',
+customize: function ( win ) {
+    $(win.document.body)
+        .css( 'font-size', '10pt' )
+       
+       
+    $(win.document.body).find( 'table' )
+        .addClass( 'compact' )
+        .css( 'font-size', 'inherit' );
+}
+}]
+
 });
+}); 
 
 
 function makeEmpty()
@@ -497,10 +436,12 @@ if (listOrders1 != "") {
 	displayTable(listOrders1)
 }
 
+
+
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Task Status</th><th>Created Time</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Task No</th><th>Department</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Created Time</th><th>Task Status</th><th>Task DeadLine</th><th>Notifications Frequency</th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -537,31 +478,70 @@ function displayTable(listOrders) {
 		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
 		var history = "<a class='history historyit' onclick='viewTask("	+ orderObj.id+ ")'> <i class='fa fa-history'></i></a>"
 		
-		
 		serviceUnitArray[orderObj.id] = orderObj;
 		var tblRow = "<tr>"
 			+ "<td title='"+orderObj.taskno+"'>"+ view2 + "</td>"
+			+ "<td title='"+orderObj.departmentname+"'>"+ orderObj.departmentname + "</td>"
 			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
 			+ "<td title='"+orderObj.assignby+"'>"+ orderObj.assignby + "</td>"
 			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
 			+ "<td title='"+orderObj.severity+"'>"+ orderObj.severity + "</td>"
+			+ "<td title='"+orderObj.strcreatedTime+"'>"+ orderObj.strcreatedTime + "</td>"
 			+ "<td title='"+orderObj.kstatus+"'>"+ orderObj.kstatus + "</td>"
 			/* + "<td title='"+orderObj.createdTime+"'>"+ new Date(orderObj.createdTime).toDateString() + "</td>" */
-			+ "<td title='"+orderObj.strcreatedTime+"'>"+ orderObj.strcreatedTime + "</td>"
+			+ "<td title='"+orderObj.taskdeadline+"'>"+ orderObj.taskdeadline + "</td>"
+			
 			+ "<td title='"+orderObj.notificationsfrequency+"'>"+ orderObj.notificationsfrequency + "</td>"
-			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time +  "&nbsp;&nbsp;"+history2+ "&nbsp;&nbsp;"+createDuplicate+"</td>" 
+			/*+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time +  "&nbsp;&nbsp;"+history2+ "&nbsp;&nbsp;"+createDuplicate+"</td>" */
 			+ "</tr>";
 		$(tblRow).appendTo("#tableId table tbody");
 	});
 // 	if(isClick=='Yes') $('#example').dataTable();
-		if(isClick=='Yes') {
-		$('.datatables').DataTable({
-			  dom: 'lBfrtip',
-		        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'
-		        ]
-		});
+ if(isClick=='Yes'){
+$('.datatables').dataTable({
+         dom: 'lBfrtip',
+         
+         
+         buttons: [
+{
+    extend: 'csv',
+    title: documentMessage,
+    filename: documentMessage
+  }, 
+                   {
+                                extend: 'pdfHtml5',
+//                                 title : documentMessage,
+						orientation : 'landscape',
+							                pageSize : 'LEGAL',
+                                                        exportOptions: {columns: [0,1,2,3,4,5,6,7,8,9]},
+                                customize: function ( doc ) {/* 
+                                                                doc.content.splice( 1, 0, {
+                                                                        margin: [ 0, 0, 0, 12 ], 
+                                                                        alignment: 'center'
+                                                                                 });*/
+                                                        }
+                            }, {
+      extend: 'excel',
+      title: documentMessage,
+      filename: documentMessage
+    }, 
+    {
+extend: 'print',
+customize: function ( win ) {
+    $(win.document.body)
+        .css( 'font-size', '10pt' )
+       
+        
+    $(win.document.body).find( 'table' )
+        .addClass( 'compact' )
+        .css( 'font-size', 'inherit' );
 }
+}]
+
+});
+ }
+ 
 }
 	
 
@@ -1186,6 +1166,18 @@ $("#example").printThis({
 });
  
 
-$("#pageName").text("Task Master");
+$("#pageName").text("Task Reports");
 $(".taskreports").addClass("active"); 
-</script>
+</script> 
+ <!--  new print -->
+<script type='text/javascript' src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js'></script> 
+<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js'></script>
+<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js'></script>
+
+
+
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js'></script>
+<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js'></script>
+ <!-- new print -->

@@ -26,9 +26,9 @@ public class TasksReportsDao {
                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category   and  kpl.issueid=r.id and date(r.created_time)='2018-07-07' "
                    +" order by kpl.statustime desc";
 		
-		String sql2 ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid"      
-                     +" from report_issue r,kpusers u,kpusers u1, kppriority p, kpseverity s,kpcategory c, kpstatus ks,notifications_frequency nf "
-                     +" where  r.assignto=u.id and r.assignby=u1.id and  p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus=ks.id and nf.id=r.notificationsfrequency and  Date(r.created_time) >=' "+fromDate+" ' and Date(r.created_time) <=' "+toDate+" ' ";
+		String sql2 ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid, r.departmentid,kpd.name as departmentname"      
+                     +" from report_issue r,kpusers u,kpusers u1, kppriority p, kpseverity s,kpcategory c, kpstatus ks,notifications_frequency nf,kpdepartment kpd "
+                     +" where  r.assignto=u.id and r.assignby=u1.id and  p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus=ks.id and nf.id=r.notificationsfrequency and  kpd.id=r.departmentid and Date(r.created_time) >=' "+fromDate+" ' and Date(r.created_time) <=' "+toDate+" ' ";
 		
 		
 		System.out.println(sql2);
@@ -40,5 +40,25 @@ public class TasksReportsDao {
 		
 		return set;
 	}
+	
+	
+	public Set<Map<String, Object>> getAlltasksForReports() {
+
+		
+		String sql2 ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid, r.departmentid,kpd.name as departmentname"      
+                     +" from report_issue r,kpusers u,kpusers u1, kppriority p, kpseverity s,kpcategory c, kpstatus ks,notifications_frequency nf,kpdepartment kpd "
+                     +" where  r.assignto=u.id and r.assignby=u1.id and  p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus=ks.id and nf.id=r.notificationsfrequency and  kpd.id=r.departmentid  ";
+		
+		
+		System.out.println(sql2);
+		
+		List<Map<String,Object>> list = template.queryForList(sql2, new Object[]{});
+		
+		Set<Map<String, Object>> set =new HashSet<Map<String,Object>>(list);
+		
+		
+		return set;
+	}
+
 
 }

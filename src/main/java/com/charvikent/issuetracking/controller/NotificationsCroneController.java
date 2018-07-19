@@ -1,21 +1,21 @@
 package com.charvikent.issuetracking.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.charvikent.issuetracking.config.SendSMS;
 import com.charvikent.issuetracking.dao.NotificationsDao;
 import com.charvikent.issuetracking.model.NotificationsBean;
+import com.charvikent.issuetracking.model.ReportIssue;
 
 @Controller
 public class NotificationsCroneController {
@@ -25,6 +25,9 @@ public class NotificationsCroneController {
 	
 	@Autowired
 	SendSMS sendSMS;
+	
+	@Autowired
+    private Environment environment;
 	
 	
 	
@@ -71,6 +74,45 @@ public class NotificationsCroneController {
 		
 		
 		return null;
+		
+		
+	}
+	
+	
+	public  void  sendSMSToTasksTomorrowDeadLine() throws IOException
+	{
+		
+	
+		List<ReportIssue> notificationsList = notificationsDao.getTasksTommorrowDeadLine();
+		
+		
+		  String tmsg =environment.getProperty("app.tmrmsg");
+		  
+		  
+		
+		
+		for(ReportIssue entry : notificationsList)
+		{
+			
+			List<String> mobilenumbers = new ArrayList<String>();
+			
+			  tmsg=  tmsg.replaceAll("_subject_", entry.getSubject());
+			  tmsg=  tmsg.replaceAll("_deadline_", entry.getTaskdeadline());
+			  tmsg= tmsg.replaceAll("_assignby_", entry.getAssignby());
+			  tmsg= tmsg.replaceAll("_assignto_", entry.getAssignto());
+			  
+			  mobilenumbers.add(entry.getAssigntoid());
+			  mobilenumbers.add(entry.getAssignbyid());
+		      
+			for(String entry2:mobilenumbers)
+			{
+		
+			String response =	sendSMS.sendSMS(tmsg, entry2);
+			System.out.println(response);
+		
+			}
+			
+		}
 		
 		
 	}
