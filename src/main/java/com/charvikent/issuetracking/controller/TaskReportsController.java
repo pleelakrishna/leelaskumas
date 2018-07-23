@@ -114,5 +114,55 @@ public class TaskReportsController {
 		return "taskReports";
 	
 	}
+	
+	
+	@RequestMapping("/taskfilter")
+	public String  TasksFilter( @ModelAttribute("taskf")  ReportIssue taskf, Model model , HttpServletRequest request,HttpSession session) {
+		Set<Map<String, Object>> listOrderBeans = null;
+		ObjectMapper objectMapper = null;
+		String sJson = null;
+		
+	/*	model.addAttribute("taskf", new ReportIssue());*/
+		model.addAttribute("subTaskf", new KpStatusLogs());   // model attribute for formmodel popup
+		model.addAttribute("severity", severityService.getSeverityNames());
+		model.addAttribute("priority", priorityService.getPriorityNames());
+		model.addAttribute("userNames", userService.getUserName());
+		model.addAttribute("category", categoryService.getCategoryNames());
+		model.addAttribute("departmentNames", mastersService.getDepartmentNames());
+		model.addAttribute("kpstatuses", mastersService.getKpStatues());
+		model.addAttribute("tasksSelection", tasksSelectionService.getTasksSelectionMap());
+		
+		//model.addAttribute("departmentNames", mastersService.getSortedDepartments());
+		
+		model.addAttribute("NotificationsFrequency", notificationsFrequencyDao.getNotificationsFrequencyesMap());
+		
+		User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String id=String.valueOf(objuserBean.getId());
+		
+		model.addAttribute("objuserBean", objuserBean);
+		
+		try {
+			listOrderBeans = tasksReportsDao.getAlltasksForReports();
+			if (listOrderBeans != null && listOrderBeans.size() > 0) {
+				objectMapper = new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(listOrderBeans);
+				request.setAttribute("allOrders1", sJson);
+				// System.out.println(sJson);
+			} else {
+				objectMapper = new ObjectMapper();
+				sJson = objectMapper.writeValueAsString(listOrderBeans);
+				request.setAttribute("allOrders1", "''");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+
+		}
+		
+		
+		return "taskfilter";
+	
+	}
 
 }

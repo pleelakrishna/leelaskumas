@@ -4,23 +4,62 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<link  href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
 <style>
-tfoot input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-    }
-    .newcog {
-    margin-left:25px !important;}
-tfoot {
-     display: table-header-group;
+.form0 {
+	margin-top:20px;
+}
+.lrt{
+	float:right;
+	margin-top:8px;
+}
+.imp{
+	color:#FF0000;
+}
+.sbtn0 .btn-success {
+	margin-top:20px;
+	float:right;
+	margin-right:10px;
+}
+.wrapper{
+  width:100%;
+}
+
+/* td, th{
+	font-size: 12px;
+} */
+.dispnone {
+    display: none;
+}
+@media (max-width: 767px) {
+	.lrt{
+		float:left;
+	}
+	.sbtn0 .btn-success {
+		margin-right:15px;
+	}
+}
+@media (min-width: 768px) and (max-width: 991px) {
+	.itp{
+		margin-top: 20px;
+	}
+	.sbtn0 .btn-success {
+		margin-right:125px;
+	}
 }
 .btn-toolbar {
 	margin-top:7px;
 }
 label {
 	float: left;
+}
+.lrt {
+	float:right !important;
+	margin-top:7px;
+}
+.col-sm-1 h3 {
+	float:right;
 }
 @media screen and (max-width: 767px) {
 	.mobi {
@@ -58,20 +97,173 @@ margin-right:8px;
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css">
-<link rel="stylesheet" href="${baseurl }/assets/css/bootstrap-glyphicons.css">
+	
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 
-
-
-
+<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js'></script>
+<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js'></script>
+	
+	
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
 		<li><a href="dashBoard">Home</a></li>
-		<li>Task Master</li>
+		<li>Task Reports</li>
 	</ol>
-	<security:authorize access="hasRole('ROLE_MASTERADMIN')">
+	<security:authorize access="hasRole('ROLE_ADMIN')">
 	                       <div class="clearfix"></div><br>
 	                       <form>
 	                        <div class="row">
+	                        <div class="container">
+	                        <div class="col-md-12">
+  		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  			<div class="panel panel-primary">
+    			<div class="panel-heading active" role="tab" id="headingOne">
+      				<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class=""><i class="fa fa-filter"></i> Filter</a></h4>
+    			</div>
+    			<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" style="">
+      			<div class="panel-body">
+                    <div class="table">
+                        <table class="table table-bordered table-stipped table-responsive">
+                            <tbody>
+                                <tr>
+                                    <th><a href="#" id="reporter" class="openinput">Assigned by</a></th>
+                                    <th><a href="#" id="assigned" class="openinput">Assigned to</a></th>
+                                    <th><a href="#" id="monitored" class="openinput">Monitored by</a></th>
+                                    <th><a href="#" id="note" class="openinput">Note by</a></th>
+                                    <th><a href="#" id="prior" class="openinput">Priority</a></th>
+                                    <th><a href="#" id="view" class="openinput">Status by</a></th>
+                                </tr>
+                                <tr>
+                                    <td><span class="reporter_text">Any</span>
+                                       
+									
+										
+										<select id="assignedbyid"  class="form-control validate1 mobi dispnone reporter_input" onfocus="removeBorder(this.id)"  >
+											<c:forEach var="list" items="${userNames}">
+											<option value=${list.key}>${list.value} </option>
+											</c:forEach>
+										</select>
+                                    </td>
+                                    <td><span class="assigned_text">Any</span>
+										
+										<select id="assignedtoid"  class="form-control validate1 mobi dispnone assigned_input" onfocus="removeBorder(this.id)"  >
+											<c:forEach var="list" items="${userNames}">
+											<option value=${list.key}>${list.value} </option>
+											</c:forEach>
+										</select>
+										
+										
+                                    </td>
+                                    <td><span class="monitored_text">Any</span>
+                                        <select id="monitoredbyid"  class="form-control validate1 mobi dispnone monitored_input" onfocus="removeBorder(this.id)"  >
+											<c:forEach var="list" items="${userNames}">
+											<option value=${list.key}>${list.value} </option>
+											</c:forEach>
+										</select>
+                                    </td>
+                                    <td><span class="note_text">Any</span>
+                                        
+                                        
+                                        <select id="noteid"  class="form-control validate1 mobi dispnone note_input" onfocus="removeBorder(this.id)"  >
+											<c:forEach var="list" items="${userNames}">
+											<option value=${list.key}>${list.value} </option>
+											</c:forEach>
+										</select>
+                                    </td>
+                                    <td><span id="prior_text">Any</span>
+                                        
+                                        
+                                        <select id="priorityid"  class="form-control validate1 mobi dispnone prior_input" onfocus="removeBorder(this.id)"  >
+											<c:forEach var="list" items="${severity}">
+											<option value=${list.key}>${list.value} </option>
+											</c:forEach>
+										</select>
+                                        
+                                    </td>
+                                    
+                                    <td><span class="view_text">Any</span>
+                                        
+                                        
+                                         <select id="priorityid"  class="form-control validate1 mobi dispnone view_input" onfocus="removeBorder(this.id)"  >
+											<c:forEach var="list" items="${kpstatuses}">
+											<option value=${list.key}>${list.value} </option>
+											</c:forEach>
+										</select>
+                                    </td>
+                                   
+                                </tr>
+                                <tr>
+                                    <th><a href="#" id="cate" class="openinput">Category</a></th>
+                                    <th><a href="#" id="hide" class="openinput">Department</a></th>
+                                    <th colspan="2"><a href="#" id="filt" class="openinput">Filter by Date Submitted</a></th>
+                                    <th colspan="2"><a href="#" id="filter" class="openinput">Filter by last updated Date</a></th>
+                                </tr>
+                                <tr>
+                                    <td><span class="cate_text">Any</span>
+                                        <select id="cate_input" class="form-control dispnone">
+                                            <option>Select</option>
+                                            <option>option1</option>
+                                            <option>option2</option>
+                                            <option>option3</option>
+                                            <option>option4</option>
+                                            <option>option5</option>
+                                        </select>
+                                         <select id="categoryid"  class="form-control validate1 mobi dispnone cate_input" onfocus="removeBorder(this.id)"  >
+											<c:forEach var="list" items="${category}">
+											<option value=${list.key}>${list.value} </option>
+											</c:forEach>
+										</select>
+                                    </td>
+                                    <td><span class="hide_text">Any</span>
+                                        <select id="deptid"  class="form-control validate1 mobi dispnone hide_input" onfocus="removeBorder(this.id)"  >
+											<c:forEach var="list" items="${departmentNames}">
+											<option value=${list.key}>${list.value} </option>
+											</c:forEach>
+										</select>
+                                    </td>
+                                   
+                                    <td colspan="2"><span class="filt_text">Any</span>
+                                        <input name="DATEFROM" id="dateFrom" type="text" class="form-control dateFrom dispnone filt_input" placeholder="select from date"/>
+                                    </td>
+                                    <td colspan="2"><span class="filter_text">Any</span>
+                                       
+                                       <input name="DATEFROM" id="dateTo" type="text" class="form-control dateTo dispnone filter_input"  placeholder="select to date"/>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
+                                
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+      			</div>
+                <div class="panel-footer">
+                    <div class="col-md-6">
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" placeholder="search">
+                        </div>
+                        <div class="col-sm-3">
+                            <a href="#" class="btn btn-info">Search</a>
+                        </div>
+                        <div class="col-sm-4">
+                        </div><div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-sm-5">
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="#" class="btn btn-info">Save Current Filter</a>
+                        </div>
+                        <div class="col-sm-3">
+                            <a href="#" class="btn btn-danger">Reset</a>
+                        </div>
+                    </div><div class="clearfix"></div>
+                </div>
+    		</div>
+  		</div>
+  	</div>
+  </div></div>
                     		<div class="col-md-4">
                     			<%-- <div class="form-horizontal">
 									<label for="focusedinput" class="col-md-6 control-label" style="padding-top:2px;">Tasks Types <span class="impColor">*</span></label>
@@ -82,7 +274,7 @@ margin-right:8px;
 										</select>
                     			</div> --%>
                     		</div>
-                    		<%-- <div class="col-md-4">
+                    		 <%-- <div class="col-md-4">
                     			<div class="form-horizontal">
 									<label for="focusedinput" class="col-md-6 control-label" style="padding-top:2px;">Department  <span class="impColor">*</span></label>
 									<select id="deptid"  class="col-xs-10 col-sm-5 " >
@@ -91,11 +283,40 @@ margin-right:8px;
 											</c:forEach>
 										</select>
                     			</div>
-                    		</div> --%>
+                    		</div>  --%>
                     		</div>
                     		</form>
                     		</security:authorize>
                     		<br>
+                    		<!-- <div class="col-md-6">
+                    		</div>
+                    		<div class="form-group col-md-6">
+  <div class="input-group">
+  	<div class="col-sm-1">
+  		<h3><i class="fa fa-calendar" aria-hidden="true"></i></h3>
+  	</div>
+    <div class="col-sm-5">
+    	<div class="col-xs-4">
+    		<label class="lrt"><b>From :</b></label>
+    	</div>
+    	<div class="col-xs-8">
+      		<input name="DATEFROM" id="dateFrom" type="text" class="form-control" placeholder="select from date"/>
+    	</div><div class="clearfix"></div>
+    </div>
+     <div class="col-sm-5">
+    	<div class="col-xs-4">
+    		<label class="lrt"><b>To :</b></label>
+    	</div>
+    	<div class="col-xs-8">
+      		<input name="DATEFROM" id="dateTo" type="text" class="form-control"  placeholder="select to date"/>
+    	</div><div class="clearfix"></div>
+    </div>
+     <div class="col-sm-1">
+    <button type="button"  id="getdatabydates" class="btn btn-success">Go</button>
+    </div>
+  </div>
+</div> -->
+                    		
 	<div class="clearfix"></div>
 	<div class="container">
 		<div class="row">
@@ -119,165 +340,8 @@ margin-right:8px;
 				</div>
 			</div>
 		</div>
-		<div class="row" id="moveTo ">
-			<div class="col-md-12 col-sm-12">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h4>Add Task</h4>
-					</div>
-					<form:form class="form-horizontal" modelAttribute="taskf"  action="savetask" method="post" enctype="multipart/form-data">
-					<div class="panel-body">
-						<div class="row">
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-                    				<form:hidden path="id"/>
-                    				<div class="col-sm-4">
-										<label for="focusedinput" style="float:right; margin-top:7px;">Category  <span class="impColor">*</span></label>
-                    				</div>
-									<div class="col-sm-6">
-										<form:select path="category" class="form-control validate1 mobi" onfocus="removeBorder(this.id)" >
-											<form:option value="" label="--- Select ---" />
-											<form:options items="${category}"/>
-										</form:select>
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
-                    			</div>
-                    		</div>
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-                    			<div class="col-sm-4">
-									<label for="focusedinput" style="float:right; margin-top:7px;">Assigned to <span class="impColor">*</span></label>
-                    			</div>
-									<div class="col-sm-6">
-										<form:select path="assignto" class="form-control validate1" onfocus="removeBorder(this.id)">
-											<form:option value="" label="--- Select ---" />
-										 	<form:options items="${userNames}"/>
-										</form:select>
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
-										<span class="hasError" id="stationnameError"></span>
-								    
-                    			</div>
-                    		</div>
-                    	</div>
-                    	<div class="row">
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-                    			<div class="col-sm-4">
-									<label for="focusedinput" style="float:right; margin-top:7px;">Task Subject  <span class="impColor">*</span></label>
-								</div>
-									<div class="col-sm-6">
-										<form:input path="subject"  placeholder="Task Subject" class="form-control validate1 mobi1" onfocus="removeBorder(this.id)" />
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
-                    			</div>
-                    		</div>
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-                    				<div class="col-sm-4">
-										<label for="focusedinput" style="float:right; margin-top:7px;">Description <span class="impColor">*</span></label>
-									</div>
-									<div class="col-sm-6">
-										<form:textarea path="description" class="form-control validate1" onfocus="removeBorder(this.id)" placeholder="Enter Description"/>
-										<span class="hasError" id="stationnameError"></span>
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
-                    			</div>
-                    		</div>
-                    		
-                    		
-                    	</div>
-                    	<div class="row">
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-                    			<div class="col-sm-4">
-									<label for="focusedinput" style="float:right; margin-top:7px;">Priority <span class="impColor">*</span></label>
-								</div>
-									<div class="col-sm-6">
-										<form:select path="severity" class="form-control validate1 mobi0" onfocus="removeBorder(this.id)">
-										<form:option value="" label="--- Select ---" />
-										 <form:options items="${severity}"/>
-										</form:select>	
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
-										<span class="hasError" id="stationnameError"></span>
-								    
-                    			</div>
-                    		</div>
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-                    			<div class="col-sm-4">
-									<label for="focusedinput" style="float:right; margin-top:7px;">Task DeadLine <span class="impColor">*</span></label>
-								</div>
-									<div class="col-sm-6">
-								    	<%-- <form:input type="datetime-local" path="taskdeadline"  class="form-control validate"   /> --%>
-								    <form:input path="taskdeadline"  class="form-control validate1"  onfocus="removeBorder(this.id)"  autocomplete="off"  />
-								    </div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
-                    			</div>
-                    		</div>
-                    	</div>
-                    	
-                    	<div class="row">
-                    		<div class="col-md-6">
-                    		<div class="form-group">
-                    			<div class="col-sm-4">
-									<label style="float:right; margin-top:7px;">Attach File(s)</label>
-								</div>
-									<div class="col-sm-6">
-										<input type="file" name="file1" id="file1" multiple="multiple" style="margin: 7px 0px 0px 0px;">
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
-                    		</div>
-                    		</div>
-                    		
-                    		<div class="col-md-6">
-                    			<div class="form-group">
-                    			<div class="col-sm-4">
-									<label for="focusedinput" style="float:right; margin-top:7px;">Notifications Frequency <span class="impColor">*</span></label>
-								</div>
-									<div class="col-sm-6">
-										<form:select path="notificationsfrequency" class="form-control validate1" onfocus="removeBorder(this.id)">
-											<form:option value="" label="--- Select ---" />
-										 	<form:options items="${NotificationsFrequency}"/>
-										</form:select>
-									</div>
-									<div class="col-sm-2">
-									</div><div class="clearfix"></div>
-										<span class="hasError" id="stationnameError"></span>
-								    
-                    			</div>
-                    		</div>
-                    		
-                    		</div>
-                    		
-                    		<div id="getting-started"></div>
-                    		
-
-
-					</div>
-					<div class="panel-footer">
-				      	<div class="row">
-				      		<div class="col-sm-12">
-				      			<div class="btn-toolbar text-center">
-					      			<input type="submit" id="submitMainForm"  value="Submit" class="btn-primary btn"/>
-					      			<input type="reset" value="Reset" class="btn-danger btn cancel2"/>
-				      			</div>
-				      		</div>
-				      	</div>
-			      	</div>
-					</form:form>
+										<div id="file1"></div>
 				</div>
-			</div>
-		</div>
-	</div>
 	
 	
 	<!-- Task History Modal Starts here-->
@@ -444,20 +508,62 @@ margin-right:8px;
 
 
 <script type="text/javascript">
-
-	
-	$('#ttop').click(function(){
-		$(window).scrollTop($('#severity').offset().top);
-	});
-
-	//$(window).scrollTop($('#severity').offset().top);
-
+/* $(function() {
+	$(window).scrollTop($('#severity').offset().top);
+}); */
 
 
 
 $("#taskdeadline").keypress(function(){
 	return false;
 })
+
+
+var documentMessage ="KPTMS";
+
+ $(function(){
+	 $('.datatables').dataTable({
+         dom: 'lBfrtip',
+         
+         
+         buttons: [
+{
+    extend: 'csv',
+    title: documentMessage,
+    filename: documentMessage
+  }, 
+                   {
+                                extend: 'pdfHtml5',
+                                orientation : 'landscape',
+				                pageSize : 'LEGAL',
+//                                 title : documentMessage,
+                                                        exportOptions: {columns: [0,1,2,3,4,5,6,7,8,9]},
+                                customize: function ( doc ) {/* 
+                                                                doc.content.splice( 1, 0, {
+                                                                        margin: [ 0, 0, 0, 12 ], 
+                                                                        alignment: 'center'
+                                                                                 });*/
+                                                        }
+                            }, {
+      extend: 'excel',
+      title: documentMessage,
+      filename: documentMessage
+    }, 
+    {
+extend: 'print',
+customize: function ( win ) {
+    $(win.document.body)
+        .css( 'font-size', '10pt' )
+       
+       
+    $(win.document.body).find( 'table' )
+        .addClass( 'compact' )
+        .css( 'font-size', 'inherit' );
+}
+}]
+
+});
+}); 
 
 
 function makeEmpty()
@@ -479,22 +585,24 @@ $(document).ready(function () {
 	
 	
 // 	$("#taskdeadline").attr('readonly', 'readonly');
-	 $('#taskdeadline').datetimepicker({        
+	 	 
 
-		    useCurrent: false,
-		    format: 'DD-MMM-YYYY HH:mm ',
-		    showTodayButton: true,
-		    sideBySide: true,
-//		    showClose: true,
-//		    showClear: true,
-		    toolbarPlacement: 'top',
-		        focusOnShow: false,
-
+	  $('#dateFrom').datepicker({
+		dateFormat: "yy-mm-dd",
+	    orientation: "top",
+	    autoclose: true
+	  });
+	  	 
+	  
+	  $('#dateTo').datepicker({
+		  dateFormat: "yy-mm-dd",
+		    orientation: "top",
+		    autoclose: true
 		  });
-	 
-	 
-	 
-	
+	  
+	  
+	  
+	  
 });
  
 
@@ -508,10 +616,12 @@ if (listOrders1 != "") {
 	displayTable(listOrders1)
 }
 
+
+
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Created Time</th><th>Task Status</th><th>Task Deadline</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody><tfoot><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Created Time</th><th>Task Status</th><th>Task Deadline</th><th>Notifications Frequency</th><td></td></tfoot></table>';
+			+ '<thead><tr><th>Task No</th><th>Department</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Created Time</th><th>Task Status</th><th>Task DeadLine</th><th>Notifications Frequency</th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -548,10 +658,10 @@ function displayTable(listOrders) {
 		var time = "<a class='time timeIt' onclick='showdeadline("	+ orderObj.id+ ")'> <i class='fa fa-hourglass-half'></i> </a>"
 		var history = "<a class='history historyit' onclick='viewTask("	+ orderObj.id+ ")'> <i class='fa fa-history'></i></a>"
 		
-		
 		serviceUnitArray[orderObj.id] = orderObj;
 		var tblRow = "<tr>"
 			+ "<td title='"+orderObj.taskno+"'>"+ view2 + "</td>"
+			+ "<td title='"+orderObj.departmentname+"'>"+ orderObj.departmentname + "</td>"
 			+ "<td title='"+orderObj.category+"'>"+ orderObj.category + "</td>"
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
 			+ "<td title='"+orderObj.assignby+"'>"+ orderObj.assignby + "</td>"
@@ -563,29 +673,85 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.taskdeadline+"'>"+ orderObj.taskdeadline + "</td>"
 			
 			+ "<td title='"+orderObj.notificationsfrequency+"'>"+ orderObj.notificationsfrequency + "</td>"
-			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time +  "&nbsp;&nbsp;"+history2+ "&nbsp;&nbsp;"+createDuplicate+"</td>" 
+			/*+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "&nbsp;&nbsp;" + comment + "&nbsp;&nbsp;" + time +  "&nbsp;&nbsp;"+history2+ "&nbsp;&nbsp;"+createDuplicate+"</td>" */
 			+ "</tr>";
 		$(tblRow).appendTo("#tableId table tbody");
 	});
-	if(isClick=='Yes') $('#example').dataTable();
-	
+// 	if(isClick=='Yes') $('#example').dataTable();
+ if(isClick=='Yes'){
+$('.datatables').dataTable({
+         dom: 'lBfrtip',
+         
+         
+         buttons: [
+{
+    extend: 'csv',
+    title: documentMessage,
+    filename: documentMessage
+  }, 
+                   {
+                                extend: 'pdfHtml5',
+//                                 title : documentMessage,
+						orientation : 'landscape',
+							                pageSize : 'LEGAL',
+                                                        exportOptions: {columns: [0,1,2,3,4,5,6,7,8,9]},
+                                customize: function ( doc ) {/* 
+                                                                doc.content.splice( 1, 0, {
+                                                                        margin: [ 0, 0, 0, 12 ], 
+                                                                        alignment: 'center'
+                                                                                 });*/
+                                                        }
+                            }, {
+      extend: 'excel',
+      title: documentMessage,
+      filename: documentMessage
+    }, 
+    {
+extend: 'print',
+customize: function ( win ) {
+    $(win.document.body)
+        .css( 'font-size', '10pt' )
+       
+        
+    $(win.document.body).find( 'table' )
+        .addClass( 'compact' )
+        .css( 'font-size', 'inherit' );
 }
+}]
+
+});
+ }
+ 
+}
+	
 
 
 
-$(function(){
-	var table = $('#example').dataTable();
-	$('#example tfoot th').each(function (i) 
-	{
 
-	            var title = $('#example thead th').eq($(this).index()).text();
-	            // or just var title = $('#sample_3 thead th').text();
-	            var serach = '<input type="text"  />';
-	            $(this).html('');
-	            $(serach).appendTo(this).keyup(function(){table.fnFilter($(this).val(),i)})
-	});
+/* $(function(){
+	
+	$('#example tfoot th').each( function () {
+	        var title = $(this).text();
+	        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+	    } );
+	 
+	    // DataTable
+	    var table = $('#example').DataTable();
+	 
+	    // Apply the search
+	    table.columns().every( function () {
+	        var that = this;
+	 
+	        $( 'input', this.footer() ).on( 'keyup change', function () {
+	            if ( that.search() !== this.value ) {
+	                that
+	                    .search( this.value )
+	                    .draw();
+	            }
+	        } );
+	    } );
 
-	});
+	}); */
 
 function createDuplicate(id) {
 	
@@ -1121,6 +1287,95 @@ document.getElementById("file1").onchange = function () {
 };
 
 
-$("#pageName").text("Task Master");
-$(".task").addClass("active"); 
-</script>
+$("#getdatabydates").click(function(){
+	
+	var fromdateval =	$("#dateFrom").val();
+	var todateval =	$("#dateTo").val();
+	
+	if(fromdateval == "")
+		{
+		alert("select From Date")
+		return false;
+		}
+	if(todateval == "")
+	{
+	alert("select Too Date")
+	return false;
+	}
+	
+	
+	
+	
+	$.ajax({
+		type : "GET",
+		url : "getDataByDates",
+		data : "fromdateval="+fromdateval+"&todateval="+todateval,
+		dataType : "text",
+		beforeSend : function() {
+             $.blockUI({ message: 'Please wait' });
+          }, 
+		success : function(data) {
+			var parsejson = JSON.parse(data);
+			var list =parsejson.listByDates;
+			displayTable(list);
+			
+			
+		},
+		complete: function () {
+            
+            $.unblockUI();
+       },
+		error :  function(e){$.unblockUI();console.log(e);}
+		
+	});
+
+
+	
+});
+
+ $("#print").click(function(){
+$("#example").printThis({
+	 debug: false,               // show the iframe for debugging
+	  importCSS: true,            // import page CSS
+	  importStyle: false,         // import style tags
+	  printContainer: true, 
+	  pageTitle: "hi leelakrishna", 
+	  removeInline: false
+	 
+ });
+});
+ 
+
+$("#pageName").text("Tasks Filter");
+$(".taskfilter").addClass("active"); 
+</script> 
+<script type="text/javascript">
+		 $('.panel-collapse').on('show.bs.collapse', function () {
+    $(this).siblings('.panel-heading').addClass('active');
+  });
+
+  $('.panel-collapse').on('hide.bs.collapse', function () {
+    $(this).siblings('.panel-heading').removeClass('active');
+  });
+
+$(".openinput").click(function(){
+    var id=$(this).attr('id');
+    $("."+id+"_text").css("display","none");
+    $("."+id+"_input").removeClass("dispnone");
+});
+	</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+ <!--  new print -->
+<script type='text/javascript' src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js'></script> 
+<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js'></script>
+<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js'></script>
+
+
+
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js'></script>
+<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js'></script>
+<script type='text/javascript' src="${baseurl }/js/ajax.js" ></script>
+ <!-- new print -->

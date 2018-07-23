@@ -330,9 +330,9 @@ function editEmployee(id) {
 function deleteEmployee(id,status){
 	var checkstr=null;
 	if(status == 0){
-		 checkstr = confirm('Are you sure you want to Deactivate?');
+		 checkstr = confirm('Are you sure  to Deactivate?');
 	}else{
-		 checkstr = confirm('Are you sure you want to Activate?');
+		 checkstr = confirm('Are you sure to Activate?');
 	}
 	if(checkstr == true){
 		var formData = new FormData();

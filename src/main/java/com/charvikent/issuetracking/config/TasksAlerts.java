@@ -34,7 +34,7 @@ public class TasksAlerts {
 	    notificationsCroneController.sendSMSToTasksTomorrowDeadLine();
 	}
 	
-	@Scheduled(cron = "*/5 * * * * *")
+	/*@Scheduled(cron = "*5 * * * * *")
 	public void testingCronExpression() throws IOException  {
 	  
 	    long now = System.currentTimeMillis() / 1000;
@@ -43,6 +43,6 @@ public class TasksAlerts {
 	    String tmg= env.getProperty("app.taskmsg");
 	    //System.out.println(tmg);
 	    
-	    notificationsCroneController.sendSMSToTasksTomorrowDeadLine();
-	}
+	   // notificationsCroneController.sendSMSToTasksTomorrowDeadLine();
+	}*/
 }

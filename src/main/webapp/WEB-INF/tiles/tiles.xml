@@ -123,6 +123,10 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/taskReports.jsp" />
 	</definition>
 	
+	<definition name="taskfilter" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/tasksfilter.jsp" />
+	</definition>
+	
 	
 		
 

@@ -305,13 +305,13 @@ function getHeadersCounts(){
 	
 	 var formData = new FormData();
 	    
-		$.fn.makeMultipartRequest('POST', 'getCount', false,
+		 $.fn.makeMultipartRequest('POST', 'getCount', false,
 				formData, false, 'text', function(data){
 			var jsonobj = $.parseJSON(data);
 			$("#unseentasks").text(jsonobj.unseentasks);
 			$("#reopentaskscount").text(jsonobj.reopentaskscount);
 			
-		});  
+		});   
 
 		
 }
@@ -494,6 +494,7 @@ function getHeadersCounts(){
 			  <li class="empchart"><a href="${baseurl }/orgemployee"><i class="fa fa-sitemap"></i> <span>EmployesChart</span></a></li>
 			<security:authorize access="hasRole('ROLE_ADMIN')">
 			 <li class="taskreports"><a href="${baseurl }/taskReports"><i class="fa fa-tasks"></i> <span>Reports</span></a></li>
+			 <li class="taskfilter"><a href="${baseurl }/taskfilter"><i class="fa fa-tasks"></i> <span>TaskFilter</span></a></li>
 			</security:authorize> 
 			</ul>
 		</div>

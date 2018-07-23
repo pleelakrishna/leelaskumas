@@ -44,7 +44,15 @@ public class CategoryService {
 				
 		return cateMapForMaster;
 		}
-		else
+		else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
+		{
+			for(Category bean: rolesList){
+				cateMapForMaster.put(bean.getId(), bean.getCategory());
+			}
+			return cateMapForMaster;
+		}
+			else
+			
 			
 		{
 			
