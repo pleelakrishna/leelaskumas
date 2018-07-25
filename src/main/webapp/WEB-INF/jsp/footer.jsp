@@ -36,7 +36,7 @@
 <script type='text/javascript' src='${baseurl }/assets/plugins/sparklines/jquery.sparklines.min.js'></script> 
 <script type='text/javascript' src='${baseurl }/assets/plugins/form-toggle/toggle.min.js'></script>
  
- <script type='text/javascript' src='${baseurl }/assets/plugins/datatables/jquery.dataTables.min.js'></script> 
+<script type='text/javascript' src='${baseurl }/assets/plugins/datatables/jquery.dataTables.min.js'></script> 
 <script type='text/javascript' src='${baseurl }/assets/plugins/datatables/dataTables.bootstrap.js'></script>
 <script type='text/javascript' src='${baseurl }/assets/demo/demo-datatables.js'></script>  
 <script type='text/javascript' src='${baseurl }/assets/js/placeholdr.js'></script> 

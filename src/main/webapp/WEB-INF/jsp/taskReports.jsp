@@ -6,6 +6,45 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <style>
+button.dt-button, div.dt-button, a.dt-button {
+       color: #fff !important;
+    background: #337ab7 !important;
+    border-color: #2e6da4 !important;
+    padding:6px 12px;
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-right: 0.333em;
+    margin-bottom: 0.933em !important;
+    padding: 0.5em 1em;
+    border: 1px solid #999;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 0.88em;
+    line-height: 1.6em;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    /* background-color: #e9e9e9; */
+    /* background-image: -webkit-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+    background-image: -moz-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+    background-image: -ms-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+    background-image: -o-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+    background-image: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='white', EndColorStr='#e9e9e9'); */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    outline: none;
+}
+
+.dt-button:hover {
+    color: #fff !important;
+    background-color: #204d74 !important;
+    border-color: #122b40 !important;
+    }
 .btn-toolbar {
 	margin-top:7px;
 }

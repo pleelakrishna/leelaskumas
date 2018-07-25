@@ -27,9 +27,9 @@ public class TasksReportsController {
 	TasksReportsDao tasksReportsDao;
 	
 	@RequestMapping("/getDataByDates")
-	public  @ResponseBody  String getUserName(HttpServletRequest request, HttpSession session) throws JSONException
+	public  @ResponseBody  String getTasksByDatesFilter(HttpServletRequest request, HttpSession session) throws JSONException
 	{
-		logger.debug("Calling getUserName at controller");
+		logger.debug("Calling  getTasksByDatesFilter at controller");
 		String fromDate=request.getParameter("fromdateval");
 		String toDate=request.getParameter("todateval");
 		
@@ -37,6 +37,32 @@ public class TasksReportsController {
 		JSONObject objJSON = new JSONObject();
 		
 	Set<Map<String,Object>> listByDates	=tasksReportsDao.getTasksByDates(fromDate,toDate);
+	
+	objJSON.put("listByDates",listByDates);
+
+		return String.valueOf(objJSON);
+	}
+	
+	@RequestMapping("/getDataByFilter")
+	public  @ResponseBody  String getTasksByFilter(HttpServletRequest request, HttpSession session) throws JSONException
+	{
+		logger.debug("Calling getUserName at controller");
+		String assignedbyid=request.getParameter("assignedbyid");
+		String assignedtoid=request.getParameter("assignedtoid");
+		
+		String priorityid=request.getParameter("priorityid");
+		String categoryid=request.getParameter("categoryid");
+		
+		
+		String deptid=request.getParameter("deptid");
+		String kstatusid=request.getParameter("kstatusid");
+		
+        System.out.println(kstatusid);
+        
+		
+		JSONObject objJSON = new JSONObject();
+		
+	Set<Map<String,Object>> listByDates	=tasksReportsDao.getTasksByFilter(assignedbyid,assignedtoid,priorityid,categoryid,deptid,kstatusid);
 	
 	objJSON.put("listByDates",listByDates);
 

@@ -7,6 +7,45 @@
  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 <link  href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
 <style>
+button.dt-button, div.dt-button, a.dt-button {
+       color: #fff !important;
+    background: #337ab7 !important;
+    border-color: #2e6da4 !important;
+    padding:6px 12px;
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-right: 0.333em;
+    margin-bottom: 0.933em !important;
+    padding: 0.5em 1em;
+    border: 1px solid #999;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 0.88em;
+    line-height: 1.6em;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    /* background-color: #e9e9e9; */
+    /* background-image: -webkit-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+    background-image: -moz-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+    background-image: -ms-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+    background-image: -o-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+    background-image: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='white', EndColorStr='#e9e9e9'); */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    outline: none;
+}
+
+.dt-button:hover {
+    color: #fff !important;
+    background-color: #204d74 !important;
+    border-color: #122b40 !important;
+    }
 .form0 {
 	margin-top:20px;
 }
@@ -100,11 +139,11 @@ margin-right:8px;
 	
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
-
-<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js'></script>
-<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js'></script>
+<!--extra scripts  -->
+<!-- <script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js'></script> -->
+<!-- <script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js'></script> -->
 	
-	
+	<!--  extra scripts closed-->
 	<div class="clearfix"></div>
 	<ol class="breadcrumb">
 		<li><a href="dashBoard">Home</a></li>
@@ -171,7 +210,7 @@ margin-right:8px;
 											</c:forEach>
 										</select>
                                     </td>
-                                    <td><span id="prior_text">Any</span>
+                                    <td><span class="prior_text">Any</span>
                                         
                                         
                                         <select id="priorityid"  class="form-control validate1 mobi dispnone prior_input" onfocus="removeBorder(this.id)"  >
@@ -185,7 +224,7 @@ margin-right:8px;
                                     <td><span class="view_text">Any</span>
                                         
                                         
-                                         <select id="priorityid"  class="form-control validate1 mobi dispnone view_input" onfocus="removeBorder(this.id)"  >
+                                         <select id="kstatusid"  class="form-control validate1 mobi dispnone view_input" onfocus="removeBorder(this.id)"  >
 											<c:forEach var="list" items="${kpstatuses}">
 											<option value=${list.key}>${list.value} </option>
 											</c:forEach>
@@ -241,10 +280,10 @@ margin-right:8px;
                 <div class="panel-footer">
                     <div class="col-md-6">
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" placeholder="search">
+                            <input type="text" class="form-control"  placeholder="search">
                         </div>
                         <div class="col-sm-3">
-                            <a href="#" class="btn btn-info">Search</a>
+                            <a href="#" id="searchpanel" class="btn btn-info">Search</a>
                         </div>
                         <div class="col-sm-4">
                         </div><div class="clearfix"></div>
@@ -1363,19 +1402,72 @@ $(".openinput").click(function(){
     $("."+id+"_text").css("display","none");
     $("."+id+"_input").removeClass("dispnone");
 });
+
+
+
+
+$("#searchpanel").click(function(){
+	
+var assignedbyid =$("#assignedbyid").val();
+
+var assignedtoid =  $("#assignedtoid").val();
+
+var priorityid =$("#priorityid").val();
+
+var categoryid =$("#categoryid").val();
+
+var deptid =$("#deptid").val();
+
+var kstatusid =$("#kstatusid").val();
+
+
+
+
+
+console.log(assignedbyid+"--"+assignedtoid+"  "+priorityid+"  "+categoryid+"  "+deptid+"  "+kstatusid);
+
+
+$.ajax({
+	type : "GET",
+	url : "getDataByFilter",
+	data : "assignedbyid="+assignedbyid+"&assignedtoid="+assignedtoid+"&priorityid="+priorityid+"&categoryid="+categoryid+"&deptid="+deptid+"&kstatusid="+kstatusid,
+	dataType : "text",
+	beforeSend : function() {
+         $.blockUI({ message: 'Please wait' });
+      }, 
+	success : function(data) {
+		var parsejson = JSON.parse(data);
+		var list =parsejson.listByDates;
+		displayTable(list);
+		
+		
+	},
+	complete: function () {
+        
+        $.unblockUI();
+   },
+	error :  function(e){$.unblockUI();console.log(e);}
+	
+});
+
+
+});
+
+
 	</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
  <!--  new print -->
 <script type='text/javascript' src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js'></script> 
 <script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js'></script>
-<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js'></script>
+<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js'></script>
+<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js'></script> 
 
 
 
 <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
 <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js'></script>
 <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js'></script>
-<script type='text/javascript' src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js'></script>
+
 <script type='text/javascript' src="${baseurl }/js/ajax.js" ></script>
  <!-- new print -->
