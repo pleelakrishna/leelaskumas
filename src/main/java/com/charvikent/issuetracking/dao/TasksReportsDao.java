@@ -113,6 +113,19 @@ public class TasksReportsDao {
 			
 		}
 		
+		if(!fromDate.equals("0"))
+		{
+			
+			sql =sql+" Date(r.created_time) >=' "+fromDate+" ' " ;
+			
+		}
+		if(!toDate.equals("0"))
+		{
+			
+			sql =sql+" Date(r.created_time) >='  and Date(r.created_time) <=' "+toDate+" '" ;
+			
+		}
+		
 		
 		
 		
