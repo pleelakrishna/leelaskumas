@@ -168,8 +168,6 @@ margin-right:8px;
                                 <tr>
                                     <th><a href="#" id="reporter" class="openinput">Assigned by</a></th>
                                     <th><a href="#" id="assigned" class="openinput">Assigned to</a></th>
-                                    <th><a href="#" id="monitored" class="openinput">Monitored by</a></th>
-                                    <th><a href="#" id="note" class="openinput">Note by</a></th>
                                     <th><a href="#" id="prior" class="openinput">Priority</a></th>
                                     <th><a href="#" id="view" class="openinput">Status by</a></th>
                                 </tr>
@@ -179,6 +177,7 @@ margin-right:8px;
 									
 										
 										<select id="assignedbyid"  class="form-control validate1 mobi dispnone reporter_input" onfocus="removeBorder(this.id)"  >
+											<option value="0">All </option>
 											<c:forEach var="list" items="${userNames}">
 											<option value=${list.key}>${list.value} </option>
 											</c:forEach>
@@ -187,6 +186,7 @@ margin-right:8px;
                                     <td><span class="assigned_text">Any</span>
 										
 										<select id="assignedtoid"  class="form-control validate1 mobi dispnone assigned_input" onfocus="removeBorder(this.id)"  >
+											<option value="0">All </option>
 											<c:forEach var="list" items="${userNames}">
 											<option value=${list.key}>${list.value} </option>
 											</c:forEach>
@@ -194,26 +194,12 @@ margin-right:8px;
 										
 										
                                     </td>
-                                    <td><span class="monitored_text">Any</span>
-                                        <select id="monitoredbyid"  class="form-control validate1 mobi dispnone monitored_input" onfocus="removeBorder(this.id)"  >
-											<c:forEach var="list" items="${userNames}">
-											<option value=${list.key}>${list.value} </option>
-											</c:forEach>
-										</select>
-                                    </td>
-                                    <td><span class="note_text">Any</span>
-                                        
-                                        
-                                        <select id="noteid"  class="form-control validate1 mobi dispnone note_input" onfocus="removeBorder(this.id)"  >
-											<c:forEach var="list" items="${userNames}">
-											<option value=${list.key}>${list.value} </option>
-											</c:forEach>
-										</select>
-                                    </td>
+                                   
+                                     
                                     <td><span class="prior_text">Any</span>
                                         
-                                        
                                         <select id="priorityid"  class="form-control validate1 mobi dispnone prior_input" onfocus="removeBorder(this.id)"  >
+											<option value="0">All </option>
 											<c:forEach var="list" items="${severity}">
 											<option value=${list.key}>${list.value} </option>
 											</c:forEach>
@@ -225,6 +211,7 @@ margin-right:8px;
                                         
                                         
                                          <select id="kstatusid"  class="form-control validate1 mobi dispnone view_input" onfocus="removeBorder(this.id)"  >
+											<option value="0">All </option>
 											<c:forEach var="list" items="${kpstatuses}">
 											<option value=${list.key}>${list.value} </option>
 											</c:forEach>
@@ -240,15 +227,9 @@ margin-right:8px;
                                 </tr>
                                 <tr>
                                     <td><span class="cate_text">Any</span>
-                                        <select id="cate_input" class="form-control dispnone">
-                                            <option>Select</option>
-                                            <option>option1</option>
-                                            <option>option2</option>
-                                            <option>option3</option>
-                                            <option>option4</option>
-                                            <option>option5</option>
-                                        </select>
+                                        
                                          <select id="categoryid"  class="form-control validate1 mobi dispnone cate_input" onfocus="removeBorder(this.id)"  >
+											<option value="0">All </option>
 											<c:forEach var="list" items="${category}">
 											<option value=${list.key}>${list.value} </option>
 											</c:forEach>
@@ -256,6 +237,7 @@ margin-right:8px;
                                     </td>
                                     <td><span class="hide_text">Any</span>
                                         <select id="deptid"  class="form-control validate1 mobi dispnone hide_input" onfocus="removeBorder(this.id)"  >
+											<option value="0">All </option>
 											<c:forEach var="list" items="${departmentNames}">
 											<option value=${list.key}>${list.value} </option>
 											</c:forEach>
@@ -1420,6 +1402,18 @@ var deptid =$("#deptid").val();
 
 var kstatusid =$("#kstatusid").val();
 
+var fromdateval =	$("#dateFrom").val();
+var todateval =	$("#dateTo").val();
+
+  if(fromdateval =="" || fromdateval == 'undefined')
+	  {
+	  fromdateval =0;
+	  }
+  
+  if(todateval =="" ||todateval == 'undefined')
+  {
+	  todateval =0;
+  }
 
 
 
@@ -1430,7 +1424,7 @@ console.log(assignedbyid+"--"+assignedtoid+"  "+priorityid+"  "+categoryid+"  "+
 $.ajax({
 	type : "GET",
 	url : "getDataByFilter",
-	data : "assignedbyid="+assignedbyid+"&assignedtoid="+assignedtoid+"&priorityid="+priorityid+"&categoryid="+categoryid+"&deptid="+deptid+"&kstatusid="+kstatusid,
+	data : "assignedbyid="+assignedbyid+"&assignedtoid="+assignedtoid+"&priorityid="+priorityid+"&categoryid="+categoryid+"&deptid="+deptid+"&kstatusid="+kstatusid+"&fromdateval="+fromdateval+"&todateval="+todateval,
 	dataType : "text",
 	beforeSend : function() {
          $.blockUI({ message: 'Please wait' });

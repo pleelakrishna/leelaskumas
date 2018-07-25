@@ -57,12 +57,15 @@ public class TasksReportsController {
 		String deptid=request.getParameter("deptid");
 		String kstatusid=request.getParameter("kstatusid");
 		
+		String fromDate=request.getParameter("fromdateval");
+		String toDate=request.getParameter("todateval");
+		
         System.out.println(kstatusid);
         
 		
 		JSONObject objJSON = new JSONObject();
 		
-	Set<Map<String,Object>> listByDates	=tasksReportsDao.getTasksByFilter(assignedbyid,assignedtoid,priorityid,categoryid,deptid,kstatusid);
+	Set<Map<String,Object>> listByDates	=tasksReportsDao.getTasksByFilter(assignedbyid,assignedtoid,priorityid,categoryid,deptid,kstatusid,fromDate,toDate);
 	
 	objJSON.put("listByDates",listByDates);
 
