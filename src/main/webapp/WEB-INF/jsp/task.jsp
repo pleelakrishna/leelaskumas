@@ -55,12 +55,14 @@ margin-right:8px;
 }
 
 </style>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css"> -->
 <link rel="stylesheet" href="${baseurl }/assets/css/bootstrap-glyphicons.css">
-
-
+<!-- <link rel="Stylesheet " href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/> -->
+<script type='text/javascript' src='${baseurl }/assets/js/moment-with-locales.js'></script>
+<script type='text/javascript' src='${baseurl }/assets/js/bootstrap-datetimepicker.js'></script>
+<link rel="stylesheet" href="${baseurl }/assets/css/bootstrap-datetimepicker2.css">
 
 
 	<div class="clearfix"></div>
