@@ -222,8 +222,8 @@ margin-right:8px;
                                 <tr>
                                     <th><a href="#" id="cate" class="openinput">Category</a></th>
                                     <th><a href="#" id="hide" class="openinput">Department</a></th>
-                                    <th colspan="2"><a href="#" id="filt" class="openinput">Filter by Date Submitted</a></th>
-                                    <th colspan="2"><a href="#" id="filter" class="openinput">Filter by last updated Date</a></th>
+                                    <th colspan=""><a href="#" id="filt" class="openinput">Filter by Date Submitted</a></th>
+                                    <th colspan=""><a href="#" id="filter" class="openinput">Filter by last updated Date</a></th>
                                 </tr>
                                 <tr>
                                     <td><span class="cate_text">Any</span>
@@ -244,12 +244,12 @@ margin-right:8px;
 										</select>
                                     </td>
                                    
-                                    <td colspan="2"><span class="filt_text">Any</span>
-                                        <input name="DATEFROM" id="dateFrom" type="text" class="form-control dateFrom dispnone filt_input" placeholder="select from date"/>
+                                    <td colspan=""><span class="filt_text">Any</span>
+                                        <input name="dateFrom" id="dateFrom" type="text" class="form-control dateFrom dispnone filt_input" placeholder="select from date"/>
                                     </td>
-                                    <td colspan="2"><span class="filter_text">Any</span>
+                                    <td colspan=""><span class="filter_text">Any</span>
                                        
-                                       <input name="DATEFROM" id="dateTo" type="text" class="form-control dateTo dispnone filter_input"  placeholder="select to date"/>
+                                       <input name="dateTo" id="dateTo" type="text" class="form-control dateTo dispnone filter_input"  placeholder="select to date"/>
                                     </td>
                                 </tr>
                                 <!-- <tr>
@@ -261,11 +261,11 @@ margin-right:8px;
       			</div>
                 <div class="panel-footer">
                     <div class="col-md-6">
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control"  placeholder="search">
-                        </div>
+                        <!-- <div class="col-sm-5">
+                            <input type="text" class="form-control"  placeholder="search"> 
+                        </div>-->
                         <div class="col-sm-3">
-                            <a href="#" id="searchpanel" class="btn btn-info">Search</a>
+                            <a href="#headingOne" id="searchpanel" class="btn btn-primary">Search</a>
                         </div>
                         <div class="col-sm-4">
                         </div><div class="clearfix"></div>
@@ -274,10 +274,11 @@ margin-right:8px;
                         <div class="col-sm-5">
                         </div>
                         <div class="col-sm-4">
-                            <a href="#" class="btn btn-info">Save Current Filter</a>
+                            <!-- <a href="#" class="btn btn-info">Save Current Filter</a> -->
                         </div>
                         <div class="col-sm-3">
-                            <a href="#" class="btn btn-danger">Reset</a>
+                             <a href="#" id="frset" class="btn btn-danger">Reset</a>
+                           <!--  <button  id="frset" class="">Reset</button> -->
                         </div>
                     </div><div class="clearfix"></div>
                 </div>
@@ -1446,6 +1447,27 @@ $.ajax({
 
 
 });
+
+$("#frset").click(function (){
+	
+	$("#assignedbyid").val("0");
+
+	 $("#assignedtoid").val("0");
+
+	$("#priorityid").val("0");
+
+	$("#categoryid").val("0");
+
+	$("#deptid").val("0");
+
+	$("#kstatusid").val("0");
+
+		$("#dateFrom").val("");
+	$("#dateTo").val("");
+
+});
+
+
 
 
 	</script>
