@@ -62,7 +62,7 @@ public class TasksReportsDao {
 
 
 	public Set<Map<String, Object>> getTasksByFilter(String assignedbyid, String assignedtoid, String priorityid,
-			String categoryid, String deptid, String kstatusid, String fromDate, String toDate) {
+			String categoryid, String deptid, String kstatusid, String fromDate, String toDate, String sfromdateval, String utodateval) {
 
 		String sql ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid, r.departmentid,kpd.name as departmentname"      
                +" from report_issue r,kpusers u,kpusers u1, kppriority p, kpseverity s,kpcategory c, kpstatus ks,notifications_frequency nf,kpdepartment kpd "
@@ -88,14 +88,14 @@ public class TasksReportsDao {
 		if(!categoryid.equals("0"))
 		{
 			
-			sql =sql+" and  r.priority='"+categoryid+" ' " ;
+			sql =sql+" and  r.category='"+categoryid+" ' " ;
 			
 		}
 		
 		if(!priorityid.equals("0"))
 		{
 			
-			sql =sql+" and  r.category='"+priorityid+" ' " ;
+			sql =sql+" and  r.severity='"+priorityid+" ' " ;
 			
 		}
 		
@@ -115,14 +115,14 @@ public class TasksReportsDao {
 		
 		if(!fromDate.equals("0"))
 		{
-			
-			sql =sql+" and Date(r.created_time) =' "+fromDate+" ' " ;
+			sql =sql+" and Date(r.created_time) >=' "+fromDate+" ' and Date(r.created_time) <=' "+sfromdateval+" ' ";
+			//sql =sql+" and Date(r.created_time) =' "+fromDate+" ' " ;
 			
 		}
 		if(!toDate.equals("0"))
 		{
-			
-			sql =sql+"and   Date(r.updated_time) =' "+toDate+" '" ;
+			sql =sql+" and Date(r.updated_time) >=' "+toDate+" ' and Date(r.updated_time) <=' "+utodateval+" ' ";
+			//sql =sql+"and   Date(r.updated_time) =' "+toDate+" '" ;
 			
 		}
 		

@@ -7,6 +7,11 @@
  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 <link  href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
 <style>
+.table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+    border: 1px solid #aba8a8;
+    width: 155px;
+}
+
 button.dt-button, div.dt-button, a.dt-button {
        color: #fff !important;
     background: #337ab7 !important;
@@ -158,15 +163,16 @@ margin-right:8px;
   		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   			<div class="panel panel-primary">
     			<div class="panel-heading active" role="tab" id="headingOne">
-      				<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class=""><i class="fa fa-filter"></i> Filter</a></h4>
+      				<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class=""><i class="fa fa-filter"></i> Filters</a></h4>
     			</div>
     			<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" style="">
       			<div class="panel-body">
+      			<form>
                     <div class="table">
                         <table class="table table-bordered table-stipped table-responsive">
                             <tbody>
                                 <tr>
-                                    <th><a href="#" id="reporter" class="openinput">Assigned by</a></th>
+                                    <th><a href="#stayhere" id="reporter" class="openinput">Assigned by</a></th>
                                     <th><a href="#" id="assigned" class="openinput">Assigned to</a></th>
                                     <th><a href="#" id="prior" class="openinput">Priority</a></th>
                                     <th><a href="#" id="view" class="openinput">Status by</a></th>
@@ -246,10 +252,12 @@ margin-right:8px;
                                    
                                     <td colspan=""><span class="filt_text">Any</span>
                                         <input name="dateFrom" id="dateFrom" type="text" class="form-control dateFrom dispnone filt_input" placeholder="select from date"/>
+                                         <input name="sdateFrom" id="sdateFrom" type="text" class="form-control dateFrom dispnone filt_input" placeholder="select to date"/>
                                     </td>
                                     <td colspan=""><span class="filter_text">Any</span>
                                        
-                                       <input name="dateTo" id="dateTo" type="text" class="form-control dateTo dispnone filter_input"  placeholder="select to date"/>
+                                       <input name="dateTo" id="dateTo" type="text" class="form-control dateTo dispnone filter_input"  placeholder="select from date"/>
+                                        <input name="udateTo" id="udateTo" type="text" class="form-control dateTo dispnone filter_input"  placeholder="select to date"/>
                                     </td>
                                 </tr>
                                 <!-- <tr>
@@ -257,7 +265,7 @@ margin-right:8px;
                                 </tr> -->
                             </tbody>
                         </table>
-                    </div>
+                    </div></form>
       			</div>
                 <div class="panel-footer">
                     <div class="col-md-6">
@@ -614,9 +622,20 @@ $(document).ready(function () {
 	    orientation: "top",
 	    autoclose: true
 	  });
+	  $('#sdateFrom').datepicker({
+			dateFormat: "yy-mm-dd",
+		    orientation: "top",
+		    autoclose: true
+		  });
 	  	 
 	  
 	  $('#dateTo').datepicker({
+		  dateFormat: "yy-mm-dd",
+		    orientation: "top",
+		    autoclose: true
+		  });
+
+	  $('#udateTo').datepicker({
 		  dateFormat: "yy-mm-dd",
 		    orientation: "top",
 		    autoclose: true
@@ -1013,19 +1032,7 @@ $('#ttype').on('change', function() {
 	 });
 	})
 	
-	$("#deptid").on('change', function() {
-		 var dept=$('#deptid').val();
-		 var formData = new FormData();
-		    formData.append('deptid', dept);
-		$.fn.makeMultipartRequest('POST', 'setdataDeptWise', false, formData, false, 'text', function(data){
-			var jsonobj = $.parseJSON(data);
-			var alldata = jsonobj.allOrders1;
-			var myJSON = JSON.stringify(alldata);
-				displayTable(alldata);
-				toolTips()
-				makeEmpty()
-		 });
-	})
+	
 	
 	
 	var idArrayCmt11 = null;
@@ -1368,7 +1375,7 @@ $("#example").printThis({
 });
  
 
-$("#pageName").text("Tasks Filter");
+$("#pageName").text("ViewTasks");
 $(".taskfilter").addClass("active"); 
 </script> 
 <script type="text/javascript">
@@ -1406,15 +1413,73 @@ var kstatusid =$("#kstatusid").val();
 var fromdateval =	$("#dateFrom").val();
 var todateval =	$("#dateTo").val();
 
-  if(fromdateval =="" || fromdateval == 'undefined')
+var sfromdateval =	$("#sdateFrom").val();
+var utodateval =	$("#udateTo").val();
+
+
+   if(fromdateval != "")
+	  {
+	    if(sfromdateval =="" ||fromdateval == 'undefined' )  
+	    	{
+	    	alert("Select To date");
+	    	return false;
+	    	}
+	  
+	  }
+  
+  
+  if(sfromdateval != "")
+  {
+    if(fromdateval =="" ||fromdateval == 'undefined' )  
+    	{
+    	alert("Select From Date");
+    	return false;
+    	}
+  
+  } 
+  
+  
+
+  if(todateval != "")
+	  {
+	    if(utodateval =="" ||utodateval == 'undefined' )  
+	    	{
+	    	alert("Select To date");
+	    	return false;
+	    	}
+	  
+	  }
+  
+  
+  if(utodateval != "")
+  {
+    if(todateval =="" ||todateval == 'undefined' )  
+    	{
+    	alert("Select From Date");
+    	return false;
+    	}
+  
+  }
+  
+  
+  
+  
+  
+
+
+
+
+  if(fromdateval =="" || fromdateval == 'undefined' || sfromdateval == ""  || sfromdateval == 'undefined')
 	  {
 	  fromdateval =0;
 	  }
   
-  if(todateval =="" ||todateval == 'undefined')
+  if(todateval =="" ||todateval == 'undefined' || utodateval  == "" || utodateval == 'undefined' )
   {
 	  todateval =0;
   }
+  
+  
 
 
 
@@ -1425,7 +1490,7 @@ console.log(assignedbyid+"--"+assignedtoid+"  "+priorityid+"  "+categoryid+"  "+
 $.ajax({
 	type : "GET",
 	url : "getDataByFilter",
-	data : "assignedbyid="+assignedbyid+"&assignedtoid="+assignedtoid+"&priorityid="+priorityid+"&categoryid="+categoryid+"&deptid="+deptid+"&kstatusid="+kstatusid+"&fromdateval="+fromdateval+"&todateval="+todateval,
+	data : "assignedbyid="+assignedbyid+"&assignedtoid="+assignedtoid+"&priorityid="+priorityid+"&categoryid="+categoryid+"&deptid="+deptid+"&kstatusid="+kstatusid+"&fromdateval="+fromdateval+"&todateval="+todateval+"&sfromdateval="+sfromdateval+"&utodateval="+utodateval,
 	dataType : "text",
 	beforeSend : function() {
          $.blockUI({ message: 'Please wait' });
@@ -1434,6 +1499,13 @@ $.ajax({
 		var parsejson = JSON.parse(data);
 		var list =parsejson.listByDates;
 		displayTable(list);
+
+		$("#dateFrom").val("");
+	$("#dateTo").val("");
+	
+
+	$("#sdateFrom").val("");
+$("#udateTo").val("");
 		
 		
 	},
@@ -1461,9 +1533,14 @@ $("#frset").click(function (){
 	$("#deptid").val("0");
 
 	$("#kstatusid").val("0");
+	
 
 		$("#dateFrom").val("");
 	$("#dateTo").val("");
+	
+
+	$("#sdateFrom").val("");
+$("#udateTo").val("");
 
 });
 
