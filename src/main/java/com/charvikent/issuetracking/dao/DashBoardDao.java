@@ -1200,6 +1200,46 @@ public Map<String, String> getDepartmentCountsForInProgress()
 }
 
 
+public Map<String, String> getDepartmentCountsForPending()
+{
+	
+	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String id=String.valueOf(objuserBean.getDesignation());
+	String orgid=String.valueOf(objuserBean.getKpOrgId());
+	
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	
+	Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
+
+	
+	HashMap<String,String> deptCounts =new LinkedHashMap<String,String>();
+	
+	String hql ="";
+	
+	if(authorities.contains(new SimpleGrantedAuthority("ROLE_MASTERADMIN")))
+	{
+	
+     hql ="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment "
+                    +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus='5'  GROUP BY kpdepartment.id ";
+	}
+	
+	else
+	{
+	
+	 hql="SELECT kpdepartment.name ,COUNT(report_issue.departmentid)as number  FROM report_issue  RIGHT  JOIN kpdepartment" 
+                   +" ON (kpdepartment.id=report_issue.departmentid) and report_issue.kstatus <> '1' and kp_org_id='"+orgid+" ' GROUP BY kpdepartment.id ";
+	}	
+	
+	@SuppressWarnings("unchecked")
+		List<Object[]> rows = em.createNativeQuery(hql).getResultList();
+		for (Object[] row : rows) {
+			deptCounts.put((String)row[0], String.valueOf(row[1]));
+    }
+		return deptCounts;
+}
+
+
+
 public Map<String, String> getDepartmentCountsForReopen()
 {
 	
@@ -2779,6 +2819,7 @@ else if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
 	return listissue;
 	
 }
+
 
 
 

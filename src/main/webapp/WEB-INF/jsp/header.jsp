@@ -72,6 +72,18 @@
 <link rel="stylesheet" href="${baseurl }/assets/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="${baseurl }/assets/css/jquery.dataTables.min.css">
 
+
+<!--  for pie charts-->
+
+<script src="${baseurl }/assets/js/amcharts.js"></script>
+<script src="${baseurl }/assets/js/pie.js"></script>
+<script src="${baseurl }/assets/js/light.js"></script>
+
+
+<script src="${baseurl }/assets/js/export.min.js"></script>
+<link type="text/css" rel="stylesheet" href="${baseurl }/assets/css/export.css">
+
+
 <style type="text/css">
 
 @media (max-width: 767px) {

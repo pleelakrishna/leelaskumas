@@ -1,5 +1,6 @@
 package com.charvikent.issuetracking.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -19,6 +20,7 @@ import com.charvikent.issuetracking.dao.KpStatusLogsDao;
 import com.charvikent.issuetracking.dao.UserDao;
 import com.charvikent.issuetracking.model.DashBordByCategory;
 import com.charvikent.issuetracking.model.DashBordByStatus;
+import com.charvikent.issuetracking.model.HmToArrayList;
 import com.charvikent.issuetracking.model.KpStatusLogs;
 import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
@@ -438,7 +440,7 @@ public Map<String,String> getDepartmentCounts2() {
 	return dashBoardDao.getDepartmentCounts();
 }
 
-public Object getDepartmentCountsForClosed() {
+public Map<String, String> getDepartmentCountsForClosed() {
 	return dashBoardDao.getDepartmentCountsForClosed();
 }
 
@@ -468,6 +470,10 @@ public Object getDepartmentCountsForInprogressed() {
 }
 public Object getDepartmentCountsForReopen() {
 	return dashBoardDao.getDepartmentCountsForReopen();
+}
+
+public Map<String, String> getDepartmentCountsForPending() {
+	return dashBoardDao.getDepartmentCountsForPending();
 }
 
 	
@@ -574,6 +580,33 @@ public Set<ReportIssue> getTasksByCategoryPending(String deptname) {
 	
 	return dashBoardDao.getTasksByCategoryPending(deptname);
 }
+
+
+
+public List<HmToArrayList> convertHashmaptoArray( Map<String,String> map){
+	
+	
+	 //Map<String,String> map =getDepartmentCounts();
+	 
+	 List< HmToArrayList> list =new ArrayList<>();
+	 
+	 
+	 for(Entry<String,String> entry : map.entrySet())
+	 {
+		 HmToArrayList ar =new HmToArrayList();
+		 
+		 ar.setStatus(entry.getKey());
+		 ar.setNumber(entry.getValue());
+		 list.add(ar);
+	 }
+	 
+	 return list;
+
+     }
+	
+	
+
+
 
 
 

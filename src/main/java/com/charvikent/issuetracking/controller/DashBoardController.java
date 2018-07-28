@@ -106,6 +106,7 @@ public class DashBoardController {
 		 
 		 ObjectMapper deptmapper =new ObjectMapper();
 		String deptcountjson = deptmapper.writeValueAsString(dashBoardService.getDepartmentCounts());
+		
 		String deptcountclosedjson = deptmapper.writeValueAsString(dashBoardService.getDepartmentCountsForClosed());
 		String deptcountAssignedjson = deptmapper.writeValueAsString(dashBoardService.getDepartmentCountsForAssigned());
 		String deptcountAcknowldgedson = deptmapper.writeValueAsString(dashBoardService.getDepartmentCountsForacKnowledged());
@@ -133,6 +134,11 @@ public class DashBoardController {
 		String categorycountidjson = deptmapper.writeValueAsString(dashBoardService.getCategoryCountsForIds());
 		
 		
+		String chartDeptAllCounts = deptmapper.writeValueAsString(dashBoardService.convertHashmaptoArray(dashBoardService.getDepartmentCounts()));
+		
+		String chartDeptClosed = deptmapper.writeValueAsString(dashBoardService.convertHashmaptoArray(dashBoardService.getDepartmentCountsForClosed()));
+		String chartDeptPending = deptmapper.writeValueAsString(dashBoardService.convertHashmaptoArray(dashBoardService.getDepartmentCountsForPending()));
+		
 		
 		request.setAttribute("categorycountjson", categorycountjson);
 		request.setAttribute("categorycountclosedjson", categorycountclosedjson);
@@ -143,9 +149,17 @@ public class DashBoardController {
 		request.setAttribute("categorycountReopen", categorycountReopen);
 		request.setAttribute("categorycountPending", categorycountPending);
 		request.setAttribute("categorycountidjson", categorycountidjson);
+		request.setAttribute("chartDeptAllCounts", chartDeptAllCounts);
+		request.setAttribute("chartDeptClosed", chartDeptClosed);
+		request.setAttribute("chartDeptPending", chartDeptPending);
 		
 		
 		System.out.println(deptcountjson);
+		
+		
+		
+	
+		
 		 
 		 
 		

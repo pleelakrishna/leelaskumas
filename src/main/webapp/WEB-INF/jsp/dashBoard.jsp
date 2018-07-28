@@ -1,3 +1,7 @@
+
+
+
+
 <style>
 .btn-toolbar {
 	margin-top:7px;
@@ -81,6 +85,25 @@ td {
 			</ul>
 			<!-- /.breadcrumb -->
 		</div>
+		<security:authorize access="hasRole('ROLE_ADMIN')">
+		
+		<div class="charts">
+			<div class="col-md-4">
+				<h3>All Tasks</h3>
+				<div id="chartdiv"></div>
+			</div>
+			<div class="col-md-4">
+				<h3>Pending</h3>
+				<div id="chartdiv0"></div>
+			</div>
+			<div class="col-md-4">
+				<h3>Closed</h3>
+				<div id="chartdiv1"></div>
+			</div><div class="clearfix"></div>
+		</div>
+		</security:authorize>
+		
+		
 		<div class="page-content container" style="background-color: #fff;">
 			<div class="col-md-12"
 				style="background-color: white !important; padding-top: 15PX;">
@@ -819,6 +842,12 @@ td {
 	var categorycountPending = ${categorycountPending};
 	
 	
+	var chartDeptAllCounts = ${chartDeptAllCounts};
+	
+	var chartDeptClosed = ${chartDeptClosed};
+	var chartDeptPending = ${chartDeptPending};
+	
+	
 	
 	
 	if (categorycountjson != "") {
@@ -866,6 +895,53 @@ td {
 	}
 	
 		
+	
+	var cylinderstatuscount =[{"cylinderstatus":"Empty","count":"1676"},{"cylinderstatus":"FillingStation","count":"265"},{"cylinderstatus":"Filled","count":"107"},{"cylinderstatus":"QualityCheck","count":"103"},{"cylinderstatus":"Truck","count":"605"},{"cylinderstatus":"Delivered","count":"90"},{"cylinderstatus":"Returned","count":34},{"cylinderstatus":"MissedCylinder","count":1}];
+	var chart = AmCharts.makeChart( "chartdiv", {
+		  "type": "pie",
+		  "theme": "light",
+		  "dataProvider":chartDeptAllCounts,
+		  "valueField": "number",
+		  "titleField": "status",
+		  "outlineAlpha": 0.4,
+		  "depth3D": 15,
+		  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+		  "angle": 30,
+		  "export": {
+		    "enabled": true
+		  }
+		} );
+	
+	var cylinderstatuscount =[{"cylinderstatus":"Empty","count":1676},{"cylinderstatus":"FillingStation","count":265},{"cylinderstatus":"Filled","count":107},{"cylinderstatus":"QualityCheck","count":103},{"cylinderstatus":"Truck","count":605},{"cylinderstatus":"Delivered","count":90},{"cylinderstatus":"Returned","count":34},{"cylinderstatus":"MissedCylinder","count":1}];
+	var chart = AmCharts.makeChart( "chartdiv0", {
+		  "type": "pie",
+		  "theme": "light",
+		  "dataProvider":chartDeptPending,
+		  "valueField": "number",
+		  "titleField": "status",
+		  "outlineAlpha": 0.4,
+		  "depth3D": 15,
+		  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+		  "angle": 30,
+		  "export": {
+		    "enabled": true
+		  }
+		} );var cylinderstatuscount =[{"cylinderstatus":"Empty","count":1676},{"cylinderstatus":"FillingStation","count":265},{"cylinderstatus":"Filled","count":107},{"cylinderstatus":"QualityCheck","count":103},{"cylinderstatus":"Truck","count":605},{"cylinderstatus":"Delivered","count":90},{"cylinderstatus":"Returned","count":34},{"cylinderstatus":"MissedCylinder","count":1}];
+		var chart = AmCharts.makeChart( "chartdiv1", {
+			  "type": "pie",
+			  "theme": "light",
+			  "dataProvider":chartDeptClosed,
+			  "valueField": "number",
+			  "titleField": "status",
+			  "outlineAlpha": 0.4,
+			  "depth3D": 15,
+			  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+			  "angle": 30,
+			  "export": {
+			    "enabled": true
+			  }
+			} );
+	
 	
 
 </script>
