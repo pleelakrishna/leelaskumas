@@ -1,5 +1,8 @@
 package com.charvikent.issuetracking.service;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -10,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.charvikent.issuetracking.dao.KpHistoryDao;
 import com.charvikent.issuetracking.model.KpHistory;
-import com.charvikent.issuetracking.model.ReportIssue;
 import com.charvikent.issuetracking.model.User;
 
 @Service
@@ -42,6 +44,31 @@ public class KpHistoryService {
 	return klist;
 		
 	}
+	
+	
+	public List<KpHistory> getTaskHistory2(String id) {
+		
+		List<KpHistory> setlist =	kpHistoryDao.getTaskHistory2();
+		
+		List<KpHistory> klist =new LinkedList<KpHistory>();
+		
+		for(KpHistory entry :setlist)
+		{
+			if(entry.getIssueid().equals(id))
+			{
+				klist.add(entry);
+				
+			}
+			
+			
+			
+		}
+		Collections.reverse(klist);
+		return klist;
+			
+		}
+	
+	
 
 
 

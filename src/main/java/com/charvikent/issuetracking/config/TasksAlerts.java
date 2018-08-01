@@ -24,7 +24,7 @@ public class TasksAlerts {
 	SendSMS sendSMS;
 	
 	
-	@Scheduled(cron = "* * 10 * * *")
+	@Scheduled(cron = "* 19 21 * * ?")
 	public void scheduleTaskUsingCronExpression() throws IOException {
 	  
 	    long now = System.currentTimeMillis() / 1000;
@@ -34,15 +34,5 @@ public class TasksAlerts {
 	    notificationsCroneController.sendSMSToTasksTomorrowDeadLine();
 	}
 	
-	/*@Scheduled(cron = "*5 * * * * *")
-	public void testingCronExpression() throws IOException  {
-	  
-	    long now = System.currentTimeMillis() / 1000;
-	    System.out.println(
-	      "schedule tasks using cron jobs - " + now);
-	    String tmg= env.getProperty("app.taskmsg");
-	    //System.out.println(tmg);
-	    
-	   // notificationsCroneController.sendSMSToTasksTomorrowDeadLine();
-	}*/
+	
 }

@@ -1,6 +1,7 @@
 package com.charvikent.issuetracking.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -282,7 +283,7 @@ public class TaskController {
 		
 		Set<KpStatusLogs> taskHistory =taskService.getrepeatLogsById(Integer.parseInt(id));
 		
-		System.out.println(taskHistory);
+		//System.out.println(taskHistory);
 		
 		
 		JSONObject obj = new JSONObject();
@@ -295,7 +296,7 @@ public class TaskController {
 	public @ResponseBody Object viewIssue2(@RequestParam(value = "id", required = true) String id, Model model,HttpServletRequest request, HttpSession session) throws JSONException {
 
 		
-		Set<KpHistory> taskHistory =kpHistoryService.getTaskHistory(id);
+		List<KpHistory> taskHistory =kpHistoryService.getTaskHistory2(id);
 		
 		JSONObject obj = new JSONObject();
 		obj.put("list", taskHistory);
@@ -546,7 +547,7 @@ public class TaskController {
 		model.addAttribute("cissue", issue);
 		model.addAttribute("clist",taskService.getTaksByid(id));
 		model.addAttribute("repeatLogs",taskService.getrepeatLogsById(id));
-		model.addAttribute("repeatLogs1",kpHistoryService.getTaskHistory(taskId));
+		model.addAttribute("repeatLogs1",kpHistoryService.getTaskHistory2(taskId));
 		return "ViewTicket";
 
 	}

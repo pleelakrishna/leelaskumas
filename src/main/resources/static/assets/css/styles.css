@@ -1487,7 +1487,7 @@ th {
 .table-bordered > thead > tr > td,
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
-  border: 1px solid #aba8a8;
+ /*  border: 1px solid #aba8a8; */
 }
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td {
@@ -1694,6 +1694,15 @@ table th[class*="col-"] {
 	}
 }
 @media (min-width: 320px) and (max-width: 639px) {
+	.btn-toolbar {
+    margin-top: -7px;
+    margin-bottom: 5px;
+}
+div.dt-buttons {
+    float: none !important;
+    text-align: center;
+    display: inline-block;
+}
 	.horizontal-nav nav.navbar {
 		margin-top: -30px !important;
 	}
@@ -1731,7 +1740,7 @@ table th[class*="col-"] {
 }
 @media (min-width: 76px) {
 	#page-heading {
-		margin-top: 40px;
+		margin-top: 34px;
 	}
 }
 /* Media queries P */

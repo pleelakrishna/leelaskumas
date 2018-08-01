@@ -41,6 +41,40 @@
 
 .default-class::-webkit-input-placeholder {color: #e73d4a !important;}
 .default-class::-moz-placeholder {color: #e73d4a !important;}
+.focusedform {
+    background-image: url(assets/img/bg.jpg);
+    padding: 0;
+    background-size: cover;
+     background-repeat: no-repeat;
+    background-position: right top;
+    margin:0;
+}
+[class*="panel-"].panel .panel-body {
+    padding: 20px;
+    border:rgba(255,255,255,0.6)!important;
+    background-color: #fff;
+}
+.panel-primary .panel-body {
+     border:none !important;
+}
+.verticalcenter {
+background:rgba(255,255,255,0.6) !important;}
+.pb {
+background:rgba(255,255,255,0.3) !important;
+}
+.panel {
+    margin: 0px 0 0px;
+    border-radius: 1px;
+}
+[class*="panel-"].panel .panel-footer {
+    background-color: #f7f8fa;
+    border-width: 0 1px 1px 1px;
+    border-style: solid;
+    border-color: #dddddd;
+    padding: 10px 20px;
+    color: #000000;
+    background: rgba(255,255,255,0.6) !important;
+}
 </style>
 
 <script type='text/javascript' src='assets/js/jquery-1.10.2.min.js'></script>
@@ -57,14 +91,14 @@
 <body class="focusedform">
 <div class="verticalcenter">
 <div align="center">
-	<img src="assets/img/klogo.png" style="width:250px;" class="img-responsive">
-	<p style="color:#3f83d8; font-size:30px;">Task Management System</p>
+	<img src="assets/img/klogo.png" style="width:180px; padding-top:8px;" class="img-responsive">
+	<p style="color:#536e86; font-size:20px;">Task Management System</p>
 </div>
 <!-- 	<h1 align="center">KHAIBAR GAS</h1> -->
 	<div class="panel panel-primary">
 		<form  action=login class="form-horizontal" method="POST"  style="margin-bottom: 0px !important;">
-		<div class="panel-body">
-			<h4 class="text-center" style="margin-bottom: 25px;">Login</h4>
+		<div class="panel-body pb">
+			<h4 class="text-center" style="margin-top: 0px; margin-bottom:15px;"></h4>
 			<c:if test="${param.error ne null}">
 				  <div class="msgcss1 row">
 									<div align="center" class="form-group">

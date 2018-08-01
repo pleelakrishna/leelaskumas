@@ -63,6 +63,8 @@ td {
 .pad1 {
 	text-align:center !important;
 }
+.charts {
+padding-top:10px;}
 </style>
 
 
@@ -88,17 +90,18 @@ td {
 		<security:authorize access="hasRole('ROLE_ADMIN')">
 		
 		<div class="charts">
-			<div class="col-md-4">
-				<h3>All Tasks</h3>
-				<div id="chartdiv"></div>
+			<div class="col-md-6">
+				<h3 align="center">Closed</h3>
+				<div id="chartdiv1"></div>
 			</div>
-			<div class="col-md-4">
-				<h3>Pending</h3>
+			<div class="col-md-6">
+				<h3  align="center">Pending</h3>
 				<div id="chartdiv0"></div>
 			</div>
-			<div class="col-md-4">
-				<h3>Closed</h3>
-				<div id="chartdiv1"></div>
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<h3  align="center">All Tasks</h3>
+				<div id="chartdiv"></div>
 			</div><div class="clearfix"></div>
 		</div>
 		</security:authorize>

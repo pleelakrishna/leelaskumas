@@ -8,7 +8,7 @@
 <link  href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
 <style>
 .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
-    border: 1px solid #aba8a8;
+    border: 1px solid #f1f1f1;
     width: 155px;
 }
 
@@ -268,7 +268,7 @@ margin-right:8px;
                     </div></form>
       			</div>
                 <div class="panel-footer">
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-xs-6">
                         <!-- <div class="col-sm-5">
                             <input type="text" class="form-control"  placeholder="search"> 
                         </div>-->

@@ -135,7 +135,7 @@ th {
 								
 <c:forEach var="logs" items="${repeatLogs1}">								
 								<tr>
-<td> ${logs.createdTime}</td><td>${logs.changedby}</td>
+<td> ${logs.strcreatedTime}</td><td>${logs.changedby}</td>
 <%-- <td>${logs.kpstatus}</td> --%>
 <td>
 

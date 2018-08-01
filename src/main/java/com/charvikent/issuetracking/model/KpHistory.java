@@ -45,6 +45,8 @@ public class KpHistory implements Comparable<KpHistory>{
 	
 	@Transient
 	private String iassignby;
+	@Transient
+	private String strcreatedTime;
 	
 
 	public Integer getId() {
@@ -148,6 +150,16 @@ public class KpHistory implements Comparable<KpHistory>{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
+
+	public String getStrcreatedTime() {
+		return strcreatedTime;
+	}
+
+	public void setStrcreatedTime(String strcreatedTime) {
+		this.strcreatedTime = strcreatedTime;
+	}
 
 	@Override
 	public String toString() {
@@ -162,7 +174,7 @@ public class KpHistory implements Comparable<KpHistory>{
 
 	@Override
 	public int compareTo(KpHistory o) {
-		return -createdTime.compareTo(o.createdTime);
+		return -strcreatedTime.compareTo(o.strcreatedTime);
 		
 	}
 

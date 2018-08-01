@@ -1,6 +1,7 @@
 package com.charvikent.issuetracking.dao;
 
-import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -39,9 +40,11 @@ public class KpHistoryDao {
 		
 		TreeSet<KpHistory> listissue=new TreeSet<KpHistory>();
 		
-		String hql ="select r.id,r.taskno,h.kpchange,h.kpfield,h.created_time,CONCAT(u.firstname,u.lastname) as username,h.issueid,h.uploadfiles, r.assignto,r.assignby "+ 
+		String hql ="select r.id,r.taskno,h.kpchange,h.kpfield, DATE_FORMAT(h.created_time,'%d - %c -%Y') as date, CONCAT(u.firstname,u.lastname) as username,h.issueid,h.uploadfiles, r.assignto,r.assignby "+ 
 				" from kp_history h, report_issue r,kpusers u" + 
 				" where  h.issueid=r.id and h.changedby=u.id";
+		
+		System.out.println(hql);
 		
 		try {
 			@SuppressWarnings("unchecked")
@@ -57,7 +60,58 @@ public class KpHistoryDao {
 				issue.setKpchange((String) row[2]);
 				
 				issue.setKpfield((String) row[3]);
-				issue.setCreatedTime((Date) row[4]);
+				issue.setStrcreatedTime((String) row[4]);
+				
+				issue.setChangedby((String) row[5]);
+				
+				issue.setIssueid((String) row[6]);
+				
+				issue.setUploadfiles((String) row[7]);
+				
+				issue.setIassignto((String) row[8]);
+				
+				issue.setIassignby((String) row[9]);
+				
+				
+				listissue.add(issue);
+
+			}
+		} catch (Exception e) {
+			System.out.println("error here");
+			e.printStackTrace();
+		}
+		return listissue;
+
+
+	 }
+	
+	
+	public List<KpHistory> getTaskHistory2()
+	 {
+		
+		List<KpHistory> listissue=new LinkedList<KpHistory>();
+		
+		String hql ="select r.id,r.taskno,h.kpchange,h.kpfield, DATE_FORMAT(h.created_time,'%d - %c -%Y') as date, CONCAT(u.firstname,u.lastname) as username,h.issueid,h.uploadfiles, r.assignto,r.assignby "+ 
+				" from kp_history h, report_issue r,kpusers u" + 
+				" where  h.issueid=r.id and h.changedby=u.id";
+		
+		System.out.println(hql);
+		
+		try {
+			@SuppressWarnings("unchecked")
+			List <Object[]> rows=entityManager.createNativeQuery(hql).getResultList();
+			for(Object[] row: rows)
+			{
+				KpHistory issue =new KpHistory();
+				int j = Integer.parseInt(String.valueOf(row[0]));
+				Integer intobj=new Integer(j);
+				issue.setId(intobj);
+				
+				issue.setTaskno((String) row[1]);
+				issue.setKpchange((String) row[2]);
+				
+				issue.setKpfield((String) row[3]);
+				issue.setStrcreatedTime((String) row[4]);
 				
 				issue.setChangedby((String) row[5]);
 				
