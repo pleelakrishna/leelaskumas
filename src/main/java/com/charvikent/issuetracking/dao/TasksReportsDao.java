@@ -21,12 +21,12 @@ public class TasksReportsDao {
 	public Set<Map<String, Object>> getTasksByDates(String fromDate, String toDate) {
 
 		String sql ="select  r.id , CONCAT(u.firstname,' ',u.lastname) as username, s.severity as sev, p.priority as pp,r.uploadfile,r.subject ,DATE_FORMAT(r.created_time,'%d - %M -%Y') as date,c.category as cc,ks.name,r.status ,r.taskno ,r.severity as sid, r.priority as pid,r.assignto ,"
-                     +" r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname,' ',u1.lastname) as asby ,r.kstatus "
+                     +" r.category as rcid,r.description ,r.taskdeadline,r.assignby,CONCAT(u1.firstname,' ',u1.lastname) as asby ,r.kstatus ,r.description"
                    +" from report_issue r, kpcategory c, kppriority p, kpusers u, kpusers u1, kpseverity s, kpstatus ks, kpstatuslogs kpl  " 
                   +"  where  r.kstatus=ks.id and r.assignto=u.id and r.assignby=u1.id and p.id=r.priority and s.id=r.severity and c.id=r.category   and  kpl.issueid=r.id and date(r.created_time)='2018-07-07' "
                    +" order by kpl.statustime desc";
 		
-		String sql2 ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid, r.departmentid,kpd.name as departmentname"      
+		String sql2 ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid, r.departmentid,kpd.name as departmentname,r.description,"      
                      +" from report_issue r,kpusers u,kpusers u1, kppriority p, kpseverity s,kpcategory c, kpstatus ks,notifications_frequency nf,kpdepartment kpd "
                      +" where  r.assignto=u.id and r.assignby=u1.id and  p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus=ks.id and nf.id=r.notificationsfrequency and  kpd.id=r.departmentid and Date(r.created_time) >=' "+fromDate+" ' and Date(r.created_time) <=' "+toDate+" ' ";
 		
@@ -45,7 +45,7 @@ public class TasksReportsDao {
 	public Set<Map<String, Object>> getAlltasksForReports() {
 
 		
-		String sql2 ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid, r.departmentid,kpd.name as departmentname"      
+		String sql2 ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid, r.departmentid,kpd.name as departmentname,r.description"      
                      +" from report_issue r,kpusers u,kpusers u1, kppriority p, kpseverity s,kpcategory c, kpstatus ks,notifications_frequency nf,kpdepartment kpd "
                      +" where  r.assignto=u.id and r.assignby=u1.id and  p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus=ks.id and nf.id=r.notificationsfrequency and  kpd.id=r.departmentid  ";
 		
@@ -64,7 +64,7 @@ public class TasksReportsDao {
 	public Set<Map<String, Object>> getTasksByFilter(String assignedbyid, String assignedtoid, String priorityid,
 			String categoryid, String deptid, String kstatusid, String fromDate, String toDate, String sfromdateval, String utodateval) {
 
-		String sql ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid, r.departmentid,kpd.name as departmentname"      
+		String sql ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid, r.departmentid,kpd.name as departmentname,r.description"      
                +" from report_issue r,kpusers u,kpusers u1, kppriority p, kpseverity s,kpcategory c, kpstatus ks,notifications_frequency nf,kpdepartment kpd "
                +" where  r.assignto=u.id and r.assignby=u1.id and  p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus=ks.id and nf.id=r.notificationsfrequency and  kpd.id=r.departmentid  ";
 	
@@ -134,7 +134,7 @@ public class TasksReportsDao {
 		
 		
 		
-		String sql2 ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid, r.departmentid,kpd.name as departmentname"      
+		String sql2 ="select r.id, CONCAT(u.firstname,' ',u.lastname)  as assignto, s.severity,p.priority,r.uploadfile,r.subject,DATE_FORMAT(r.created_time,'%d - %M -%Y') as strcreatedTime,c.category, ks.name as kstatus,r.status,r.taskno, r.description,CONCAT(u1.firstname,' ',u1.lastname) as assignby,r.taskdeadline,nf.frequence_name as notificationsfrequency ,ks.id as kstatusid, r.departmentid,kpd.name as departmentname,r.description"      
                 +" from report_issue r,kpusers u,kpusers u1, kppriority p, kpseverity s,kpcategory c, kpstatus ks,notifications_frequency nf,kpdepartment kpd "
                 +" where  r.assignto=u.id and r.assignby=u1.id and  p.id=r.priority and s.id=r.severity and c.id=r.category and r.kstatus=ks.id and nf.id=r.notificationsfrequency and  kpd.id=r.departmentid  "
                 +"    and r.assignto= '"+assignedtoid+" '  and  r.assignby='"+assignedbyid+" ' and r.category='"+categoryid+" 'and r.priority='"+priorityid+" ' and  r.kstatus='"+kstatusid+"' and r.departmentid='"+deptid+"' " ;

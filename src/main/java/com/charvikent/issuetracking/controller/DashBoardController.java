@@ -1,6 +1,5 @@
 package com.charvikent.issuetracking.controller;
 
-import java.io.File;
 import java.util.List;
 import java.util.Set;
 
@@ -140,6 +139,14 @@ public class DashBoardController {
 		String chartDeptPending = deptmapper.writeValueAsString(dashBoardService.convertHashmaptoArray(dashBoardService.getDepartmentCountsForPending()));
 		
 		
+		
+		String barChartDeptAllCounts = deptmapper.writeValueAsString(dashBoardService.convertHashmaptoArray(dashBoardService.getCategoryCountsForAll()));
+		String barChartDeptClosed = deptmapper.writeValueAsString(dashBoardService.convertHashmaptoArray(dashBoardService.getCategoryCountsForClosed()));
+		String barChartDeptPending = deptmapper.writeValueAsString(dashBoardService.convertHashmaptoArray(dashBoardService.getCategoryCountsForPending()));
+		
+		
+		
+		
 		request.setAttribute("categorycountjson", categorycountjson);
 		request.setAttribute("categorycountclosedjson", categorycountclosedjson);
 		request.setAttribute("categorycountAssignedjson", categorycountAssignedjson);
@@ -153,8 +160,12 @@ public class DashBoardController {
 		request.setAttribute("chartDeptClosed", chartDeptClosed);
 		request.setAttribute("chartDeptPending", chartDeptPending);
 		
+		request.setAttribute("barChartDeptAllCounts", barChartDeptAllCounts);
+		request.setAttribute("barChartDeptClosed", barChartDeptClosed);
+		request.setAttribute("barChartDeptPending", barChartDeptPending);
 		
-		System.out.println(deptcountjson);
+		
+		//System.out.println(deptcountjson);
 		
 		
 		

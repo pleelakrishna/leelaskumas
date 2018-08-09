@@ -136,7 +136,7 @@ $(".onlyCharacters").on("keypress",	function(event) {
 
 			// alert(event.keyCode);
 
-			if (event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 ||event.keyCode == 38
+			if (event.keyCode == 8 || event.keyCode == 9 
 					|| event.keyCode == 39
 					|| englishAlphabetAndWhiteSpace.test(key)) {
 				return true;

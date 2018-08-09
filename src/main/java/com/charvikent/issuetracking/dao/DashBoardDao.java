@@ -657,7 +657,7 @@ public Object getLastloginTime() {
 	User objuserBean = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String id=String.valueOf(objuserBean.getId());
 	
-	String hql ="select logintime from kpuserslogs where sessionname='login' and userid=:uid order by logintime desc limit 1,1 ";
+	String hql ="select logintime from kpuserslogs where sessionname='login' and userid=:uid order by logintime desc limit 1,2 ";
 	@SuppressWarnings("unchecked")
 	List<UserLogs> rows = (List<UserLogs>) em.createNativeQuery(hql).setParameter("uid",id).getResultList();
 	 if(rows.size()>0)
@@ -667,7 +667,7 @@ public Object getLastloginTime() {
 	
 	 else
 		 
-	return "";
+		 return "";
 }
 
 

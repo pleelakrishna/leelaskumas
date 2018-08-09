@@ -77,11 +77,13 @@
 
 <script src="${baseurl }/assets/js/amcharts.js"></script>
 <script src="${baseurl }/assets/js/pie.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
 <script src="${baseurl }/assets/js/light.js"></script>
 
 
 <script src="${baseurl }/assets/js/export.min.js"></script>
 <link type="text/css" rel="stylesheet" href="${baseurl }/assets/css/export.css">
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 
 
 <style type="text/css">
@@ -242,7 +244,10 @@ color: inherit !important;
 .dropdown:hover .dropdown-content {
     display: block;
 }
-
+table.dataTable tfoot th, table.dataTable tfoot td {
+    padding: 10px 18px 6px 18px;
+    border-top: 1px solid #ccc !important; 
+}
 
   	.table1{
 		border:solid 1px;
@@ -256,6 +261,57 @@ color: inherit !important;
 	#passwordErrormsg {
 		text-align:center;
 	}
+	#return-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+    width: 50px;
+    height: 50px;
+    display: block;
+    text-decoration: none;
+    -webkit-border-radius: 35px;
+    -moz-border-radius: 35px;
+    border-radius: 35px;
+    display: none;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+#return-to-top i {
+    color: #fff;
+    margin: 0;
+    position: relative;
+    left: 16px;
+    top: 13px;
+    font-size: 19px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+#return-to-top:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+#return-to-top:hover i {
+    color: #fff;
+    top: 5px;
+}
+@media only screen and (max-width: 640px) and (min-width: 320px) {
+#page-heading h1 {
+    margin: 0;
+    padding: 16px 1px 0px 20px;
+    float: left;
+    line-height: 25px;
+    font-weight: 300;
+    font-size: 27px;
+    margin-bottom: 3px;
+}
+}
 </style>
 <script type="text/javascript">
 	var isClick = 'No';

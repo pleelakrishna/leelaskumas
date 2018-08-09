@@ -519,7 +519,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Created Time</th><th>Task Status</th><th>Task Deadline</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody><tfoot><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Created Time</th><th>Task Status</th><th>Task Deadline</th><th>Notifications Frequency</th><td></td></tfoot></table>';
+			+ '<thead><tr><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Description</th><th>Priority</th><th>Created Time</th><th>Task Status</th><th>Task Deadline</th><th>Notifications Frequency</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody><tfoot><th>Task No</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Created Time</th><th>Task Status</th><th>Task Deadline</th><th>Notifications Frequency</th><td></td></tfoot></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -564,6 +564,7 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
 			+ "<td title='"+orderObj.assignby+"'>"+ orderObj.assignby + "</td>"
 			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
+			+ "<td title='"+orderObj.description+"'>"+ orderObj.description + "</td>"
 			+ "<td title='"+orderObj.severity+"'>"+ orderObj.severity + "</td>"
 			+ "<td title='"+orderObj.strcreatedTime+"'>"+ orderObj.strcreatedTime + "</td>"
 			+ "<td title='"+orderObj.kstatus+"'>"+ orderObj.kstatus + "</td>"

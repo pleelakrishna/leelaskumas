@@ -8,7 +8,7 @@
 <link  href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
 <style>
 .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
-    border: 1px solid #f1f1f1;
+    border: 1px solid #ccc;
     width: 155px;
 }
 
@@ -173,9 +173,9 @@ margin-right:8px;
                             <tbody>
                                 <tr>
                                     <th><a href="#stayhere" id="reporter" class="openinput">Assigned by</a></th>
-                                    <th><a href="#" id="assigned" class="openinput">Assigned to</a></th>
-                                    <th><a href="#" id="prior" class="openinput">Priority</a></th>
-                                    <th><a href="#" id="view" class="openinput">Status by</a></th>
+                                    <th><a href="#stayhere" id="assigned" class="openinput">Assigned to</a></th>
+                                    <th><a href="#stayhere" id="prior" class="openinput">Priority</a></th>
+                                    <th><a href="#stayhere" id="view" class="openinput">Status by</a></th>
                                 </tr>
                                 <tr>
                                     <td><span class="reporter_text">Any</span>
@@ -226,10 +226,10 @@ margin-right:8px;
                                    
                                 </tr>
                                 <tr>
-                                    <th><a href="#" id="cate" class="openinput">Category</a></th>
-                                    <th><a href="#" id="hide" class="openinput">Department</a></th>
-                                    <th colspan=""><a href="#" id="filt" class="openinput">Filter by Date Submitted</a></th>
-                                    <th colspan=""><a href="#" id="filter" class="openinput">Filter by last updated Date</a></th>
+                                    <th><a href="#stayhere" id="cate" class="openinput">Category</a></th>
+                                    <th><a href="#stayhere" id="hide" class="openinput">Department</a></th>
+                                    <th colspan=""><a href="#stayhere" id="filt" class="openinput">Filter by Date Submitted</a></th>
+                                    <th colspan=""><a href="#stayhere" id="filter" class="openinput">Filter by last updated Date</a></th>
                                 </tr>
                                 <tr>
                                     <td><span class="cate_text">Any</span>
@@ -251,12 +251,12 @@ margin-right:8px;
                                     </td>
                                    
                                     <td colspan=""><span class="filt_text">Any</span>
-                                        <input name="dateFrom" id="dateFrom" type="text" class="form-control dateFrom dispnone filt_input" placeholder="select from date"/>
+                                        <input name="dateFrom" id="dateFrom" type="text" style="margin-bottom:5px;" class="form-control dateFrom dispnone filt_input" placeholder="select from date"/>
                                          <input name="sdateFrom" id="sdateFrom" type="text" class="form-control dateFrom dispnone filt_input" placeholder="select to date"/>
                                     </td>
                                     <td colspan=""><span class="filter_text">Any</span>
                                        
-                                       <input name="dateTo" id="dateTo" type="text" class="form-control dateTo dispnone filter_input"  placeholder="select from date"/>
+                                       <input name="dateTo" id="dateTo" type="text" style="margin-bottom:5px;" class="form-control dateTo dispnone filter_input"  placeholder="select from date"/>
                                         <input name="udateTo" id="udateTo" type="text" class="form-control dateTo dispnone filter_input"  placeholder="select to date"/>
                                     </td>
                                 </tr>
@@ -662,7 +662,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Task No</th><th>Department</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Priority</th><th>Created Time</th><th>Task Status</th><th>Task DeadLine</th><th>Notifications Frequency</th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Task No</th><th>Department</th><th>Category</th><th>Assigned To</th><th>Assigned By</th><th>Task Subject</th><th>Description</th><th>Priority</th><th>Created Time</th><th>Task Status</th><th>Task DeadLine</th><th>Notifications Frequency</th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	
@@ -707,6 +707,7 @@ function displayTable(listOrders) {
 			+ "<td title='"+orderObj.assignto+"'>"+ orderObj.assignto + "</td>"
 			+ "<td title='"+orderObj.assignby+"'>"+ orderObj.assignby + "</td>"
 			+ "<td title='"+orderObj.subject+"'>"+ orderObj.subject + "</td>"
+			+ "<td title='"+orderObj.description+"'>"+ orderObj.description + "</td>"
 			+ "<td title='"+orderObj.severity+"'>"+ orderObj.severity + "</td>"
 			+ "<td title='"+orderObj.strcreatedTime+"'>"+ orderObj.strcreatedTime + "</td>"
 			+ "<td title='"+orderObj.kstatus+"'>"+ orderObj.kstatus + "</td>"

@@ -506,7 +506,7 @@ public Set<ReportIssue> getTasksBydepartmentReopen(String deptname) {
 
 
 
-public Object getCategoryCountsForAll() {
+public  Map<String,String> getCategoryCountsForAll() {
 	return dashBoardDao.getCategoriesCounts();
 }
 
@@ -528,11 +528,11 @@ public Object getCategoryCountsForReopen(){
 }
 
 
-public Object getCategoryCountsForClosed() {
+public Map<String,String> getCategoryCountsForClosed() {
 	return dashBoardDao.getCategoryCountsForClosed();
 }
 
-public Object getCategoryCountsForPending() {
+public Map<String,String> getCategoryCountsForPending() {
 	return dashBoardDao.getCategoryCountsForPending();
 }
 

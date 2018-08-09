@@ -1,7 +1,3 @@
-
-
-
-
 <style>
 .btn-toolbar {
 	margin-top:7px;
@@ -29,8 +25,17 @@ text-align:left;}
 	line-height: 0.8;
 	border-radius: 10px;
 }
+@media only screen and (max-width: 640px) and (min-width: 320px) {
+ .amcharts-graph-column-element
+{
+fixedColumnWidth:100px;
+} 
 
-
+}
+ .amcharts-graph-column-element
+{
+fixedColumnWidth:80px;
+} 
 table:nth-of-type(1) .th {
   background-image: linear-gradient(
     to top right,
@@ -63,8 +68,20 @@ td {
 .pad1 {
 	text-align:center !important;
 }
+label {
+font-size:15px;}
 .charts {
 padding-top:10px;}
+.amcharts-chart-div svg
+{
+width: auto !important;
+min-width: 900px !important;
+overflow: scroll;
+}
+
+.slice1 .amcharts-pie-slice {
+  fill: #f00;
+}
 </style>
 
 
@@ -88,20 +105,38 @@ padding-top:10px;}
 			<!-- /.breadcrumb -->
 		</div>
 		<security:authorize access="hasRole('ROLE_ADMIN')">
-		
-		<div class="charts">
+		<div class="container" align="center"><br>
+		<input type="radio" class="" name="scharts"  value="1" id="departmentId" checked>   <label for="departmentId">DepartmentWise</label> 
+  		&nbsp; &nbsp; <input type="radio" name="scharts"  value="0" id="categoryId">  <label for="categoryId">CategoryWise</label> <br>
+  		</div>
+		<div class="charts" id="deptcharts">
 			<div class="col-md-6">
-				<h3 align="center">Closed</h3>
+				<p align="center">Closed Tasks</p>
 				<div id="chartdiv1"></div>
 			</div>
 			<div class="col-md-6">
-				<h3  align="center">Pending</h3>
+				<p  align="center">Pending Tasks</p>
 				<div id="chartdiv0"></div>
 			</div>
-			<div class="col-md-3"></div>
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<p  align="center">Open Tasks</p>
+				<div id="chartdiv"  class="table-responsive"></div>
+			</div><div class="clearfix"></div>
+		</div>
+		<div class="charts table-responsive" id="catecharts">
 			<div class="col-md-6">
-				<h3  align="center">All Tasks</h3>
-				<div id="chartdiv"></div>
+				<p align="center">Closed Tasks</p>
+				<div id="chartdiv1c"></div>
+			</div>
+			<div class="col-md-6">
+				<p  align="center">Pending Tasks</p>
+				<div id="chartdiv0c"></div>
+			</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<p  align="center">Open Tasks</p>
+				<div id="chartdivc" class="table-responsive"></div>
 			</div><div class="clearfix"></div>
 		</div>
 		</security:authorize>
@@ -647,6 +682,8 @@ padding-top:10px;}
 	        window.location = window.location + '#loaded';
 	        window.location.reload();
 	    }
+	    
+	    $("#catecharts").hide();
 	}); 
 
 	$(".dashBoard").addClass("active");
@@ -850,6 +887,12 @@ padding-top:10px;}
 	var chartDeptClosed = ${chartDeptClosed};
 	var chartDeptPending = ${chartDeptPending};
 	
+	var barChartDeptAllCounts = ${barChartDeptAllCounts};
+	var barChartDeptClosed = ${barChartDeptClosed};
+	var barChartDeptPending = ${barChartDeptPending};
+	
+	
+	
 	
 	
 	
@@ -900,7 +943,7 @@ padding-top:10px;}
 		
 	
 	var cylinderstatuscount =[{"cylinderstatus":"Empty","count":"1676"},{"cylinderstatus":"FillingStation","count":"265"},{"cylinderstatus":"Filled","count":"107"},{"cylinderstatus":"QualityCheck","count":"103"},{"cylinderstatus":"Truck","count":"605"},{"cylinderstatus":"Delivered","count":"90"},{"cylinderstatus":"Returned","count":34},{"cylinderstatus":"MissedCylinder","count":1}];
-	var chart = AmCharts.makeChart( "chartdiv", {
+	/* var chart = AmCharts.makeChart( "chartdiv", {
 		  "type": "pie",
 		  "theme": "light",
 		  "dataProvider":chartDeptAllCounts,
@@ -913,38 +956,225 @@ padding-top:10px;}
 		  "export": {
 		    "enabled": true
 		  }
-		} );
+		} ); */
+		
+		AmCharts.addInitHandler(function(chart) {
+			  // check if there are graphs with autoColor: true set
+			  for(var i = 0; i < chart.graphs.length; i++) {
+			    var graph = chart.graphs[i];
+			    if (graph.autoColor !== true)
+			      continue;
+			    var colorKey = "autoColor-"+i;
+			    graph.lineColorField = colorKey;
+			    graph.fillColorsField = colorKey;
+			    for(var x = 0; x < chart.dataProvider.length; x++) {
+			      var color = chart.colors[x]
+			      chart.dataProvider[x][colorKey] = color;
+			    }
+			  }
+			  
+			}, ["serial"]);
+		
+		
+		var chart = AmCharts.makeChart( "chartdiv", {
+			  "type": "serial",
+			  "theme": "light",
+			  "dataProvider":chartDeptAllCounts,
+			  "valueAxes": [{
+			        "position": "left",
+			        "axisAlpha":0,
+			        "gridAlpha":0
+			    }],
+			    "graphs": [{
+			        "balloonText": "[[category]]: <b>[[value]]</b>",
+			        "fillAlphas": 0.85,
+			        "lineAlpha": 0.1,
+			        "type": "column",
+			        "topRadius":1,
+			        "valueField": "number",
+			        "autoColor": true
+			    }],
+			    "depth3D": 40,
+				"angle": 30,
+			    "chartCursor": {
+			        "categoryBalloonEnabled": false,
+			        "cursorAlpha": 0,
+			        "zoomable": false
+			    },
+			    "categoryField": "status",
+			    "categoryAxis": {
+			        "gridPosition": "start",
+			        "axisAlpha":0,
+			        "gridAlpha":0,
+			        "labelRotation":50
+
+			    },
+			    "export": {
+			    	"enabled": true
+			     }
+
+			}, 0);
 	
-	var cylinderstatuscount =[{"cylinderstatus":"Empty","count":1676},{"cylinderstatus":"FillingStation","count":265},{"cylinderstatus":"Filled","count":107},{"cylinderstatus":"QualityCheck","count":103},{"cylinderstatus":"Truck","count":605},{"cylinderstatus":"Delivered","count":90},{"cylinderstatus":"Returned","count":34},{"cylinderstatus":"MissedCylinder","count":1}];
 	var chart = AmCharts.makeChart( "chartdiv0", {
 		  "type": "pie",
 		  "theme": "light",
+// 		  "labelsEnabled": false,
+ 		  "labelRadius": -35,
+		  "autoMargins": false,
+		  "marginTop": 0,
+		  "marginBottom": 0,
+		  "marginLeft": 0,
+		  "marginRight": 0,
+		  "pullOutRadius": 0,
+		  
+		  
 		  "dataProvider":chartDeptPending,
 		  "valueField": "number",
 		  "titleField": "status",
 		  "outlineAlpha": 0.4,
 		  "depth3D": 15,
 		  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-		  "angle": 30,
+		  "angle": 50,
 		  "export": {
 		    "enabled": true
 		  }
-		} );var cylinderstatuscount =[{"cylinderstatus":"Empty","count":1676},{"cylinderstatus":"FillingStation","count":265},{"cylinderstatus":"Filled","count":107},{"cylinderstatus":"QualityCheck","count":103},{"cylinderstatus":"Truck","count":605},{"cylinderstatus":"Delivered","count":90},{"cylinderstatus":"Returned","count":34},{"cylinderstatus":"MissedCylinder","count":1}];
+		} );
 		var chart = AmCharts.makeChart( "chartdiv1", {
 			  "type": "pie",
 			  "theme": "light",
-			  "dataProvider":chartDeptClosed,
+			  "labelRadius": -35,
+			  "autoMargins": false,
+			  "marginTop": 0,
+			  "marginBottom": 0,
+			  "marginLeft": 0,
+			  "marginRight": 0,
+			  "pullOutRadius": 0,
+			  "dataProvider":chartDeptPending,
 			  "valueField": "number",
 			  "titleField": "status",
 			  "outlineAlpha": 0.4,
 			  "depth3D": 15,
+			 " legend": {
+				"enabled": true,
+				"align": "center",
+				"markerType": "circle"
+			},
 			  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-			  "angle": 30,
+			  "angle": 50,
 			  "export": {
 			    "enabled": true
 			  }
 			} );
 	
+		
+		/* category charts codes */
+		
+		
+		
 	
+	
+		
+		var chart = AmCharts.makeChart( "chartdivc", {
+			  "theme": "light",
+			  "type": "serial",
+			  "dataProvider":barChartDeptAllCounts,
+			  "valueAxes": [{
+			        "position": "left",
+			        "axisAlpha":0,
+			        "gridAlpha":0
+			    }],
+			    "graphs": [{
+			        "balloonText": "[[category]]: <b>[[value]]</b>",
+			        "fillAlphas": 0.85,
+			        "lineAlpha": 0.1,
+			        "type": "column",
+			        "topRadius":1,
+			        "valueField": "number",
+			        "autoColor": true
+			    }],
+			    "depth3D": 40,
+				"angle": 30,
+			    "chartCursor": {
+			        "categoryBalloonEnabled": false,
+			        "cursorAlpha": 0,
+			        "zoomable": false
+			    },
+			    "categoryField": "status",
+			    "categoryAxis": {
+			        "gridPosition": "start",
+			        "axisAlpha":0,
+			        "gridAlpha":0,
+			        "labelRotation":50
+
+			    },
+			    "export": {
+			    	"enabled": true
+			     }
+
+			}, 0);
+	var chart = AmCharts.makeChart( "chartdiv0c", {
+		  "type": "pie",
+		  "theme": "light",
+		  "labelRadius": -45,
+		  "labelRotation":50,
+		  "autoMargins": false,
+		  "marginTop": 0,
+		  "marginBottom": 0,
+		  "marginLeft": 0,
+		  "marginRight": 0,
+		  "pullOutRadius": 0,
+		  "dataProvider":barChartDeptPending,
+		  "valueField": "number",
+		  "titleField": "status",
+		  "outlineAlpha": 0.4,
+		  "depth3D": 15,
+		  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+		  "angle": 50,
+		  "export": {
+		    "enabled": true
+		  }
+		} );
+		var chart = AmCharts.makeChart( "chartdiv1c", {
+			  "type": "pie",	
+			  "theme": "light",
+			  "labelRadius": -45,
+			  "autoMargins": false,
+			  "marginTop": 0,
+			  "marginBottom": 0,
+			  "marginLeft": 0,
+			  "marginRight": 0,
+			  "pullOutRadius": 0,
+			  "dataProvider":barChartDeptClosed,
+			  "valueField": "number",
+			  "titleField": "status",
+			  "outlineAlpha": 0.4,
+			  "depth3D": 15,
+			  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+			  "angle": 50,
+			  "export": {
+			    "enabled": true
+			  }
+			} );
+	
+		
+		
+		 $('input[name=scharts]').on('change', function(e) {
+			 
+			 var val=$('[name="scharts"]:checked').val();
+		    
+		    if(val ==1)
+		    	{
+		    	$("#catecharts").hide();
+		    	$("#deptcharts").show();
+		    	
+		    	
+		    	}
+		    else
+		    	{
+		    	$("#catecharts").show();
+		    	$("#deptcharts").hide();
+		    	
+		    	}
+		}); 
 
 </script>
