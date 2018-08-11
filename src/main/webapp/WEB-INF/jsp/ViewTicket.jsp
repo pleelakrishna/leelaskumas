@@ -156,7 +156,7 @@ th {
 			
 </div>
 
-
+<input type="submit" value="print" onClick="window.print()"/> 
 </div>
 			<!-- /.page-content -->
 		</div>

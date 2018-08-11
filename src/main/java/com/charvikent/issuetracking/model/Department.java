@@ -16,7 +16,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 /**
  * @author KLS
- *
+ *department code
  */
 /**
  * @author KLS
