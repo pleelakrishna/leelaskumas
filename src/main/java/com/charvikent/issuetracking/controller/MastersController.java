@@ -109,6 +109,8 @@ public class MastersController {
 				{
 					dept.setStatus("1");
 					mastersService.saveDept(dept);
+					
+					mastersService.saveBranch(dept);
 
 					redir.addFlashAttribute("msg", "Record Inserted Successfully");
 					redir.addFlashAttribute("cssMsg", "success");
@@ -129,6 +131,8 @@ public class MastersController {
 				if(id == dummyId || deptBean == null)
 				{
 					mastersService.updateDept(dept);
+					mastersService.updateBranch(dept);
+					
 					redir.addFlashAttribute("msg", "Record Updated Successfully");
 					redir.addFlashAttribute("cssMsg", "warning");
 					
@@ -166,6 +170,7 @@ public class MastersController {
 		try{
 			if(objdept.getId() != 0){
  				delete = mastersService.deleteDepartment(objdept.getId(),objdept.getStatus());
+ 				mastersService.deletebranch(objdept.getId(),objdept.getStatus());
  				if(delete){
  					jsonObj.put("message", "deleted");
  				}else{

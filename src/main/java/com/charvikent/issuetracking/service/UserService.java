@@ -170,6 +170,8 @@ public class UserService {
 	}
 
 	public boolean deleteUser(Integer id,String enabled) {
+		userDao.deleteKumarEmployee(id,enabled);
+		userDao.deleteKumarlogin(id,enabled);
 
 		return userDao.deleteUser(id,enabled);
 
@@ -188,7 +190,9 @@ public class UserService {
 	}
 
 	public void updatePassword(User user) {
-
+		userDao.changePasswordKumarLogin(user);
+		userDao.changePasswordkumarEmployee(user);
+		
 		userDao.updatePassword(user);
 
 	}
@@ -314,6 +318,33 @@ public class UserService {
 		// TODO Auto-generated method stub
 		return userDao.getEmployessForChart();
 	}
+
+	public void savekumarlogin(User user) {
+		// TODO Auto-generated method stub
+		
+		userDao.saveKumarLogin(user);
+		
+	}
+
+	public void savekumarEmployee(User user) {
+		// TODO Auto-generated method stub
+		userDao.saveKumarEmployeeLogin(user);
+		
+	}
+
+	public void editkumarEmployee(User user) {
+		// TODO Auto-generated method stub
+		userDao.editKumarEmployeeLogin(user);
+		
+	}
+
+	public void editkumarlogin(User user) {
+		// TODO Auto-generated method stub
+		userDao.updateKumarLogin(user);
+		
+	}
+
+	
 
 
 }

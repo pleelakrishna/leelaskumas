@@ -42,6 +42,8 @@ public class Department {
 	@Transient
 	private String  deptheadid;
 	
+	private String deptCode;
+	
 	
 	@Column
 	private String status;
@@ -55,6 +57,17 @@ public class Department {
 	@UpdateTimestamp
 	protected Date updatedTime ;
 	
+	
+	
+	
+
+	public String getDeptCode() {
+		return deptCode;
+	}
+
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
+	}
 
 	public String getStatus() {
 		return status;
@@ -139,6 +152,8 @@ public class Department {
 	public void setKpOrgId(String kpOrgId) {
 		this.kpOrgId = kpOrgId;
 	}
+	
+	
 
 	@Override
 	public String toString() {
