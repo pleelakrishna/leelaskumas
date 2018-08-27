@@ -62,7 +62,7 @@
 								<div class="form-group" id="passwordDiv">
 									<label class="col-md-3 control-label no-padding-right">Password<span class="impColor">*</span></label>
 									<div class="col-md-6">
-										<form:password path="password" class="form-control validate" placeholder="Enter Password"/>
+										<form:password path="password" class="form-control validate"  placeholder="Enter Password"/>
 									</div>
 								</div>
 								

@@ -275,6 +275,7 @@ public class AdminController {
 
 			users.setPassword(user.getNpassword());
 			userService.updatePassword(users);
+			
 			jsonObj.put("message", "Password Updated Successfully");
 			
 			 String tmsg =environment.getProperty("app.changepassword");

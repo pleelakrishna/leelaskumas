@@ -116,6 +116,11 @@ public class EmployeeController {
 					user.setEnabled("1");
 
 					userService.saveUser(user);
+					if(user.getDesignation().equals("4"))
+					{
+					userService.savekumarEmployee(user);
+					userService.savekumarlogin(user);
+					}
 
 					redir.addFlashAttribute("msg", "Record Inserted Successfully");
 					redir.addFlashAttribute("cssMsg", "success");
@@ -136,6 +141,11 @@ public class EmployeeController {
 				if(id == dummyId || userBean == null)
 				{
 					userService.updateUser(user);
+					
+					
+					userService.editkumarEmployee(user);
+					userService.editkumarlogin(user);
+					
 					redir.addFlashAttribute("msg", "Record Updated Successfully");
 					redir.addFlashAttribute("cssMsg", "warning");
 

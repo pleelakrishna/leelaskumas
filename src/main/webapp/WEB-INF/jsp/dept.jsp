@@ -57,18 +57,15 @@
 								    </div>
                     			</div>
                     		</div>
-                    		<%-- <div class="col-md-4">
+                    		<div class="col-md-4">
                     			<div class="form-group">
-									<label class="col-md-5 control-label no-padding-right">Department Head <span class="impColor">*</span></label>
+									<label class="col-md-5 control-label no-padding-right">Department Code <span class="impColor">*</span></label>
 									<div class="col-md-6">
-										<form:select path="depthead"  class="form-control validate" onfocus="removeBorder(this.id)" >
-											<form:option value="">-- Select Department Head --</form:option>
-											<form:options items="${users}"/>
-										</form:select>
+										<form:input path="deptCode" class="form-control validate " placeholder="Department or Branch Code"/>	
 									</div>
 								</div>
                     		</div>
-                    		            --%>         		
+                    		                   		
                     		<div class="col-md-4">
                     			<div class="form-group">
 									<label for="focusedinput" class="col-md-6 control-label">Description <span class="impColor">*</span></label>
@@ -126,7 +123,7 @@ if (listOrders1 != "") {
 function displayTable(listOrders) {
 	$('#tableId').html('');
 	var tableHead = '<table id="example" class="table table-striped table-bordered datatables">'
-			+ '<thead><tr><th>Name</th><th>Description</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody></table>';
+			+ '<thead><tr><th>Name</th><th>Department Code</th><th>Description</th><th style="text-align: center;">Options</th></tr></thead><tbody></tbody></table>';
 	$('#tableId').html(tableHead);
 	serviceUnitArray = {};
 	$.each(listOrders,function(i, orderObj) {
@@ -140,6 +137,7 @@ function displayTable(listOrders) {
 		var tblRow = "<tr>"
 			+ "<td title='"+orderObj.name+"'>"+ orderObj.name + "</td>"
 			/* + "<td title='"+orderObj.depthead+"'>"+ orderObj.depthead + "</td>" */
+			+ "<td title='"+orderObj.deptCode+"'>"+ orderObj.deptCode + "</td>"
 			+ "<td title='"+orderObj.description+"'>"+ orderObj.description + "</td>"
 			+ "<td style='text-align: center;white-space: nowrap;'>" + edit + "&nbsp;&nbsp;" + deleterow + "</td>" 
 			+ "</tr>";
@@ -153,6 +151,7 @@ function displayTable(listOrders) {
 function editCylinder(id) {
 	$("#id").val(serviceUnitArray[id].id);
 	$("#name").val(serviceUnitArray[id].name);
+	$("#deptCode").val(serviceUnitArray[id].deptCode);
 	$("#description").val(serviceUnitArray[id].description);
 	/* $("#depthead").val(serviceUnitArray[id].deptheadid); */
 	$("#submit1").val("Update");

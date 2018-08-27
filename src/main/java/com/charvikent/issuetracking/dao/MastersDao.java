@@ -1,6 +1,10 @@
 package com.charvikent.issuetracking.dao;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -36,7 +40,7 @@ public class MastersDao {
 		
        List<Department> list=new ArrayList<Department>();
 		
-		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,d.description,d.status ,d.kp_org_id from kpdepartment d  where d.status='1'").getResultList();
+		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,d.description,d.status ,d.kp_org_id,d.dept_code from kpdepartment d  where d.status='1' order by updated_time desc  ").getResultList();
 		for(Object[] row: rows)
 		{
 		Department dept =new Department();
@@ -45,6 +49,7 @@ public class MastersDao {
 		dept.setDescription((String)row[2]);
 		dept.setStatus((String)row[3]);
 		dept.setKpOrgId((String)row[4]);
+		dept.setDeptCode((String)row[5]);
 		
 		list.add(dept);
 		}
@@ -58,7 +63,7 @@ public class MastersDao {
 	 {
        List<Department> list=new ArrayList<Department>();
 		
-		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,d.description,d.status from kpdepartment d where  d.status='0'").getResultList();
+		List <Object[]> rows=entityManager.createNativeQuery("select d.id,d.name,d.description,d.status ,d.kp_org_id,d.dept_code from kpdepartment d where  d.status='0'").getResultList();
 		for(Object[] row: rows)
 		{
 		 
@@ -68,6 +73,8 @@ public class MastersDao {
 		dept.setName((String)row[1]);
 		dept.setDescription((String)row[2]);
 		dept.setStatus((String)row[3]);
+		dept.setKpOrgId((String)row[4]);
+		dept.setDeptCode((String)row[5]);
 		list.add(dept);
 		}
 		return list;
@@ -99,7 +106,7 @@ public class MastersDao {
 	public void updateDept(Department dept) {
 		Department ud =entityManager.find(Department.class,dept.getId());
 		ud.setName(dept.getName());
-		//ud.setDepthead(dept.getDepthead());
+		ud.setDeptCode(dept.getDeptCode());
 		ud.setDescription(dept.getDescription());;
 		
 		entityManager.merge(ud);
@@ -137,5 +144,61 @@ public class MastersDao {
 	
 	
 	}
+
+	public void saveBranch(Department dept) {
+		
+		// TODO Auto-generated method stub
+		
+
+		//String timestamp = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(Calendar.getInstance().getTime());
+		
+		java.sql.Timestamp Date = 
+				new java.sql.Timestamp(new Date().getTime()); 
+		
+		
+		
+		 
+		 
+	String hql ="INSERT INTO kumar_branch (id,branch_cr_time,branchname,branchcode,status) VALUES ( "+dept.getId()+" , '"+Date+" ' ,'"+dept.getName()+" ','"+dept.getDeptCode()+" ','"+dept.getStatus()+" ') ";
+	jdbcTemplate.update(hql);
+		
+		
+		
+	
+		
+	}
+	
+	
+	public void updateBranch(Department dept) {
+		//String timestamp = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(Calendar.getInstance().getTime());
+		
+		java.sql.Timestamp Date = 
+				new java.sql.Timestamp(new Date().getTime()); 
+		
+			String hql ="update kumar_branch set branchname='"+dept.getName()+"' , branch_up_time = '"+Date+"' ,branchcode = '"+dept.getDeptCode()+"' where id="+dept.getId()+" ";  
+			
+			jdbcTemplate.update(hql);
+			
+		
+		
+		
+		
+		
+	}
+
+	public void deletebranch(Integer id, String status) {
+		//String timestamp = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(Calendar.getInstance().getTime());
+		
+		java.sql.Timestamp Date = 
+				new java.sql.Timestamp(new Date().getTime()); 
+			
+		
+		String hql ="update kumar_branch set  branch_up_time = '"+Date+"' ,status = '"+status+"' where id="+id+" ";  
+		
+		jdbcTemplate.update(hql);
+		
+		
+	}
+		
 	
 }

@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,6 +33,7 @@ public class MastersService {
 	@Autowired
 	HttpSession session;
 	
+	@Autowired JdbcTemplate jdbcTemplate;
 	
 	public List<Department> deptList()
 	{
@@ -163,6 +165,31 @@ public class MastersService {
 	public List<Department> getAllInActiveDepartments() {
 		// TODO Auto-generated method stub
 		return mastersDao.getAllInActiveDepartments();
+	}
+
+
+
+	public void saveBranch(Department dept) {
+		// TODO Auto-generated method stub
+		
+	 mastersDao.saveBranch(dept);
+		
+	}
+
+
+
+	public void updateBranch(Department dept) {
+		// TODO Auto-generated method stub
+		 mastersDao.updateBranch(dept);
+		
+	}
+
+
+
+	public void deletebranch(Integer id, String status) {
+		// TODO Auto-generated method stub
+		mastersDao.deletebranch(id,status);
+		
 	}
 	
 	

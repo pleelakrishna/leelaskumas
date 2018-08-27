@@ -3,6 +3,7 @@ package com.charvikent.issuetracking.dao;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -53,7 +54,7 @@ public class UserDao {
 
 		try {
 			List<Object[]> rows = em.createQuery("select  u.id,u.username,u.mobilenumber,u.email,u.reportto,u2.username,CASE WHEN u.enabled IN ('0') THEN 'Deactive' WHEN u.enabled IN ('1') THEN 'Active' ELSE '-----' END AS enabled,dep.name,d.name,"
-					+ "u.firstname,u.lastname,u.reportto,u.designation ,u.department , u.enabled as status,u.password,u.kpOrgId ,u.createdTime from User u,User u2,Designation d,Department dep where u.enabled='1' and u.department=dep.id and u.designation= d.id and  u.reportto=u2.id order by u.createdTime").getResultList();
+					+ "u.firstname,u.lastname,u.reportto,u.designation ,u.department , u.enabled as status,u.password,u.kpOrgId ,u.createdTime from User u,User u2,Designation d,Department dep where u.enabled='1' and u.department=dep.id and u.designation= d.id and  u.reportto=u2.id order by u.updatedTime desc").getResultList();
 			for (Object[] row : rows) {
 				User users =new User();
 
@@ -93,7 +94,7 @@ public class UserDao {
 	public List<Department> getDepartmentslist()
 	{
 
-		return em.createQuery("select department from Department department").getResultList();
+		return em.createQuery("select department from Department department where status ='1' ").getResultList();
 
 	}
 
@@ -443,8 +444,100 @@ public class UserDao {
 		
 	}
 
+	public void saveKumarLogin(User user) {
+		java.sql.Timestamp Date = 
+				new java.sql.Timestamp(new Date().getTime()); 
+		String hql ="INSERT INTO login (created_time,userName,password,roleId,status,branchId,empId) VALUES ( '"+Date+"' , '"+user.getUsername()+"' ,'"+user.getPassword()+"','4','1','"+user.getDepartment()+"','"+user.getId()+"') ";
+		
+		System.out.println(hql);
+		jdbcTemplate.update(hql);
+			
+		
+	}
+	
+	
+	public void saveKumarEmployeeLogin(User user) {
+		
+		
+		String name = user.getFirstname()+" "+user.getLastname();
+		
+		java.sql.Timestamp Date = 
+				new java.sql.Timestamp(new Date().getTime()); 
+		String hql ="INSERT INTO kumar_employee (id,created_time,name,email,userName,password,roleId,status,branch_id,phone_number) VALUES ( "+user.getId()+" ,'"+Date+"' , '"+name+"' ,'"+user.getEmail()+"' ,'"+user.getUsername()+"' ,'"+user.getPassword()+"','4','1','"+user.getDepartment()+"','"+user.getMobilenumber()+"') ";
+		
+		System.out.println(hql);
+		
+		jdbcTemplate.update(hql);
+			
+		
+	}
 
 
+	
+public void editKumarEmployeeLogin(User user) {
+		
+		
+		String name = user.getFirstname()+" "+user.getLastname();
+		
+		java.sql.Timestamp Date = 
+				new java.sql.Timestamp(new Date().getTime()); 
+		//String hql ="INSERT INTO kumar_employee (id,created_time,name,email,userName,password,roleId,status,branch_id,phone_number) VALUES ( "+user.getId()+" ,'"+Date+"' , '"+name+"' ,'"+user.getEmail()+"' ,'"+user.getUsername()+"' ,'"+user.getPassword()+"','4','1','"+user.getDepartment()+"','"+user.getMobilenumber()+"') ";
+		
+		String  hql ="update kumar_employee set name ='"+name+"',email ='"+user.getEmail()+"',roleId='4',branch_id='"+user.getDepartment()+"',phone_number='"+user.getMobilenumber()+"',roleId='"+user.getDesignation()+"' where id= "+user.getId();  
+		
+		
+		System.out.println(hql);
+		
+		jdbcTemplate.update(hql);
+			
+		
+	}
+
+public void updateKumarLogin(User user) {
+	java.sql.Timestamp Date = 
+			new java.sql.Timestamp(new Date().getTime()); 
+	String hql ="update login set roleId='"+user.getDesignation()+"',branchId='"+user.getDepartment()+"' where empId ="+user.getId();
+	
+	System.out.println(hql);
+	jdbcTemplate.update(hql);
+		
+	
+}
+
+public void deleteKumarEmployee(Integer id, String enabled) {
+	String  hql ="update kumar_employee  set status='"+enabled+"' where id ="+id;
+	
+	
+	System.out.println(hql);
+	
+	jdbcTemplate.update(hql);
+	
+}
+
+public void deleteKumarlogin(Integer id, String enabled) {
+String hql ="update login set status='"+enabled+"' where empId ="+id;
+	
+	System.out.println(hql);
+	jdbcTemplate.update(hql);
+		
+	
+}
+
+public void changePasswordKumarLogin(User user) {
+String hql ="update login set password='"+user.getPassword()+"' where empId ="+user.getId();
+	
+	System.out.println(hql);
+	jdbcTemplate.update(hql);
+	
+}
+
+public void changePasswordkumarEmployee(User user) {
+String hql ="update kumar_employee set password='"+user.getPassword()+"' where id="+user.getId();
+	
+	System.out.println(hql);
+	jdbcTemplate.update(hql);
+	
+}
 
 
 }
