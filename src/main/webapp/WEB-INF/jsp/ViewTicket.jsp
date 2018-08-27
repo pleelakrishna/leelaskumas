@@ -56,7 +56,7 @@ th {
 
 <!-- Body starts here -->
 
-	<div class="main-content">
+	<div class="main-content" id="div_to_print">
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
 				<ul class="breadcrumb">
@@ -113,7 +113,7 @@ th {
 				</div>
 							</div>
 							<div align="center" style="margin-bottom:15px;" class="col-md-12">
-							<button onclick="goBack()" class="btn btn-primary"> <i class="fa fa-step-backward"></i> Back  </button></div>
+							<button onclick="goBack()"  id="pback" class="btn btn-primary"> <i class="fa fa-step-backward"></i> Back  </button></div>
 							</div>
 						
 				
@@ -156,7 +156,7 @@ th {
 			
 </div>
 
-<input type="submit" value="print" onClick="window.print()"/> 
+<center><input type="submit"  onclick="goPrint('#div_to_print')" id="printbb" class="btn btn-primary" style="margin-bottom:5px;"  value="print" /></center> 
 </div>
 			<!-- /.page-content -->
 		</div>
@@ -221,7 +221,9 @@ th {
 
 <!-- Body ends here -->
 
-	<link rel="stylesheet" type="text/css" href="http://charvikent.com/mantis/css/dropzone-4.3.0.min.css" />
+	
+	
+	<script type='text/javascript' src="${baseurl }/js/jquery.printThis.js" ></script>
 <script type="text/javascript">
 $("#pageName").text("View Task Details");
 $(".createTicketIssues").addClass("active");
@@ -234,6 +236,56 @@ $(".task").hide();
 function goBack() {
     window.history.go(-1);
 }
+function goPrint(elem) {
+	
+	
+	$("#printbb").hide();
+	$("#pback").hide();
+	$('.breadcrumb').hide();
+	
+	Popup($(elem).html());
+	
+	
+}
 
+function Popup(data){
+
+	var mywindow = window.open('','new div');
+
+    var is_chrome = Boolean(mywindow.chrome);
+    
+mywindow.document.write('<html><head><title>Task Details</title> <link rel="stylesheet" type="text/css" href="${baseurl }/assets/css/styles.css"></head><body>');
+mywindow.document.write(data);
+
+mywindow.document.write('</body></html>');
+mywindow.document.close(); // necessary for IE >= 10 and necessary before onload for chrome
+
+/* $(".printbtn").show();
+$(".noPrint").show();
+$("#printFooter").hide();
+ */
+ 
+ $("#printbb").show();
+	$("#pback").show();
+	$('.breadcrumb').show();
+	
+if (is_chrome) {
+    mywindow.onload = function() { // wait until all resources loaded 
+        mywindow.focus(); // necessary for IE >= 10
+        mywindow.print();  // change window to mywindow
+        mywindow.close();// change window to mywindow
+    };
+
+
+} else {
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10
+
+    mywindow.print();
+    mywindow.close();
+}
+
+
+}
 
 </script>

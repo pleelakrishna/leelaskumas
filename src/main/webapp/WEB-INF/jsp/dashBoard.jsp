@@ -1014,57 +1014,89 @@ overflow: scroll;
 			     }
 
 			}, 0);
-	
-	var chart = AmCharts.makeChart( "chartdiv0", {
-		  "type": "pie",
-		  "theme": "light",
-// 		  "labelsEnabled": false,
- 		  "labelRadius": -35,
-		  "autoMargins": false,
-		  "marginTop": 0,
-		  "marginBottom": 0,
-		  "marginLeft": 0,
-		  "marginRight": 0,
-		  "pullOutRadius": 0,
-		  
-		  
-		  "dataProvider":chartDeptPending,
-		  "valueField": "number",
-		  "titleField": "status",
-		  "outlineAlpha": 0.4,
-		  "depth3D": 15,
-		  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-		  "angle": 50,
-		  "export": {
-		    "enabled": true
-		  }
-		} );
-		var chart = AmCharts.makeChart( "chartdiv1", {
-			  "type": "pie",
+		
+		var chart = AmCharts.makeChart( "chartdiv0", {
+			  "type": "serial",
 			  "theme": "light",
-			  "labelRadius": -35,
-			  "autoMargins": false,
-			  "marginTop": 0,
-			  "marginBottom": 0,
-			  "marginLeft": 0,
-			  "marginRight": 0,
-			  "pullOutRadius": 0,
 			  "dataProvider":chartDeptPending,
-			  "valueField": "number",
-			  "titleField": "status",
-			  "outlineAlpha": 0.4,
-			  "depth3D": 15,
-			 " legend": {
-				"enabled": true,
-				"align": "center",
-				"markerType": "circle"
-			},
-			  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-			  "angle": 50,
-			  "export": {
-			    "enabled": true
-			  }
-			} );
+			  "valueAxes": [{
+			        "position": "left",
+			        "axisAlpha":0,
+			        "gridAlpha":0
+			    }],
+			    "graphs": [{
+			        "balloonText": "[[category]]: <b>[[value]]</b>",
+			        "fillAlphas": 0.85,
+			        "lineAlpha": 0.1,
+			        "type": "column",
+			        "topRadius":1,
+			        "valueField": "number",
+			        "autoColor": true
+			    }],
+			    "depth3D": 40,
+				"angle": 30,
+			    "chartCursor": {
+			        "categoryBalloonEnabled": false,
+			        "cursorAlpha": 0,
+			        "zoomable": false
+			    },
+			    "categoryField": "status",
+			    "categoryAxis": {
+			        "gridPosition": "start",
+			        "axisAlpha":0,
+			        "gridAlpha":0,
+			        "labelRotation":50
+
+			    },
+			    "export": {
+			    	"enabled": true
+			     }
+
+			}, 0);
+		
+		
+		var chart = AmCharts.makeChart( "chartdiv1", {
+			  "type": "serial",
+			  "theme": "light",
+			  "dataProvider":chartDeptPending,
+			  "valueAxes": [{
+			        "position": "left",
+			        "axisAlpha":0,
+			        "gridAlpha":0
+			    }],
+			    "graphs": [{
+			        "balloonText": "[[category]]: <b>[[value]]</b>",
+			        "fillAlphas": 0.85,
+			        "lineAlpha": 0.1,
+			        "type": "column",
+			        "topRadius":1,
+			        "valueField": "number",
+			        "autoColor": true
+			    }],
+			    "depth3D": 40,
+				"angle": 30,
+			    "chartCursor": {
+			        "categoryBalloonEnabled": false,
+			        "cursorAlpha": 0,
+			        "zoomable": false
+			    },
+			    "categoryField": "status",
+			    "categoryAxis": {
+			        "gridPosition": "start",
+			        "axisAlpha":0,
+			        "gridAlpha":0,
+			        "labelRotation":50
+
+			    },
+			    "export": {
+			    	"enabled": true
+			     }
+
+			}, 0);
+	
+	
+	
+		
 	
 		
 		/* category charts codes */
@@ -1112,49 +1144,92 @@ overflow: scroll;
 			     }
 
 			}, 0);
-	var chart = AmCharts.makeChart( "chartdiv0c", {
-		  "type": "pie",
-		  "theme": "light",
-		  "labelRadius": -45,
-		  "labelRotation":50,
-		  "autoMargins": false,
-		  "marginTop": 0,
-		  "marginBottom": 0,
-		  "marginLeft": 0,
-		  "marginRight": 0,
-		  "pullOutRadius": 0,
-		  "dataProvider":barChartDeptPending,
-		  "valueField": "number",
-		  "titleField": "status",
-		  "outlineAlpha": 0.4,
-		  "depth3D": 15,
-		  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-		  "angle": 50,
-		  "export": {
-		    "enabled": true
-		  }
-		} );
-		var chart = AmCharts.makeChart( "chartdiv1c", {
-			  "type": "pie",	
+		
+		
+		var chart = AmCharts.makeChart( "chartdiv0c", {
 			  "theme": "light",
-			  "labelRadius": -45,
-			  "autoMargins": false,
-			  "marginTop": 0,
-			  "marginBottom": 0,
-			  "marginLeft": 0,
-			  "marginRight": 0,
-			  "pullOutRadius": 0,
+			  "type": "serial",
+			  "dataProvider":barChartDeptPending,
+			  "valueAxes": [{
+			        "position": "left",
+			        "axisAlpha":0,
+			        "gridAlpha":0
+			    }],
+			    "graphs": [{
+			        "balloonText": "[[category]]: <b>[[value]]</b>",
+			        "fillAlphas": 0.85,
+			        "lineAlpha": 0.1,
+			        "type": "column",
+			        "topRadius":1,
+			        "valueField": "number",
+			        "autoColor": true
+			    }],
+			    "depth3D": 40,
+				"angle": 30,
+			    "chartCursor": {
+			        "categoryBalloonEnabled": false,
+			        "cursorAlpha": 0,
+			        "zoomable": false
+			    },
+			    "categoryField": "status",
+			    "categoryAxis": {
+			        "gridPosition": "start",
+			        "axisAlpha":0,
+			        "gridAlpha":0,
+			        "labelRotation":50
+
+			    },
+			    "export": {
+			    	"enabled": true
+			     }
+
+			}, 0);
+		
+		
+		var chart = AmCharts.makeChart( "chartdiv1c", {
+			  "theme": "light",
+			  "type": "serial",
 			  "dataProvider":barChartDeptClosed,
-			  "valueField": "number",
-			  "titleField": "status",
-			  "outlineAlpha": 0.4,
-			  "depth3D": 15,
-			  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-			  "angle": 50,
-			  "export": {
-			    "enabled": true
-			  }
-			} );
+			  "valueAxes": [{
+			        "position": "left",
+			        "axisAlpha":0,
+			        "gridAlpha":0
+			    }],
+			    "graphs": [{
+			        "balloonText": "[[category]]: <b>[[value]]</b>",
+			        "fillAlphas": 0.85,
+			        "lineAlpha": 0.1,
+			        "type": "column",
+			        "topRadius":1,
+			        "valueField": "number",
+			        "autoColor": true
+			    }],
+			    "depth3D": 40,
+				"angle": 30,
+			    "chartCursor": {
+			        "categoryBalloonEnabled": false,
+			        "cursorAlpha": 0,
+			        "zoomable": false
+			    },
+			    "categoryField": "status",
+			    "categoryAxis": {
+			        "gridPosition": "start",
+			        "axisAlpha":0,
+			        "gridAlpha":0,
+			        "labelRotation":50
+
+			    },
+			    "export": {
+			    	"enabled": true
+			     }
+
+			}, 0);
+		
+		
+		
+		
+	
+		
 	
 		
 		

@@ -24,7 +24,7 @@ public class TasksAlerts {
 	SendSMS sendSMS;
 	
 	
-	@Scheduled(cron = "1 1 10 * * *")
+	@Scheduled(cron = "1 1 10 * * ?")
 	public void scheduleTaskUsingCronExpression() throws IOException {
 	  
 	    long now = System.currentTimeMillis() / 1000;
@@ -33,6 +33,8 @@ public class TasksAlerts {
 	    
 	    notificationsCroneController.sendSMSToTasksTomorrowDeadLine();
 	}
+	
+	
 	
 	
 }
